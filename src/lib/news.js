@@ -4,6 +4,24 @@ import { db } from './firebase';
 const NEWS_COLLECTION = 'news';
 const newsCollectionRef = collection(db, NEWS_COLLECTION);
 
+async function fetchSimpleCollection(name) {
+  try {
+    const snap = await getDocs(collection(db, name));
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  } catch (err) {
+    console.warn(`fetchSimpleCollection(${name}): could not fetch`, err);
+    return [];
+  }
+}
+
+export async function getCommunities() {
+  return fetchSimpleCollection('communities');
+}
+
+export async function getTestimonials() {
+  return fetchSimpleCollection('testimonials');
+}
+
 // Firestore Timestamp -> plain ISO string, so it's safe to pass from
 // Server Components to Client Components and to JSON-LD.
 function serializeDates(data) {
