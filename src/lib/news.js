@@ -22,6 +22,16 @@ export async function getTestimonials() {
   return fetchSimpleCollection('testimonials');
 }
 
+export async function getPodcastEpisodes() {
+  const eps = await fetchSimpleCollection('podcasts');
+  // Sort newest first if a date field exists.
+  return eps.sort((a, b) => {
+    const da = a.date ? new Date(a.date).getTime() : 0;
+    const db = b.date ? new Date(b.date).getTime() : 0;
+    return db - da;
+  });
+}
+
 // Firestore Timestamp -> plain ISO string, so it's safe to pass from
 // Server Components to Client Components and to JSON-LD.
 function serializeDates(data) {
