@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { getAllNews, getCommunities, getTestimonials } from '@/lib/news';
 import Hero from '@/components/Hero';
 import Mission from '@/components/Mission';
@@ -96,9 +97,9 @@ export default async function HomePage() {
               </h2>
               <p className="text-xl text-gray-400">Latest insights on Bitcoin Movement and adoption in Africa</p>
             </div>
-            <a href="/news" className="hidden md:inline-flex items-center text-yellow-500 font-semibold hover:text-yellow-400 transition-colors duration-200">
+            <Link href="/news" className="hidden md:inline-flex items-center text-yellow-500 font-semibold hover:text-yellow-400 transition-colors duration-200">
               View All Posts →
-            </a>
+            </Link>
           </div>
 
           {categoriesToShow.map((cat) => {
@@ -113,9 +114,9 @@ export default async function HomePage() {
           })}
 
           <div className="text-center mt-8 md:hidden">
-            <a href="/news" className="inline-flex items-center text-yellow-500 font-semibold hover:text-yellow-400 transition-colors duration-200">
+            <Link href="/news" className="inline-flex items-center text-yellow-500 font-semibold hover:text-yellow-400 transition-colors duration-200">
               View All Posts →
-            </a>
+            </Link>
           </div>
         </div>
       </section>
