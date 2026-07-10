@@ -7,6 +7,7 @@ import { collection, addDoc, updateDoc, doc, serverTimestamp } from 'firebase/fi
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import StoryEditor from '@/components/StoryEditor';
 import ImageUploader from '@/components/dashboard/ImageUploader';
+import SeoPanel from '@/components/dashboard/SeoPanel';
 
 const CATEGORIES = ['Adoption', 'Regulations', 'Education', 'Technology', 'Economy', 'Security', 'Community'];
 
@@ -35,6 +36,15 @@ const emptyForm = {
   isPopular: false,
   isTopStory: false,
   status: 'draft',
+  // SEO / AEO fields
+  seoTitle: '',
+  metaDescription: '',
+  focusKeywords: '',
+  canonicalUrl: '',
+  imageAlt: '',
+  tags: [],
+  keyTakeaways: [],
+  faqs: [],
 };
 
 const AUTOSAVE_KEY = 'bas_article_draft';
@@ -172,9 +182,7 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
 
         <div className="bg-[#0A0A0A] border border-gray-800 rounded-2xl p-6">
           <label className="block text-sm font-medium text-gray-300 mb-3">Article Body</label>
-          <div className="bg-white rounded-lg overflow-hidden">
-            <StoryEditor value={form.content} onChange={(content) => update({ content })} />
-          </div>
+          <StoryEditor value={form.content} onChange={(content) => update({ content })} dark />
         </div>
 
         <div className="bg-[#0A0A0A] border border-gray-800 rounded-2xl p-6">
@@ -228,6 +236,9 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
             </button>
           </div>
         </div>
+
+        {/* SEO / AEO panel */}
+        <SeoPanel form={form} update={update} />
 
         {/* Metadata */}
         <div className="bg-[#0A0A0A] border border-gray-800 rounded-2xl p-6 space-y-4">
