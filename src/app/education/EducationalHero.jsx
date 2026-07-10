@@ -38,7 +38,7 @@ export default function EducationalHero() {
             </div>
 
             <div className="space-y-2">
-              <h1 className="text-5xl sm:text-7xl md:text-6xl lg:text-7xl md:font-extrabold leading-tight">
+              <h1 className="text-4xl sm:text-6xl md:text-6xl lg:text-7xl md:font-extrabold leading-tight">
                 Study <span className="text-[#FAD604]">Bitcoin.</span>
                 <br />
                 Study Freedom!

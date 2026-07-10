@@ -24,7 +24,7 @@ export default function Hero() {
               <span className="text-yellow-500 text-sm font-semibold">Bringing Signal to the Noise</span>
             </div>
 
-            <h1 className="text-5xl sm:text-7xl md:text-6xl lg:text-7xl md:font-extrabold mb-4 leading-tight">
+            <h1 className="text-4xl sm:text-6xl md:text-6xl lg:text-7xl md:font-extrabold mb-4 leading-tight">
               <span> Showing </span> <br className="sm:hidden" /> <span>Africa&rsquo;s </span> <br className="sm:hidden" /> <span> Bitcoin </span> <br /> <span className="text-[#FAD604]"> Proof-of-Work. </span>
             </h1>
 

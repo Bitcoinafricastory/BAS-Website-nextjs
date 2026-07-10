@@ -14,6 +14,8 @@ const staticRoutes = [
   { path: '/resources', priority: 0.7, changeFrequency: 'weekly' },
 ];
 
+const CATEGORIES = ['adoption', 'regulations', 'education', 'technology', 'economy', 'security', 'community'];
+
 export default async function sitemap() {
   const base = 'https://bitcoinafricastory.com';
 
@@ -50,5 +52,12 @@ export default async function sitemap() {
     priority: r.priority,
   }));
 
-  return [...staticEntries, ...articleEntries, ...eventEntries];
+  const categoryEntries = CATEGORIES.map((c) => ({
+    url: `${base}/news/category/${c}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.7,
+  }));
+
+  return [...staticEntries, ...categoryEntries, ...articleEntries, ...eventEntries];
 }

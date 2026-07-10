@@ -39,7 +39,7 @@ export default function AboutContent() {
                 <span className="text-yellow-500 text-sm font-semibold">2+ Years of Proof-of-Quality-Works</span>
               </div>
 
-              <h1 className="text-5xl sm:text-7xl md:text-6xl lg:text-7xl md:font-extrabold mb-4 leading-tight">
+              <h1 className="text-4xl sm:text-6xl md:text-6xl lg:text-7xl md:font-extrabold mb-4 leading-tight">
                 <span> Empowering </span> <br className="sm:hidden" /> <span> Africa </span> <br className="sm:hidden" /> <span> Through </span> <br /> <span className="text-[#FAD604]"> Bitcoin. </span>
               </h1>
 

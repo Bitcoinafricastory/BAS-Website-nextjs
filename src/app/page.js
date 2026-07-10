@@ -37,21 +37,6 @@ const features = [
   },
 ];
 
-const organizationSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Bitcoin Africa Story',
-  url: 'https://bitcoinafricastory.com',
-  logo: 'https://bitcoinafricastory.com/assets/BASlogo.png',
-  sameAs: [
-    'https://x.com/story_bitcoin',
-    'https://youtube.com/@bitcoinafricastory',
-    'https://t.me/+KirVlW8gMMtlNDI8',
-    'https://www.linkedin.com/company/bitcoin-africa-story/',
-    'https://primal.net/p/nprofile1qqs0tmrphute79adfe4r3h8qdkdgqw3fz9244238x2ss53lmhft3jug4hhw4r',
-  ],
-};
-
 export default async function HomePage() {
   const [posts, communities, testimonials] = await Promise.all([
     getAllNews(),
@@ -69,11 +54,6 @@ export default async function HomePage() {
 
   return (
     <div className="pt-16 md:mt-[40px]">
-      <script
-        type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-      />
 
       <Hero />
 
@@ -109,7 +89,7 @@ export default async function HomePage() {
 
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-end mb-12">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4 mb-12">
             <div>
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 From Our News and <span className="text-yellow-500">Stories</span>

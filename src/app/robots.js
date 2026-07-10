@@ -5,6 +5,9 @@ export default function robots() {
       allow: '/',
       disallow: ['/admin', '/dashboard'],
     },
-    sitemap: 'https://bitcoinafricastory.com/sitemap.xml',
+    sitemap: [
+      'https://bitcoinafricastory.com/sitemap.xml',
+      'https://bitcoinafricastory.com/news-sitemap.xml',
+    ],
   };
 }

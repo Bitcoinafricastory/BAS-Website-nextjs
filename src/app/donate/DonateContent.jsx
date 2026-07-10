@@ -30,7 +30,7 @@ export default function DonateContent() {
                 <span className="text-yellow-500 text-sm font-semibold">2+ Years of Proof-of-Quality-Works</span>
               </div>
 
-              <h1 className="text-5xl sm:text-7xl md:text-6xl lg:text-7xl md:font-extrabold mb-4 leading-tight">
+              <h1 className="text-4xl sm:text-6xl md:text-6xl lg:text-7xl md:font-extrabold mb-4 leading-tight">
                 <span>Support </span> <br className="sm:hidden" /> <span>Bitcoin </span> <br className="sm:hidden" /> <span>Adoption </span> <br /> <span className="text-[#FAD604]">in Africa.</span>
               </h1>
 
@@ -46,7 +46,7 @@ export default function DonateContent() {
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="bg-gray-900 border border-gray-800 overflow-hidden">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between px-4 py-3 border-b border-gray-800">
-            <nav role="tablist" className="flex gap-2">
+            <nav role="tablist" className="flex flex-wrap gap-2">
               <button role="tab" aria-selected={activeTab === 'geyser'} onClick={() => setActiveTab('geyser')} className={`px-4 py-2 text-sm font-semibold ${activeTab === 'geyser' ? 'bg-yellow-500 text-black' : 'text-gray-300 hover:bg-gray-800'}`}>
                 Geyser
               </button>

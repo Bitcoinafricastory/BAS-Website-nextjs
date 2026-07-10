@@ -139,7 +139,7 @@ export default function EventsContent({ initialEvents = [] }) {
                 <span className="text-yellow-500 text-sm font-semibold">Your Network is your Networth</span>
               </div>
 
-              <h1 className="text-5xl sm:text-7xl md:text-6xl lg:text-7xl md:font-extrabold mb-4 leading-tight">
+              <h1 className="text-4xl sm:text-6xl md:text-6xl lg:text-7xl md:font-extrabold mb-4 leading-tight">
                 <span>Explore </span> <br /> <span>Bitcoin </span> <br className="sm:hidden" /> <span>Events </span> <br /> <span className="text-[#FAD604]">Across Africa</span>
               </h1>
 
