@@ -8,6 +8,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import StoryEditor from '@/components/StoryEditor';
 import ImageUploader from '@/components/dashboard/ImageUploader';
 import SeoPanel from '@/components/dashboard/SeoPanel';
+import AiTools from '@/components/dashboard/AiTools';
 
 const CATEGORIES = ['Adoption', 'Regulations', 'Education', 'Technology', 'Economy', 'Security', 'Community'];
 
@@ -198,7 +199,7 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
       {/* Sidebar: publish controls + metadata */}
       <div className="lg:col-span-1 space-y-6">
         {/* Publish box */}
-        <div className="bg-[#0A0A0A] border border-gray-800 rounded-2xl p-6 lg:sticky lg:top-24">
+        <div className="bg-[#0A0A0A] border border-gray-800 rounded-2xl p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-bold">Publish</h3>
             <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${currentStatus.color}`}>
@@ -239,6 +240,9 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
 
         {/* SEO / AEO panel */}
         <SeoPanel form={form} update={update} />
+
+        {/* AI editorial tools */}
+        <AiTools form={form} update={update} />
 
         {/* Metadata */}
         <div className="bg-[#0A0A0A] border border-gray-800 rounded-2xl p-6 space-y-4">
