@@ -1,6 +1,7 @@
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import AppShell from '@/components/AppShell';
 import { organizationSchema, websiteSchema, jsonLdScript } from '@/lib/schema';
 
 export const metadata = {
@@ -46,9 +47,9 @@ export default function RootLayout({ children }) {
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(websiteSchema())} />
       </head>
       <body>
-        <Header />
-        {children}
-        <Footer />
+        <AppShell header={<Header />} footer={<Footer />}>
+          {children}
+        </AppShell>
       </body>
     </html>
   );
