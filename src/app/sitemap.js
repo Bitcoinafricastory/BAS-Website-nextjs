@@ -1,4 +1,5 @@
 import { getAllNews } from '@/lib/news';
+import { getAllEvents } from '@/lib/events';
 
 export const revalidate = 300;
 
@@ -10,12 +11,14 @@ const staticRoutes = [
   { path: '/events', priority: 0.8, changeFrequency: 'weekly' },
   { path: '/education', priority: 0.8, changeFrequency: 'weekly' },
   { path: '/about', priority: 0.7, changeFrequency: 'monthly' },
+  { path: '/resources', priority: 0.7, changeFrequency: 'weekly' },
 ];
 
 export default async function sitemap() {
   const base = 'https://bitcoinafricastory.com';
 
   let articleEntries = [];
+  let eventEntries = [];
   try {
     const posts = await getAllNews();
     articleEntries = posts.map((post) => ({
@@ -28,6 +31,18 @@ export default async function sitemap() {
     console.warn('sitemap: could not fetch articles', err);
   }
 
+  try {
+    const events = await getAllEvents();
+    eventEntries = events.map((event) => ({
+      url: `${base}/events/${event.id}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.6,
+    }));
+  } catch (err) {
+    console.warn('sitemap: could not fetch events', err);
+  }
+
   const staticEntries = staticRoutes.map((r) => ({
     url: `${base}${r.path}`,
     lastModified: new Date(),
@@ -35,5 +50,5 @@ export default async function sitemap() {
     priority: r.priority,
   }));
 
-  return [...staticEntries, ...articleEntries];
+  return [...staticEntries, ...articleEntries, ...eventEntries];
 }
