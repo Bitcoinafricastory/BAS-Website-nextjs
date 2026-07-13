@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Search } from 'lucide-react';
 
 const navLinks = [
   { name: 'Home', path: '/' },
@@ -67,6 +67,16 @@ export default function Header() {
                 />
               </Link>
             ))}
+
+            <Link
+              href="/search"
+              aria-label="Search"
+              className={`transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-sm ${
+                isActive('/search') ? 'text-yellow-500' : 'text-gray-300 hover:text-yellow-500'
+              }`}
+            >
+              <Search size={18} />
+            </Link>
           </div>
 
           <button
@@ -96,6 +106,19 @@ export default function Header() {
                 {link.name}
               </Link>
             ))}
+
+            <Link
+              href="/search"
+              onClick={() => setIsOpen(false)}
+              className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors duration-200 ${
+                isActive('/search')
+                  ? 'text-yellow-500 bg-yellow-500/10'
+                  : 'text-gray-300 hover:text-yellow-500 hover:bg-yellow-500/5'
+              }`}
+            >
+              <Search size={16} />
+              Search
+            </Link>
           </div>
         )}
       </nav>

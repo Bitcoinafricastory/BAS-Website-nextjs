@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, MapPin, Clock } from 'lucide-react';
 import { getEventById } from '@/lib/events';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { eventSchema, breadcrumbSchema, jsonLdScript, SITE_URL } from '@/lib/schema';
 
 export const revalidate = 300;
 
@@ -22,8 +24,22 @@ export default async function EventDetailsPage({ params }) {
   const event = await getEventById(id);
   if (!event) notFound();
 
+  const crumbs = [
+    { name: 'Home', url: `${SITE_URL}/` },
+    { name: 'Events', url: `${SITE_URL}/events` },
+    { name: event.eventName, url: `${SITE_URL}/events/${id}` },
+  ];
+
   return (
     <div className="min-h-screen bg-black text-white pt-24 pb-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(eventSchema({ ...event, id }))}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(breadcrumbSchema(crumbs))}
+      />
       <div className="relative h-[300px] md:h-[400px] w-full overflow-hidden">
         {event.banner ? (
           <>
@@ -46,6 +62,14 @@ export default async function EventDetailsPage({ params }) {
       </div>
 
       <div className="max-w-5xl mx-auto px-6 -mt-20 relative z-10">
+        <Breadcrumbs
+          items={[
+            { name: 'Home', url: '/' },
+            { name: 'Events', url: '/events' },
+            { name: event.eventName },
+          ]}
+          className="mb-4"
+        />
         <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 md:p-10 shadow-2xl">
           <div className="flex flex-col md:flex-row gap-8 justify-between items-start">
             <div className="flex-1">

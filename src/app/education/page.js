@@ -6,6 +6,7 @@ import ProgramsSection from './ProgramsSection';
 import OtherBitcoinPrograms from './OtherBitcoinPrograms';
 import BitcoinVideos from './BitcoinVideos';
 import BitcoinResources from './BitcoinResources';
+import { courseListSchema, jsonLdScript } from '@/lib/schema';
 
 export const revalidate = 300;
 
@@ -19,8 +20,18 @@ export const metadata = {
 export default async function EducationPage() {
   const { testimonials, videoData, programs, otherPrograms, videos, resources } = await getEducationData();
 
+  // Course schema from real program data — makes free programs eligible for
+  // Google's course rich results and readable by AI answer engines.
+  const coursesSchema = courseListSchema([...(programs || []), ...(otherPrograms || [])]);
+
   return (
     <div className="pt-16">
+      {coursesSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={jsonLdScript(coursesSchema)}
+        />
+      )}
       <EducationalHero />
       <ProgramCard />
       <WhyBitcoin testimonials={testimonials} videoData={videoData} />

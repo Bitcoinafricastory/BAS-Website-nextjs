@@ -13,7 +13,7 @@ import { FeaturedCard, StoryCard, RankedItem, HorizontalCard } from '@/component
 import NewsletterSignup from '@/components/NewsletterSignup';
 import PodcastHighlights from '@/components/PodcastHighlights';
 import NewsExplorer from './NewsExplorer';
-import { SITE_URL } from '@/lib/schema';
+import { SITE_URL, podcastListSchema, jsonLdScript } from '@/lib/schema';
 
 export const revalidate = 300;
 
@@ -53,8 +53,16 @@ export default async function NewsPage() {
   const tags = getAllTags(posts).slice(0, 16);
   const categories = getCategoryCounts(posts);
 
+  const podcastSchema = podcastListSchema(podcastEpisodes);
+
   return (
     <div className="pt-16 bg-black text-white">
+      {podcastSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={jsonLdScript(podcastSchema)}
+        />
+      )}
       {/* ===== Featured Story ===== */}
       <section className="max-w-7xl mx-auto px-6 pt-12 pb-8">
         <div className="mb-8">
