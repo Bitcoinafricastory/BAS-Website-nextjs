@@ -320,7 +320,7 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img src={imagePreview} alt={form.title} className="w-full rounded-xl mb-8" />
               )}
-              <div className="prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: form.content }} />
+              <div className="article-body" dangerouslySetInnerHTML={{ __html: form.content }} />
             </article>
           </div>
         </div>

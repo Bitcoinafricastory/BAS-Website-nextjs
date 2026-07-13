@@ -7,11 +7,28 @@ const newsCollectionRef = collection(db, NEWS_COLLECTION);
 async function fetchSimpleCollection(name) {
   try {
     const snap = await getDocs(collection(db, name));
-    return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    // Serialize any Firestore Timestamp fields to ISO strings — these documents
+    // are passed straight from Server Components to Client Components, and
+    // Timestamp objects (they carry a toJSON method) trigger a Next.js
+    // "Only plain objects can be passed" runtime error otherwise.
+    return snap.docs.map((d) => ({ id: d.id, ...serializeDates(d.data()) }));
   } catch (err) {
     console.warn(`fetchSimpleCollection(${name}): could not fetch`, err);
     return [];
   }
+}
+
+// Firestore Timestamp -> plain ISO string, so it's safe to pass from
+// Server Components to Client Components and to JSON-LD.
+function serializeDates(data) {
+  const out = { ...data };
+  for (const key of Object.keys(out)) {
+    const val = out[key];
+    if (val && typeof val.toDate === 'function') {
+      out[key] = val.toDate().toISOString();
+    }
+  }
+  return out;
 }
 
 export async function getCommunities() {
@@ -30,19 +47,6 @@ export async function getPodcastEpisodes() {
     const db = b.date ? new Date(b.date).getTime() : 0;
     return db - da;
   });
-}
-
-// Firestore Timestamp -> plain ISO string, so it's safe to pass from
-// Server Components to Client Components and to JSON-LD.
-function serializeDates(data) {
-  const out = { ...data };
-  for (const key of Object.keys(out)) {
-    const val = out[key];
-    if (val && typeof val.toDate === 'function') {
-      out[key] = val.toDate().toISOString();
-    }
-  }
-  return out;
 }
 
 export async function getAllNews() {

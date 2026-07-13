@@ -171,7 +171,7 @@ export default async function BlogPostPage({ params }) {
         )}
 
         <div
-          className="prose prose-invert max-w-none prose-headings:font-bold prose-headings:scroll-mt-24 prose-a:text-yellow-500"
+          className="article-body mx-auto"
           dangerouslySetInnerHTML={{ __html: contentWithIds }}
         />
 

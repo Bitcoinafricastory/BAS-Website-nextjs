@@ -18,3 +18,217 @@ body {
   color: var(--foreground);
   font-family: var(--font-montserrat), Arial, Helvetica, sans-serif;
 }
+
+/* ─────────────────────────────────────────────────────────────
+   Article typography
+   Tailwind's stock `prose` gives uniform, oversized gaps and no
+   heading rhythm. This defines a real editorial type scale:
+   comfortable measure, tighter paragraph spacing, and headings
+   that clearly outrank body text.
+   ───────────────────────────────────────────────────────────── */
+.article-body {
+  /* ~68 characters per line — the readable range for long-form text. */
+  max-width: 68ch;
+  width: 100%;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: #d1d5db;
+  /* Long URLs and unbroken strings must never blow out the container. */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+@media (min-width: 768px) {
+  .article-body {
+    font-size: 1.125rem;
+  }
+}
+
+.article-body > * + * {
+  margin-top: 1.4em;
+}
+
+/* CMS editors frequently leave empty <p> tags and stray <br>s between
+   paragraphs. These are real elements, so CSS spacing alone can't fix the
+   resulting gaps — collapse them instead. */
+.article-body p:empty,
+.article-body p:has(> br:only-child) {
+  display: none;
+}
+
+.article-body br + br {
+  display: none;
+}
+
+.article-body h2 {
+  font-size: 1.75rem;
+  line-height: 1.25;
+  font-weight: 700;
+  color: #fff;
+  margin-top: 2.5em;
+  margin-bottom: 0.75em;
+  letter-spacing: -0.01em;
+  scroll-margin-top: 6rem;
+}
+
+.article-body h3 {
+  font-size: 1.3125rem;
+  line-height: 1.35;
+  font-weight: 700;
+  color: #fff;
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+  scroll-margin-top: 6rem;
+}
+
+/* First heading shouldn't push away from the intro. */
+.article-body > h2:first-child,
+.article-body > h3:first-child {
+  margin-top: 0;
+}
+
+.article-body strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+.article-body a {
+  color: #FAD604;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+.article-body a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.article-body ul,
+.article-body ol {
+  padding-left: 1.5em;
+  margin-top: 1.25em;
+}
+
+.article-body ul { list-style: disc; }
+.article-body ol { list-style: decimal; }
+
+.article-body li {
+  margin-top: 0.5em;
+  padding-left: 0.25em;
+}
+
+.article-body li::marker {
+  color: #FAD604;
+}
+
+.article-body blockquote {
+  border-left: 3px solid #FAD604;
+  padding-left: 1.25em;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  font-style: italic;
+  color: #e5e7eb;
+}
+
+.article-body img {
+  border-radius: 0.75rem;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.article-body hr {
+  border-color: #1f2937;
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+
+/* ── Remaining elements the Quill editor can emit ── */
+
+.article-body h1 {
+  font-size: 2.125rem;
+  line-height: 1.2;
+  font-weight: 800;
+  color: #fff;
+  margin-top: 2.5em;
+  margin-bottom: 0.75em;
+  letter-spacing: -0.02em;
+  scroll-margin-top: 6rem;
+}
+
+.article-body h4,
+.article-body h5,
+.article-body h6 {
+  font-size: 1.125rem;
+  line-height: 1.4;
+  font-weight: 700;
+  color: #fff;
+  margin-top: 1.75em;
+  margin-bottom: 0.5em;
+  scroll-margin-top: 6rem;
+}
+
+.article-body h1:first-child,
+.article-body h4:first-child {
+  margin-top: 0;
+}
+
+/* Quill emits code blocks as <pre class="ql-syntax"> */
+.article-body pre,
+.article-body .ql-syntax {
+  background: #0d1117;
+  border: 1px solid #1f2937;
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  max-width: 100%;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #e5e7eb;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.article-body code {
+  background: #1f2937;
+  padding: 0.15em 0.4em;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+  color: #FAD604;
+}
+
+.article-body pre code,
+.article-body .ql-syntax code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+.article-body sub { vertical-align: sub; font-size: 0.75em; }
+.article-body sup { vertical-align: super; font-size: 0.75em; }
+
+/* Quill alignment classes */
+.article-body .ql-align-center { text-align: center; }
+.article-body .ql-align-right  { text-align: right; }
+.article-body .ql-align-justify { text-align: justify; }
+
+/* Quill indent classes */
+.article-body .ql-indent-1 { padding-left: 3em; }
+.article-body .ql-indent-2 { padding-left: 6em; }
+.article-body .ql-indent-3 { padding-left: 9em; }
+
+/* Embedded video (Quill wraps these in an iframe) */
+.article-body iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border-radius: 0.75rem;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  border: 1px solid #1f2937;
+}
+
+.article-body img {
+  max-width: 100%;
+  height: auto;
+}
