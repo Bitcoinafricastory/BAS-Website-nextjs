@@ -21,11 +21,11 @@ export default function EducationalHero() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] lg:min-h-[64vh]">
         {/* Copy column */}
         <div className="order-2 lg:order-1 flex flex-col justify-center px-6 sm:px-10 lg:pl-6 lg:pr-14 py-14 lg:py-20 border-b lg:border-b-0 lg:border-r border-gray-800">
-          <span className="font-hero-mono text-[11px] tracking-[0.18em] uppercase text-[#FAD604] mb-6">
+          <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-[#FAD604] mb-6">
             Free &middot; Self-paced &middot; Open to all
           </span>
 
-          <h1 className="font-hero-serif font-normal text-white text-[38px] sm:text-[48px] lg:text-[56px] leading-[1.05] tracking-tight mb-6 max-w-xl">
+          <h1 className="font-extrabold text-white text-[38px] sm:text-[48px] lg:text-[56px] leading-[1.05] tracking-tight mb-6 max-w-xl">
             Learn Bitcoin. <em className="italic text-[#FAD604]">Free</em>, at your own pace.
           </h1>
 

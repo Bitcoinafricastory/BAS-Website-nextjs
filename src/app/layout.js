@@ -1,24 +1,16 @@
 import './globals.css';
-import { Instrument_Serif, JetBrains_Mono } from 'next/font/google';
+import { Montserrat } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import AppShell from '@/components/AppShell';
 import { organizationSchema, websiteSchema, jsonLdScript } from '@/lib/schema';
 
-// Display faces used for the homepage hero (headline + mono data/labels).
-// Scoped via CSS variables so they don't affect body copy elsewhere on the site.
-const instrumentSerif = Instrument_Serif({
+// Brand font, applied site-wide (nav, body copy, cards, heroes, dashboard).
+const montserrat = Montserrat({
   subsets: ['latin'],
-  weight: '400',
+  weight: ['400', '500', '600', '700', '800'],
   style: ['normal', 'italic'],
-  variable: '--font-instrument-serif',
-  display: 'swap',
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-jetbrains-mono',
+  variable: '--font-montserrat',
   display: 'swap',
 });
 
@@ -75,12 +67,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${instrumentSerif.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={montserrat.variable}>
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(organizationSchema())} />
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(websiteSchema())} />
       </head>
-      <body>
+      <body className={montserrat.className}>
         <AppShell header={<Header />} footer={<Footer />}>
           {children}
         </AppShell>

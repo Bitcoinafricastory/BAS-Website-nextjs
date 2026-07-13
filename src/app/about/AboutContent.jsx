@@ -22,11 +22,11 @@ export default function AboutContent() {
       <section id="hero" className="relative bg-black">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] lg:min-h-[70vh]">
           <div className="order-2 lg:order-1 flex flex-col justify-center px-6 sm:px-10 lg:pl-6 lg:pr-14 py-14 lg:py-20 border-b lg:border-b-0 lg:border-r border-gray-800">
-            <span className="font-hero-mono text-[11px] tracking-[0.18em] uppercase text-[#FAD604] mb-6">
+            <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-[#FAD604] mb-6">
               Since 2024 &middot; Operating across Africa
             </span>
 
-            <h1 className="font-hero-serif font-normal text-white text-[36px] sm:text-[46px] lg:text-[54px] leading-[1.05] tracking-tight mb-6 max-w-xl">
+            <h1 className="font-extrabold text-white text-[36px] sm:text-[46px] lg:text-[54px] leading-[1.05] tracking-tight mb-6 max-w-xl">
               Empowering Africa through <em className="italic text-[#FAD604]">Bitcoin.</em>
             </h1>
 
@@ -82,10 +82,10 @@ export default function AboutContent() {
                   i >= 2 ? 'border-t lg:border-t-0' : '',
                 ].join(' ')}
               >
-                <div className="font-hero-mono font-semibold text-white text-[26px] sm:text-[30px] leading-none">
+                <div className="font-bold text-white text-[26px] sm:text-[30px] leading-none">
                   <CountUp end={stat.value} suffix={stat.suffix} />
                 </div>
-                <div className="font-hero-mono text-[10px] tracking-[0.16em] uppercase text-gray-300 mt-3">
+                <div className="font-bold text-[10px] tracking-[0.16em] uppercase text-gray-300 mt-3">
                   {stat.label}
                 </div>
               </div>

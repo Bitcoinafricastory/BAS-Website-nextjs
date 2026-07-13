@@ -17,11 +17,11 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] lg:min-h-[78vh]">
         {/* Copy column */}
         <div className="order-2 lg:order-1 flex flex-col justify-center px-6 sm:px-10 lg:pl-6 lg:pr-14 py-14 lg:py-20 border-b lg:border-b-0 lg:border-r border-gray-800">
-          <span className="font-hero-mono text-[11px] tracking-[0.18em] uppercase text-[#FAD604] mb-6">
+          <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-[#FAD604] mb-6">
             Est. 2024 &middot; Reporting from the ground
           </span>
 
-          <h1 className="font-hero-serif font-normal text-white text-[38px] sm:text-[50px] lg:text-[62px] leading-[1.05] tracking-tight mb-6 max-w-xl">
+          <h1 className="font-extrabold text-white text-[38px] sm:text-[50px] lg:text-[62px] leading-[1.05] tracking-tight mb-6 max-w-xl">
             Showing Africa&rsquo;s Bitcoin{' '}
             <em className="italic text-[#FAD604]">proof&#8209;of&#8209;work.</em>
           </h1>
@@ -75,11 +75,11 @@ export default function Hero() {
                 i >= 2 ? 'border-t lg:border-t-0' : '',
               ].join(' ')}
             >
-              <div className="font-hero-mono font-semibold text-white text-[26px] sm:text-[30px] leading-none flex items-baseline gap-0.5">
+              <div className="font-bold text-white text-[26px] sm:text-[30px] leading-none flex items-baseline gap-0.5">
                 <CountUp end={stat.value} duration={2} enableScrollSpy scrollSpyOnce />
                 <span className="text-[#FAD604] text-lg">{stat.suffix}</span>
               </div>
-              <div className="font-hero-mono text-[10px] tracking-[0.16em] uppercase text-gray-500 mt-3">
+              <div className="font-bold text-[10px] tracking-[0.16em] uppercase text-gray-500 mt-3">
                 {stat.label}
               </div>
               <div className="text-[11px] text-gray-600 mt-1">{stat.sub}</div>

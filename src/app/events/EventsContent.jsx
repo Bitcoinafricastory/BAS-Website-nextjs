@@ -125,31 +125,30 @@ export default function EventsContent({ initialEvents = [] }) {
   return (
     <div className="mt-[75px] pb-32">
       <section id="hero" className="relative bg-black">
-        <div className="relative h-[220px] sm:h-[280px] overflow-hidden">
-          <Image
-            src="/assets/communities.jpg"
-            alt="Bitcoin community gathering"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.2)_45%,rgba(0,0,0,0.9)_100%)]" />
-          <div className="absolute inset-0 flex items-end">
-            <div className="max-w-7xl mx-auto px-6 pb-6 w-full">
-              <span className="font-hero-mono text-[11px] tracking-[0.18em] uppercase text-[#FAD604] mb-2 block">
-                Your network is your networth
-              </span>
-              <h1 className="font-hero-serif font-normal text-white text-[32px] sm:text-[44px] lg:text-[52px] leading-[1.05] tracking-tight">
-                Bitcoin events <em className="italic text-[#FAD604]">across Africa.</em>
-              </h1>
-            </div>
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] lg:min-h-[52vh]">
+          <div className="order-2 lg:order-1 flex flex-col justify-center px-6 sm:px-10 lg:pl-6 lg:pr-14 py-14 lg:py-16 border-b lg:border-b-0 lg:border-r border-gray-800">
+            <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-[#FAD604] mb-6">
+              Your network is your networth
+            </span>
+            <h1 className="font-extrabold text-white text-[34px] sm:text-[44px] lg:text-[50px] leading-[1.05] tracking-tight mb-6 max-w-xl">
+              Bitcoin events <em className="italic text-[#FAD604]">across Africa.</em>
+            </h1>
+            <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-md">
+              Discover meetups, conferences, workshops, and grassroots Bitcoin gatherings shaping Africa&rsquo;s Bitcoin circular economy.
+            </p>
           </div>
-        </div>
-        <div className="max-w-7xl mx-auto px-6 py-6">
-          <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-2xl">
-            Discover meetups, conferences, workshops, and grassroots Bitcoin gatherings shaping Africa&rsquo;s Bitcoin circular economy.
-          </p>
+          <div className="order-1 lg:order-2 relative min-h-[220px] sm:min-h-[300px] lg:min-h-0 overflow-hidden">
+            <Image
+              src="/assets/communities.jpg"
+              alt="Bitcoin community gathering"
+              fill
+              priority
+              sizes="(min-width: 1024px) 45vw, 100vw"
+              className="object-cover"
+            />
+            <div className="hidden lg:block absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.85)_0%,rgba(0,0,0,0.25)_30%,rgba(0,0,0,0)_60%)]" />
+            <div className="lg:hidden absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.15)_0%,rgba(0,0,0,0.8)_100%)]" />
+          </div>
         </div>
       </section>
 
