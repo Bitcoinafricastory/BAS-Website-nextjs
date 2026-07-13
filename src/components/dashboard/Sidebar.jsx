@@ -24,6 +24,7 @@ const navGroups = [
     items: [
       { name: 'News & Stories', path: '/dashboard/news', icon: Newspaper },
       { name: 'Submitted Stories', path: '/dashboard/submitted-stories', icon: Inbox },
+      { name: 'Authors', path: '/dashboard/authors', icon: Users },
       { name: 'Podcast Episodes', path: '/dashboard/podcasts', icon: Mic },
     ],
   },

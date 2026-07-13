@@ -9,6 +9,7 @@ import StoryEditor from '@/components/StoryEditor';
 import ImageUploader from '@/components/dashboard/ImageUploader';
 import SeoPanel from '@/components/dashboard/SeoPanel';
 import AiTools from '@/components/dashboard/AiTools';
+import { getActiveAuthors } from '@/lib/authors';
 
 const CATEGORIES = ['Adoption', 'Regulations', 'Education', 'Technology', 'Economy', 'Security', 'Community'];
 
@@ -28,6 +29,7 @@ const emptyForm = {
   category: 'Adoption',
   image: '',
   author: 'Bitcoin Educator',
+  authorId: '',
   authorImage: '',
   authorLinkedIn: '',
   authorX: '',
@@ -70,12 +72,19 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
     const f = loadInitialForm(editingPost);
     return typeof f.image === 'string' ? f.image : '';
   });
-  const [authorPreview, setAuthorPreview] = useState(editingPost?.authorImage || '');
+  const [authors, setAuthors] = useState([]);
   const [slugTouched, setSlugTouched] = useState(!!editingPost);
   const [busy, setBusy] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [lastSaved, setLastSaved] = useState(null);
   const isEditing = !!editingPost;
+
+  // Load active authors once for the picker.
+  useEffect(() => {
+    getActiveAuthors().then(setAuthors).catch((err) => {
+      console.warn('Could not load authors for picker', err);
+    });
+  }, []);
 
   // Draft auto-save to localStorage (only for NEW articles, not edits).
   useEffect(() => {
@@ -287,18 +296,57 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
         <div className="bg-[#0A0A0A] border border-gray-800 rounded-2xl p-6 space-y-4">
           <h3 className="font-bold">Author</h3>
           <div>
-            <label className="block text-xs font-medium text-gray-400 mb-2">Name</label>
-            <input value={form.author} onChange={(e) => update({ author: e.target.value })} className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white focus:outline-none focus:border-yellow-500 text-sm" />
+            <label className="block text-xs font-medium text-gray-400 mb-2">Choose author</label>
+            <select
+              value={form.authorId || ''}
+              onChange={(e) => {
+                const chosen = authors.find((a) => a.id === e.target.value);
+                if (!chosen) {
+                  update({ authorId: '', author: '', authorImage: '', authorLinkedIn: '', authorX: '' });
+                  return;
+                }
+                // Denormalize the author's current details onto the article so
+                // legacy display code (which reads post.author, post.authorImage,
+                // etc.) keeps working unchanged. The canonical link is authorId.
+                update({
+                  authorId: chosen.id,
+                  author: chosen.name || '',
+                  authorImage: chosen.avatar || '',
+                  authorLinkedIn: chosen.linkedin || '',
+                  authorX: chosen.twitter || '',
+                });
+              }}
+              className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white focus:outline-none focus:border-yellow-500 text-sm"
+            >
+              <option value="">— Select an author —</option>
+              {authors.map((a) => (
+                <option key={a.id} value={a.id}>
+                  {a.name}{a.role ? ` · ${a.role}` : ''}
+                </option>
+              ))}
+            </select>
+            <p className="text-xs text-gray-500 mt-2">
+              Authors are managed in the{' '}
+              <a href="/dashboard/authors" className="text-yellow-500 hover:underline">Authors section</a>.
+              The chosen author&rsquo;s name, photo, and socials appear on the article automatically.
+            </p>
           </div>
-          <ImageUploader label="Author Photo" value={form.authorImage} preview={authorPreview} aspect="aspect-square" compact onChange={(val, prev) => { update({ authorImage: val }); setAuthorPreview(prev); }} />
-          <div>
-            <label className="block text-xs font-medium text-gray-400 mb-2">LinkedIn</label>
-            <input value={form.authorLinkedIn} onChange={(e) => update({ authorLinkedIn: e.target.value })} placeholder="https://linkedin.com/in/…" className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 text-sm" />
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-gray-400 mb-2">X / Twitter</label>
-            <input value={form.authorX} onChange={(e) => update({ authorX: e.target.value })} placeholder="https://x.com/…" className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 text-sm" />
-          </div>
+          {form.author && (
+            <div className="flex items-center gap-3 p-3 bg-black/40 border border-gray-800 rounded-lg">
+              {form.authorImage && (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img src={form.authorImage} alt="" className="w-10 h-10 rounded-full object-cover" />
+              )}
+              <div className="min-w-0">
+                <p className="text-sm text-white truncate">{form.author}</p>
+                {form.authorId ? (
+                  <p className="text-xs text-gray-500">Linked to author record</p>
+                ) : (
+                  <p className="text-xs text-orange-400">Legacy byline — not linked to an author profile</p>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

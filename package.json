@@ -23,6 +23,7 @@
     "@tailwindcss/typography": "^0.5.20",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
+    "firebase-admin": "^13.0.0",
     "tailwindcss": "^4"
   }
 }

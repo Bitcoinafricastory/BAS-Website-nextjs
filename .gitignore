@@ -2,3 +2,6 @@ node_modules/
 .next/
 .env
 .DS_Store
+
+# Firebase Admin SDK service account (never commit)
+service-account.json
