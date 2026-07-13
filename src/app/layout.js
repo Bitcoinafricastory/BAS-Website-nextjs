@@ -1,5 +1,5 @@
 import './globals.css';
-import { Montserrat, Instrument_Serif } from 'next/font/google';
+import { Montserrat } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import AppShell from '@/components/AppShell';
@@ -11,16 +11,6 @@ const montserrat = Montserrat({
   weight: ['400', '500', '600', '700', '800'],
   style: ['normal', 'italic'],
   variable: '--font-montserrat',
-  display: 'swap',
-});
-
-// Editorial display serif, scoped to hero headlines only via CSS variable —
-// everything else (nav, body, cards, dashboard) stays on Montserrat.
-const instrumentSerif = Instrument_Serif({
-  subsets: ['latin'],
-  weight: '400',
-  style: ['normal', 'italic'],
-  variable: '--font-instrument-serif',
   display: 'swap',
 });
 
@@ -77,7 +67,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${montserrat.variable} ${instrumentSerif.variable}`}>
+    <html lang="en" className={montserrat.variable}>
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(organizationSchema())} />
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(websiteSchema())} />

@@ -26,7 +26,7 @@ export default function AboutContent() {
               Since 2024 &middot; Operating across Africa
             </span>
 
-            <h1 className="font-headline font-normal text-white text-[36px] sm:text-[46px] lg:text-[54px] leading-[1.05] tracking-tight mb-6 max-w-xl">
+            <h1 className="font-extrabold text-white text-[36px] sm:text-[46px] lg:text-[54px] leading-[1.05] tracking-tight mb-6 max-w-xl">
               Empowering Africa through <em className="italic text-[#FAD604]">Bitcoin.</em>
             </h1>
 
