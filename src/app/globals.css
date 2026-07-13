@@ -11,6 +11,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-montserrat);
   --font-mono: var(--font-geist-mono);
+  /* Editorial display serif — hero <h1> headlines only, not the brand font */
+  --font-headline: var(--font-instrument-serif);
 }
 
 body {

@@ -16,7 +16,7 @@ export default function DonateContent() {
               100% of donations fund the work
             </span>
 
-            <h1 className="font-extrabold text-white text-[34px] sm:text-[44px] lg:text-[50px] leading-[1.05] tracking-tight mb-6 max-w-xl">
+            <h1 className="font-headline font-normal text-white text-[34px] sm:text-[44px] lg:text-[50px] leading-[1.05] tracking-tight mb-6 max-w-xl">
               Support Bitcoin adoption <em className="italic text-[#FAD604]">in Africa.</em>
             </h1>
 

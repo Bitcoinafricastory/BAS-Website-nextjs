@@ -21,7 +21,7 @@ export default function Hero() {
             Est. 2024 &middot; Reporting from the ground
           </span>
 
-          <h1 className="font-extrabold text-white text-[38px] sm:text-[50px] lg:text-[62px] leading-[1.05] tracking-tight mb-6 max-w-xl">
+          <h1 className="font-headline font-normal text-white text-[38px] sm:text-[50px] lg:text-[62px] leading-[1.05] tracking-tight mb-6 max-w-xl">
             Showing Africa&rsquo;s Bitcoin{' '}
             <em className="italic text-[#FAD604]">proof&#8209;of&#8209;work.</em>
           </h1>

@@ -51,7 +51,7 @@ export default function ContactContent() {
           <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-[#FAD604] mb-4 block">
             Get in touch
           </span>
-          <h1 className="font-extrabold text-white text-[34px] sm:text-[44px] md:text-[52px] leading-[1.05] tracking-tight mb-4 sm:mb-6">
+          <h1 className="font-headline font-normal text-white text-[34px] sm:text-[44px] md:text-[52px] leading-[1.05] tracking-tight mb-4 sm:mb-6">
             Let&rsquo;s <em className="italic text-[#FAD604]">connect.</em>
           </h1>
           <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-xl mx-auto">

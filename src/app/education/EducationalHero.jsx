@@ -25,7 +25,7 @@ export default function EducationalHero() {
             Free &middot; Self-paced &middot; Open to all
           </span>
 
-          <h1 className="font-extrabold text-white text-[38px] sm:text-[48px] lg:text-[56px] leading-[1.05] tracking-tight mb-6 max-w-xl">
+          <h1 className="font-headline font-normal text-white text-[38px] sm:text-[48px] lg:text-[56px] leading-[1.05] tracking-tight mb-6 max-w-xl">
             Learn Bitcoin. <em className="italic text-[#FAD604]">Free</em>, at your own pace.
           </h1>
 
