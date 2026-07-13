@@ -22,6 +22,15 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 });
 
+// Vercel sets this automatically to this project's real production URL, whatever it currently is.
+// During the migration, that's bas-website-nextjs.vercel.app — not bitcoinafricastory.com, which
+// is still serving the old React site until cutover. Link-preview images need to resolve against
+// wherever the site actually lives right now; canonical/sitemap/RSS below intentionally stay
+// pointed at the final domain so that SEO groundwork isn't undone before cutover.
+const currentSiteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : 'https://bitcoinafricastory.com';
+
 export const metadata = {
   metadataBase: new URL('https://bitcoinafricastory.com'),
   title: {
@@ -39,7 +48,7 @@ export const metadata = {
       'Bitcoin Africa Story is a trusted source of news, insights, and narratives on Bitcoin adoption, innovation, and impact across the African continent.',
     images: [
       {
-        url: '/assets/og-image.jpg',
+        url: `${currentSiteUrl}/assets/og-image.jpg`,
         width: 1200,
         height: 630,
         alt: 'Bitcoin Africa Story — Showing Africa\'s Bitcoin proof-of-work',
@@ -51,7 +60,7 @@ export const metadata = {
     title: 'Bitcoin Africa Story - Bitcoin News, Education & Community in Africa',
     description:
       'Bitcoin Africa Story is a trusted source of news, insights, and narratives on Bitcoin adoption, innovation, and impact across the African continent.',
-    images: ['/assets/og-image.jpg'],
+    images: [`${currentSiteUrl}/assets/og-image.jpg`],
   },
   icons: {
     icon: ['/favicon-32x32.png', '/favicon-192.png'],
