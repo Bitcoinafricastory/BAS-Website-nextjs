@@ -1,44 +1,41 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { BookOpen, Users, Zap } from 'lucide-react';
 
 export default function DonateContent() {
   const [activeTab, setActiveTab] = useState('geyser');
-  const BACKGROUND_IMAGE_URL = '/assets/dontebg.jpg';
 
   return (
     <div className="mt-[110px]">
-      <section id="hero" className="relative flex items-center overflow-hidden">
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: `url(${BACKGROUND_IMAGE_URL})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-          }}
-        >
-          <div className="absolute inset-0 bg-black/80" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black" />
-        </div>
+      <section id="hero" className="relative bg-black">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] lg:min-h-[56vh]">
+          <div className="order-2 lg:order-1 flex flex-col justify-center px-6 sm:px-10 lg:pl-6 lg:pr-14 py-14 lg:py-16 border-b lg:border-b-0 lg:border-r border-gray-800">
+            <span className="font-hero-mono text-[11px] tracking-[0.18em] uppercase text-[#FAD604] mb-6">
+              100% of donations fund the work
+            </span>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
-          <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-16">
-            <div className="w-full lg:w-1/2 text-left mt-12 md:mt-10 lg:text-left">
-              <div className="hidden sm:inline-block mb-6 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full">
-                <span className="text-yellow-500 text-sm font-semibold">2+ Years of Proof-of-Quality-Works</span>
-              </div>
+            <h1 className="font-hero-serif font-normal text-white text-[34px] sm:text-[44px] lg:text-[50px] leading-[1.05] tracking-tight mb-6 max-w-xl">
+              Support Bitcoin adoption <em className="italic text-[#FAD604]">in Africa.</em>
+            </h1>
 
-              <h1 className="text-4xl sm:text-6xl md:text-6xl lg:text-7xl md:font-extrabold mb-4 leading-tight">
-                <span>Support </span> <br className="sm:hidden" /> <span>Bitcoin </span> <br className="sm:hidden" /> <span>Adoption </span> <br /> <span className="text-[#FAD604]">in Africa.</span>
-              </h1>
+            <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-md">
+              Your donation fuels grassroots training, community building, real adoption stories, and local circular economy projects. Help us grow Africa&rsquo;s Bitcoin proof-of-work.
+            </p>
+          </div>
 
-              <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl">
-                Your donation fuels grassroots training, community building, real adoption stories, and
-                local circular economy projects. Help us grow Africa&rsquo;s Bitcoin proof-of-work.
-              </p>
-            </div>
+          <div className="order-1 lg:order-2 relative min-h-[220px] sm:min-h-[300px] lg:min-h-0 overflow-hidden">
+            <Image
+              src="/assets/dontebg.jpg"
+              alt="Bitcoin Africa Story community"
+              fill
+              priority
+              sizes="(min-width: 1024px) 45vw, 100vw"
+              className="object-cover"
+            />
+            <div className="hidden lg:block absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.85)_0%,rgba(0,0,0,0.25)_30%,rgba(0,0,0,0)_60%)]" />
+            <div className="lg:hidden absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.15)_0%,rgba(0,0,0,0.8)_100%)]" />
           </div>
         </div>
       </section>

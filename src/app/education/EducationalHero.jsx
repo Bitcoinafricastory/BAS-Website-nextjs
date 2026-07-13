@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 
 export default function EducationalHero() {
@@ -16,56 +17,51 @@ export default function EducationalHero() {
   };
 
   return (
-    <section id="hero" className="relative flex items-center overflow-hidden">
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: "url('/assets/basbg.jpg')",
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        <div className="absolute inset-0 bg-black/80" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black" />
-      </div>
+    <section id="hero" className="relative bg-black">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] lg:min-h-[64vh]">
+        {/* Copy column */}
+        <div className="order-2 lg:order-1 flex flex-col justify-center px-6 sm:px-10 lg:pl-6 lg:pr-14 py-14 lg:py-20 border-b lg:border-b-0 lg:border-r border-gray-800">
+          <span className="font-hero-mono text-[11px] tracking-[0.18em] uppercase text-[#FAD604] mb-6">
+            Free &middot; Self-paced &middot; Open to all
+          </span>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pb-[20px] w-full">
-        <div className="flex flex-col items-center gap-8 text-center">
-          <div className="w-full lg:w-2/3 mt-12 md:mt-10">
-            <div className="hidden sm:inline-block mb-6 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full">
-              <span className="text-yellow-500 text-sm font-semibold">Learn From Anywhere In The World</span>
-            </div>
+          <h1 className="font-hero-serif font-normal text-white text-[38px] sm:text-[48px] lg:text-[56px] leading-[1.05] tracking-tight mb-6 max-w-xl">
+            Learn Bitcoin. <em className="italic text-[#FAD604]">Free</em>, at your own pace.
+          </h1>
 
-            <div className="space-y-2">
-              <h1 className="text-4xl sm:text-6xl md:text-6xl lg:text-7xl md:font-extrabold leading-tight">
-                Study <span className="text-[#FAD604]">Bitcoin.</span>
-                <br />
-                Study Freedom!
-              </h1>
-            </div>
+          <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-md mb-10">
+            Practical Bitcoin education built for the African context — from your first wallet to running a circular economy in your community.
+          </p>
 
-            <p className="text-lg mt-5 md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Everything you need to start your Bitcoin journey. Guides, tools, and trusted resources to
-              help you learn and grow.
-            </p>
-
-            <div className="flex sm:flex-row gap-3 mt-5 justify-center mb-6 w-full max-w-lg mx-auto">
-              <button
-                onClick={() => scrollToSection('education-programs')}
-                className="inline-flex w-full sm:w-auto items-center justify-center px-2 py-2 sm:py-2.5 bg-yellow-500 text-black font-bold text-sm sm:text-base hover:bg-yellow-400 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-yellow-500/50"
-              >
-                Explore Bitcoin Programs
-                <ArrowRight className="ml-2" size={18} />
-              </button>
-              <button
-                onClick={() => scrollToSection('bitcoin-resources')}
-                className="inline-flex w-full sm:w-auto items-center justify-center px-4 py-2 sm:py-2.5 bg-transparent border-2 border-yellow-500 text-yellow-500 font-bold text-sm sm:text-base hover:bg-yellow-500 hover:text-black transition-all duration-200"
-              >
-                Explore Bitcoin Resources
-              </button>
-            </div>
+          <div className="flex flex-wrap items-center gap-6 sm:gap-8">
+            <button
+              onClick={() => scrollToSection('education-programs')}
+              className="inline-flex items-center gap-2 bg-[#FAD604] text-black font-bold text-sm sm:text-base px-6 py-4 sm:px-7 hover:brightness-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAD604] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            >
+              Explore Bitcoin Programs
+              <ArrowRight size={18} />
+            </button>
+            <button
+              onClick={() => scrollToSection('bitcoin-resources')}
+              className="text-sm sm:text-base font-semibold text-gray-200 border-b border-gray-700 pb-1 hover:text-[#FAD604] hover:border-[#FAD604] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAD604] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            >
+              Explore Bitcoin Resources
+            </button>
           </div>
+        </div>
+
+        {/* Photo column — shown bright, unobstructed; darkened only on the edge meeting the copy */}
+        <div className="order-1 lg:order-2 relative min-h-[220px] sm:min-h-[300px] lg:min-h-0 overflow-hidden">
+          <Image
+            src="/assets/education.jpg"
+            alt="Bitcoin education session"
+            fill
+            priority
+            sizes="(min-width: 1024px) 45vw, 100vw"
+            className="object-cover"
+          />
+          <div className="hidden lg:block absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.85)_0%,rgba(0,0,0,0.25)_30%,rgba(0,0,0,0)_60%)]" />
+          <div className="lg:hidden absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.15)_0%,rgba(0,0,0,0.8)_100%)]" />
         </div>
       </div>
     </section>

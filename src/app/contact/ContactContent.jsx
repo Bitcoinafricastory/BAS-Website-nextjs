@@ -46,15 +46,15 @@ export default function ContactContent() {
 
   return (
     <div className="pt-16">
-      <section id="hero" className="py-16 sm:py-20 px-4 bg-gradient-to-b from-gray-900/30 to-transparent">
+      <section id="hero" className="pt-16 pb-10 sm:pt-20 sm:pb-12 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="hidden sm:inline-block mb-4 px-3 py-1 bg-yellow-500/10 border border-yellow-500/30 rounded-full">
-            <span className="text-yellow-500 text-xs sm:text-sm font-semibold">Get In Touch</span>
-          </div>
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-black mb-4 sm:mb-6">
-            Let&rsquo;s <span className="text-yellow-500">Connect</span>
+          <span className="font-hero-mono text-[11px] tracking-[0.18em] uppercase text-[#FAD604] mb-4 block">
+            Get in touch
+          </span>
+          <h1 className="font-hero-serif font-normal text-white text-[34px] sm:text-[44px] md:text-[52px] leading-[1.05] tracking-tight mb-4 sm:mb-6">
+            Let&rsquo;s <em className="italic text-[#FAD604]">connect.</em>
           </h1>
-          <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
+          <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-xl mx-auto">
             Have questions about Bitcoin? Want to collaborate? Or just want to say hello? We&rsquo;d love to
             hear from you.
           </p>

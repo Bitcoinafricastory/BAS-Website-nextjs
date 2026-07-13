@@ -2,6 +2,7 @@
 
 import { Calendar, Users, Target, Heart, ArrowRight, BookOpen } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import CountUp from '@/components/ui/CountUp';
 
@@ -18,70 +19,77 @@ const milestones = [
 export default function AboutContent() {
   return (
     <div className="pt-16">
-      <section id="hero" className="relative flex items-center overflow-hidden">
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: "url('/assets/aboutus.png')",
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        >
-          <div className="absolute inset-0 bg-black/80" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black" />
+      <section id="hero" className="relative bg-black">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] lg:min-h-[70vh]">
+          <div className="order-2 lg:order-1 flex flex-col justify-center px-6 sm:px-10 lg:pl-6 lg:pr-14 py-14 lg:py-20 border-b lg:border-b-0 lg:border-r border-gray-800">
+            <span className="font-hero-mono text-[11px] tracking-[0.18em] uppercase text-[#FAD604] mb-6">
+              Since 2024 &middot; Operating across Africa
+            </span>
+
+            <h1 className="font-hero-serif font-normal text-white text-[36px] sm:text-[46px] lg:text-[54px] leading-[1.05] tracking-tight mb-6 max-w-xl">
+              Empowering Africa through <em className="italic text-[#FAD604]">Bitcoin.</em>
+            </h1>
+
+            <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-md mb-10">
+              Our journey began with a simple belief: everyone deserves access to financial freedom.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-6 sm:gap-8">
+              <Link
+                href="/donate"
+                className="inline-flex items-center gap-2 bg-[#FAD604] text-black font-bold text-sm sm:text-base px-6 py-4 sm:px-7 hover:brightness-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAD604] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              >
+                Donate
+                <ArrowRight size={18} />
+              </Link>
+              <Link
+                href="/contact"
+                className="text-sm sm:text-base font-semibold text-gray-200 border-b border-gray-700 pb-1 hover:text-[#FAD604] hover:border-[#FAD604] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAD604] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              >
+                Contact Us
+              </Link>
+            </div>
+          </div>
+
+          <div className="order-1 lg:order-2 relative min-h-[260px] sm:min-h-[340px] lg:min-h-0 overflow-hidden">
+            <Image
+              src="/assets/aboutus.png"
+              alt="Bitcoin Africa Story classroom"
+              fill
+              priority
+              sizes="(min-width: 1024px) 45vw, 100vw"
+              className="object-cover"
+            />
+            <div className="hidden lg:block absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.85)_0%,rgba(0,0,0,0.25)_30%,rgba(0,0,0,0)_60%)]" />
+            <div className="lg:hidden absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.15)_0%,rgba(0,0,0,0.8)_100%)]" />
+          </div>
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
-          <div className="flex flex-col items-center gap-8 text-center">
-            <div className="w-full lg:w-2/3 mt-12 md:mt-10">
-              <div className="hidden sm:inline-block mb-6 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full">
-                <span className="text-yellow-500 text-sm font-semibold">2+ Years of Proof-of-Quality-Works</span>
-              </div>
-
-              <h1 className="text-4xl sm:text-6xl md:text-6xl lg:text-7xl md:font-extrabold mb-4 leading-tight">
-                <span> Empowering </span> <br className="sm:hidden" /> <span> Africa </span> <br className="sm:hidden" /> <span> Through </span> <br /> <span className="text-[#FAD604]"> Bitcoin. </span>
-              </h1>
-
-              <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-                Our journey began with a simple belief: everyone deserves access to financial freedom.
-              </p>
-
-              <div className="flex mt-5 sm:flex-row gap-4 justify-center mb-6 w-full max-w-md mx-auto">
-                <Link
-                  href="/donate"
-                  className="inline-flex w-full sm:w-auto items-center justify-center px-6 py-2 sm:py-3 bg-yellow-500 text-black font-bold text-base sm:text-lg hover:bg-yellow-400 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-yellow-500/50"
-                >
-                  Donate
-                  <ArrowRight className="ml-2" size={18} />
-                </Link>
-                <Link
-                  href="/contact"
-                  className="inline-flex w-full sm:w-auto items-center justify-center px-6 py-2 sm:py-3 bg-transparent border-2 border-yellow-500 text-yellow-500 font-bold text-base sm:text-lg hover:bg-yellow-500 hover:text-black transition-all duration-200"
-                >
-                  Contact Us
-                </Link>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-6 max-w-md mx-auto">
-                <div>
-                  <div className="text-3xl md:text-4xl font-bold text-yellow-500 mb-1"><CountUp end={2} suffix="+" /></div>
-                  <div className="text-gray-400 text-sm">Years Teaching</div>
+        <div className="border-t border-gray-800 bg-gradient-to-b from-[#0a0a0a] to-black">
+          <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4">
+            {[
+              { value: 2, suffix: '+', label: 'Years Teaching' },
+              { value: 500, suffix: '+', label: 'Lives Changed' },
+              { value: 50, suffix: '+', label: 'Communities' },
+              { value: 100, suffix: '%', label: 'Free Education' },
+            ].map((stat, i) => (
+              <div
+                key={stat.label}
+                className={[
+                  'px-6 sm:px-8 py-7 border-gray-800',
+                  i % 2 === 1 ? 'border-l' : '',
+                  i !== 0 ? 'lg:border-l' : '',
+                  i >= 2 ? 'border-t lg:border-t-0' : '',
+                ].join(' ')}
+              >
+                <div className="font-hero-mono font-semibold text-white text-[26px] sm:text-[30px] leading-none">
+                  <CountUp end={stat.value} suffix={stat.suffix} />
                 </div>
-                <div>
-                  <div className="text-3xl md:text-4xl font-bold text-yellow-500 mb-1"><CountUp end={500} suffix="+" /></div>
-                  <div className="text-gray-400 text-sm">Lives Changed</div>
-                </div>
-                <div>
-                  <div className="text-3xl md:text-4xl font-bold text-yellow-500 mb-1"><CountUp end={50} suffix="+" /></div>
-                  <div className="text-gray-400 text-sm">Communities</div>
-                </div>
-                <div>
-                  <div className="text-3xl md:text-4xl font-bold text-yellow-500 mb-1"><CountUp end={100} suffix="%" /></div>
-                  <div className="text-gray-400 text-sm">Free Education</div>
+                <div className="font-hero-mono text-[10px] tracking-[0.16em] uppercase text-gray-300 mt-3">
+                  {stat.label}
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>

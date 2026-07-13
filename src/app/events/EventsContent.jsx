@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { ArrowRight, Search, Calendar, Clock, MapPin, Box, Ticket, X as CloseIcon, Save } from 'lucide-react';
 import CountUp from '@/components/ui/CountUp';
 import { db, storage } from '@/lib/firebase';
@@ -123,32 +124,32 @@ export default function EventsContent({ initialEvents = [] }) {
 
   return (
     <div className="mt-[75px] pb-32">
-      <section id="hero" className="relative flex items-center overflow-hidden">
-        <div
-          className="absolute inset-0 z-0"
-          style={{ backgroundImage: "url('/assets/story.jpg')", backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center' }}
-        >
-          <div className="absolute inset-0 bg-black/80" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black" />
-        </div>
-
-        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
-          <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-16">
-            <div className="w-full lg:w-1/2 text-left mt-12 md:mt-10 lg:text-left">
-              <div className="hidden sm:inline-block mb-6 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full">
-                <span className="text-yellow-500 text-sm font-semibold">Your Network is your Networth</span>
-              </div>
-
-              <h1 className="text-4xl sm:text-6xl md:text-6xl lg:text-7xl md:font-extrabold mb-4 leading-tight">
-                <span>Explore </span> <br /> <span>Bitcoin </span> <br className="sm:hidden" /> <span>Events </span> <br /> <span className="text-[#FAD604]">Across Africa</span>
+      <section id="hero" className="relative bg-black">
+        <div className="relative h-[220px] sm:h-[280px] overflow-hidden">
+          <Image
+            src="/assets/communities.jpg"
+            alt="Bitcoin community gathering"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.2)_45%,rgba(0,0,0,0.9)_100%)]" />
+          <div className="absolute inset-0 flex items-end">
+            <div className="max-w-7xl mx-auto px-6 pb-6 w-full">
+              <span className="font-hero-mono text-[11px] tracking-[0.18em] uppercase text-[#FAD604] mb-2 block">
+                Your network is your networth
+              </span>
+              <h1 className="font-hero-serif font-normal text-white text-[32px] sm:text-[44px] lg:text-[52px] leading-[1.05] tracking-tight">
+                Bitcoin events <em className="italic text-[#FAD604]">across Africa.</em>
               </h1>
-
-              <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl">
-                Discover meetups, conferences, workshops, and grassroots Bitcoin gatherings shaping
-                Africa&rsquo;s Bitcoin circular economy.
-              </p>
             </div>
           </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-6 py-6">
+          <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-2xl">
+            Discover meetups, conferences, workshops, and grassroots Bitcoin gatherings shaping Africa&rsquo;s Bitcoin circular economy.
+          </p>
         </div>
       </section>
 
