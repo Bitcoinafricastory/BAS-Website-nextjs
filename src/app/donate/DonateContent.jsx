@@ -108,8 +108,14 @@ export default function DonateContent() {
                 <h2 className="text-xl font-bold mb-4">Static QR Code</h2>
                 <p className="text-sm text-gray-400 mb-4 text-center">Scan the QR code below to donate.</p>
                 <div className="w-full flex justify-center">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/assets/qrcode.jpg" alt="Static QR Code for donations" className="w-full max-w-[700px] rounded-lg shadow-md p-4" />
+                  <Image
+                    src="/assets/qrcode.jpg"
+                    alt="Static QR Code for donations"
+                    width={700}
+                    height={700}
+                    sizes="(min-width: 768px) 700px, 100vw"
+                    className="w-full max-w-[700px] h-auto rounded-lg shadow-md p-4"
+                  />
                 </div>
               </div>
             )}

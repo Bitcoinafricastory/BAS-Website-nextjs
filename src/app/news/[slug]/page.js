@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getNewsBySlug, getAllSlugs, getAllNews } from '@/lib/news';
 import {
   newsArticleSchema,
@@ -128,8 +129,15 @@ export default async function BlogPostPage({ params }) {
 
         {imageUrl && (
           <div className="mb-10 rounded-xl overflow-hidden">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={imageUrl} alt={post.imageAlt || post.title} className="w-full h-auto" />
+            <Image
+              src={imageUrl}
+              alt={post.imageAlt || post.title}
+              width={1200}
+              height={675}
+              priority
+              sizes="(min-width: 1024px) 1024px, 100vw"
+              className="w-full h-auto"
+            />
           </div>
         )}
 
@@ -194,13 +202,16 @@ export default async function BlogPostPage({ params }) {
                   href={`/news/${relatedPost.slug || relatedPost.id}`}
                   className="group bg-gray-900 border border-gray-800 rounded-xl overflow-hidden hover:border-yellow-500 transition-all duration-300"
                 >
-                  <div className="aspect-video overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={resolveImageUrl(relatedPost.image)}
-                      alt={relatedPost.imageAlt || relatedPost.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
+                  <div className="aspect-video overflow-hidden relative bg-gray-800">
+                    {resolveImageUrl(relatedPost.image) && (
+                      <Image
+                        src={resolveImageUrl(relatedPost.image)}
+                        alt={relatedPost.imageAlt || relatedPost.title}
+                        fill
+                        sizes="(min-width: 768px) 33vw, 100vw"
+                        className="object-cover group-hover:scale-110 transition-transform duration-300"
+                      />
+                    )}
                   </div>
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-3">

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Menu, X, Search } from 'lucide-react';
@@ -34,11 +35,13 @@ export default function Header() {
       <nav className="max-w-7xl mx-auto px-6 pb-4 pt-[10px]">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center group">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src="/assets/BitcoinAfricaStoryLogo.png"
               alt="Bitcoin Africa Story"
-              className="w-[100px] h-[50px]"
+              width={100}
+              height={50}
+              priority
+              className="w-[100px] h-[50px] object-contain"
             />
           </Link>
 

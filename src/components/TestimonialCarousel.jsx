@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 import { useState, useEffect } from 'react';
 import { ArrowLeft, ArrowRight, AtSign, Quote } from 'lucide-react';
 
@@ -42,8 +44,13 @@ export default function TestimonialCarousel({ testimonials = [] }) {
                   <div className="flex items-center gap-4 mb-8">
                     <div className="w-14 h-14 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex-shrink-0 flex items-center justify-center text-black font-extrabold text-xl shadow-lg overflow-hidden">
                       {testimonial.image ? (
-                        /* eslint-disable-next-line @next/next/no-img-element */
-                        <img src={testimonial.image} alt={testimonial.name} className="w-full h-full object-cover" />
+                        <Image
+                          src={testimonial.image}
+                          alt={testimonial.name}
+                          width={56}
+                          height={56}
+                          className="w-full h-full object-cover"
+                        />
                       ) : (
                         testimonial.avatar || (testimonial.name ? testimonial.name[0] : 'U')
                       )}

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 
 export default function OtherBitcoinPrograms({ programs = [] }) {
@@ -25,8 +26,15 @@ export default function OtherBitcoinPrograms({ programs = [] }) {
             return (
               <CardWrapper key={program.id} {...extraProps} className="group relative flex flex-col bg-[#0A0A0A] overflow-hidden border border-white/5 hover:border-yellow-500/50 transition-all duration-500 min-h-[420px] cursor-pointer">
                 <div className="relative h-[240px] overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={program.image} alt={program.title} className="w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-80" />
+                  {program.image && (
+                    <Image
+                      src={program.image}
+                      alt={program.title}
+                      fill
+                      sizes="(min-width: 768px) 33vw, 100vw"
+                      className="object-cover opacity-60 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-80"
+                    />
+                  )}
                   <div className="absolute bottom-0 left-0">
                     <span className={`inline-block px-3 py-1 text-[10px] font-bold ${program.level === 'EXPERT' ? 'bg-black text-white border-t border-r border-white/20' : 'bg-yellow-500 text-black'}`}>
                       {program.level} | {program.price}

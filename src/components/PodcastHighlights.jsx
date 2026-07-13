@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Mic, Play } from 'lucide-react';
 import { resolveImageUrl } from '@/lib/schema';
 
@@ -29,8 +30,13 @@ export default function PodcastHighlights({ episodes = [] }) {
                 <Wrapper key={ep.id} {...props} className="group bg-gray-900 border border-gray-800 rounded-xl overflow-hidden hover:border-yellow-500 transition-all duration-300">
                   <div className="aspect-video overflow-hidden relative bg-black">
                     {ep.image ? (
-                      /* eslint-disable-next-line @next/next/no-img-element */
-                      <img src={resolveImageUrl(ep.image)} alt={ep.title} className="w-full h-full object-cover opacity-70 group-hover:opacity-90 transition-opacity" />
+                      <Image
+                        src={resolveImageUrl(ep.image)}
+                        alt={ep.title}
+                        fill
+                        sizes="(min-width: 768px) 33vw, 100vw"
+                        className="object-cover opacity-70 group-hover:opacity-90 transition-opacity"
+                      />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-yellow-500/10 to-transparent">
                         <Mic className="text-yellow-500/40" size={48} />

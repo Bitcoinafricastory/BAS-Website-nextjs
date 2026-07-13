@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { getAllNews, getCommunities, getTestimonials } from '@/lib/news';
 import Hero from '@/components/Hero';
 import Mission from '@/components/Mission';
@@ -72,9 +73,16 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map((feature) => (
               <div key={feature.id} className="group relative overflow-hidden bg-gray-900 border border-gray-800 hover:border-yellow-500 transition-all duration-300 hover:scale-105">
-                <div className="aspect-video overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={feature.image} alt={feature.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+                <div className="aspect-video overflow-hidden relative bg-gray-800">
+                  {feature.image && (
+                    <Image
+                      src={feature.image}
+                      alt={feature.title}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                  )}
                 </div>
                 <div className="p-6">
                   <h3 className="text-2xl font-bold mb-3 text-yellow-500">{feature.title}</h3>
@@ -153,8 +161,17 @@ export default async function HomePage() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
                   {communities.slice(0, 8).map((community) => (
                     <a key={community.id} href={community.link} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center aspect-square bg-gray-800 border border-gray-700 hover:border-yellow-500 transition-all p-4 group">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={community.logo} alt={community.name} className="w-full h-full object-contain group-hover:scale-110 transition-transform" />
+                      {community.logo && (
+                        <div className="relative w-full h-full">
+                          <Image
+                            src={community.logo}
+                            alt={community.name}
+                            fill
+                            sizes="160px"
+                            className="object-contain group-hover:scale-110 transition-transform"
+                          />
+                        </div>
+                      )}
                     </a>
                   ))}
                 </div>

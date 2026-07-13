@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 
 export default function BitcoinResources({ resources = [] }) {
@@ -25,8 +26,13 @@ export default function BitcoinResources({ resources = [] }) {
               <CardWrapper key={r.id} {...extraProps} className="group relative flex flex-col bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-all duration-500 min-h-[400px] cursor-pointer">
                 <div className="relative h-[200px] overflow-hidden bg-yellow-100/5">
                   {r.imageSrc ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img src={r.imageSrc} alt={r.imageAlt || r.title} className="w-full h-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-100" loading="lazy" />
+                    <Image
+                      src={r.imageSrc}
+                      alt={r.imageAlt || r.title}
+                      fill
+                      sizes="(min-width: 768px) 33vw, 100vw"
+                      className="object-cover opacity-80 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-100"
+                    />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-yellow-900/20">
                       <span className="text-xs font-bold text-center text-yellow-500">{r.title.toUpperCase()}</span>

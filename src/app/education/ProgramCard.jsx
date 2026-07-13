@@ -3,6 +3,7 @@
 import { ArrowRight, Users, GraduationCap, Briefcase, Globe, Zap, User } from 'lucide-react';
 import CountUp from 'react-countup';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const stats = [
   { label: 'Registrations', value: 250, suffix: '+', icon: <Users className="w-4 h-4" /> },
@@ -35,8 +36,13 @@ export default function ProgramCard() {
           <div className="relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-yellow-500 to-orange-600 blur opacity-20 group-hover:opacity-40 transition duration-1000" />
             <div className="relative sm:h-[350px] md:h-[500px] overflow-hidden border border-white/10">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/assets/basplaceholder.png" alt="Bitcoin Educator" className="w-full h-full grayscale-[20%] group-hover:grayscale-0 transition-all duration-700" />
+              <Image
+                src="/assets/basplaceholder.png"
+                alt="Bitcoin Educator"
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700"
+              />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-8">
                 <p className="text-yellow-500 font-medium tracking-widest uppercase text-xs">Community Led</p>
                 <h3 className="text-xl font-semibold">Empowering the next generation</h3>

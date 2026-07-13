@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
@@ -59,8 +60,15 @@ export default function WhyBitcoin({ testimonials = [], videoData = null }) {
                     <div className={`relative p-8 rounded-3xl border transition-all duration-500 w-full max-w-lg bg-[#111111] ${i === active ? 'border-yellow-500 shadow-[0_0_20px_rgba(234,179,8,0.1)]' : 'border-white/5 opacity-40 scale-95'}`}>
                       <Quote className="absolute top-8 right-8 w-10 h-10 text-yellow-500/10" strokeWidth={3} />
                       <div className="flex items-center gap-4 mb-8">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={t.image} alt={t.name} className="w-14 h-14 rounded-full border-2 border-yellow-500 object-cover" />
+                        {t.image && (
+                          <Image
+                            src={t.image}
+                            alt={t.name}
+                            width={56}
+                            height={56}
+                            className="w-14 h-14 rounded-full border-2 border-yellow-500 object-cover"
+                          />
+                        )}
                         <div>
                           <h4 className="font-bold text-lg leading-none">{t.name}</h4>
                           <p className="text-[10px] text-yellow-500 font-bold mt-1 tracking-widest">{t.role}</p>

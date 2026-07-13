@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft, Calendar, MapPin, Clock } from 'lucide-react';
 import { getEventById } from '@/lib/events';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -43,8 +44,14 @@ export default async function EventDetailsPage({ params }) {
       <div className="relative h-[300px] md:h-[400px] w-full overflow-hidden">
         {event.banner ? (
           <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={event.banner} alt={event.eventName} className="w-full h-full object-cover" />
+            <Image
+              src={event.banner}
+              alt={event.eventName}
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
           </>
         ) : (

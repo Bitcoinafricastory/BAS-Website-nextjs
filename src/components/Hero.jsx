@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import CountUp from 'react-countup';
 
@@ -49,11 +50,13 @@ export default function Hero() {
 
         {/* Photo column — shown bright, unobstructed; darkened only on the edge meeting the copy */}
         <div className="order-1 lg:order-2 relative min-h-[260px] sm:min-h-[340px] lg:min-h-0 overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src="/assets/dontebg.jpg"
             alt="Bitcoin Africa Story community meetup"
-            className="absolute inset-0 w-full h-full object-cover"
+            fill
+            priority
+            sizes="(min-width: 1024px) 45vw, 100vw"
+            className="object-cover"
           />
           {/* desktop: darken left edge only, where it meets the text column */}
           <div className="hidden lg:block absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.85)_0%,rgba(0,0,0,0.25)_30%,rgba(0,0,0,0)_60%)]" />

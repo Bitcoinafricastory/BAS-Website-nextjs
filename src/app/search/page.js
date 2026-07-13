@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Search as SearchIcon, Calendar, Newspaper } from 'lucide-react';
 import { getAllNews } from '@/lib/news';
 import { getAllEvents } from '@/lib/events';
@@ -155,13 +156,16 @@ export default async function SearchPage({ searchParams }) {
                       href={`/news/${post.slug || post.id}`}
                       className="group flex gap-5 p-4 bg-gray-900 border border-gray-800 rounded-xl hover:border-yellow-500/50 transition-colors"
                     >
-                      {post.image && (
-                        /* eslint-disable-next-line @next/next/no-img-element */
-                        <img
-                          src={resolveImageUrl(post.image)}
-                          alt={post.imageAlt || post.title}
-                          className="w-28 h-20 object-cover rounded-lg flex-shrink-0 hidden sm:block"
-                        />
+                      {resolveImageUrl(post.image) && (
+                        <div className="relative w-28 h-20 flex-shrink-0 hidden sm:block">
+                          <Image
+                            src={resolveImageUrl(post.image)}
+                            alt={post.imageAlt || post.title}
+                            fill
+                            sizes="112px"
+                            className="object-cover rounded-lg"
+                          />
+                        </div>
                       )}
                       <div className="min-w-0">
                         {post.category && (

@@ -1,11 +1,19 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function PostCard({ post }) {
   return (
     <Link href={`/news/${post.slug || post.id}`} className="group bg-gray-900 border border-gray-800 overflow-hidden hover:border-yellow-500 transition-all duration-300 hover:scale-105">
-      <div className="aspect-video overflow-hidden relative">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={post.image} alt={post.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+      <div className="aspect-video overflow-hidden relative bg-gray-800">
+        {post.image && (
+          <Image
+            src={post.image}
+            alt={post.title}
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover group-hover:scale-110 transition-transform duration-300"
+          />
+        )}
         <div className="absolute top-4 left-4">
           <span className="text-xs font-semibold text-black bg-yellow-500 px-3 py-1 rounded-full">{post.category}</span>
         </div>

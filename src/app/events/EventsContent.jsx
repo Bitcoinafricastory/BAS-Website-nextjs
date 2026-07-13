@@ -188,8 +188,13 @@ export default function EventsContent({ initialEvents = [] }) {
               >
                 <div className="relative h-48 overflow-hidden">
                   {e.banner ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img src={e.banner} alt={e.eventName} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                    <Image
+                      src={e.banner}
+                      alt={e.eventName}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
                   ) : (
                     <div className="w-full h-full bg-gray-800 flex items-center justify-center">
                       <Ticket size={40} className="text-gray-700" />

@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 
 import { useRef } from 'react';
 import { ChevronLeft, ChevronRight, BookOpen, Clock } from 'lucide-react';
@@ -38,8 +39,15 @@ export default function ProgramsSection({ programs = [] }) {
               return (
                 <CardWrapper key={course.id} {...extraProps} className="min-w-[320px] md:min-w-[320px] snap-start group/card cursor-pointer">
                   <div className="relative h-[450px] overflow-hidden border border-white/10 hover:border-yellow-500/50 transition-all duration-500 bg-[#111]">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={course.image} alt={course.title} className="w-full h-full object-cover opacity-50 group-hover/card:scale-110 group-hover/card:opacity-70 transition-all duration-700" />
+                    {course.image && (
+                      <Image
+                        src={course.image}
+                        alt={course.title}
+                        fill
+                        sizes="320px"
+                        className="object-cover opacity-50 group-hover/card:scale-110 group-hover/card:opacity-70 transition-all duration-700"
+                      />
+                    )}
                     <div className="absolute inset-0 p-8 flex flex-col justify-end bg-gradient-to-t from-black via-black/40 to-transparent">
                       <div className="flex gap-2 mb-4">
                         <span className="px-3 py-1 bg-yellow-500 text-black text-[10px] font-bold rounded">

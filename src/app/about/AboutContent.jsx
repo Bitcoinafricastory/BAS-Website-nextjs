@@ -123,8 +123,14 @@ export default function AboutContent() {
             </div>
 
             <div className="space-y-6">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/assets/communities.jpg" alt="Community" className="w-full shadow-2xl" />
+              <Image
+                src="/assets/communities.jpg"
+                alt="Community"
+                width={2100}
+                height={1500}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="w-full h-auto shadow-2xl"
+              />
               <div className="grid grid-cols-2 gap-6">
                 <div className="p-6 bg-gray-900 border border-gray-800">
                   <div className="text-3xl font-bold text-yellow-500 mb-2"><CountUp end={2} suffix="+" /></div>

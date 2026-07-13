@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 
 import { useState } from 'react';
 import { Clock, Layers, ChevronRight, Activity } from 'lucide-react';
@@ -101,8 +102,15 @@ export default function BitcoinVideos({ videos = [] }) {
               >
                 <div className="p-6 flex gap-6">
                   <div className="w-24 aspect-square bg-zinc-900 flex-shrink-0 border border-white/10 overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={video.thumbnailUrl} alt="" className={`w-full h-full object-cover transition-opacity duration-500 ${currentVideo.id === video.id ? 'opacity-100' : 'opacity-40 group-hover:opacity-100'}`} />
+                    {video.thumbnailUrl && (
+                      <Image
+                        src={video.thumbnailUrl}
+                        alt=""
+                        fill
+                        sizes="96px"
+                        className={`object-cover transition-opacity duration-500 ${currentVideo.id === video.id ? 'opacity-100' : 'opacity-40 group-hover:opacity-100'}`}
+                      />
+                    )}
                   </div>
                   <div className="flex flex-col justify-between py-1">
                     <h3 className={`text-xs font-black leading-tight tracking-tight ${currentVideo.id === video.id ? 'text-black' : 'text-gray-300 group-hover:text-white'}`}>{video.title}</h3>

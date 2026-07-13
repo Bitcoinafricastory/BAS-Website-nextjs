@@ -1,16 +1,20 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { getAllNews } from '@/lib/news';
 
 function PostCard({ title, author, image, link }) {
   return (
     <Link href={link} className="flex items-start space-x-3 group">
-      <div className="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 overflow-hidden rounded-md border border-gray-700">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-full object-cover group-hover:opacity-75 transition-opacity duration-200"
-        />
+      <div className="relative flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 overflow-hidden rounded-md border border-gray-700 bg-gray-800">
+        {image && (
+          <Image
+            src={image}
+            alt={title}
+            fill
+            sizes="80px"
+            className="object-cover group-hover:opacity-75 transition-opacity duration-200"
+          />
+        )}
       </div>
       <div className="flex-1">
         <p className="text-gray-200 text-sm leading-snug group-hover:text-yellow-500 transition-colors duration-200">
@@ -111,8 +115,7 @@ export default async function Footer() {
         <div className="mt-[130px] grid grid-cols-1 md:grid-cols-3 gap-[50px] items-start">
           <div className="flex justify-start">
             <Link href="/">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/assets/BASlogo.png" alt="Bitcoin Africa Story" className="w-[100%] md:w-[200px]" />
+              <Image src="/assets/BASlogo.png" alt="Bitcoin Africa Story" width={200} height={100} className="w-[100%] md:w-[200px] h-auto" />
             </Link>
           </div>
 
