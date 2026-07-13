@@ -11,6 +11,7 @@ import {
   SITE_URL,
 } from '@/lib/schema';
 import { computeReadingTime, deriveKeyTakeaways, getFaqs, addHeadingIds, extractHeadings } from '@/lib/article-content';
+import ArticleSidebar from '@/components/ArticleSidebar';
 
 export const revalidate = 300;
 
@@ -95,7 +96,7 @@ export default async function BlogPostPage({ params }) {
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(schema)} />
       ))}
 
-      <div className="max-w-5xl mx-auto px-6 py-8">
+      <div className="max-w-3xl xl:max-w-6xl mx-auto px-6 py-8 xl:pr-6">
         {/* Visible breadcrumb trail (matches breadcrumb schema, aids internal linking) */}
         <nav aria-label="Breadcrumb" className="text-sm text-gray-400 flex flex-wrap gap-2 items-center">
           <Link href="/" className="hover:text-yellow-500">Home</Link>
@@ -110,88 +111,100 @@ export default async function BlogPostPage({ params }) {
         </nav>
       </div>
 
-      <article className="max-w-5xl mx-auto px-6 pb-20">
-        <div className="mb-6">
-          <span className="inline-block text-sm font-semibold text-black bg-yellow-500 px-4 py-2 rounded-full">
-            {post.category}
-          </span>
-        </div>
-
-        <h1 className="text-3xl md:text-5xl font-black mb-6 leading-tight">{post.title}</h1>
-
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-400 mb-8">
-          <span>{post.author || post.authorName}</span>
-          <span>·</span>
-          <span>{post.date ? new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''}</span>
-          <span>·</span>
-          <span>{readingTime}</span>
-        </div>
-
-        {imageUrl && (
-          <div className="mb-10 rounded-xl overflow-hidden">
-            <Image
-              src={imageUrl}
-              alt={post.imageAlt || post.title}
-              width={1200}
-              height={675}
-              priority
-              sizes="(min-width: 1024px) 1024px, 100vw"
-              className="w-full h-auto"
-            />
+      <div className="max-w-3xl xl:max-w-6xl mx-auto px-6 pb-20 xl:grid xl:grid-cols-[minmax(0,1fr)_280px] xl:gap-16">
+        <article className="min-w-0">
+          <div className="mb-6">
+            <span className="inline-block text-sm font-semibold text-black bg-yellow-500 px-4 py-2 rounded-full">
+              {post.category}
+            </span>
           </div>
-        )}
 
-        {/* Key Takeaways — AEO-friendly summary block that answer engines love */}
-        {keyTakeaways.length > 0 && (
-          <div className="mb-10 p-6 bg-yellow-500/5 border border-yellow-500/20 rounded-xl">
-            <h2 className="text-lg font-bold text-yellow-500 mb-4 uppercase tracking-wide">Key Takeaways</h2>
-            <ul className="space-y-2">
-              {keyTakeaways.map((t, i) => (
-                <li key={i} className="flex gap-3 text-gray-200">
-                  <span className="text-yellow-500 flex-shrink-0">▸</span>
-                  <span>{t}</span>
-                </li>
-              ))}
-            </ul>
+          <h1 className="text-3xl md:text-5xl font-black mb-6 leading-tight">{post.title}</h1>
+
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-400 mb-8">
+            <span>{post.author || post.authorName}</span>
+            <span>·</span>
+            <span>{post.date ? new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''}</span>
+            <span>·</span>
+            <span>{readingTime}</span>
           </div>
-        )}
 
-        {/* Table of Contents — improves heading hierarchy navigation */}
-        {headings.length > 2 && (
-          <div className="mb-10 p-6 bg-gray-900 border border-gray-800 rounded-xl">
-            <h2 className="text-sm font-bold text-gray-400 mb-3 uppercase tracking-wide">In This Article</h2>
-            <ul className="space-y-2">
-              {headings.map((h, i) => (
-                <li key={i} className={h.level === 'h3' ? 'ml-4' : ''}>
-                  <a href={`#${h.id}`} className="text-gray-300 hover:text-yellow-500 text-sm">{h.text}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        <div
-          className="article-body mx-auto"
-          dangerouslySetInnerHTML={{ __html: contentWithIds }}
-        />
-
-        {/* FAQ section — rendered visibly AND emitted as FAQPage schema above */}
-        {faqs.length > 0 && (
-          <div className="mt-12 pt-12 border-t border-gray-800">
-            <h2 className="text-3xl font-bold mb-8">Frequently Asked <span className="text-yellow-500">Questions</span></h2>
-            <div className="space-y-6">
-              {faqs.map((f, i) => (
-                <div key={i} className="p-6 bg-gray-900 border border-gray-800 rounded-xl">
-                  <h3 className="text-lg font-bold mb-2">{f.question}</h3>
-                  <p className="text-gray-400 leading-relaxed">{f.answer}</p>
-                </div>
-              ))}
+          {imageUrl && (
+            <div className="mb-10 rounded-xl overflow-hidden">
+              <Image
+                src={imageUrl}
+                alt={post.imageAlt || post.title}
+                width={1200}
+                height={675}
+                priority
+                sizes="(min-width: 1280px) 720px, (min-width: 1024px) 1024px, 100vw"
+                className="w-full h-auto"
+              />
             </div>
-          </div>
-        )}
+          )}
 
-        {relatedPosts.length > 0 && (
-          <div className="pt-12 mt-12 border-t border-gray-800">
+          {/* Key Takeaways — AEO-friendly summary block that answer engines love */}
+          {keyTakeaways.length > 0 && (
+            <div className="mb-10 p-6 bg-yellow-500/5 border border-yellow-500/20 rounded-xl">
+              <h2 className="text-lg font-bold text-yellow-500 mb-4 uppercase tracking-wide">Key Takeaways</h2>
+              <ul className="space-y-2">
+                {keyTakeaways.map((t, i) => (
+                  <li key={i} className="flex gap-3 text-gray-200">
+                    <span className="text-yellow-500 flex-shrink-0">▸</span>
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Inline Table of Contents — shown only up to lg; on xl+ the sticky
+              sidebar TOC replaces it so the reader doesn't see two. */}
+          {headings.length > 2 && (
+            <div className="xl:hidden mb-10 p-6 bg-gray-900 border border-gray-800 rounded-xl">
+              <h2 className="text-sm font-bold text-gray-400 mb-3 uppercase tracking-wide">In This Article</h2>
+              <ul className="space-y-2">
+                {headings.map((h, i) => (
+                  <li key={i} className={h.level === 'h3' ? 'ml-4' : ''}>
+                    <a href={`#${h.id}`} className="text-gray-300 hover:text-yellow-500 text-sm">{h.text}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div
+            className="article-body mx-auto"
+            dangerouslySetInnerHTML={{ __html: contentWithIds }}
+          />
+
+          {/* FAQ section — rendered visibly AND emitted as FAQPage schema above */}
+          {faqs.length > 0 && (
+            <div className="mt-12 pt-12 border-t border-gray-800">
+              <h2 className="text-3xl font-bold mb-8">Frequently Asked <span className="text-yellow-500">Questions</span></h2>
+              <div className="space-y-6">
+                {faqs.map((f, i) => (
+                  <div key={i} className="p-6 bg-gray-900 border border-gray-800 rounded-xl">
+                    <h3 className="text-lg font-bold mb-2">{f.question}</h3>
+                    <p className="text-gray-400 leading-relaxed">{f.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </article>
+
+        <ArticleSidebar
+          headings={headings}
+          category={post.category}
+          title={post.title}
+          url={`${SITE_URL}/news/${post.slug || slug}`}
+        />
+      </div>
+
+      {relatedPosts.length > 0 && (
+        <section className="max-w-3xl xl:max-w-6xl mx-auto px-6 pb-20">
+          <div className="pt-12 mt-4 border-t border-gray-800">
             <h2 className="text-3xl font-bold mb-8">
               Related <span className="text-yellow-500">Articles</span>
             </h2>
@@ -228,8 +241,8 @@ export default async function BlogPostPage({ params }) {
               ))}
             </div>
           </div>
-        )}
-      </article>
+        </section>
+      )}
     </div>
   );
 }
