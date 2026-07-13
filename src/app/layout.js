@@ -37,14 +37,21 @@ export const metadata = {
     title: 'Bitcoin Africa Story - Bitcoin News, Education & Community in Africa',
     description:
       'Bitcoin Africa Story is a trusted source of news, insights, and narratives on Bitcoin adoption, innovation, and impact across the African continent.',
-    images: ['/assets/BASLOGOSmall.png'],
+    images: [
+      {
+        url: '/assets/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Bitcoin Africa Story — Showing Africa\'s Bitcoin proof-of-work',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Bitcoin Africa Story - Bitcoin News, Education & Community in Africa',
     description:
       'Bitcoin Africa Story is a trusted source of news, insights, and narratives on Bitcoin adoption, innovation, and impact across the African continent.',
-    images: ['/assets/BASLOGOSmall.png'],
+    images: ['/assets/og-image.jpg'],
   },
   icons: {
     icon: ['/favicon-32x32.png', '/favicon-192.png'],
