@@ -1,8 +1,26 @@
 import './globals.css';
+import { Instrument_Serif, JetBrains_Mono } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import AppShell from '@/components/AppShell';
 import { organizationSchema, websiteSchema, jsonLdScript } from '@/lib/schema';
+
+// Display faces used for the homepage hero (headline + mono data/labels).
+// Scoped via CSS variables so they don't affect body copy elsewhere on the site.
+const instrumentSerif = Instrument_Serif({
+  subsets: ['latin'],
+  weight: '400',
+  style: ['normal', 'italic'],
+  variable: '--font-instrument-serif',
+  display: 'swap',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-jetbrains-mono',
+  display: 'swap',
+});
 
 export const metadata = {
   metadataBase: new URL('https://bitcoinafricastory.com'),
@@ -41,7 +59,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${instrumentSerif.variable} ${jetbrainsMono.variable}`}>
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(organizationSchema())} />
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(websiteSchema())} />
