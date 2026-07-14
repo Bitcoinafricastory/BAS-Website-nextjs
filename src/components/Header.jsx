@@ -3,24 +3,46 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
-import { Menu, X, Search } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { Menu, X, Search, ChevronDown } from 'lucide-react';
 
-const navLinks = [
+// Primary destinations — always visible on desktop.
+const primaryLinks = [
   { name: 'Home', path: '/' },
-  { name: 'News ', path: '/news' },
+  { name: 'News', path: '/news' },
   { name: 'Education', path: '/education' },
   { name: 'Events', path: '/events' },
-  { name: 'Contact', path: '/contact' },
+];
+
+// Secondary destinations — collapsed under a "More" dropdown on desktop,
+// listed inline in the mobile menu.
+const moreLinks = [
+  { name: 'Writers', path: '/authors' },
+  { name: 'Resources', path: '/resources' },
   { name: 'About', path: '/about' },
-  { name: 'Donate', path: '/donate' },
+  { name: 'Contact', path: '/contact' },
 ];
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const moreRef = useRef(null);
   const pathname = usePathname();
 
   const isActive = (path) => pathname === path;
+
+  // Close the More dropdown when clicking outside (mouse-leave handles hover users;
+  // this covers keyboard/touch users who opened it via click).
+  useEffect(() => {
+    if (!moreOpen) return;
+    const handler = (e) => {
+      if (moreRef.current && !moreRef.current.contains(e.target)) {
+        setMoreOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [moreOpen]);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-sm border-b border-gray-800">
@@ -45,31 +67,68 @@ export default function Header() {
             />
           </Link>
 
-          <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
+          <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
+            {primaryLinks.map((link) => (
               <Link
                 key={link.path}
                 href={link.path}
                 className={`text-sm font-medium transition-colors duration-200 relative group ${
-                  link.name === 'Donate'
-                    ? 'bg-yellow-500 text-black px-3 py-2 shadow-lg'
-                    : isActive(link.path)
-                    ? 'text-yellow-500'
-                    : 'text-gray-300 hover:text-yellow-500'
+                  isActive(link.path) ? 'text-yellow-500' : 'text-gray-300 hover:text-yellow-500'
                 }`}
               >
                 {link.name}
                 <span
                   className={`absolute -bottom-1 left-0 h-0.5 bg-yellow-500 transition-all duration-200 ${
-                    link.name === 'Donate'
-                      ? 'hidden'
-                      : isActive(link.path)
-                      ? 'w-full'
-                      : 'w-0 group-hover:w-full'
+                    isActive(link.path) ? 'w-full' : 'w-0 group-hover:w-full'
                   }`}
                 />
               </Link>
             ))}
+
+            {/* "More" dropdown for secondary destinations */}
+            <div
+              ref={moreRef}
+              className="relative"
+              onMouseEnter={() => setMoreOpen(true)}
+              onMouseLeave={() => setMoreOpen(false)}
+            >
+              <button
+                type="button"
+                onClick={() => setMoreOpen((v) => !v)}
+                aria-expanded={moreOpen}
+                aria-haspopup="true"
+                className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 ${
+                  moreLinks.some((l) => isActive(l.path)) ? 'text-yellow-500' : 'text-gray-300 hover:text-yellow-500'
+                }`}
+              >
+                More
+                <ChevronDown size={14} className={`transition-transform duration-200 ${moreOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {moreOpen && (
+                <div
+                  className="absolute right-0 top-full pt-3 w-48"
+                  role="menu"
+                >
+                  <div className="bg-[#111113] border border-gray-800 rounded-lg shadow-xl overflow-hidden py-2">
+                    {moreLinks.map((link) => (
+                      <Link
+                        key={link.path}
+                        href={link.path}
+                        role="menuitem"
+                        onClick={() => setMoreOpen(false)}
+                        className={`block px-4 py-2 text-sm transition-colors ${
+                          isActive(link.path)
+                            ? 'text-yellow-500 bg-yellow-500/10'
+                            : 'text-gray-300 hover:text-yellow-500 hover:bg-white/5'
+                        }`}
+                      >
+                        {link.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
 
             <Link
               href="/search"
@@ -79,6 +138,17 @@ export default function Header() {
               }`}
             >
               <Search size={18} />
+            </Link>
+
+            <Link
+              href="/donate"
+              className={`text-sm font-bold px-4 py-2 shadow-lg transition-colors duration-200 ${
+                isActive('/donate')
+                  ? 'bg-yellow-400 text-black'
+                  : 'bg-yellow-500 text-black hover:bg-yellow-400'
+              }`}
+            >
+              Donate
             </Link>
           </div>
 
@@ -92,16 +162,14 @@ export default function Header() {
         </div>
 
         {isOpen && (
-          <div className="md:hidden mt-4 pb-4 space-y-3 relative z-50 bg-black/80 backdrop-blur-sm rounded-lg p-4">
-            {navLinks.map((link) => (
+          <div className="md:hidden mt-4 pb-4 space-y-1 relative z-50 bg-black/80 backdrop-blur-sm rounded-lg p-4">
+            {[...primaryLinks, ...moreLinks].map((link) => (
               <Link
                 key={link.path}
                 href={link.path}
                 onClick={() => setIsOpen(false)}
                 className={`block px-4 py-2 text-sm font-medium transition-colors duration-200 ${
-                  link.name === 'Donate'
-                    ? 'bg-yellow-500 text-black shadow-lg'
-                    : isActive(link.path)
+                  isActive(link.path)
                     ? 'text-yellow-500 bg-yellow-500/10'
                     : 'text-gray-300 hover:text-yellow-500 hover:bg-yellow-500/5'
                 }`}
@@ -121,6 +189,14 @@ export default function Header() {
             >
               <Search size={16} />
               Search
+            </Link>
+
+            <Link
+              href="/donate"
+              onClick={() => setIsOpen(false)}
+              className="block px-4 py-2 text-sm font-bold text-black bg-yellow-500 mt-2"
+            >
+              Donate
             </Link>
           </div>
         )}

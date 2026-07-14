@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import 'react-quill-new/dist/quill.snow.css';
 
@@ -7,10 +8,25 @@ const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 
 const fontSizeArr = ['10px', '12px', '14px', '16px', '18px', '20px', '24px', '30px', '36px', '48px'];
 
+// Named fonts writers can pick from the toolbar dropdown.
+// Slugs must be lowercase, no spaces (Quill's Parchment requirement).
+// `family` uses next/font CSS variables where possible so browsers use the
+// fonts we've actually loaded rather than a random system fallback.
+const FONT_CHOICES = [
+  { value: 'montserrat', label: 'Montserrat', family: 'var(--font-montserrat), system-ui, sans-serif' },
+  { value: 'poppins', label: 'Poppins', family: 'var(--font-poppins), system-ui, sans-serif' },
+  { value: 'inter', label: 'Inter', family: 'var(--font-inter), system-ui, sans-serif' },
+  { value: 'georgia', label: 'Georgia', family: 'Georgia, "Times New Roman", serif' },
+  { value: 'merriweather', label: 'Merriweather', family: 'var(--font-merriweather), Georgia, serif' },
+  { value: 'courier', label: 'Courier', family: '"Courier New", Courier, monospace' },
+];
+
+const FONT_WHITELIST = FONT_CHOICES.map((f) => f.value);
+
 const modules = {
   toolbar: [
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
-    [{ font: [] }],
+    [{ font: FONT_WHITELIST }],
     [{ size: fontSizeArr }],
     [{ align: [] }],
     ['bold', 'italic', 'underline', 'strike'],
@@ -33,6 +49,20 @@ const formats = [
   'align',
   'link', 'image', 'video',
 ];
+
+// CSS that must apply BOTH inside the Quill editor AND on the public article
+// page (since Quill emits e.g. <span class="ql-font-poppins"> into stored HTML).
+// Loaded once on client mount below AND injected into globals for public reads.
+const fontCss = FONT_CHOICES
+  .map((f) => `
+    .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="${f.value}"]::before,
+    .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="${f.value}"]::before {
+      content: "${f.label}";
+      font-family: ${f.family};
+    }
+    .ql-font-${f.value} { font-family: ${f.family}; }
+  `)
+  .join('\n');
 
 // Dark-theme overrides for use inside the dashboard (Quill's default "snow"
 // theme is light). Scoped to .bas-quill-dark so the public light editor is
@@ -86,8 +116,28 @@ const darkStyles = `
 `;
 
 export default function StoryEditor({ value, onChange, dark = false }) {
+  // Register the named fonts with Quill's Parchment. Must run only on the
+  // client (Quill imports break during SSR) and only once per page load.
+  useEffect(() => {
+    let cancelled = false;
+    import('react-quill-new').then((mod) => {
+      if (cancelled) return;
+      const Quill = mod.Quill || (mod.default && mod.default.Quill);
+      if (!Quill) return;
+      try {
+        const Font = Quill.import('attributors/class/font');
+        Font.whitelist = FONT_WHITELIST;
+        Quill.register(Font, true);
+      } catch {
+        // Registration is idempotent-safe to fail silently on hot reload.
+      }
+    });
+    return () => { cancelled = true; };
+  }, []);
+
   return (
     <div className={dark ? 'bas-quill-dark' : ''}>
+      <style dangerouslySetInnerHTML={{ __html: fontCss }} />
       {dark && <style dangerouslySetInnerHTML={{ __html: darkStyles }} />}
       <ReactQuill theme="snow" value={value} onChange={onChange} modules={modules} formats={formats} />
     </div>

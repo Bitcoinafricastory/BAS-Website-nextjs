@@ -232,3 +232,14 @@ body {
   max-width: 100%;
   height: auto;
 }
+
+/* Quill font classes — must match the whitelist in StoryEditor.jsx.
+   Writers pick a font from the editor toolbar; Quill emits e.g.
+   <span class="ql-font-poppins"> into stored HTML. These rules apply the
+   chosen font on the public article page too. */
+.article-body .ql-font-montserrat { font-family: var(--font-montserrat), system-ui, sans-serif; }
+.article-body .ql-font-poppins { font-family: var(--font-poppins), system-ui, sans-serif; }
+.article-body .ql-font-inter { font-family: var(--font-inter), system-ui, sans-serif; }
+.article-body .ql-font-georgia { font-family: Georgia, "Times New Roman", serif; }
+.article-body .ql-font-merriweather { font-family: var(--font-merriweather), Georgia, serif; }
+.article-body .ql-font-courier { font-family: "Courier New", Courier, monospace; }

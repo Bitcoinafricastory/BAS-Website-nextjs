@@ -1,5 +1,5 @@
 import './globals.css';
-import { Montserrat } from 'next/font/google';
+import { Montserrat, Poppins, Inter, Merriweather } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import AppShell from '@/components/AppShell';
@@ -11,6 +11,28 @@ const montserrat = Montserrat({
   weight: ['400', '500', '600', '700', '800'],
   style: ['normal', 'italic'],
   variable: '--font-montserrat',
+  display: 'swap',
+});
+
+// Additional fonts writers can pick from the article editor's font dropdown.
+// One weight each to keep the bundle lean — writers rarely need bold/italic in
+// their chosen body font since bold is applied via <strong>.
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-poppins',
+  display: 'swap',
+});
+const inter = Inter({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-inter',
+  display: 'swap',
+});
+const merriweather = Merriweather({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-merriweather',
   display: 'swap',
 });
 
@@ -67,7 +89,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={montserrat.variable}>
+    <html lang="en" className={`${montserrat.variable} ${poppins.variable} ${inter.variable} ${merriweather.variable}`}>
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(organizationSchema())} />
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(websiteSchema())} />
