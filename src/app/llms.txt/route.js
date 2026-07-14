@@ -30,6 +30,7 @@ Bitcoin Africa Story documents and shares real stories of Bitcoin adoption acros
 - [About](${SITE_URL}/about): Our mission, story, and impact.
 - [Donate](${SITE_URL}/donate): Support Bitcoin education and adoption in Africa.
 - [Resources](${SITE_URL}/resources): Curated Bitcoin guides, wallets, and learning materials.
+- [Writers](${SITE_URL}/authors): Profiles of the reporters, educators, and community builders behind our coverage.
 - [Search](${SITE_URL}/search?q=): Search all news, stories, and events. Append a query, e.g. /search?q=lightning
 
 ## Recent Articles

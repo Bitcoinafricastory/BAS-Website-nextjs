@@ -11,7 +11,9 @@ import {
   SITE_URL,
 } from '@/lib/schema';
 import { computeReadingTime, deriveKeyTakeaways, getFaqs, addHeadingIds, extractHeadings } from '@/lib/article-content';
+import { resolveArticleAuthor } from '@/lib/authors';
 import ArticleSidebar from '@/components/ArticleSidebar';
+import AuthorFooter from '@/components/AuthorFooter';
 
 export const revalidate = 300;
 
@@ -77,6 +79,10 @@ export default async function BlogPostPage({ params }) {
     .filter((p) => p.id !== post.id && p.category === post.category)
     .slice(0, 3);
 
+  // Resolve full author record (handles both authorId-linked articles and
+  // legacy string bylines). Powers the footer card and Person schema.
+  const author = await resolveArticleAuthor(post);
+
   const breadcrumbs = [
     { name: 'Home', url: SITE_URL },
     { name: 'News', url: `${SITE_URL}/news` },
@@ -85,7 +91,7 @@ export default async function BlogPostPage({ params }) {
   ];
 
   const schemas = [
-    newsArticleSchema(post),
+    newsArticleSchema(post, author),
     breadcrumbSchema(breadcrumbs),
     faqSchema(faqs),
   ].filter(Boolean);
@@ -122,7 +128,13 @@ export default async function BlogPostPage({ params }) {
           <h1 className="text-3xl md:text-5xl font-black mb-6 leading-tight">{post.title}</h1>
 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-400 mb-8">
-            <span>{post.author || post.authorName}</span>
+            {author?.slug && !author.isLegacy ? (
+              <Link href={`/authors/${author.slug}`} className="hover:text-yellow-500 transition-colors">
+                {author.name}
+              </Link>
+            ) : (
+              <span>{post.author || post.authorName}</span>
+            )}
             <span>·</span>
             <span>{post.date ? new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''}</span>
             <span>·</span>
@@ -177,6 +189,8 @@ export default async function BlogPostPage({ params }) {
             className="article-body mx-auto"
             dangerouslySetInnerHTML={{ __html: contentWithIds }}
           />
+
+          <AuthorFooter author={author} />
 
           {/* FAQ section — rendered visibly AND emitted as FAQPage schema above */}
           {faqs.length > 0 && (

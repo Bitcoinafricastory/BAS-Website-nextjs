@@ -74,3 +74,18 @@ export async function getAllSlugs() {
     .map((d) => d.data().slug)
     .filter(Boolean);
 }
+
+/**
+ * All articles written by a specific author. Falls back to matching by name
+ * so pre-migration articles (no authorId yet) still show up on their author's
+ * profile page as long as the byline string matches the author's name.
+ */
+export async function getArticlesByAuthor(author) {
+  if (!author) return [];
+  const all = await getAllNews();
+  return all.filter((post) => {
+    if (post.authorId && author.id) return post.authorId === author.id;
+    if (author.name) return (post.author || post.authorName) === author.name;
+    return false;
+  });
+}

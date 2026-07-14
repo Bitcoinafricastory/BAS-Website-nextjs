@@ -145,6 +145,7 @@ export default async function Footer() {
             <div className="mt-8 pt-6 text-center md:text-left text-sm">
               <ul className="flex md:flex-wrap space-x-4 text-white">
                 <li><Link href="/about" className="hover:text-yellow-500 uppercase">ABOUT US</Link></li>
+                <li><Link href="/authors" className="hover:text-yellow-500 uppercase">WRITERS</Link></li>
                 <li><Link href="/terms" className="hover:text-yellow-500 uppercase">TERM OF USE</Link></li>
                 <li><Link href="/privacy" className="hover:text-yellow-500 uppercase">PRIVACY POLICY</Link></li>
               </ul>

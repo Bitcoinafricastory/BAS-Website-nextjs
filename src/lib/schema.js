@@ -62,19 +62,47 @@ export function breadcrumbSchema(items) {
   };
 }
 
-export function personSchema(name) {
-  return {
+/**
+ * Person schema — accepts either a plain name string (legacy bylines) or a
+ * full author object with slug/bio/socials/avatar.
+ *
+ * When given a full author, emits url pointing at their /authors/[slug] page
+ * plus sameAs for their public socials, which is what E-E-A-T signals depend on.
+ */
+export function personSchema(author) {
+  if (!author) {
+    return { '@type': 'Person', name: SITE_NAME, url: `${SITE_URL}/about` };
+  }
+
+  if (typeof author === 'string') {
+    return { '@type': 'Person', name: author, url: `${SITE_URL}/about` };
+  }
+
+  const sameAs = [author.twitter, author.linkedin, author.website]
+    .filter(Boolean);
+
+  const schema = {
     '@type': 'Person',
-    name: name || SITE_NAME,
-    url: `${SITE_URL}/about`,
+    name: author.name,
+    url: author.slug ? `${SITE_URL}/authors/${author.slug}` : `${SITE_URL}/about`,
   };
+  if (author.role) schema.jobTitle = author.role;
+  if (author.bio) schema.description = author.bio;
+  if (author.avatar) schema.image = resolveImageUrl(author.avatar);
+  if (sameAs.length > 0) schema.sameAs = sameAs;
+  return schema;
 }
 
-export function newsArticleSchema(post) {
+export function newsArticleSchema(post, author) {
   const pageUrl = `${SITE_URL}/news/${post.slug || post.id}`;
   const imageUrl = resolveImageUrl(post.image);
   const published = post.date ? new Date(post.date).toISOString() : new Date().toISOString();
   const modified = post.updatedAt ? new Date(post.updatedAt).toISOString() : published;
+
+  // Prefer a resolved author object; fall back to the legacy string byline.
+  const authorSchema = author
+    ? personSchema(author)
+    : personSchema(post.author || post.authorName);
 
   return {
     '@context': 'https://schema.org',
@@ -83,7 +111,7 @@ export function newsArticleSchema(post) {
     image: imageUrl ? [imageUrl] : undefined,
     datePublished: published,
     dateModified: modified,
-    author: [personSchema(post.author || post.authorName)],
+    author: [authorSchema],
     publisher: {
       '@type': 'Organization',
       name: SITE_NAME,
@@ -238,6 +266,28 @@ export function podcastListSchema(episodes) {
       '@type': 'ListItem',
       position: i + 1,
       item: ep,
+    })),
+  };
+}
+
+/**
+ * ProfilePage schema for /authors/[slug]. Wraps the Person and links to all
+ * of their published articles so Google understands the page is an author hub.
+ */
+export function authorProfileSchema(author, articles = []) {
+  if (!author) return null;
+  const personObj = personSchema(author);
+  delete personObj['@context'];
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    mainEntity: personObj,
+    hasPart: articles.slice(0, 20).map((a) => ({
+      '@type': 'NewsArticle',
+      headline: a.title,
+      url: `${SITE_URL}/news/${a.slug || a.id}`,
+      datePublished: a.date ? new Date(a.date).toISOString() : undefined,
     })),
   };
 }
