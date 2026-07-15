@@ -194,7 +194,7 @@ export default function EventsContent({ initialEvents = [] }) {
               return (
                 <div key={e.id} className="group bg-gray-900 border border-gray-800 hover:border-yellow-500/40 transition-colors overflow-hidden">
                   <Link href={`/events/${e.id}`} className="block">
-                    <div className="relative aspect-[4/5] overflow-hidden bg-gray-800">
+                    <div className="relative aspect-square overflow-hidden bg-gray-800">
                       {e.banner ? (
                         <Image
                           src={e.banner}
@@ -210,7 +210,7 @@ export default function EventsContent({ initialEvents = [] }) {
                     <div className="p-5 pb-0">
                       <p className="text-xs text-gray-500 mb-2">{e.city || (e.format === 'virtual' ? 'Online' : 'In-person')}</p>
                       <h4 className="text-lg font-bold text-white group-hover:text-yellow-500 transition-colors leading-snug mb-1.5 line-clamp-2 min-h-[52px]">{e.eventName}</h4>
-                      {e.venue && <p className="text-xs text-gray-500 mb-4 truncate">{e.venue}</p>}
+                      <p className="text-xs text-gray-500 mb-4 truncate min-h-[16px]">{e.venue || '\u00A0'}</p>
                       <div className="flex items-center gap-3 mb-5">
                         <div className="flex-shrink-0 w-11 h-11 rounded-full border border-gray-700 flex flex-col items-center justify-center leading-none">
                           <span className="text-[9px] font-bold text-yellow-500 uppercase">{month}</span>
