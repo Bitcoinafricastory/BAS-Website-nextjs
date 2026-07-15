@@ -2,7 +2,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getAllNews, getTestimonials } from '@/lib/news';
 import { getEntities, selectFeaturedEntities } from '@/lib/entities';
-import { entityTypeLabel, summarizeBadges, badgeLabel } from '@/lib/entityTypes';
 import Hero from '@/components/Hero';
 import Mission from '@/components/Mission';
 import PostsGrid from '@/components/PostsGrid';
@@ -167,33 +166,23 @@ export default async function HomePage() {
               <p className="text-gray-400">No entities available yet.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+            <div className="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-9 gap-4 mb-8">
               {featuredEntities.map((entity, i) => {
-                const { top, rest } = summarizeBadges(entity.badges);
                 // 3 on mobile, 6 on tablet (sm+), 9 on desktop (lg+).
                 const visibility = i < 3 ? '' : i < 6 ? 'hidden sm:flex' : 'hidden lg:flex';
                 return (
                   <Link
                     key={entity.id}
                     href={`/directory/${entity.slug}`}
-                    className={`flex-col bg-gray-900 border border-gray-800 rounded-xl p-5 hover:border-yellow-500/50 transition-colors ${visibility || 'flex'}`}
+                    title={entity.name}
+                    className={`flex-col items-center gap-2 group ${visibility || 'flex'}`}
                   >
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="relative w-11 h-11 flex-shrink-0 bg-gray-800 border border-gray-700 rounded-lg overflow-hidden">
-                        {entity.logo && (
-                          <Image src={entity.logo} alt={entity.name} fill sizes="44px" className="object-contain p-1" />
-                        )}
-                      </div>
-                      <div className="min-w-0">
-                        <p className="font-bold text-white text-sm truncate">{entity.name}</p>
-                        <p className="text-[11px] text-gray-500">{entityTypeLabel(entity.type)}{entity.country ? ` · ${entity.country}` : ''}</p>
-                      </div>
+                    <div className="relative w-full aspect-square bg-gray-900 border border-gray-800 rounded-xl overflow-hidden group-hover:border-yellow-500/50 transition-colors">
+                      {entity.logo && (
+                        <Image src={entity.logo} alt={entity.name} fill sizes="120px" className="object-contain p-3" />
+                      )}
                     </div>
-                    {top && (
-                      <span className="text-xs font-semibold text-yellow-500">
-                        {badgeLabel(top.level)}{rest.length > 0 ? ` +${rest.length}` : ''}
-                      </span>
-                    )}
+                    <p className="text-[11px] text-gray-500 text-center truncate w-full group-hover:text-gray-300 transition-colors">{entity.name}</p>
                   </Link>
                 );
               })}
