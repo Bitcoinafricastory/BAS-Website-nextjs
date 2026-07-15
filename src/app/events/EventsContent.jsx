@@ -186,44 +186,40 @@ export default function EventsContent({ initialEvents = [] }) {
             <button onClick={() => setSearch('')} className="mt-4 text-yellow-500 hover:text-yellow-400 font-bold transition-colors">Clear all filters</button>
           </div>
         ) : (
-          <div className="flex flex-col border-t border-gray-800">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-800 border border-gray-800">
             {filtered.map((e) => {
               const { day, month } = parseEventDate(e.date);
               return (
-                <div key={e.id} className="group flex items-center gap-4 sm:gap-5 py-5 border-b border-gray-800">
-                  <Link href={`/events/${e.id}`} className="flex items-center gap-4 sm:gap-5 flex-1 min-w-0">
-                    <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-900 border border-gray-800">
-                      {e.banner ? (
-                        <Image src={e.banner} alt={e.eventName} fill sizes="64px" className="object-cover" />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center"><Ticket size={20} className="text-gray-700" /></div>
-                      )}
+                <div key={e.id} className="group bg-black flex flex-col p-5">
+                  <Link href={`/events/${e.id}`} className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="relative w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-gray-900 border border-gray-800">
+                        {e.banner ? (
+                          <Image src={e.banner} alt={e.eventName} fill sizes="40px" className="object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center"><Ticket size={16} className="text-gray-700" /></div>
+                        )}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-[11px] text-gray-500">{month} {day} · {e.time || ''}</p>
+                        <p className="text-[11px] text-gray-500">{e.format === 'virtual' ? 'Online' : 'In-person'}</p>
+                      </div>
                     </div>
-                    <div className="flex-shrink-0 w-12 text-center">
-                      <p className="text-[10px] font-bold text-yellow-500 uppercase tracking-wide">{month}</p>
-                      <p className="text-xl font-black text-white leading-none mt-0.5">{day}</p>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-base sm:text-lg font-bold text-white group-hover:text-yellow-500 transition-colors truncate">{e.eventName}</h4>
-                      <p className="text-xs text-gray-500 truncate mt-1">
-                        {e.time ? `${e.time} · ` : ''}
-                        {e.city ? `${e.city}, ` : ''}{e.venue || ''}
-                        {' · '}{e.format === 'virtual' ? 'Online' : 'In-person'}
-                      </p>
-                    </div>
+                    <h4 className="text-sm font-bold text-white group-hover:text-yellow-500 transition-colors leading-snug mb-1.5 line-clamp-2">{e.eventName}</h4>
+                    <p className="text-xs text-gray-500 mb-4 truncate">{e.city ? `${e.city}, ` : ''}{e.venue || ''}</p>
                   </Link>
                   {e.registrationUrl ? (
                     <a
                       href={e.registrationUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-shrink-0 px-4 sm:px-5 py-2 bg-yellow-500 text-black rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-yellow-400 transition-colors"
+                      className="w-full text-center px-4 py-2 bg-yellow-500 text-black rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-yellow-400 transition-colors"
                     >
                       Register
                     </a>
                   ) : (
-                    <Link href={`/events/${e.id}`} className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-yellow-500 group-hover:text-black transition-all">
-                      <ArrowRight size={16} />
+                    <Link href={`/events/${e.id}`} className="w-full flex items-center justify-center gap-1.5 px-4 py-2 bg-gray-900 border border-gray-800 rounded-lg text-xs font-bold uppercase tracking-wide text-gray-400 group-hover:text-white transition-colors">
+                      View details <ArrowRight size={14} />
                     </Link>
                   )}
                 </div>
