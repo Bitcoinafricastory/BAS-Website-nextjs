@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { getAllNews, getCommunities, getTestimonials } from '@/lib/news';
+import { getAllNews, getTestimonials } from '@/lib/news';
+import { getEntities, selectFeaturedEntities } from '@/lib/entities';
+import { entityTypeLabel, summarizeBadges, badgeLabel } from '@/lib/entityTypes';
 import Hero from '@/components/Hero';
 import Mission from '@/components/Mission';
 import PostsGrid from '@/components/PostsGrid';
@@ -40,11 +42,12 @@ const features = [
 ];
 
 export default async function HomePage() {
-  const [posts, communities, testimonials] = await Promise.all([
+  const [posts, entities, testimonials] = await Promise.all([
     getAllNews(),
-    getCommunities(),
+    getEntities(),
     getTestimonials(),
   ]);
+  const featuredEntities = selectFeaturedEntities(entities, 9);
 
   const groupedPosts = posts.slice(0).reverse().reduce((acc, post) => {
     const cat = post.category || 'Uncategorized';
@@ -145,54 +148,65 @@ export default async function HomePage() {
       </section>
 
       <section className="py-20 px-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-gray-900 border border-gray-800 p-8 shadow-lg">
-            <div className="text-center mb-6">
-              <h2 className="text-2xl md:text-3xl font-bold text-white">African Bitcoin Communities</h2>
-              <p className="text-sm text-gray-400 mt-2">Discover other amazing Bitcoin communities across Africa</p>
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-end justify-between mb-8">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-white">Featured in the Directory</h2>
+              <p className="text-sm text-gray-400 mt-2 max-w-xl">
+                Communities, companies, projects, and people building Bitcoin across Africa — verified
+                by our reporters, not scraped from a database.
+              </p>
             </div>
+            <Link href="/directory" className="hidden md:inline-flex items-center text-sm text-yellow-500 font-semibold hover:text-yellow-400 transition-colors flex-shrink-0">
+              View Full Directory →
+            </Link>
+          </div>
 
-            {communities.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-gray-400">No communities available yet.</p>
-              </div>
-            ) : (
-              <>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-                  {communities.slice(0, 8).map((community) => (
-                    <a key={community.id} href={community.link} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center aspect-square bg-gray-800 border border-gray-700 hover:border-yellow-500 transition-all p-4 group">
-                      {community.logo && (
-                        <div className="relative w-full h-full">
-                          <Image
-                            src={community.logo}
-                            alt={community.name}
-                            fill
-                            sizes="160px"
-                            className="object-contain group-hover:scale-110 transition-transform"
-                          />
-                        </div>
-                      )}
-                    </a>
-                  ))}
-                </div>
-
-                <div className="space-y-4 mb-6">
-                  {communities.slice(0, 4).map((community) => (
-                    <div key={community.id} className="flex items-start justify-between p-4 bg-gray-800 border border-gray-700">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3">
-                          <div className="font-semibold text-white">{community.name}</div>
-                        </div>
-                        {community.description && <div className="text-sm text-gray-400 mt-1">{community.description}</div>}
+          {featuredEntities.length === 0 ? (
+            <div className="text-center py-12 bg-gray-900/50 border border-gray-800 rounded-xl">
+              <p className="text-gray-400">No entities available yet.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+              {featuredEntities.map((entity, i) => {
+                const { top, rest } = summarizeBadges(entity.badges);
+                // 3 on mobile, 6 on tablet (sm+), 9 on desktop (lg+).
+                const visibility = i < 3 ? '' : i < 6 ? 'hidden sm:flex' : 'hidden lg:flex';
+                return (
+                  <Link
+                    key={entity.id}
+                    href={`/directory/${entity.slug}`}
+                    className={`flex-col bg-gray-900 border border-gray-800 rounded-xl p-5 hover:border-yellow-500/50 transition-colors ${visibility || 'flex'}`}
+                  >
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="relative w-11 h-11 flex-shrink-0 bg-gray-800 border border-gray-700 rounded-lg overflow-hidden">
+                        {entity.logo && (
+                          <Image src={entity.logo} alt={entity.name} fill sizes="44px" className="object-contain p-1" />
+                        )}
                       </div>
-                      <a href={community.link} target="_blank" rel="noopener noreferrer" className="ml-4 px-3 py-1 border border-yellow-500 text-yellow-500 rounded-md hover:bg-yellow-500/10 transition-all">
-                        Visit
-                      </a>
+                      <div className="min-w-0">
+                        <p className="font-bold text-white text-sm truncate">{entity.name}</p>
+                        <p className="text-[11px] text-gray-500">{entityTypeLabel(entity.type)}{entity.country ? ` · ${entity.country}` : ''}</p>
+                      </div>
                     </div>
-                  ))}
-                </div>
-              </>
-            )}
+                    {top && (
+                      <span className="text-xs font-semibold text-yellow-500">
+                        {badgeLabel(top.level)}{rest.length > 0 ? ` +${rest.length}` : ''}
+                      </span>
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+
+          <div className="text-center md:hidden">
+            <Link
+              href="/directory"
+              className="inline-flex items-center gap-2 text-sm font-bold text-black bg-yellow-500 px-6 py-3 hover:bg-yellow-400 transition-colors"
+            >
+              View Full Directory
+            </Link>
           </div>
         </div>
       </section>

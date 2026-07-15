@@ -18,6 +18,7 @@ const primaryLinks = [
 // listed inline in the mobile menu.
 const moreLinks = [
   { name: 'Writers', path: '/authors' },
+  { name: 'Directory', path: '/directory' },
   { name: 'Resources', path: '/resources' },
   { name: 'About', path: '/about' },
   { name: 'Contact', path: '/contact' },

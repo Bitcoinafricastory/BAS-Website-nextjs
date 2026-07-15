@@ -50,6 +50,7 @@ const sectionLinks = [
   { label: 'Education', href: '/education' },
   { label: 'Events', href: '/events' },
   { label: 'Podcast', href: '/education#podcast' },
+  { label: 'Directory', href: '/directory' },
   { label: 'Resources', href: '/resources' },
 ];
 

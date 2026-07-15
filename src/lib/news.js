@@ -31,10 +31,6 @@ function serializeDates(data) {
   return out;
 }
 
-export async function getCommunities() {
-  return fetchSimpleCollection('communities');
-}
-
 export async function getTestimonials() {
   return fetchSimpleCollection('testimonials');
 }

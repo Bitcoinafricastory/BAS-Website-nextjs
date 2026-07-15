@@ -48,7 +48,8 @@ const navGroups = [
   {
     label: 'Community',
     items: [
-      { name: 'Communities', path: '/dashboard/communities', icon: Globe },
+      { name: 'Directory', path: '/dashboard/entities', icon: Globe },
+      { name: 'Submitted Directory Entries', path: '/dashboard/submitted-entities', icon: Inbox },
       { name: 'X Testimonials', path: '/dashboard/testimonials', icon: Heart },
       { name: 'Education Testimonials', path: '/dashboard/edu-testimonials', icon: Users },
       { name: 'Newsletter', path: '/dashboard/newsletter', icon: Mail },

@@ -48,6 +48,31 @@ export function websiteSchema() {
   };
 }
 
+/**
+ * Structured data for a directory profile page (/directory/[slug]).
+ * Emits Person schema for entity type "person", Organization for everything
+ * else — both are valid schema.org types search engines and AI answer
+ * engines already understand, so each profile can rank independently.
+ */
+export function directoryEntitySchema(entity) {
+  const pageUrl = `${SITE_URL}/directory/${entity.slug}`;
+  const sameAs = [entity.website, entity.socialLinks?.twitter, entity.socialLinks?.linkedin, entity.socialLinks?.telegram]
+    .filter(Boolean);
+
+  const base = {
+    '@context': 'https://schema.org',
+    '@type': entity.type === 'person' ? 'Person' : 'Organization',
+    name: entity.name,
+    url: pageUrl,
+  };
+  if (entity.description) base.description = entity.description;
+  if (entity.logo) base.image = resolveImageUrl(entity.logo);
+  if (sameAs.length > 0) base.sameAs = sameAs;
+  if (entity.country) base.areaServed = entity.country;
+  if (entity.type !== 'person' && entity.yearFounded) base.foundingDate = String(entity.yearFounded);
+  return base;
+}
+
 export function breadcrumbSchema(items) {
   // items: [{ name, url }]
   return {
