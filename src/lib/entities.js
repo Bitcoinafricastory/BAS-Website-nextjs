@@ -43,6 +43,51 @@ export async function getEntities() {
   }
 }
 
+/**
+ * BAS's own coverage of an entity — articles and podcast episodes that an
+ * editor explicitly linked (via the "Linked Directory Profiles" picker in
+ * their respective editors). This is what makes Related Coverage populate
+ * itself: editors link content once, while writing, and every profile that
+ * content touches updates automatically. Separate from `externalCoverage`,
+ * which is for things outside BAS's own content (third-party interviews,
+ * PDFs, videos) added directly on the entity.
+ */
+export async function getEntityCoverage(slug) {
+  try {
+    const [newsSnap, podcastsSnap] = await Promise.all([
+      getDocs(query(collection(db, 'news'), where('linkedEntityIds', 'array-contains', slug))),
+      getDocs(query(collection(db, 'podcasts'), where('linkedEntityIds', 'array-contains', slug))),
+    ]);
+
+    const articles = newsSnap.docs.map((d) => {
+      const data = serializeDates(d.data());
+      return {
+        type: 'Article',
+        title: data.title,
+        url: `/news/${data.slug || d.id}`,
+        date: data.date || '',
+        external: false,
+      };
+    });
+
+    const episodes = podcastsSnap.docs.map((d) => {
+      const data = serializeDates(d.data());
+      return {
+        type: 'Podcast Episode',
+        title: data.title,
+        url: data.url || '#',
+        date: data.date || '',
+        external: true,
+      };
+    });
+
+    return [...articles, ...episodes].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+  } catch (err) {
+    console.warn(`getEntityCoverage(${slug}): could not fetch`, err);
+    return [];
+  }
+}
+
 export async function getEntityBySlug(slug) {
   try {
     const snap = await getDocs(query(entitiesCollectionRef, where('slug', '==', slug)));

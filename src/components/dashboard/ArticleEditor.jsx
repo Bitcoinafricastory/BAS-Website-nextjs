@@ -9,6 +9,7 @@ import StoryEditor from '@/components/StoryEditor';
 import ImageUploader from '@/components/dashboard/ImageUploader';
 import SeoPanel from '@/components/dashboard/SeoPanel';
 import AiTools from '@/components/dashboard/AiTools';
+import EntityLinker from '@/components/dashboard/EntityLinker';
 import { getActiveAuthors } from '@/lib/authors';
 
 const CATEGORIES = ['Adoption', 'Regulations', 'Education', 'Technology', 'Economy', 'Security', 'Community'];
@@ -48,6 +49,7 @@ const emptyForm = {
   tags: [],
   keyTakeaways: [],
   faqs: [],
+  linkedEntityIds: [],
 };
 
 const AUTOSAVE_KEY = 'bas_article_draft';
@@ -347,6 +349,12 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
               </div>
             </div>
           )}
+        </div>
+
+        {/* Linked directory profiles — powers the Related Coverage section on those profiles automatically */}
+        <div className="bg-[#0A0A0A] border border-gray-800 rounded-2xl p-6 space-y-4">
+          <h3 className="font-bold">Linked Directory Profiles</h3>
+          <EntityLinker value={form.linkedEntityIds || []} onChange={(vals) => update({ linkedEntityIds: vals })} />
         </div>
       </div>
 

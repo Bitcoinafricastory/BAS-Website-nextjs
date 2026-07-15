@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getEntities, getEntityBySlug } from '@/lib/entities';
+import { getEntities, getEntityBySlug, getEntityCoverage } from '@/lib/entities';
 import { directoryEntitySchema, breadcrumbSchema, jsonLdScript, SITE_URL, resolveImageUrl } from '@/lib/schema';
 import { entityTypeLabel, summarizeBadges, badgeLabel } from '@/lib/entityTypes';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -50,6 +50,12 @@ export default async function DirectoryProfilePage({ params }) {
   const relatedEntities = (entity.relatedEntityIds || [])
     .map((s) => allEntities.find((e) => e.slug === s))
     .filter(Boolean);
+
+  const autoCoverage = await getEntityCoverage(entity.slug);
+  const manualCoverage = (entity.externalCoverage || []).map((c) => ({ ...c, external: true }));
+  const coverage = [...autoCoverage, ...manualCoverage].sort(
+    (a, b) => new Date(b.date || 0) - new Date(a.date || 0)
+  );
 
   // Sort by weight, highest first — reuse summarizeBadges' ordering logic directly.
   const { top: topBadge, rest: restBadges } = summarizeBadges(entity.badges);
@@ -138,21 +144,29 @@ export default async function DirectoryProfilePage({ params }) {
           )}
         </div>
 
-        {/* Stage 2 will add BAS's own articles/podcasts here automatically via linkedEntityIds.
-            For now, this section surfaces manually-added external coverage only. */}
-        {entity.externalCoverage?.length > 0 && (
+        {/* Automatic coverage from linked articles/podcasts, merged with manually-added
+            external items (third-party interviews, reports, videos). */}
+        {coverage.length > 0 && (
           <div className="mb-8">
             <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">
-              Coverage · {entity.externalCoverage.length}
+              Coverage · {coverage.length}
             </p>
             <div className="space-y-2">
-              {entity.externalCoverage.map((c, i) => (
-                <a key={i} href={c.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 bg-gray-900 border border-gray-800 rounded-xl px-4 py-3 hover:border-yellow-500/50 transition-colors">
-                  <span className="text-[11px] font-semibold text-yellow-500 flex-shrink-0">{c.type}</span>
-                  <span className="text-sm flex-1 truncate">{c.title}</span>
-                  {c.date && <span className="text-xs text-gray-500">{c.date}</span>}
-                </a>
-              ))}
+              {coverage.map((c, i) => {
+                const content = (
+                  <>
+                    <span className="text-[11px] font-semibold text-yellow-500 flex-shrink-0">{c.type}</span>
+                    <span className="text-sm flex-1 truncate">{c.title}</span>
+                    {c.date && <span className="text-xs text-gray-500">{c.date}</span>}
+                  </>
+                );
+                const className = 'flex items-center gap-3 bg-gray-900 border border-gray-800 rounded-xl px-4 py-3 hover:border-yellow-500/50 transition-colors';
+                return c.external ? (
+                  <a key={i} href={c.url} target="_blank" rel="noopener noreferrer" className={className}>{content}</a>
+                ) : (
+                  <Link key={i} href={c.url} className={className}>{content}</Link>
+                );
+              })}
             </div>
           </div>
         )}

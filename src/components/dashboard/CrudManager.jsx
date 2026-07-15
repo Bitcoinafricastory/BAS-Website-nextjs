@@ -6,6 +6,7 @@ import { collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, serverTimest
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { PlusCircle, Search, Pencil, Trash2, ArrowLeft, LoaderCircle, CheckCircle2, AlertCircle, X } from 'lucide-react';
 import ImageUploader from '@/components/dashboard/ImageUploader';
+import EntityLinker from '@/components/dashboard/EntityLinker';
 
 function Toast({ toast, onClose }) {
   useEffect(() => {
@@ -60,7 +61,11 @@ export default function CrudManager({ config }) {
 
   const emptyForm = useMemo(() => {
     const f = {};
-    fields.forEach((fld) => { f[fld.name] = fld.type === 'select' ? (fld.options?.[0] || '') : ''; });
+    fields.forEach((fld) => {
+      if (fld.type === 'select') f[fld.name] = fld.options?.[0] || '';
+      else if (fld.type === 'entities') f[fld.name] = [];
+      else f[fld.name] = '';
+    });
     return f;
   }, [fields]);
 
@@ -152,6 +157,8 @@ export default function CrudManager({ config }) {
                 </select>
               ) : fld.type === 'image' ? (
                 <ImageUploader label={fld.label} value={form[fld.name]} preview={previews[fld.name]} aspect={fld.aspect || 'aspect-video'} onChange={(val, prev) => { setForm({ ...form, [fld.name]: val }); setPreviews({ ...previews, [fld.name]: prev }); }} />
+              ) : fld.type === 'entities' ? (
+                <EntityLinker value={form[fld.name] || []} onChange={(vals) => setForm({ ...form, [fld.name]: vals })} />
               ) : (
                 <input type={fld.type === 'url' ? 'url' : 'text'} value={form[fld.name] || ''} onChange={(e) => setForm({ ...form, [fld.name]: e.target.value })} placeholder={fld.placeholder} className="w-full px-4 py-3 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500" />
               )}

@@ -15,6 +15,7 @@ const config = {
     { name: 'image', label: 'Thumbnail', type: 'image', aspect: 'aspect-video' },
     { name: 'url', label: 'YouTube Link', type: 'url', placeholder: 'https://www.youtube.com/watch?v=…' },
     { name: 'date', label: 'Publish Date', type: 'text', placeholder: 'e.g. 2026-05-12' },
+    { name: 'linkedEntityIds', label: 'Linked Directory Profiles', type: 'entities' },
   ],
 };
 
