@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Save, Eye, X, LoaderCircle, FileText, CheckCircle2, Archive, Clock, Send } from 'lucide-react';
-import { db, storage } from '@/lib/firebase';
+import { db, storage, auth } from '@/lib/firebase';
 import { collection, addDoc, updateDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import StoryEditor from '@/components/StoryEditor';
@@ -10,6 +10,7 @@ import ImageUploader from '@/components/dashboard/ImageUploader';
 import SeoPanel from '@/components/dashboard/SeoPanel';
 import AiTools from '@/components/dashboard/AiTools';
 import EntityLinker from '@/components/dashboard/EntityLinker';
+import EntityExtractionReview from '@/components/dashboard/EntityExtractionReview';
 import { getActiveAuthors } from '@/lib/authors';
 
 const CATEGORIES = ['Adoption', 'Regulations', 'Education', 'Technology', 'Economy', 'Security', 'Community'];
@@ -79,6 +80,8 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
   const [busy, setBusy] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [lastSaved, setLastSaved] = useState(null);
+  const [extractionState, setExtractionState] = useState(null); // null | 'loading' | { suggestions, degraded, reason }
+  const [pendingArticleId, setPendingArticleId] = useState(null); // set only when extraction runs post-publish, so confirming persists immediately
   const isEditing = !!editingPost;
 
   // Load active authors once for the picker.
@@ -123,18 +126,22 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
     }
     setBusy(true);
     try {
+      // eslint-disable-next-line react-hooks/purity -- runs inside an event handler, not render; false positive
       const imageUrl = await uploadIfFile(form.image, `news/featured_${Date.now()}`);
+      // eslint-disable-next-line react-hooks/purity -- runs inside an event handler, not render; false positive
       const authorImageUrl = await uploadIfFile(form.authorImage, `authors/author_${Date.now()}`);
 
       const { id, _doc, ...rest } = form;
+      const finalStatus = statusOverride || form.status;
       const payload = {
         ...rest,
         image: imageUrl,
         authorImage: authorImageUrl,
-        status: statusOverride || form.status,
+        status: finalStatus,
         updatedAt: serverTimestamp(),
       };
 
+      let articleId = editingPost?.id;
       if (isEditing) {
         await updateDoc(doc(db, 'news', editingPost.id), payload);
         onNotify?.('success', 'Article updated successfully.');
@@ -144,16 +151,79 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
           setBusy(false);
           return;
         }
-        await addDoc(collection(db, 'news'), { ...payload, createdAt: serverTimestamp() });
-        onNotify?.('success', statusOverride === 'published' ? 'Article published and live!' : 'Article saved.');
+        const newDoc = await addDoc(collection(db, 'news'), { ...payload, createdAt: serverTimestamp() });
+        articleId = newDoc.id;
+        onNotify?.('success', finalStatus === 'published' ? 'Article published and live!' : 'Article saved.');
         try { localStorage.removeItem(AUTOSAVE_KEY); } catch {}
       }
-      onDone?.();
+
+      // Only run entity extraction on an actual publish, not draft saves —
+      // no point suggesting directory matches for something not live yet.
+      if (finalStatus === 'published') {
+        runExtraction(articleId);
+      } else {
+        onDone?.();
+      }
     } catch (err) {
       console.error('Save error:', err);
       onNotify?.('error', 'Something went wrong. Please try again.');
     } finally {
       setBusy(false);
+    }
+  };
+
+  // persistDocId: when set, confirming the review immediately patches that
+  // Firestore doc (post-publish flow, since the editor is about to close).
+  // When called manually mid-edit (no persistDocId), results just update
+  // local form state — they'll be saved next time the editor does save.
+  const runExtraction = async (persistDocId = null) => {
+    setExtractionState('loading');
+    setPendingArticleId(persistDocId);
+    try {
+      const idToken = await auth.currentUser?.getIdToken();
+      const res = await fetch('/api/admin/entities/extract', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: form.title, excerpt: form.excerpt, content: form.content, category: form.category, idToken,
+        }),
+      });
+      const data = await res.json();
+      if (data.error || !data.suggestions || data.suggestions.length === 0) {
+        setExtractionState(null);
+        if (persistDocId) onDone?.();
+        return;
+      }
+      setExtractionState({ suggestions: data.suggestions, degraded: data.degraded, reason: data.reason });
+    } catch (err) {
+      console.warn('Entity extraction request failed:', err);
+      setExtractionState(null);
+      if (persistDocId) onDone?.();
+    }
+  };
+
+  const handleExtractionConfirm = async (slugs) => {
+    const merged = Array.from(new Set([...(form.linkedEntityIds || []), ...slugs]));
+    update({ linkedEntityIds: merged });
+    if (pendingArticleId) {
+      try {
+        await updateDoc(doc(db, 'news', pendingArticleId), { linkedEntityIds: merged });
+      } catch (err) {
+        console.warn('Could not save linked entities:', err);
+      }
+      setExtractionState(null);
+      setPendingArticleId(null);
+      onDone?.();
+    } else {
+      setExtractionState(null);
+    }
+  };
+
+  const handleExtractionSkip = () => {
+    setExtractionState(null);
+    if (pendingArticleId) {
+      setPendingArticleId(null);
+      onDone?.();
     }
   };
 
@@ -353,10 +423,30 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
 
         {/* Linked directory profiles — powers the Related Coverage section on those profiles automatically */}
         <div className="bg-[#0A0A0A] border border-gray-800 rounded-2xl p-6 space-y-4">
-          <h3 className="font-bold">Linked Directory Profiles</h3>
+          <div className="flex items-center justify-between">
+            <h3 className="font-bold">Linked Directory Profiles</h3>
+            <button
+              onClick={() => runExtraction(null)}
+              disabled={!form.title || extractionState === 'loading'}
+              className="text-xs font-semibold text-yellow-500 hover:text-yellow-400 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
+            >
+              {extractionState === 'loading' ? 'Scanning…' : 'Find matches'}
+            </button>
+          </div>
           <EntityLinker value={form.linkedEntityIds || []} onChange={(vals) => update({ linkedEntityIds: vals })} />
         </div>
       </div>
+
+      {extractionState && extractionState !== 'loading' && (
+        <EntityExtractionReview
+          suggestions={extractionState.suggestions}
+          degraded={extractionState.degraded}
+          reason={extractionState.reason}
+          articleTitle={form.title}
+          onConfirm={handleExtractionConfirm}
+          onSkip={handleExtractionSkip}
+        />
+      )}
 
       {/* Preview modal */}
       {showPreview && (
