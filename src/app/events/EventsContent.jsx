@@ -1,10 +1,9 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Search, Calendar, Clock, MapPin, Box, Ticket, X as CloseIcon, Save } from 'lucide-react';
-import CountUp from '@/components/ui/CountUp';
 import { db, storage } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -27,7 +26,6 @@ export default function EventsContent({ initialEvents = [] }) {
   });
   const [imageMode, setImageMode] = useState('url');
   const [imagePreview, setImagePreview] = useState('');
-  const router = useRouter();
 
   const filtered = useMemo(() => {
     if (!search) return events;
@@ -180,66 +178,71 @@ export default function EventsContent({ initialEvents = [] }) {
             {filtered.map((e) => (
               <div
                 key={e.id}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(ev) => { if (ev.key === 'Enter') { if (e.registrationUrl) window.open(e.registrationUrl, '_blank'); else router.push(`/events/${e.id}`); } }}
-                onClick={() => { if (e.registrationUrl) window.open(e.registrationUrl, '_blank'); else router.push(`/events/${e.id}`); }}
-                className="group cursor-pointer bg-gray-900 border border-gray-800 hover:border-yellow-500/50 transition-all duration-300 overflow-hidden hover:-translate-y-2 hover:shadow-2xl hover:shadow-yellow-500/5"
+                className="group bg-gray-900 border border-gray-800 hover:border-yellow-500/50 transition-all duration-300 overflow-hidden hover:-translate-y-2 hover:shadow-2xl hover:shadow-yellow-500/5"
               >
-                <div className="relative h-48 overflow-hidden">
-                  {e.banner ? (
-                    <Image
-                      src={e.banner}
-                      alt={e.eventName}
-                      fill
-                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                      className="object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gray-800 flex items-center justify-center">
-                      <Ticket size={40} className="text-gray-700" />
-                    </div>
-                  )}
-                  <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg border border-white/10">
-                    <span className="text-[10px] font-black uppercase text-yellow-500 tracking-tighter">
-                      {e.format === 'virtual' ? 'Online Event' : 'In-Person'}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <div className="flex flex-wrap gap-x-4 gap-y-2 mb-3">
-                    <div className="flex items-center gap-1.5 text-xs text-gray-500">
-                      <Calendar size={14} className="text-yellow-500/70" />
-                      <span>{e.date}</span>
-                    </div>
-                    {e.time && (
-                      <div className="flex items-center gap-1.5 text-xs text-gray-500 border-l border-gray-800 pl-4">
-                        <Clock size={14} className="text-yellow-500/70" />
-                        <span>{e.time}</span>
-                      </div>
-                    )}
-                  </div>
-
-                  <h4 className="text-xl font-bold text-white group-hover:text-yellow-500 transition-colors line-clamp-2 min-h-[56px] leading-snug">{e.eventName}</h4>
-
-                  <div className="mt-4 flex items-center gap-2 text-sm text-gray-400">
-                    <MapPin size={16} className="text-yellow-500/70 flex-shrink-0" />
-                    <span className="line-clamp-1">{e.city ? `${e.city}, ` : ''}{e.venue || (e.format === 'virtual' ? 'Gathering Online' : '')}</span>
-                  </div>
-
-                  <div className="mt-6 pt-6 border-t border-gray-800 flex items-center justify-between">
-                    <span className="text-xs font-bold text-gray-600 uppercase tracking-widest group-hover:text-white transition-colors">Details</span>
-                    {e.registrationUrl ? (
-                      <button onClick={(ev) => { ev.stopPropagation(); window.open(e.registrationUrl, '_blank'); }} className="px-6 py-2 bg-yellow-500 text-black rounded-xl font-black text-xs uppercase tracking-widest hover:bg-yellow-400 transition-colors shadow-lg shadow-yellow-500/10">
-                        Register
-                      </button>
+                <Link href={`/events/${e.id}`} className="block">
+                  <div className="relative h-56 overflow-hidden">
+                    {e.banner ? (
+                      <Image
+                        src={e.banner}
+                        alt={e.eventName}
+                        fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        className="object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
                     ) : (
-                      <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-yellow-500 group-hover:text-black transition-all">
-                        <ArrowRight size={16} />
+                      <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+                        <Ticket size={40} className="text-gray-700" />
                       </div>
                     )}
+                    <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg border border-white/10">
+                      <span className="text-[10px] font-black uppercase text-yellow-500 tracking-tighter">
+                        {e.format === 'virtual' ? 'Online Event' : 'In-Person'}
+                      </span>
+                    </div>
                   </div>
+
+                  <div className="p-6 pb-0">
+                    <div className="flex flex-wrap gap-x-4 gap-y-2 mb-3">
+                      <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                        <Calendar size={14} className="text-yellow-500/70" />
+                        <span>{e.date}</span>
+                      </div>
+                      {e.time && (
+                        <div className="flex items-center gap-1.5 text-xs text-gray-500 border-l border-gray-800 pl-4">
+                          <Clock size={14} className="text-yellow-500/70" />
+                          <span>{e.time}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    <h4 className="text-xl font-bold text-white group-hover:text-yellow-500 transition-colors line-clamp-2 min-h-[56px] leading-snug">{e.eventName}</h4>
+
+                    <div className="mt-4 flex items-center gap-2 text-sm text-gray-400">
+                      <MapPin size={16} className="text-yellow-500/70 flex-shrink-0" />
+                      <span className="line-clamp-1">{e.city ? `${e.city}, ` : ''}{e.venue || (e.format === 'virtual' ? 'Gathering Online' : '')}</span>
+                    </div>
+                  </div>
+                </Link>
+
+                <div className="px-6 pb-6 mt-6 pt-6 border-t border-gray-800 flex items-center justify-between">
+                  <Link href={`/events/${e.id}`} className="text-xs font-bold text-gray-500 uppercase tracking-widest hover:text-white transition-colors">
+                    View details
+                  </Link>
+                  {e.registrationUrl ? (
+                    <a
+                      href={e.registrationUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-6 py-2 bg-yellow-500 text-black rounded-xl font-black text-xs uppercase tracking-widest hover:bg-yellow-400 transition-colors shadow-lg shadow-yellow-500/10"
+                    >
+                      Register
+                    </a>
+                  ) : (
+                    <Link href={`/events/${e.id}`} className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-yellow-500 group-hover:text-black transition-all">
+                      <ArrowRight size={16} />
+                    </Link>
+                  )}
                 </div>
               </div>
             ))}
@@ -249,7 +252,7 @@ export default function EventsContent({ initialEvents = [] }) {
 
       <div className="max-w-7xl mx-auto mt-12 px-6">
         <div className="bg-gray-900 border border-gray-800 overflow-hidden shadow-2xl">
-          <div className="p-6 md:p-8 text-center border-b border-gray-800/50">
+          <div className="p-6 md:p-8 text-center">
             <div className="hidden sm:inline-block mb-3 px-3 py-1 bg-yellow-500/10 border border-yellow-500/30 rounded-full">
               <span className="text-yellow-500 text-[10px] font-bold uppercase tracking-widest">Connect With Us</span>
             </div>
@@ -258,39 +261,19 @@ export default function EventsContent({ initialEvents = [] }) {
               Add your event to our directory to reach thousands of builders, educators, and enthusiasts
               across the continent.
             </p>
-            <div className="text-gray-500 text-xs">
-              Want an event featured? <button onClick={() => setShowSubmitModal(true)} className="text-yellow-500 hover:underline cursor-pointer">Submit it here</button>.
-            </div>
-            <div className="flex flex-wrap mt-3 items-center justify-center gap-3 mb-5">
-              <a href="https://t.me/+KirVlW8gMMtlNDI8" target="_blank" rel="noreferrer" className="px-6 py-2.5 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-sm transition-all shadow-lg shadow-yellow-500/10">
-                Telegram Channel
-              </a>
-              <a href="https://chat.whatsapp.com/Ckny9TqxoWDJJ6MQlX5VpL" target="_blank" rel="noreferrer" className="px-6 py-2.5 border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black font-bold text-sm transition-all shadow-lg shadow-yellow-500/10">
-                WhatsApp Group
-              </a>
-            </div>
-            {notice && <p className="text-sm text-yellow-400">{notice}</p>}
-          </div>
-
-          <div className="p-6 md:p-8 bg-black/20">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-              <div className="space-y-1">
-                <div className="text-2xl md:text-3xl font-black text-yellow-500"><CountUp end={5240} /></div>
-                <div className="text-[10px] font-bold text-gray-500 uppercase tracking-tighter">Active Members</div>
-              </div>
-              <div className="space-y-1">
-                <div className="text-2xl md:text-3xl font-black text-yellow-500"><CountUp end={850} suffix="+" /></div>
-                <div className="text-[10px] font-bold text-gray-500 uppercase tracking-tighter">Discussions</div>
-              </div>
-              <div className="space-y-1">
-                <div className="text-2xl md:text-3xl font-black text-yellow-500"><CountUp end={125} /></div>
-                <div className="text-[10px] font-bold text-gray-500 uppercase tracking-tighter">Local Events</div>
-              </div>
-              <div className="space-y-1">
-                <div className="text-2xl md:text-3xl font-black text-yellow-500"><CountUp end={28} /></div>
-                <div className="text-[10px] font-bold text-gray-500 uppercase tracking-tighter">Countries</div>
-              </div>
-            </div>
+            <button
+              onClick={() => setShowSubmitModal(true)}
+              className="px-8 py-3 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-sm transition-all shadow-lg shadow-yellow-500/10"
+            >
+              Submit Your Event
+            </button>
+            {notice && <p className="text-sm text-yellow-400 mt-4">{notice}</p>}
+            <p className="text-gray-500 text-xs mt-6">
+              Or join the community on{' '}
+              <a href="https://t.me/+KirVlW8gMMtlNDI8" target="_blank" rel="noreferrer" className="text-yellow-500 hover:underline">Telegram</a>
+              {' '}or{' '}
+              <a href="https://chat.whatsapp.com/Ckny9TqxoWDJJ6MQlX5VpL" target="_blank" rel="noreferrer" className="text-yellow-500 hover:underline">WhatsApp</a>.
+            </p>
           </div>
         </div>
       </div>
