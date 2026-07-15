@@ -3,20 +3,22 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Search, Box, Ticket, X as CloseIcon, Save } from 'lucide-react';
+import { Search, Box, Ticket, X as CloseIcon, Save } from 'lucide-react';
 import { db, storage } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
-// "2026-06-17" -> { day: 17, month: 'JUN' }. Falls back gracefully since this
-// field is free text in the admin form, not guaranteed to be a strict date.
+// "2026-06-17" -> { day: 17, month: 'JUN', weekday: 'Wednesday' }. Falls back
+// gracefully since this field is free text in the admin form, not guaranteed
+// to be a strict date.
 function parseEventDate(dateStr) {
-  if (!dateStr) return { day: '–', month: '' };
+  if (!dateStr) return { day: '–', month: '', weekday: '' };
   const d = new Date(dateStr);
-  if (Number.isNaN(d.getTime())) return { day: dateStr, month: '' };
+  if (Number.isNaN(d.getTime())) return { day: dateStr, month: '', weekday: '' };
   return {
     day: d.getDate(),
     month: d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase(),
+    weekday: d.toLocaleDateString('en-US', { weekday: 'long' }),
   };
 }
 
@@ -186,42 +188,57 @@ export default function EventsContent({ initialEvents = [] }) {
             <button onClick={() => setSearch('')} className="mt-4 text-yellow-500 hover:text-yellow-400 font-bold transition-colors">Clear all filters</button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-800 border border-gray-800">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((e) => {
-              const { day, month } = parseEventDate(e.date);
+              const { day, month, weekday } = parseEventDate(e.date);
               return (
-                <div key={e.id} className="group bg-black flex flex-col p-5">
-                  <Link href={`/events/${e.id}`} className="flex-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="relative w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-gray-900 border border-gray-800">
-                        {e.banner ? (
-                          <Image src={e.banner} alt={e.eventName} fill sizes="40px" className="object-cover" />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center"><Ticket size={16} className="text-gray-700" /></div>
-                        )}
-                      </div>
-                      <div className="min-w-0">
-                        <p className="text-[11px] text-gray-500">{month} {day} · {e.time || ''}</p>
-                        <p className="text-[11px] text-gray-500">{e.format === 'virtual' ? 'Online' : 'In-person'}</p>
+                <div key={e.id} className="group bg-gray-900 border border-gray-800 hover:border-yellow-500/40 transition-colors overflow-hidden">
+                  <Link href={`/events/${e.id}`} className="block">
+                    <div className="relative aspect-[4/5] overflow-hidden bg-gray-800">
+                      {e.banner ? (
+                        <Image
+                          src={e.banner}
+                          alt={e.eventName}
+                          fill
+                          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                          className="object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center"><Ticket size={40} className="text-gray-700" /></div>
+                      )}
+                    </div>
+                    <div className="p-5 pb-0">
+                      <p className="text-xs text-gray-500 mb-2">{e.city || (e.format === 'virtual' ? 'Online' : 'In-person')}</p>
+                      <h4 className="text-lg font-bold text-white group-hover:text-yellow-500 transition-colors leading-snug mb-1.5 line-clamp-2 min-h-[52px]">{e.eventName}</h4>
+                      {e.venue && <p className="text-xs text-gray-500 mb-4 truncate">{e.venue}</p>}
+                      <div className="flex items-center gap-3 mb-5">
+                        <div className="flex-shrink-0 w-11 h-11 rounded-full border border-gray-700 flex flex-col items-center justify-center leading-none">
+                          <span className="text-[9px] font-bold text-yellow-500 uppercase">{month}</span>
+                          <span className="text-sm font-black text-white">{day}</span>
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-xs font-semibold text-white truncate">{weekday}</p>
+                          <p className="text-[11px] text-gray-500 truncate">{e.time || ''}</p>
+                        </div>
                       </div>
                     </div>
-                    <h4 className="text-sm font-bold text-white group-hover:text-yellow-500 transition-colors leading-snug mb-1.5 line-clamp-2">{e.eventName}</h4>
-                    <p className="text-xs text-gray-500 mb-4 truncate">{e.city ? `${e.city}, ` : ''}{e.venue || ''}</p>
                   </Link>
-                  {e.registrationUrl ? (
-                    <a
-                      href={e.registrationUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full text-center px-4 py-2 bg-yellow-500 text-black rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-yellow-400 transition-colors"
-                    >
-                      Register
-                    </a>
-                  ) : (
-                    <Link href={`/events/${e.id}`} className="w-full flex items-center justify-center gap-1.5 px-4 py-2 bg-gray-900 border border-gray-800 rounded-lg text-xs font-bold uppercase tracking-wide text-gray-400 group-hover:text-white transition-colors">
-                      View details <ArrowRight size={14} />
-                    </Link>
-                  )}
+                  <div className="px-5 pb-5">
+                    {e.registrationUrl ? (
+                      <a
+                        href={e.registrationUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-full text-center px-4 py-2.5 bg-yellow-500 text-black rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-yellow-400 transition-colors"
+                      >
+                        Register
+                      </a>
+                    ) : (
+                      <Link href={`/events/${e.id}`} className="block w-full text-center px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-lg font-bold text-xs uppercase tracking-wide text-gray-300 group-hover:text-white transition-colors">
+                        View details
+                      </Link>
+                    )}
+                  </div>
                 </div>
               );
             })}
