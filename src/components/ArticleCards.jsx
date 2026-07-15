@@ -13,7 +13,10 @@ export function FeaturedCard({ post }) {
   if (!post) return null;
   const href = `/news/${post.slug || post.id}`;
   return (
-    <Link href={href} className="group block relative overflow-hidden rounded-2xl border border-gray-800 hover:border-yellow-500/50 transition-all duration-500">
+    <Link
+      href={href}
+      className="group flex flex-col md:block md:relative overflow-hidden rounded-2xl border border-gray-800 hover:border-yellow-500/50 transition-all duration-500 bg-gray-900"
+    >
       <div className="aspect-[16/10] md:aspect-[21/9] overflow-hidden relative bg-gray-900">
         {resolveImageUrl(post.image) && (
           <Image
@@ -22,17 +25,20 @@ export function FeaturedCard({ post }) {
             fill
             priority
             sizes="(min-width: 1280px) 1280px, 100vw"
-            className="object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700"
+            className="object-cover md:opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700"
           />
         )}
+        {/* On mobile the title sits below the image in normal flow (see panel below),
+            so the image needs no darkening. On md+ the title overlays the image directly,
+            so this gradient keeps it legible. */}
+        <div className="hidden md:block absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
-        <div className="flex items-center gap-3 mb-4">
+      <div className="relative md:absolute md:bottom-0 md:left-0 md:right-0 p-5 md:p-10">
+        <div className="flex items-center gap-3 mb-3 md:mb-4">
           <span className="text-xs font-bold text-black bg-yellow-500 px-3 py-1.5 rounded-full uppercase tracking-wide">Featured</span>
           <span className="text-xs font-semibold text-yellow-500">{post.category}</span>
         </div>
-        <h2 className="text-2xl md:text-4xl lg:text-5xl font-black mb-3 leading-tight group-hover:text-yellow-500 transition-colors max-w-4xl">
+        <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-black mb-3 leading-tight group-hover:text-yellow-500 transition-colors max-w-4xl">
           {post.title}
         </h2>
         <p className="text-gray-300 text-sm md:text-base mb-4 max-w-2xl line-clamp-2">{post.excerpt}</p>

@@ -35,7 +35,7 @@ export default function ProgramCard() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-yellow-500 to-orange-600 blur opacity-20 group-hover:opacity-40 transition duration-1000" />
-            <div className="relative sm:h-[350px] md:h-[500px] overflow-hidden border border-white/10">
+            <div className="relative h-[280px] sm:h-[350px] md:h-[500px] overflow-hidden border border-white/10">
               <Image
                 src="/assets/basplaceholder.png"
                 alt="Bitcoin Educator"
