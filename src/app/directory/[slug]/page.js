@@ -131,18 +131,24 @@ export default async function DirectoryProfilePage({ params }) {
           </div>
         )}
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-gray-800 border border-gray-800 rounded-xl overflow-hidden mb-8">
-          {entity.yearFounded && (
-            <div className="bg-gray-900 p-4"><p className="text-[11px] text-gray-500 mb-1">Founded</p><p className="text-sm font-semibold">{entity.yearFounded}</p></div>
-          )}
-          <div className="bg-gray-900 p-4"><p className="text-[11px] text-gray-500 mb-1">Category</p><p className="text-sm font-semibold">{entityTypeLabel(entity.type)}</p></div>
-          {entity.bitcoinFocus && (
-            <div className="bg-gray-900 p-4"><p className="text-[11px] text-gray-500 mb-1">Focus</p><p className="text-sm font-semibold">{entity.bitcoinFocus}</p></div>
-          )}
-          {entity.founder && (
-            <div className="bg-gray-900 p-4"><p className="text-[11px] text-gray-500 mb-1">Founder</p><p className="text-sm font-semibold">{entity.founder}</p></div>
-          )}
-        </div>
+        {(() => {
+          const stats = [
+            entity.yearFounded && { label: 'Founded', value: entity.yearFounded },
+            { label: 'Category', value: entityTypeLabel(entity.type) },
+            entity.bitcoinFocus && { label: 'Focus', value: entity.bitcoinFocus },
+            entity.founder && { label: 'Founder', value: entity.founder },
+          ].filter(Boolean);
+          return (
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-px bg-gray-800 border border-gray-800 rounded-xl overflow-hidden mb-8">
+              {stats.map((s) => (
+                <div key={s.label} className="bg-gray-900 p-4">
+                  <p className="text-[11px] text-gray-500 mb-1">{s.label}</p>
+                  <p className="text-sm font-semibold">{s.value}</p>
+                </div>
+              ))}
+            </div>
+          );
+        })()}
 
         {/* Automatic coverage from linked articles/podcasts, merged with manually-added
             external items (third-party interviews, reports, videos). */}
