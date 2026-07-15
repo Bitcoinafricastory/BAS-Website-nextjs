@@ -22,6 +22,21 @@ async function fetchCollection(name, orderField) {
   }
 }
 
+export async function getAllEducationPrograms() {
+  return fetchCollection('education_programs', 'createdAt');
+}
+
+export async function getEducationProgramById(id) {
+  try {
+    const snap = await getDoc(doc(db, 'education_programs', id));
+    if (!snap.exists()) return null;
+    return { id: snap.id, ...serializeDates(snap.data()) };
+  } catch (err) {
+    console.warn(`getEducationProgramById(${id}): could not fetch`, err);
+    return null;
+  }
+}
+
 export async function getAllOtherPrograms() {
   return fetchCollection('other_programs', 'createdAt');
 }

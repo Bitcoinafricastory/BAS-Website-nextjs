@@ -1,5 +1,6 @@
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { useRef } from 'react';
 import { ChevronLeft, ChevronRight, BookOpen, Clock } from 'lucide-react';
@@ -33,11 +34,8 @@ export default function ProgramsSection({ programs = [] }) {
 
         <div className="relative group">
           <div ref={scrollRef} className="flex gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-10" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            {programs.map((course) => {
-              const CardWrapper = course.link ? 'a' : 'div';
-              const extraProps = course.link ? { href: course.link, target: '_blank', rel: 'noopener noreferrer' } : {};
-              return (
-                <CardWrapper key={course.id} {...extraProps} className="min-w-[320px] md:min-w-[320px] snap-start group/card cursor-pointer">
+            {programs.map((course) => (
+              <Link key={course.id} href={`/education/our-programs/${course.id}`} className="min-w-[320px] md:min-w-[320px] snap-start group/card">
                   <div className="relative h-[450px] overflow-hidden border border-white/10 hover:border-yellow-500/50 transition-all duration-500 bg-[#111]">
                     {course.image && (
                       <Image
@@ -68,9 +66,8 @@ export default function ProgramsSection({ programs = [] }) {
                       </div>
                     </div>
                   </div>
-                </CardWrapper>
-              );
-            })}
+              </Link>
+            ))}
           </div>
 
           <div className="flex gap-4 mt-8">

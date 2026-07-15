@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft } from 'lucide-react';
-import { getAllOtherPrograms, getOtherProgramById } from '@/lib/education';
+import { ArrowLeft, Clock } from 'lucide-react';
+import { getAllEducationPrograms, getEducationProgramById } from '@/lib/education';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { courseSchema, breadcrumbSchema, jsonLdScript, SITE_URL } from '@/lib/schema';
 
@@ -10,35 +10,35 @@ export const revalidate = 300;
 
 export async function generateStaticParams() {
   try {
-    const programs = await getAllOtherPrograms();
+    const programs = await getAllEducationPrograms();
     return programs.map((p) => ({ id: p.id }));
   } catch (err) {
-    console.warn('generateStaticParams (program): could not fetch', err);
+    console.warn('generateStaticParams (education program): could not fetch', err);
     return [];
   }
 }
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const program = await getOtherProgramById(id);
+  const program = await getEducationProgramById(id);
   if (!program) return {};
 
   return {
     title: program.title,
-    description: program.desc || `${program.title} — a Bitcoin education program.`,
-    alternates: { canonical: `${SITE_URL}/education/programs/${id}` },
+    description: program.desc || `${program.title} — a free Bitcoin education program from Bitcoin Africa Story.`,
+    alternates: { canonical: `${SITE_URL}/education/our-programs/${id}` },
   };
 }
 
-export default async function ProgramDetailsPage({ params }) {
+export default async function EducationProgramDetailsPage({ params }) {
   const { id } = await params;
-  const program = await getOtherProgramById(id);
+  const program = await getEducationProgramById(id);
   if (!program) notFound();
 
   const crumbs = [
     { name: 'Home', url: `${SITE_URL}/` },
     { name: 'Education', url: `${SITE_URL}/education` },
-    { name: program.title, url: `${SITE_URL}/education/programs/${id}` },
+    { name: program.title, url: `${SITE_URL}/education/our-programs/${id}` },
   ];
 
   return (
@@ -93,6 +93,11 @@ export default async function ProgramDetailsPage({ params }) {
                 {program.price}
               </span>
             )}
+            {program.duration && (
+              <span className="flex items-center gap-1.5 px-3 py-1 bg-gray-800 text-gray-400 text-xs font-bold uppercase tracking-wider rounded-full">
+                <Clock size={12} /> {program.duration}
+              </span>
+            )}
           </div>
 
           <h1 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">{program.title}</h1>
@@ -112,7 +117,7 @@ export default async function ProgramDetailsPage({ params }) {
               rel="noopener noreferrer"
               className="inline-block px-8 py-4 bg-yellow-500 hover:bg-yellow-400 text-black font-extrabold text-center rounded-lg transition-colors shadow-lg shadow-yellow-500/20"
             >
-              Visit Program
+              Enrol Now
             </a>
           )}
         </div>

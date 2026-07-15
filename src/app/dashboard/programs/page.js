@@ -15,7 +15,8 @@ const config = {
     { name: 'price', label: 'Price', type: 'text', placeholder: 'FREE' },
     { name: 'duration', label: 'Duration', type: 'text', placeholder: 'e.g. 6 weeks' },
     { name: 'image', label: 'Cover Image', type: 'image' },
-    { name: 'desc', label: 'Description', type: 'textarea' },
+    { name: 'desc', label: 'Short Description (used on cards)', type: 'textarea' },
+    { name: 'content', label: 'Full Program Details (optional, rich text)', type: 'richtext' },
     { name: 'link', label: 'Enrolment Link', type: 'url', placeholder: 'https://…' },
   ],
 };
