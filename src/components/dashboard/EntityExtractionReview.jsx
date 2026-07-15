@@ -4,26 +4,33 @@ import { useState } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { LoaderCircle, CheckCircle2, Sparkles, AlertTriangle, X } from 'lucide-react';
-import { ENTITY_TYPES, entityTypeLabel } from '@/lib/entityTypes';
+import { ENTITY_TYPES, ENTITY_COUNTRIES, entityTypeLabel } from '@/lib/entityTypes';
 import { slugifyEntity } from '@/lib/entities';
 import EntityLinker from '@/components/dashboard/EntityLinker';
 
-export default function EntityExtractionReview({ suggestions, degraded, reason, articleTitle, onConfirm, onSkip }) {
+export default function EntityExtractionReview({ suggestions, degraded, reason, articleTitle, articleImage, onConfirm, onSkip }) {
   const [items, setItems] = useState(() =>
     suggestions.map((s) => ({
       ...s,
       slug: s.existingSlug,
       status: s.existingSlug ? 'linked' : 'pending',
       typeChoice: s.guessedType,
+      country: s.guessedCountry || '',
+      city: s.guessedCity || '',
+      website: s.guessedWebsite || '',
+      founder: s.guessedFounder || '',
+      tags: (s.guessedTags || []).join(', '),
       creating: false,
     }))
   );
   const [manualSlugs, setManualSlugs] = useState([]);
 
-  const dismiss = (i) => setItems((prev) => prev.map((it, idx) => (idx === i ? { ...it, status: 'dismissed' } : it)));
+  const updateItem = (i, patch) => setItems((prev) => prev.map((it, idx) => (idx === i ? { ...it, ...patch } : it)));
+
+  const dismiss = (i) => updateItem(i, { status: 'dismissed' });
 
   const createAndLink = async (i) => {
-    setItems((prev) => prev.map((it, idx) => (idx === i ? { ...it, creating: true } : it)));
+    updateItem(i, { creating: true });
     const item = items[i];
     try {
       const slug = slugifyEntity(item.name);
@@ -32,9 +39,21 @@ export default function EntityExtractionReview({ suggestions, degraded, reason, 
         slug,
         type: item.typeChoice,
         description: item.reason || '',
-        country: '', city: '', website: '', socialLinks: {}, contactEmail: '',
-        yearFounded: '', bitcoinFocus: '', founder: '', logo: '', coverImage: '',
-        tags: [], featured: false, relatedEntityIds: [], externalCoverage: [],
+        country: item.country || '',
+        city: item.city || '',
+        website: item.website || '',
+        socialLinks: {},
+        contactEmail: '',
+        yearFounded: '',
+        bitcoinFocus: '',
+        founder: item.founder || '',
+        logo: '',
+        // Best available default — the model can't fetch a logo/photo from
+        // nowhere, but the article's own featured image is a reasonable
+        // placeholder cover until someone uploads something better.
+        coverImage: articleImage || '',
+        tags: item.tags ? item.tags.split(',').map((t) => t.trim()).filter(Boolean) : [],
+        featured: false, relatedEntityIds: [], externalCoverage: [],
         badges: [{
           level: 'editorial_reviewed',
           dateEarned: new Date().toISOString().slice(0, 10),
@@ -42,10 +61,10 @@ export default function EntityExtractionReview({ suggestions, degraded, reason, 
         }],
         createdAt: serverTimestamp(),
       });
-      setItems((prev) => prev.map((it, idx) => (idx === i ? { ...it, status: 'linked', slug, creating: false } : it)));
+      updateItem(i, { status: 'linked', slug, creating: false });
     } catch (err) {
       console.error('Could not create entity from suggestion:', err);
-      setItems((prev) => prev.map((it, idx) => (idx === i ? { ...it, creating: false } : it)));
+      updateItem(i, { creating: false });
     }
   };
 
@@ -105,23 +124,61 @@ export default function EntityExtractionReview({ suggestions, degraded, reason, 
                     </div>
                     <button onClick={() => dismiss(i)} className="text-gray-500 hover:text-red-400 flex-shrink-0"><X size={14} /></button>
                   </div>
-                  <div className="flex items-center gap-2">
+
+                  <div className="grid grid-cols-2 gap-2 mb-2">
                     <select
                       value={it.typeChoice}
-                      onChange={(e) => setItems((prev) => prev.map((p, idx) => (idx === i ? { ...p, typeChoice: e.target.value } : p)))}
-                      className="flex-1 px-2 py-1.5 bg-black/40 border border-gray-800 rounded text-xs text-white focus:outline-none focus:border-yellow-500"
+                      onChange={(e) => updateItem(i, { typeChoice: e.target.value })}
+                      className="px-2 py-1.5 bg-black/40 border border-gray-800 rounded text-xs text-white focus:outline-none focus:border-yellow-500"
                     >
                       {ENTITY_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
                     </select>
-                    <button
-                      onClick={() => createAndLink(i)}
-                      disabled={it.creating}
-                      className="flex-shrink-0 px-3 py-1.5 bg-yellow-500 text-black text-xs font-bold rounded hover:bg-yellow-400 transition-colors disabled:opacity-50 flex items-center gap-1.5"
+                    <select
+                      value={it.country}
+                      onChange={(e) => updateItem(i, { country: e.target.value })}
+                      className="px-2 py-1.5 bg-black/40 border border-gray-800 rounded text-xs text-white focus:outline-none focus:border-yellow-500"
                     >
-                      {it.creating ? <LoaderCircle className="animate-spin" size={12} /> : null}
-                      Create profile
-                    </button>
+                      <option value="">Country — not stated</option>
+                      {ENTITY_COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
+                    </select>
+                    <input
+                      value={it.city}
+                      onChange={(e) => updateItem(i, { city: e.target.value })}
+                      placeholder="City (optional)"
+                      className="px-2 py-1.5 bg-black/40 border border-gray-800 rounded text-xs text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500"
+                    />
+                    <input
+                      value={it.founder}
+                      onChange={(e) => updateItem(i, { founder: e.target.value })}
+                      placeholder="Founder (optional)"
+                      className="px-2 py-1.5 bg-black/40 border border-gray-800 rounded text-xs text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500"
+                    />
+                    <input
+                      value={it.website}
+                      onChange={(e) => updateItem(i, { website: e.target.value })}
+                      placeholder="Website (optional)"
+                      className="col-span-2 px-2 py-1.5 bg-black/40 border border-gray-800 rounded text-xs text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500"
+                    />
+                    <input
+                      value={it.tags}
+                      onChange={(e) => updateItem(i, { tags: e.target.value })}
+                      placeholder="Tags, comma separated (optional)"
+                      className="col-span-2 px-2 py-1.5 bg-black/40 border border-gray-800 rounded text-xs text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500"
+                    />
                   </div>
+
+                  {articleImage && (
+                    <p className="text-[11px] text-gray-500 mb-2">Cover image will default to this article&rsquo;s featured image.</p>
+                  )}
+
+                  <button
+                    onClick={() => createAndLink(i)}
+                    disabled={it.creating}
+                    className="w-full px-3 py-1.5 bg-yellow-500 text-black text-xs font-bold rounded hover:bg-yellow-400 transition-colors disabled:opacity-50 flex items-center justify-center gap-1.5"
+                  >
+                    {it.creating ? <LoaderCircle className="animate-spin" size={12} /> : null}
+                    Create profile
+                  </button>
                 </div>
               ))}
             </div>

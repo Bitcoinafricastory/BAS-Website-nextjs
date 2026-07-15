@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getEntities } from '@/lib/entities';
-import { ENTITY_TYPES } from '@/lib/entityTypes';
+import { ENTITY_TYPES, ENTITY_COUNTRIES } from '@/lib/entityTypes';
 
 // Same public web API key already used by src/lib/firebase.js — this call
 // only verifies that the caller has a valid, currently signed-in Firebase
@@ -95,6 +95,7 @@ export async function POST(request) {
 Existing directory entries, as "name (type)": ${entityList}
 
 Valid entity types: ${typeList}
+Valid countries: ${ENTITY_COUNTRIES.join(', ')}
 
 Article title: ${title}
 Article excerpt: ${excerpt}
@@ -103,8 +104,10 @@ Article body (HTML tags already stripped, may be truncated): ${plainText.slice(0
 
 List every specific, named entity this article is actually about or substantively discusses. For each, state whether its name matches one of the existing directory entries above (case-insensitive, allow for minor name variation) or whether it looks like something new to the directory.
 
+For anything that looks NEW (no existing match), also pull out country, city, website, founder, and 2-4 short lowercase tags — but ONLY values the article text actually states. Leave a field empty ("" or []) rather than guessing or inventing something the article doesn't say. Never invent a website URL — only include one if it's literally written in the article text.
+
 Respond with ONLY a JSON array and no other text. Each item exactly like:
-{"name": "string", "type": "one of the valid entity types", "matchesExisting": "the exact existing entry name it matches, or null", "reason": "one short sentence on why this belongs in the directory"}
+{"name": "string", "type": "one of the valid entity types", "matchesExisting": "the exact existing entry name it matches, or null", "reason": "one short sentence on why this belongs in the directory", "country": "one of the valid countries, or empty string if not stated", "city": "string or empty", "website": "string or empty", "founder": "string or empty", "tags": ["short", "lowercase", "tags"]}
 
 If nothing qualifies, respond with an empty array: []`;
 
@@ -169,6 +172,13 @@ If nothing qualifies, respond with an empty array: []`;
       existingSlug: matched?.slug || null,
       reason: item.reason || '',
       isNew: !matched,
+      // Prefill data — only populated by the model when the article actually
+      // states it. Editors can still edit any of this before creating.
+      guessedCountry: ENTITY_COUNTRIES.includes(item.country) ? item.country : '',
+      guessedCity: item.city || '',
+      guessedWebsite: item.website || '',
+      guessedFounder: item.founder || '',
+      guessedTags: Array.isArray(item.tags) ? item.tags.filter((t) => typeof t === 'string').slice(0, 6) : [],
     };
   });
 

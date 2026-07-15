@@ -443,6 +443,7 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
           degraded={extractionState.degraded}
           reason={extractionState.reason}
           articleTitle={form.title}
+          articleImage={typeof form.image === 'string' ? form.image : imagePreview}
           onConfirm={handleExtractionConfirm}
           onSkip={handleExtractionSkip}
         />
