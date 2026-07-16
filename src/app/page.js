@@ -57,7 +57,7 @@ export default async function HomePage() {
   const categoriesToShow = Object.keys(groupedPosts);
 
   return (
-    <div className="pt-16 md:mt-[40px]">
+    <div className="pt-16">
 
       <Hero />
 
