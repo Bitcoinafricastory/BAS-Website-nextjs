@@ -38,7 +38,7 @@ export function FeaturedCard({ post }) {
           <span className="text-xs font-bold text-black bg-yellow-500 px-3 py-1.5 rounded-full uppercase tracking-wide">Featured</span>
           <span className="text-xs font-semibold text-yellow-500">{post.category}</span>
         </div>
-        <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-black mb-3 leading-tight group-hover:text-yellow-500 transition-colors max-w-4xl">
+        <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-semibold mb-3 leading-tight group-hover:text-yellow-500 transition-colors max-w-4xl">
           {post.title}
         </h2>
         <p className="text-gray-300 text-sm md:text-base mb-4 max-w-2xl line-clamp-2">{post.excerpt}</p>

@@ -66,7 +66,7 @@ export default async function NewsPage() {
       {/* ===== Featured Story ===== */}
       <section className="max-w-7xl mx-auto px-6 pt-12 pb-8">
         <div className="mb-8">
-          <h1 className="text-4xl md:text-5xl font-black">
+          <h1 className="text-4xl md:text-5xl font-semibold">
             The Pulse of <span className="text-yellow-500">Bitcoin in Africa</span>
           </h1>
           <p className="text-gray-400 mt-3 max-w-2xl">

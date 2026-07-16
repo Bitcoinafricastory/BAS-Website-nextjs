@@ -89,7 +89,7 @@ export default async function DirectoryProfilePage({ params }) {
               )}
             </div>
             <div className="min-w-0">
-              <h1 className="text-2xl sm:text-3xl font-black mb-2 leading-tight">{entity.name}</h1>
+              <h1 className="text-2xl sm:text-3xl font-semibold mb-2 leading-tight">{entity.name}</h1>
               {entity.description && (
                 <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-xl">{entity.description}</p>
               )}

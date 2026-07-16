@@ -33,7 +33,7 @@ export default function ResourcesContent() {
           <div className="hidden sm:inline-block mb-6 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full">
             <span className="text-yellow-500 text-sm font-semibold">Learning Resources</span>
           </div>
-          <h1 className="text-5xl md:text-6xl font-black mb-6">
+          <h1 className="text-5xl md:text-6xl font-semibold mb-6">
             Bitcoin <span className="text-yellow-500">Resources</span>
           </h1>
           <p className="text-xl text-gray-300 leading-relaxed">

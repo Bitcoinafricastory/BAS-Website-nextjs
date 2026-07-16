@@ -102,7 +102,7 @@ export default async function AuthorProfilePage({ params }) {
             )}
           </div>
           <div className="min-w-0 flex-1">
-            <h1 className="text-3xl md:text-5xl font-extrabold mb-2">{author.name}</h1>
+            <h1 className="text-3xl md:text-5xl font-semibold mb-2">{author.name}</h1>
             {(author.role || author.location) && (
               <p className="text-gray-400 text-base sm:text-lg mb-6">
                 {author.role}

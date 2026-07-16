@@ -26,7 +26,7 @@ export default function AboutContent() {
               Since 2024 &middot; Operating across Africa
             </span>
 
-            <h1 className="font-extrabold text-white text-[36px] sm:text-[46px] lg:text-[54px] leading-[1.05] tracking-tight mb-6 max-w-xl">
+            <h1 className="font-semibold text-white text-[36px] sm:text-[46px] lg:text-[54px] leading-[1.05] tracking-tight mb-6 max-w-xl">
               Empowering Africa through <em className="italic text-[#FAD604]">Bitcoin.</em>
             </h1>
 
@@ -270,7 +270,7 @@ export default function AboutContent() {
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="inline-block mb-4 px-4 py-2 bg-yellow-500/10 border border-yellow-500/20 rounded-full">
               <span className="text-yellow-500 text-sm font-bold uppercase tracking-widest">Join The Movement</span>
             </motion.div>
-            <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="text-4xl md:text-5xl font-black mb-6 text-white">
+            <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="text-4xl md:text-5xl font-semibold mb-6 text-white">
               Ready to Shape the <br className="hidden md:block" />
               <span className="text-yellow-500">Future of Africa?</span>
             </motion.h2>

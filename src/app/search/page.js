@@ -81,7 +81,7 @@ export default async function SearchPage({ searchParams }) {
           className="mb-6"
         />
 
-        <h1 className="text-3xl md:text-5xl font-extrabold mb-3">
+        <h1 className="text-3xl md:text-5xl font-semibold mb-3">
           Search <span className="text-yellow-500">Bitcoin Africa Story</span>
         </h1>
         <p className="text-gray-400 mb-8">

@@ -125,7 +125,7 @@ export default async function BlogPostPage({ params }) {
             </span>
           </div>
 
-          <h1 className="text-3xl md:text-5xl font-black mb-6 leading-tight">{post.title}</h1>
+          <h1 className="text-3xl md:text-5xl font-semibold mb-6 leading-tight">{post.title}</h1>
 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-400 mb-8">
             {author?.slug && !author.isLegacy ? (

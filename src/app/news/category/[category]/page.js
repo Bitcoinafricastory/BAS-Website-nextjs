@@ -56,7 +56,7 @@ export default async function CategoryPage({ params }) {
           <span className="text-gray-200">{name}</span>
         </nav>
 
-        <h1 className="text-4xl md:text-5xl font-black mb-4">
+        <h1 className="text-4xl md:text-5xl font-semibold mb-4">
           {name} <span className="text-yellow-500">Stories</span>
         </h1>
         <p className="text-xl text-gray-400 mb-12">
