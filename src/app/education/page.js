@@ -1,6 +1,5 @@
 import { getEducationData } from '@/lib/education';
 import EducationalHero from './EducationalHero';
-import ProgramCard from './ProgramCard';
 import WhyBitcoin from './WhyBitcoin';
 import ProgramsSection from './ProgramsSection';
 import OtherBitcoinPrograms from './OtherBitcoinPrograms';
@@ -33,7 +32,6 @@ export default async function EducationPage() {
         />
       )}
       <EducationalHero />
-      <ProgramCard />
       <WhyBitcoin testimonials={testimonials} videoData={videoData} />
       <ProgramsSection programs={programs} />
       <OtherBitcoinPrograms programs={otherPrograms} />

@@ -63,11 +63,11 @@ export default async function HomePage() {
 
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="mb-16 max-w-2xl">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Pillars of <span className="text-yellow-500"> Bitcoin Africa Story </span>
+              Pillars of <span className="text-yellow-500">Bitcoin Africa Story</span>
             </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-400">
               Discover how Bitcoin is transforming lives and creating opportunities across Africa
             </p>
           </div>

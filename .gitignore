@@ -5,3 +5,5 @@ node_modules/
 
 # Firebase Admin SDK service account (never commit)
 service-account.json
+.vercel
+.env*

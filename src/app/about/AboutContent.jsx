@@ -51,7 +51,7 @@ export default function AboutContent() {
             </div>
           </div>
 
-          <div className="order-1 lg:order-2 relative min-h-[260px] sm:min-h-[340px] lg:min-h-0 overflow-hidden">
+          <div className="order-1 lg:order-2 relative min-h-[380px] sm:min-h-[440px] lg:min-h-0 overflow-hidden">
             <Image
               src="/assets/aboutus.png"
               alt="Bitcoin Africa Story classroom"
@@ -61,35 +61,26 @@ export default function AboutContent() {
               className="object-cover"
             />
             <div className="hidden lg:block absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.85)_0%,rgba(0,0,0,0.25)_30%,rgba(0,0,0,0)_60%)]" />
-            <div className="lg:hidden absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.15)_0%,rgba(0,0,0,0.8)_100%)]" />
-          </div>
-        </div>
+            <div className="lg:hidden absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.15)_0%,rgba(0,0,0,0)_35%)]" />
+            <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black via-black/70 to-transparent" />
 
-        <div className="border-t border-gray-800 bg-gradient-to-b from-[#0a0a0a] to-black">
-          <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4">
-            {[
-              { value: 2, suffix: '+', label: 'Years Teaching' },
-              { value: 500, suffix: '+', label: 'Lives Changed' },
-              { value: 50, suffix: '+', label: 'Communities' },
-              { value: 100, suffix: '%', label: 'Free Education' },
-            ].map((stat, i) => (
-              <div
-                key={stat.label}
-                className={[
-                  'px-6 sm:px-8 py-7 border-gray-800',
-                  i % 2 === 1 ? 'border-l' : '',
-                  i !== 0 ? 'lg:border-l' : '',
-                  i >= 2 ? 'border-t lg:border-t-0' : '',
-                ].join(' ')}
-              >
-                <div className="font-bold text-white text-[26px] sm:text-[30px] leading-none">
-                  <CountUp end={stat.value} suffix={stat.suffix} />
+            <div className="absolute bottom-0 left-0 right-0 grid grid-cols-2 gap-x-6 gap-y-5 px-6 sm:px-8 py-6 sm:py-8">
+              {[
+                { value: 2, suffix: '+', label: 'Years Teaching' },
+                { value: 500, suffix: '+', label: 'Lives Changed' },
+                { value: 50, suffix: '+', label: 'Communities' },
+                { value: 100, suffix: '%', label: 'Free Education' },
+              ].map((stat) => (
+                <div key={stat.label}>
+                  <div className="font-bold text-white text-[22px] sm:text-[26px] leading-none">
+                    <CountUp end={stat.value} suffix={stat.suffix} />
+                  </div>
+                  <div className="font-semibold text-[10px] tracking-[0.14em] uppercase text-gray-300 mt-1.5">
+                    {stat.label}
+                  </div>
                 </div>
-                <div className="font-bold text-[10px] tracking-[0.16em] uppercase text-gray-300 mt-3">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>

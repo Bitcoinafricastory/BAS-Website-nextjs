@@ -1,7 +1,17 @@
 'use client';
 
 import Image from 'next/image';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Users, GraduationCap, Briefcase, Globe, Zap, User } from 'lucide-react';
+import CountUp from 'react-countup';
+
+const stats = [
+  { label: 'Registrations', value: 250, suffix: '+', icon: Users },
+  { label: 'Alumni', value: 100, suffix: '+', icon: GraduationCap },
+  { label: 'Careers', value: 15, suffix: '+', icon: Briefcase },
+  { label: 'Countries', value: 10, suffix: '+', icon: Globe },
+  { label: 'Sats Rewarded', value: 150, suffix: 'K', icon: Zap },
+  { label: 'Educators', value: 30, suffix: '+', icon: User },
+];
 
 export default function EducationalHero() {
   const scrollToSection = (id) => {
@@ -47,6 +57,23 @@ export default function EducationalHero() {
             >
               Explore Bitcoin Resources
             </button>
+          </div>
+
+          <div className="grid grid-cols-3 gap-x-6 gap-y-6 mt-12 pt-8 border-t border-gray-800 max-w-md">
+            {stats.map((stat) => {
+              const Icon = stat.icon;
+              return (
+                <div key={stat.label} className="group">
+                  <div className="flex items-center gap-1.5 text-gray-500 mb-1.5 group-hover:text-[#FAD604] transition-colors">
+                    <Icon size={13} />
+                    <span className="text-[9px] uppercase tracking-widest font-bold">{stat.label}</span>
+                  </div>
+                  <div className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                    <CountUp end={stat.value} suffix={stat.suffix} enableScrollSpy scrollSpyOnce />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
