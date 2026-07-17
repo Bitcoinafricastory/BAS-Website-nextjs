@@ -1,15 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import { Download, FileText, BookOpen, Shield, ExternalLink } from 'lucide-react';
-import StatusModal from '@/components/StatusModal';
-
-const resources = [
-  { id: '1', title: 'Bitcoin Beginner Guide (PDF)', description: 'A comprehensive guide for anyone starting their Bitcoin journey', type: 'PDF', downloadUrl: '#' },
-  { id: '2', title: 'Recommended Bitcoin Wallets', description: 'Top secure wallets for storing your Bitcoin safely', type: 'Guide', downloadUrl: '#' },
-  { id: '3', title: 'Security Best Practices', description: 'Essential security tips every Bitcoin user should know', type: 'PDF', downloadUrl: '#' },
-  { id: '4', title: 'Bitcoin Glossary', description: 'Common Bitcoin terms and their meanings explained simply', type: 'Reference', downloadUrl: '#' },
-];
+import { BookOpen, Shield, ExternalLink, FileCode2, Wrench } from 'lucide-react';
 
 const recommendedWallets = [
   { name: 'BlueWallet', description: 'User-friendly mobile Bitcoin wallet', url: 'https://bluewallet.io' },
@@ -17,15 +8,44 @@ const recommendedWallets = [
   { name: 'Sparrow', description: 'Desktop Bitcoin wallet for power users', url: 'https://sparrowwallet.com' },
 ];
 
-const learningResources = [
-  { name: 'Bitcoin.org', description: 'Official Bitcoin information and resources', url: 'https://bitcoin.org' },
-  { name: 'Learn Me A Bitcoin', description: 'Technical Bitcoin education', url: 'https://learnmeabitcoin.com' },
-  { name: 'Bitcoin Magazine', description: 'Latest Bitcoin news and insights', url: 'https://bitcoinmagazine.com' },
+const foundationalLearning = [
+  { name: 'The Bitcoin Whitepaper', description: "Satoshi Nakamoto's original paper — the theoretical foundation everything else builds on.", url: 'https://bitcoin.org/bitcoin.pdf' },
+  { name: 'Learn Me A Bitcoin', description: 'Clear, visual breakdowns of how Bitcoin actually works, from first principles to technical detail.', url: 'https://learnmeabitcoin.com' },
+  { name: "Jameson Lopp's Bitcoin Resources", description: 'A long-running, carefully curated list spanning beginner to expert-level material.', url: 'https://www.lopp.net/bitcoin-information.html' },
+  { name: 'Mastering Bitcoin', description: "Andreas Antonopoulos's open-source reference book — the in-depth technical guide, free on GitHub.", url: 'https://github.com/bitcoinbook/bitcoinbook' },
 ];
 
-export default function ResourcesContent() {
-  const [modal, setModal] = useState({ open: false, title: '', message: '' });
+const toolsAndTracking = [
+  { name: 'mempool.space', description: 'Track real-time network fees, unconfirmed transactions, and the Lightning Network.', url: 'https://mempool.space' },
+  { name: 'Bitcoin.org: Getting Started', description: 'Choosing a wallet and making your first Bitcoin payment, explained simply.', url: 'https://bitcoin.org/en/getting-started' },
+];
 
+const developerResources = [
+  { name: 'Bitcoin Developer Documentation', description: 'Technical references and guides for building directly on the Bitcoin network.', url: 'https://developer.bitcoin.org' },
+];
+
+function ResourceCard({ resource, Icon }) {
+  return (
+    <a
+      href={resource.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group p-8 bg-gray-900 border border-gray-800 rounded-xl hover:border-yellow-500 transition-all duration-300 flex flex-col"
+    >
+      <div className="w-14 h-14 bg-yellow-500/10 rounded-lg flex items-center justify-center mb-6">
+        <Icon className="text-yellow-500" size={28} />
+      </div>
+      <h3 className="text-xl font-bold mb-3 group-hover:text-yellow-500 transition-colors duration-200">{resource.name}</h3>
+      <p className="text-gray-400 mb-4 flex-grow">{resource.description}</p>
+      <span className="inline-flex items-center text-yellow-500 font-semibold">
+        Visit Site
+        <ExternalLink size={16} className="ml-2 group-hover:translate-x-1 transition-transform duration-200" />
+      </span>
+    </a>
+  );
+}
+
+export default function ResourcesContent() {
   return (
     <div className="pt-16">
       <section className="py-20 px-6 bg-gradient-to-b from-gray-900/30 to-transparent">
@@ -47,34 +67,45 @@ export default function ResourcesContent() {
         <div className="max-w-6xl mx-auto">
           <div className="mb-12">
             <h2 className="text-4xl font-bold mb-4">
-              Download <span className="text-yellow-500">Guides</span>
+              Foundational <span className="text-yellow-500">Learning</span>
             </h2>
-            <p className="text-lg text-gray-400">Free educational materials to accelerate your learning</p>
+            <p className="text-lg text-gray-400">Start here — from the original whitepaper to the definitive technical reference</p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {resources.map((resource) => (
-              <div key={resource.id} className="group p-8 bg-gray-900 border border-gray-800 rounded-xl hover:border-yellow-500 transition-all duration-300">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="w-14 h-14 bg-yellow-500/10 rounded-lg flex items-center justify-center">
-                    {resource.type === 'PDF' ? <FileText className="text-yellow-500" size={28} /> : resource.type === 'Guide' ? <BookOpen className="text-yellow-500" size={28} /> : <FileText className="text-yellow-500" size={28} />}
-                  </div>
-                  <span className="text-xs font-semibold text-yellow-500 bg-yellow-500/10 px-3 py-1 rounded-full">{resource.type}</span>
-                </div>
-                <h3 className="text-xl font-bold mb-3 group-hover:text-yellow-500 transition-colors duration-200">{resource.title}</h3>
-                <p className="text-gray-400 mb-6">{resource.description}</p>
-                <a
-                  href={resource.downloadUrl}
-                  className="inline-flex items-center text-yellow-500 font-semibold hover:text-yellow-400 transition-colors duration-200"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setModal({ open: true, title: 'Coming Soon', message: 'Download feature will be available soon!' });
-                  }}
-                >
-                  <Download size={18} className="mr-2" />
-                  Download Now
-                </a>
-              </div>
+            {foundationalLearning.map((resource) => (
+              <ResourceCard key={resource.name} resource={resource} Icon={BookOpen} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 px-6 bg-gradient-to-b from-transparent via-gray-900/30 to-transparent">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-12">
+            <h2 className="text-4xl font-bold mb-4">
+              Tools &amp; <span className="text-yellow-500">Tracking</span>
+            </h2>
+            <p className="text-lg text-gray-400">Live network data and practical guides for actually using Bitcoin</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {toolsAndTracking.map((resource) => (
+              <ResourceCard key={resource.name} resource={resource} Icon={Wrench} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-12">
+            <h2 className="text-4xl font-bold mb-4">
+              For <span className="text-yellow-500">Developers</span>
+            </h2>
+            <p className="text-lg text-gray-400">Building on Bitcoin? Start with the official technical documentation</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {developerResources.map((resource) => (
+              <ResourceCard key={resource.name} resource={resource} Icon={FileCode2} />
             ))}
           </div>
         </div>
@@ -90,8 +121,8 @@ export default function ResourcesContent() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {recommendedWallets.map((wallet, index) => (
-              <div key={index} className="p-8 bg-gray-900 border border-gray-800 rounded-xl hover:border-yellow-500 transition-all duration-300 text-center">
+            {recommendedWallets.map((wallet) => (
+              <div key={wallet.name} className="p-8 bg-gray-900 border border-gray-800 rounded-xl hover:border-yellow-500 transition-all duration-300 text-center">
                 <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
                   <Shield className="text-yellow-500" size={32} />
                 </div>
@@ -116,33 +147,6 @@ export default function ResourcesContent() {
       </section>
 
       <section className="py-16 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-12">
-            <h2 className="text-4xl font-bold mb-4">
-              External <span className="text-yellow-500">Resources</span>
-            </h2>
-            <p className="text-lg text-gray-400">Trusted websites and platforms for continued learning</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {learningResources.map((resource, index) => (
-              <a key={index} href={resource.url} target="_blank" rel="noopener noreferrer" className="group p-8 bg-gray-900 border border-gray-800 rounded-xl hover:border-yellow-500 transition-all duration-300">
-                <div className="w-14 h-14 bg-yellow-500/10 rounded-lg flex items-center justify-center mb-6">
-                  <BookOpen className="text-yellow-500" size={28} />
-                </div>
-                <h3 className="text-xl font-bold mb-3 group-hover:text-yellow-500 transition-colors duration-200">{resource.name}</h3>
-                <p className="text-gray-400 mb-4">{resource.description}</p>
-                <span className="inline-flex items-center text-yellow-500 font-semibold">
-                  Visit Site
-                  <ExternalLink size={16} className="ml-2 group-hover:translate-x-1 transition-transform duration-200" />
-                </span>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 px-6 bg-gradient-to-b from-gray-900/30 to-transparent">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-6">
             Video <span className="text-yellow-500">Tutorials</span>
@@ -168,8 +172,6 @@ export default function ResourcesContent() {
           </div>
         </div>
       </section>
-
-      <StatusModal open={modal.open} title={modal.title} message={modal.message} onClose={() => setModal({ ...modal, open: false })} />
     </div>
   );
 }

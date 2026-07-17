@@ -137,11 +137,11 @@ export default function EventsContent({ initialEvents = [] }) {
   return (
     <div className="mt-[75px] pb-32">
       <section id="hero" className="relative bg-black border-b border-gray-800">
-        <div className="max-w-3xl mx-auto px-6 sm:px-10 py-16 sm:py-20">
+        <div className="max-w-7xl mx-auto px-6 py-16 sm:py-20">
           <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-6 inline-block">
             Your network is your networth
           </span>
-          <h1 className="font-semibold text-white text-[44px] sm:text-[56px] lg:text-[66px] leading-[1.03] tracking-tight mb-6">
+          <h1 className="font-semibold text-white text-[44px] sm:text-[56px] lg:text-[66px] leading-[1.03] tracking-tight mb-6 max-w-2xl">
             Bitcoin events <em className="italic text-yellow-500">across Africa.</em>
           </h1>
           <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-md">
@@ -150,8 +150,13 @@ export default function EventsContent({ initialEvents = [] }) {
         </div>
       </section>
 
-      <div id="events" className="max-w-7xl mx-auto px-6 mt-16">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+      <div id="events" className="relative max-w-7xl mx-auto px-6 mt-16">
+        <div
+          className="pointer-events-none absolute -inset-x-6 top-0 h-[600px] opacity-[0.07]"
+          style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 0%, #eab308, transparent)' }}
+          aria-hidden="true"
+        />
+        <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
           <div className="relative flex-1 max-w-2xl group">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-yellow-500 transition-colors" size={20} />
             <input
@@ -178,60 +183,42 @@ export default function EventsContent({ initialEvents = [] }) {
             {filtered.map((e) => {
               const { day, month, weekday } = parseEventDate(e.date);
               return (
-                <div key={e.id} className="group relative flex flex-col bg-[#0A0A0A] overflow-hidden border border-white/5 hover:border-yellow-500/50 transition-all duration-500">
-                  <Link href={`/events/${e.id}`} className="flex flex-col flex-grow">
-                    <div className="relative h-[200px] overflow-hidden">
-                      {e.banner ? (
-                        <Image
-                          src={e.banner}
-                          alt={e.eventName}
-                          fill
-                          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                          className="object-cover opacity-60 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-80"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-gray-900"><Ticket size={32} className="text-gray-700" /></div>
-                      )}
-                      <div className="absolute bottom-0 left-0">
-                        <span className="inline-block px-3 py-1 text-[10px] font-bold bg-yellow-500 text-black">
-                          {month} {day} · {weekday.slice(0, 3).toUpperCase()}
-                        </span>
-                      </div>
-                      <div className="absolute top-3 right-3">
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-black/70 backdrop-blur-sm rounded-full text-[10px] font-semibold text-gray-200 uppercase tracking-wide">
-                          <MapPin size={10} className="text-yellow-500" />
-                          {e.city || (e.format === 'virtual' ? 'Online' : 'In-person')}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="p-6 flex flex-col flex-grow">
-                      <h3 className="text-lg font-bold mb-2 line-clamp-2 leading-tight group-hover:text-yellow-500 transition-colors uppercase tracking-tight min-h-[52px]">{e.eventName}</h3>
-                      <p className="text-gray-400 text-sm mb-4 truncate">{e.venue || '\u00A0'}</p>
-                      <div className="mt-auto pt-4 border-t border-white/5">
-                        <span className="flex items-center gap-2 text-[10px] font-black text-yellow-500 group-hover:text-white transition-colors uppercase tracking-widest">
-                          {e.time || 'View details'}
-                          <ArrowUpRight className="w-3 h-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
-                  <div className="px-6 pb-6">
-                    {e.registrationUrl ? (
-                      <a
-                        href={e.registrationUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block w-full text-center px-4 py-3 bg-yellow-500 text-black rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-yellow-400 transition-colors"
-                      >
-                        Register
-                      </a>
+                <Link href={`/events/${e.id}`} key={e.id} className="group relative flex flex-col bg-[#0A0A0A] overflow-hidden border border-white/5 hover:border-yellow-500/50 transition-all duration-500">
+                  <div className="relative h-[200px] overflow-hidden">
+                    {e.banner ? (
+                      <Image
+                        src={e.banner}
+                        alt={e.eventName}
+                        fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        className="object-cover opacity-60 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-80"
+                      />
                     ) : (
-                      <Link href={`/events/${e.id}`} className="block w-full text-center px-4 py-3 bg-white/5 border border-white/10 rounded-lg font-bold text-xs uppercase tracking-wide text-gray-300 hover:text-white transition-colors">
-                        View details
-                      </Link>
+                      <div className="w-full h-full flex items-center justify-center bg-gray-900"><Ticket size={32} className="text-gray-700" /></div>
                     )}
+                    <div className="absolute bottom-0 left-0">
+                      <span className="inline-block px-3 py-1 text-[10px] font-bold bg-yellow-500 text-black">
+                        {month} {day} · {weekday.slice(0, 3).toUpperCase()}
+                      </span>
+                    </div>
+                    <div className="absolute top-3 right-3">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-black/70 backdrop-blur-sm rounded-full text-[10px] font-semibold text-gray-200 uppercase tracking-wide">
+                        <MapPin size={10} className="text-yellow-500" />
+                        {e.city || (e.format === 'virtual' ? 'Online' : 'In-person')}
+                      </span>
+                    </div>
                   </div>
-                </div>
+                  <div className="p-6 flex flex-col flex-grow">
+                    <h3 className="text-lg font-bold mb-2 line-clamp-2 leading-tight group-hover:text-yellow-500 transition-colors uppercase tracking-tight min-h-[52px]">{e.eventName}</h3>
+                    <p className="text-gray-400 text-sm mb-4 truncate">{e.venue || '\u00A0'}</p>
+                    <div className="mt-auto pt-4 border-t border-white/5">
+                      <span className="flex items-center gap-2 text-[10px] font-black text-yellow-500 group-hover:text-white transition-colors uppercase tracking-widest">
+                        View details &amp; register
+                        <ArrowUpRight className="w-3 h-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                      </span>
+                    </div>
+                  </div>
+                </Link>
               );
             })}
           </div>
