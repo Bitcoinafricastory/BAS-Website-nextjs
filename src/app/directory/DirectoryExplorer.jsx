@@ -86,14 +86,14 @@ function EntityCard({ entity }) {
   return (
     <div className="flex flex-col bg-gray-900 border border-gray-800 rounded-xl overflow-hidden hover:border-yellow-500/50 transition-colors">
       <Link href={`/directory/${entity.slug}`} className="flex items-center gap-4 p-5 border-b border-gray-800 hover:bg-white/5 transition-colors">
-        <div className="relative w-14 h-14 flex-shrink-0 bg-gray-800 border border-gray-700 rounded-lg overflow-hidden">
+        <div className="relative w-20 h-20 flex-shrink-0 bg-gray-800 border border-gray-700 rounded-lg overflow-hidden">
           {entity.logo && (
-            <Image src={entity.logo} alt={entity.name} fill sizes="56px" className="object-contain p-1.5" />
+            <Image src={entity.logo} alt={entity.name} fill sizes="80px" className="object-contain p-2" />
           )}
         </div>
         <div className="min-w-0">
-          <h3 className="font-bold text-white truncate">{entity.name}</h3>
-          <div className="flex flex-wrap gap-1.5 mt-1">
+          <h3 className="font-bold text-white text-lg truncate">{entity.name}</h3>
+          <div className="flex flex-wrap gap-1.5 mt-1.5">
             <span className="text-[10px] text-gray-400 bg-gray-800 px-2 py-0.5 rounded-full">{entityTypeLabel(entity.type)}</span>
             {entity.country && <span className="text-[10px] text-gray-400 bg-gray-800 px-2 py-0.5 rounded-full">{entity.country}</span>}
           </div>

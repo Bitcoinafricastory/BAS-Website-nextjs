@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Search, Box, Ticket, X as CloseIcon, Save } from 'lucide-react';
+import { Search, Box, Ticket, MapPin, X as CloseIcon, Save } from 'lucide-react';
 import { db, storage } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -142,24 +142,41 @@ export default function EventsContent({ initialEvents = [] }) {
             <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-[#FAD604] mb-6">
               Your network is your networth
             </span>
-            <h1 className="font-semibold text-white text-[34px] sm:text-[44px] lg:text-[50px] leading-[1.05] tracking-tight mb-6 max-w-xl">
+            <h1 className="font-semibold text-white text-[44px] sm:text-[56px] lg:text-[66px] leading-[1.03] tracking-tight mb-6 max-w-xl">
               Bitcoin events <em className="italic text-[#FAD604]">across Africa.</em>
             </h1>
             <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-md">
               Discover meetups, conferences, workshops, and grassroots Bitcoin gatherings shaping Africa&rsquo;s Bitcoin circular economy.
             </p>
           </div>
-          <div className="order-1 lg:order-2 relative min-h-[220px] sm:min-h-[300px] lg:min-h-0 overflow-hidden">
-            <Image
-              src="/assets/communities.jpg"
-              alt="Bitcoin community gathering"
-              fill
-              priority
-              sizes="(min-width: 1024px) 45vw, 100vw"
-              className="object-cover"
-            />
-            <div className="hidden lg:block absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.85)_0%,rgba(0,0,0,0.25)_30%,rgba(0,0,0,0)_60%)]" />
-            <div className="lg:hidden absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.15)_0%,rgba(0,0,0,0.8)_100%)]" />
+
+          {/* Stylized Africa map with pins marking where our tracked events actually are —
+              replaces the stock photo. Not a precision map, a decorative continent silhouette. */}
+          <div className="order-1 lg:order-2 relative min-h-[280px] sm:min-h-[340px] lg:min-h-0 overflow-hidden flex items-center justify-center py-10 lg:py-0">
+            <svg viewBox="0 0 400 420" className="w-[70%] max-w-[320px] lg:w-[75%] lg:max-w-none" aria-hidden="true">
+              <path
+                d="M100,12 C150,8 210,18 250,35 C275,45 285,55 300,75 C330,90 345,95 338,108 C330,120 305,112 292,105 C305,130 315,150 310,175 C305,205 285,225 275,255 C268,280 265,300 250,325 C238,347 225,365 205,388 C195,402 190,412 180,410 C170,408 172,392 168,378 C160,352 140,340 125,320 C105,295 90,275 78,248 C62,213 55,185 58,150 C52,140 40,132 35,118 C28,102 32,88 48,82 C58,78 68,80 75,72 C68,58 62,45 68,32 C76,15 88,14 100,12 Z"
+                fill="#141414"
+                stroke="#3a3a3a"
+                strokeWidth="1.5"
+              />
+              {[
+                { cx: 78, cy: 232, label: 'Lagos' },
+                { cx: 66, cy: 172, label: 'Ouagadougou' },
+                { cx: 255, cy: 252, label: 'Nairobi' },
+                { cx: 248, cy: 322, label: 'Blantyre' },
+                { cx: 186, cy: 398, label: 'Cape Town' },
+                { cx: 92, cy: 236, label: 'Cotonou' },
+              ].map((pin) => (
+                <g key={pin.label}>
+                  <circle cx={pin.cx} cy={pin.cy} r="9" fill="#FAD604" opacity="0.18">
+                    <animate attributeName="r" values="7;13;7" dur="2.4s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.25;0;0.25" dur="2.4s" repeatCount="indefinite" />
+                  </circle>
+                  <circle cx={pin.cx} cy={pin.cy} r="3.5" fill="#FAD604" />
+                </g>
+              ))}
+            </svg>
           </div>
         </div>
       </section>
@@ -194,7 +211,7 @@ export default function EventsContent({ initialEvents = [] }) {
               return (
                 <div key={e.id} className="group bg-gray-900 border border-gray-800 hover:border-yellow-500/40 transition-colors overflow-hidden">
                   <Link href={`/events/${e.id}`} className="block">
-                    <div className="relative aspect-square overflow-hidden bg-gray-800">
+                    <div className="relative h-36 sm:h-40 overflow-hidden bg-gray-800">
                       {e.banner ? (
                         <Image
                           src={e.banner}
@@ -204,11 +221,14 @@ export default function EventsContent({ initialEvents = [] }) {
                           className="object-cover"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center"><Ticket size={40} className="text-gray-700" /></div>
+                        <div className="w-full h-full flex items-center justify-center"><Ticket size={32} className="text-gray-700" /></div>
                       )}
                     </div>
                     <div className="p-5 pb-0">
-                      <p className="text-xs text-gray-500 mb-2">{e.city || (e.format === 'virtual' ? 'Online' : 'In-person')}</p>
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gray-800 rounded-full text-[10px] font-semibold text-gray-300 uppercase tracking-wide mb-3">
+                        <MapPin size={11} className="text-yellow-500" />
+                        {e.city || (e.format === 'virtual' ? 'Online' : 'In-person')}
+                      </span>
                       <h4 className="text-lg font-bold text-white group-hover:text-yellow-500 transition-colors leading-snug mb-1.5 line-clamp-2 min-h-[52px]">{e.eventName}</h4>
                       <p className="text-xs text-gray-500 mb-4 truncate min-h-[16px]">{e.venue || '\u00A0'}</p>
                       <div className="flex items-center gap-3 mb-5">
