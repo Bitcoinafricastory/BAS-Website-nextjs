@@ -1,11 +1,9 @@
-'use client';
-
-import { BookOpen, Shield, ExternalLink, FileCode2, Wrench } from 'lucide-react';
+import Image from 'next/image';
+import { ExternalLink, ArrowUpRight, Play } from 'lucide-react';
 
 const recommendedWallets = [
-  { name: 'BlueWallet', description: 'User-friendly mobile Bitcoin wallet', url: 'https://bluewallet.io' },
-  { name: 'Muun', description: 'Simple and secure Bitcoin wallet', url: 'https://muun.com' },
-  { name: 'Sparrow', description: 'Desktop Bitcoin wallet for power users', url: 'https://sparrowwallet.com' },
+  { name: 'Blink', description: 'The Lightning wallet the Bitcoin Africa Story community actually uses day to day.', url: 'https://www.blink.sv', logo: '/assets/wallets/blink-logo.png' },
+  { name: 'Sparrow', description: 'Desktop Bitcoin wallet for power users who want full control.', url: 'https://sparrowwallet.com', logo: '/assets/wallets/sparrow-logo.png' },
 ];
 
 const foundationalLearning = [
@@ -15,37 +13,30 @@ const foundationalLearning = [
   { name: 'Mastering Bitcoin', description: "Andreas Antonopoulos's open-source reference book — the in-depth technical guide, free on GitHub.", url: 'https://github.com/bitcoinbook/bitcoinbook' },
 ];
 
-const toolsAndTracking = [
+const toolsAndDevelopers = [
   { name: 'mempool.space', description: 'Track real-time network fees, unconfirmed transactions, and the Lightning Network.', url: 'https://mempool.space' },
   { name: 'Bitcoin.org: Getting Started', description: 'Choosing a wallet and making your first Bitcoin payment, explained simply.', url: 'https://bitcoin.org/en/getting-started' },
-];
-
-const developerResources = [
   { name: 'Bitcoin Developer Documentation', description: 'Technical references and guides for building directly on the Bitcoin network.', url: 'https://developer.bitcoin.org' },
 ];
 
-function ResourceCard({ resource, Icon }) {
+function ResourceRow({ resource }) {
   return (
     <a
       href={resource.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group p-8 bg-gray-900 border border-gray-800 rounded-xl hover:border-yellow-500 transition-all duration-300 flex flex-col"
+      className="group flex items-start justify-between gap-6 py-6 border-b border-gray-800 hover:bg-gray-900/40 transition-colors -mx-4 px-4"
     >
-      <div className="w-14 h-14 bg-yellow-500/10 rounded-lg flex items-center justify-center mb-6">
-        <Icon className="text-yellow-500" size={28} />
+      <div>
+        <h3 className="text-lg font-bold mb-1.5 group-hover:text-yellow-500 transition-colors">{resource.name}</h3>
+        <p className="text-gray-400 text-sm max-w-xl">{resource.description}</p>
       </div>
-      <h3 className="text-xl font-bold mb-3 group-hover:text-yellow-500 transition-colors duration-200">{resource.name}</h3>
-      <p className="text-gray-400 mb-4 flex-grow">{resource.description}</p>
-      <span className="inline-flex items-center text-yellow-500 font-semibold">
-        Visit Site
-        <ExternalLink size={16} className="ml-2 group-hover:translate-x-1 transition-transform duration-200" />
-      </span>
+      <ArrowUpRight size={20} className="text-gray-600 group-hover:text-yellow-500 flex-shrink-0 mt-1 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
     </a>
   );
 }
 
-export default function ResourcesContent() {
+export default function ResourcesContent({ episodes = [] }) {
   return (
     <div className="pt-16">
       <section className="py-20 px-6 bg-gradient-to-b from-gray-900/30 to-transparent">
@@ -63,68 +54,92 @@ export default function ResourcesContent() {
         </div>
       </section>
 
+      {/* Editorial reference list — deliberately not another card grid, so this section reads
+          like a curated bibliography rather than a fifth identical box of icons. */}
       <section className="py-16 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-12">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-8">
             <h2 className="text-4xl font-bold mb-4">
               Foundational <span className="text-yellow-500">Learning</span>
             </h2>
             <p className="text-lg text-gray-400">Start here — from the original whitepaper to the definitive technical reference</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
             {foundationalLearning.map((resource) => (
-              <ResourceCard key={resource.name} resource={resource} Icon={BookOpen} />
+              <ResourceRow key={resource.name} resource={resource} />
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-16 px-6 bg-gradient-to-b from-transparent via-gray-900/30 to-transparent">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-12">
-            <h2 className="text-4xl font-bold mb-4">
-              Tools &amp; <span className="text-yellow-500">Tracking</span>
-            </h2>
-            <p className="text-lg text-gray-400">Live network data and practical guides for actually using Bitcoin</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {toolsAndTracking.map((resource) => (
-              <ResourceCard key={resource.name} resource={resource} Icon={Wrench} />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Podcast — real episodes, real thumbnails, replacing the old empty
+          "video tutorials coming soon" placeholder. */}
+      {episodes.length > 0 && (
+        <section className="py-16 px-6 bg-gradient-to-b from-transparent via-gray-900/30 to-transparent">
+          <div className="max-w-6xl mx-auto">
+            <div className="mb-12">
+              <h2 className="text-4xl font-bold mb-4">
+                The <span className="text-yellow-500">Podcast</span>
+              </h2>
+              <p className="text-lg text-gray-400">Conversations with the people building Bitcoin across Africa</p>
+            </div>
 
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {episodes.map((ep) => (
+                <a key={ep.id} href={ep.url} target="_blank" rel="noopener noreferrer" className="group block bg-gray-900 border border-gray-800 rounded-xl overflow-hidden hover:border-yellow-500 transition-all duration-300">
+                  <div className="relative aspect-video bg-gray-800">
+                    {ep.image && (
+                      <Image src={ep.image} alt={ep.title} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                    )}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center group-hover:bg-yellow-500 transition-colors">
+                        <Play size={18} className="text-white group-hover:text-black ml-0.5" fill="currentColor" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-5">
+                    {ep.episodeNumber && <p className="text-xs font-bold text-yellow-500 uppercase tracking-wide mb-1.5">Episode {ep.episodeNumber}</p>}
+                    <h3 className="font-bold group-hover:text-yellow-500 transition-colors line-clamp-2 leading-snug">{ep.title}</h3>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Tools, tracking, and developer references — same editorial row treatment as
+          Foundational Learning, so the page doesn't fall back into box-after-box. */}
       <section className="py-16 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-12">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-8">
             <h2 className="text-4xl font-bold mb-4">
-              For <span className="text-yellow-500">Developers</span>
+              Tools &amp; <span className="text-yellow-500">Development</span>
             </h2>
-            <p className="text-lg text-gray-400">Building on Bitcoin? Start with the official technical documentation</p>
+            <p className="text-lg text-gray-400">Live network data and technical references for using and building on Bitcoin</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {developerResources.map((resource) => (
-              <ResourceCard key={resource.name} resource={resource} Icon={FileCode2} />
+          <div>
+            {toolsAndDevelopers.map((resource) => (
+              <ResourceRow key={resource.name} resource={resource} />
             ))}
           </div>
         </div>
       </section>
 
       <section className="py-16 px-6 bg-gradient-to-b from-transparent via-gray-900/30 to-transparent">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="mb-12">
             <h2 className="text-4xl font-bold mb-4">
               Recommended <span className="text-yellow-500">Wallets</span>
             </h2>
-            <p className="text-lg text-gray-400">Secure and trusted Bitcoin wallets for storing your funds</p>
+            <p className="text-lg text-gray-400">The two wallets our community actually uses and trusts</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {recommendedWallets.map((wallet) => (
               <div key={wallet.name} className="p-8 bg-gray-900 border border-gray-800 rounded-xl hover:border-yellow-500 transition-all duration-300 text-center">
-                <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Shield className="text-yellow-500" size={32} />
+                <div className="relative w-full h-16 mb-6">
+                  <Image src={wallet.logo} alt={`${wallet.name} logo`} fill sizes="200px" className="object-contain" />
                 </div>
                 <h3 className="text-xl font-bold mb-3">{wallet.name}</h3>
                 <p className="text-gray-400 mb-6">{wallet.description}</p>
@@ -136,7 +151,7 @@ export default function ResourcesContent() {
             ))}
           </div>
 
-          <div className="mt-8 p-6 bg-yellow-500/10 border border-yellow-500/30 rounded-xl">
+          <div className="mt-8 p-6 bg-yellow-500/10 border border-yellow-500/30 rounded-xl max-w-4xl">
             <p className="text-gray-300 text-center">
               <strong className="text-yellow-500">Security Tip:</strong> Always download wallets from
               official websites. Never share your seed phrase with anyone, and always keep backups in a
@@ -146,30 +161,29 @@ export default function ResourcesContent() {
         </div>
       </section>
 
-      <section className="py-16 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6">
-            Video <span className="text-yellow-500">Tutorials</span>
-          </h2>
-          <p className="text-lg text-gray-400 mb-8">Visual guides and tutorials to help you understand Bitcoin concepts</p>
-          <div className="aspect-video bg-gray-900 border border-gray-800 rounded-xl flex items-center justify-center">
-            <p className="text-gray-500">Video tutorials coming soon</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="bg-gradient-to-r from-yellow-500/10 to-yellow-600/10 border border-yellow-500/30 rounded-2xl p-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Need More Help?</h2>
-            <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-              Have questions or need personalized guidance? Reach out to us and we&rsquo;ll help you on your
-              Bitcoin journey.
+      {/* Contact CTA — full-bleed with a flowing diagonal gradient sweep instead of yet
+          another bordered rounded box (that pattern already repeats for Security Tip above);
+          asymmetric layout so it doesn't just read as "centered text in a container" again. */}
+      <section className="relative py-24 px-6 overflow-hidden border-t border-gray-800">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-20"
+          style={{ background: 'radial-gradient(ellipse 60% 80% at 15% 50%, #eab308, transparent 70%)' }}
+          aria-hidden="true"
+        />
+        <div className="relative max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-end justify-between gap-8">
+          <div className="max-w-xl">
+            <span className="inline-block text-yellow-500 text-xs font-bold uppercase tracking-widest mb-4">Still have questions?</span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Need more help?</h2>
+            <p className="text-lg text-gray-300">
+              Reach out and we&rsquo;ll help you on your Bitcoin journey — no question too basic.
             </p>
-            <a href="/contact" className="inline-block px-8 py-4 bg-yellow-500 text-black font-bold text-lg rounded-lg hover:bg-yellow-400 transition-all duration-200 hover:scale-105">
-              Contact Us
-            </a>
           </div>
+          <a
+            href="/contact"
+            className="flex-shrink-0 inline-flex items-center gap-2 px-8 py-4 bg-yellow-500 text-black font-bold text-lg rounded-lg hover:bg-yellow-400 hover:gap-3 transition-all duration-200"
+          >
+            Contact Us <ArrowUpRight size={20} />
+          </a>
         </div>
       </section>
     </div>
