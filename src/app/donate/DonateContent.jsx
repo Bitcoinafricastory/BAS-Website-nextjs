@@ -12,12 +12,12 @@ export default function DonateContent() {
       <section id="hero" className="relative bg-black">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] lg:min-h-[56vh]">
           <div className="order-2 lg:order-1 flex flex-col justify-center px-6 sm:px-10 lg:pl-6 lg:pr-14 py-14 lg:py-16 border-b lg:border-b-0 lg:border-r border-gray-800">
-            <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-[#FAD604] mb-6">
+            <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-6">
               100% of donations fund the work
             </span>
 
             <h1 className="font-semibold text-white text-[34px] sm:text-[44px] lg:text-[50px] leading-[1.05] tracking-tight mb-6 max-w-xl">
-              Support Bitcoin adoption <em className="italic text-[#FAD604]">in Africa.</em>
+              Support Bitcoin adoption <em className="italic text-yellow-500">in Africa.</em>
             </h1>
 
             <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-md">

@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Search, Box, Ticket, MapPin, X as CloseIcon, Save } from 'lucide-react';
+import { Search, Box, Ticket, MapPin, ArrowUpRight, X as CloseIcon, Save } from 'lucide-react';
 import { db, storage } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -136,48 +136,17 @@ export default function EventsContent({ initialEvents = [] }) {
 
   return (
     <div className="mt-[75px] pb-32">
-      <section id="hero" className="relative bg-black">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] lg:min-h-[52vh]">
-          <div className="order-2 lg:order-1 flex flex-col justify-center px-6 sm:px-10 lg:pl-6 lg:pr-14 py-14 lg:py-16 border-b lg:border-b-0 lg:border-r border-gray-800">
-            <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-[#FAD604] mb-6">
-              Your network is your networth
-            </span>
-            <h1 className="font-semibold text-white text-[44px] sm:text-[56px] lg:text-[66px] leading-[1.03] tracking-tight mb-6 max-w-xl">
-              Bitcoin events <em className="italic text-[#FAD604]">across Africa.</em>
-            </h1>
-            <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-md">
-              Discover meetups, conferences, workshops, and grassroots Bitcoin gatherings shaping Africa&rsquo;s Bitcoin circular economy.
-            </p>
-          </div>
-
-          {/* Stylized Africa map with pins marking where our tracked events actually are —
-              replaces the stock photo. Not a precision map, a decorative continent silhouette. */}
-          <div className="order-1 lg:order-2 relative min-h-[280px] sm:min-h-[340px] lg:min-h-0 overflow-hidden flex items-center justify-center py-10 lg:py-0">
-            <svg viewBox="0 0 400 420" className="w-[70%] max-w-[320px] lg:w-[75%] lg:max-w-none" aria-hidden="true">
-              <path
-                d="M100,12 C150,8 210,18 250,35 C275,45 285,55 300,75 C330,90 345,95 338,108 C330,120 305,112 292,105 C305,130 315,150 310,175 C305,205 285,225 275,255 C268,280 265,300 250,325 C238,347 225,365 205,388 C195,402 190,412 180,410 C170,408 172,392 168,378 C160,352 140,340 125,320 C105,295 90,275 78,248 C62,213 55,185 58,150 C52,140 40,132 35,118 C28,102 32,88 48,82 C58,78 68,80 75,72 C68,58 62,45 68,32 C76,15 88,14 100,12 Z"
-                fill="#141414"
-                stroke="#3a3a3a"
-                strokeWidth="1.5"
-              />
-              {[
-                { cx: 78, cy: 232, label: 'Lagos' },
-                { cx: 66, cy: 172, label: 'Ouagadougou' },
-                { cx: 255, cy: 252, label: 'Nairobi' },
-                { cx: 248, cy: 322, label: 'Blantyre' },
-                { cx: 186, cy: 398, label: 'Cape Town' },
-                { cx: 92, cy: 236, label: 'Cotonou' },
-              ].map((pin) => (
-                <g key={pin.label}>
-                  <circle cx={pin.cx} cy={pin.cy} r="9" fill="#FAD604" opacity="0.18">
-                    <animate attributeName="r" values="7;13;7" dur="2.4s" repeatCount="indefinite" />
-                    <animate attributeName="opacity" values="0.25;0;0.25" dur="2.4s" repeatCount="indefinite" />
-                  </circle>
-                  <circle cx={pin.cx} cy={pin.cy} r="3.5" fill="#FAD604" />
-                </g>
-              ))}
-            </svg>
-          </div>
+      <section id="hero" className="relative bg-black border-b border-gray-800">
+        <div className="max-w-3xl mx-auto px-6 sm:px-10 py-16 sm:py-20">
+          <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-6 inline-block">
+            Your network is your networth
+          </span>
+          <h1 className="font-semibold text-white text-[44px] sm:text-[56px] lg:text-[66px] leading-[1.03] tracking-tight mb-6">
+            Bitcoin events <em className="italic text-yellow-500">across Africa.</em>
+          </h1>
+          <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-md">
+            Discover meetups, conferences, workshops, and grassroots Bitcoin gatherings shaping Africa&rsquo;s Bitcoin circular economy.
+          </p>
         </div>
       </section>
 
@@ -209,52 +178,55 @@ export default function EventsContent({ initialEvents = [] }) {
             {filtered.map((e) => {
               const { day, month, weekday } = parseEventDate(e.date);
               return (
-                <div key={e.id} className="group bg-gray-900 border border-gray-800 hover:border-yellow-500/40 transition-colors overflow-hidden">
-                  <Link href={`/events/${e.id}`} className="block">
-                    <div className="relative h-36 sm:h-40 overflow-hidden bg-gray-800">
+                <div key={e.id} className="group relative flex flex-col bg-[#0A0A0A] overflow-hidden border border-white/5 hover:border-yellow-500/50 transition-all duration-500">
+                  <Link href={`/events/${e.id}`} className="flex flex-col flex-grow">
+                    <div className="relative h-[200px] overflow-hidden">
                       {e.banner ? (
                         <Image
                           src={e.banner}
                           alt={e.eventName}
                           fill
                           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                          className="object-cover"
+                          className="object-cover opacity-60 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-80"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center"><Ticket size={32} className="text-gray-700" /></div>
+                        <div className="w-full h-full flex items-center justify-center bg-gray-900"><Ticket size={32} className="text-gray-700" /></div>
                       )}
+                      <div className="absolute bottom-0 left-0">
+                        <span className="inline-block px-3 py-1 text-[10px] font-bold bg-yellow-500 text-black">
+                          {month} {day} · {weekday.slice(0, 3).toUpperCase()}
+                        </span>
+                      </div>
+                      <div className="absolute top-3 right-3">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-black/70 backdrop-blur-sm rounded-full text-[10px] font-semibold text-gray-200 uppercase tracking-wide">
+                          <MapPin size={10} className="text-yellow-500" />
+                          {e.city || (e.format === 'virtual' ? 'Online' : 'In-person')}
+                        </span>
+                      </div>
                     </div>
-                    <div className="p-5 pb-0">
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gray-800 rounded-full text-[10px] font-semibold text-gray-300 uppercase tracking-wide mb-3">
-                        <MapPin size={11} className="text-yellow-500" />
-                        {e.city || (e.format === 'virtual' ? 'Online' : 'In-person')}
-                      </span>
-                      <h4 className="text-lg font-bold text-white group-hover:text-yellow-500 transition-colors leading-snug mb-1.5 line-clamp-2 min-h-[52px]">{e.eventName}</h4>
-                      <p className="text-xs text-gray-500 mb-4 truncate min-h-[16px]">{e.venue || '\u00A0'}</p>
-                      <div className="flex items-center gap-3 mb-5">
-                        <div className="flex-shrink-0 w-11 h-11 rounded-full border border-gray-700 flex flex-col items-center justify-center leading-none">
-                          <span className="text-[9px] font-bold text-yellow-500 uppercase">{month}</span>
-                          <span className="text-sm font-black text-white">{day}</span>
-                        </div>
-                        <div className="min-w-0">
-                          <p className="text-xs font-semibold text-white truncate">{weekday}</p>
-                          <p className="text-[11px] text-gray-500 truncate">{e.time || ''}</p>
-                        </div>
+                    <div className="p-6 flex flex-col flex-grow">
+                      <h3 className="text-lg font-bold mb-2 line-clamp-2 leading-tight group-hover:text-yellow-500 transition-colors uppercase tracking-tight min-h-[52px]">{e.eventName}</h3>
+                      <p className="text-gray-400 text-sm mb-4 truncate">{e.venue || '\u00A0'}</p>
+                      <div className="mt-auto pt-4 border-t border-white/5">
+                        <span className="flex items-center gap-2 text-[10px] font-black text-yellow-500 group-hover:text-white transition-colors uppercase tracking-widest">
+                          {e.time || 'View details'}
+                          <ArrowUpRight className="w-3 h-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                        </span>
                       </div>
                     </div>
                   </Link>
-                  <div className="px-5 pb-5">
+                  <div className="px-6 pb-6">
                     {e.registrationUrl ? (
                       <a
                         href={e.registrationUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="block w-full text-center px-4 py-2.5 bg-yellow-500 text-black rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-yellow-400 transition-colors"
+                        className="block w-full text-center px-4 py-3 bg-yellow-500 text-black rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-yellow-400 transition-colors"
                       >
                         Register
                       </a>
                     ) : (
-                      <Link href={`/events/${e.id}`} className="block w-full text-center px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-lg font-bold text-xs uppercase tracking-wide text-gray-300 group-hover:text-white transition-colors">
+                      <Link href={`/events/${e.id}`} className="block w-full text-center px-4 py-3 bg-white/5 border border-white/10 rounded-lg font-bold text-xs uppercase tracking-wide text-gray-300 hover:text-white transition-colors">
                         View details
                       </Link>
                     )}

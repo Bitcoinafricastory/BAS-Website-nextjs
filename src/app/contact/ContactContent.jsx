@@ -48,11 +48,11 @@ export default function ContactContent() {
     <div className="pt-16">
       <section id="hero" className="pt-16 pb-10 sm:pt-20 sm:pb-12 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-[#FAD604] mb-4 block">
+          <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-4 block">
             Get in touch
           </span>
           <h1 className="font-semibold text-white text-[34px] sm:text-[44px] md:text-[52px] leading-[1.05] tracking-tight mb-4 sm:mb-6">
-            Let&rsquo;s <em className="italic text-[#FAD604]">connect.</em>
+            Let&rsquo;s <em className="italic text-yellow-500">connect.</em>
           </h1>
           <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-xl mx-auto">
             Have questions about Bitcoin? Want to collaborate? Or just want to say hello? We&rsquo;d love to

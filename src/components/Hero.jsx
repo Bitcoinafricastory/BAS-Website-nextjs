@@ -18,13 +18,13 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] lg:min-h-[78vh]">
         {/* Copy column */}
         <div className="order-2 lg:order-1 flex flex-col justify-center px-6 sm:px-10 lg:pl-6 lg:pr-14 py-14 lg:py-20 border-b lg:border-b-0 lg:border-r border-gray-800">
-          <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-[#FAD604] mb-6">
+          <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-6">
             Est. 2024 &middot; Reporting from the ground
           </span>
 
           <h1 className="font-semibold text-white text-[38px] sm:text-[50px] lg:text-[62px] leading-[1.05] tracking-tight mb-6 max-w-xl">
             Showing Africa&rsquo;s Bitcoin{' '}
-            <em className="italic text-[#FAD604]">proof&#8209;of&#8209;work.</em>
+            <em className="italic text-yellow-500">proof&#8209;of&#8209;work.</em>
           </h1>
 
           <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-md mb-10">
@@ -34,14 +34,14 @@ export default function Hero() {
           <div className="flex flex-wrap items-center gap-6 sm:gap-8">
             <Link
               href="/news"
-              className="inline-flex items-center gap-2 bg-[#FAD604] text-black font-bold text-sm sm:text-base px-6 py-4 sm:px-7 hover:brightness-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAD604] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              className="inline-flex items-center gap-2 bg-yellow-500 text-black font-bold text-sm sm:text-base px-6 py-4 sm:px-7 hover:brightness-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
               Read the Stories
               <ArrowRight size={18} />
             </Link>
             <Link
               href="/education"
-              className="text-sm sm:text-base font-semibold text-gray-200 border-b border-gray-700 pb-1 hover:text-[#FAD604] hover:border-[#FAD604] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAD604] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              className="text-sm sm:text-base font-semibold text-gray-200 border-b border-gray-700 pb-1 hover:text-yellow-500 hover:border-yellow-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
               Study Bitcoin
             </Link>
@@ -71,7 +71,7 @@ export default function Hero() {
               <div key={stat.label}>
                 <div className="font-bold text-white text-[22px] sm:text-[26px] leading-none flex items-baseline gap-0.5">
                   <CountUp end={stat.value} duration={2} enableScrollSpy scrollSpyOnce />
-                  <span className="text-[#FAD604] text-base">{stat.suffix}</span>
+                  <span className="text-yellow-500 text-base">{stat.suffix}</span>
                 </div>
                 <div className="font-semibold text-[10px] tracking-[0.14em] uppercase text-gray-300 mt-1.5">
                   {stat.label}

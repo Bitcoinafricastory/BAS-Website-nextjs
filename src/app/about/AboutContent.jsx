@@ -22,12 +22,12 @@ export default function AboutContent() {
       <section id="hero" className="relative bg-black">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] lg:min-h-[70vh]">
           <div className="order-2 lg:order-1 flex flex-col justify-center px-6 sm:px-10 lg:pl-6 lg:pr-14 py-14 lg:py-20 border-b lg:border-b-0 lg:border-r border-gray-800">
-            <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-[#FAD604] mb-6">
+            <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-6">
               Since 2024 &middot; Operating across Africa
             </span>
 
             <h1 className="font-semibold text-white text-[36px] sm:text-[46px] lg:text-[54px] leading-[1.05] tracking-tight mb-6 max-w-xl">
-              Empowering Africa through <em className="italic text-[#FAD604]">Bitcoin.</em>
+              Empowering Africa through <em className="italic text-yellow-500">Bitcoin.</em>
             </h1>
 
             <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-md mb-10">
@@ -37,14 +37,14 @@ export default function AboutContent() {
             <div className="flex flex-wrap items-center gap-6 sm:gap-8">
               <Link
                 href="/donate"
-                className="inline-flex items-center gap-2 bg-[#FAD604] text-black font-bold text-sm sm:text-base px-6 py-4 sm:px-7 hover:brightness-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAD604] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                className="inline-flex items-center gap-2 bg-yellow-500 text-black font-bold text-sm sm:text-base px-6 py-4 sm:px-7 hover:brightness-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 Donate
                 <ArrowRight size={18} />
               </Link>
               <Link
                 href="/contact"
-                className="text-sm sm:text-base font-semibold text-gray-200 border-b border-gray-700 pb-1 hover:text-[#FAD604] hover:border-[#FAD604] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAD604] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                className="text-sm sm:text-base font-semibold text-gray-200 border-b border-gray-700 pb-1 hover:text-yellow-500 hover:border-yellow-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 Contact Us
               </Link>
