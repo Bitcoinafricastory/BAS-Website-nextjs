@@ -83,24 +83,54 @@ export default function DirectoryExplorer({ entities }) {
 
 function EntityCard({ entity }) {
   const { top, rest } = summarizeBadges(entity.badges);
+  const hasCover = Boolean(entity.coverImage);
+  const hasLogo = Boolean(entity.logo);
+
   return (
-    <div className="flex flex-col bg-gray-900 border border-gray-800 rounded-xl overflow-hidden hover:border-yellow-500/50 transition-colors">
-      <Link href={`/directory/${entity.slug}`} className="flex items-center gap-4 p-5 border-b border-gray-800 hover:bg-white/5 transition-colors">
-        <div className="relative w-20 h-20 flex-shrink-0 bg-gray-800 border border-gray-700 rounded-lg overflow-hidden">
-          {entity.logo && (
-            <Image src={entity.logo} alt={entity.name} fill sizes="80px" className="object-contain p-2" />
+    <div className="group flex flex-col bg-[#0A0A0A] border border-white/5 overflow-hidden hover:border-yellow-500/50 transition-colors duration-300">
+      <Link href={`/directory/${entity.slug}`} className="block">
+        <div className="relative h-[190px] overflow-hidden bg-gradient-to-br from-gray-900 to-black">
+          {hasCover ? (
+            <>
+              <Image
+                src={entity.coverImage}
+                alt={entity.name}
+                fill
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+            </>
+          ) : hasLogo ? (
+            <div className="absolute inset-0 flex items-center justify-center p-10">
+              <div className="relative w-full h-full">
+                <Image src={entity.logo} alt={entity.name} fill sizes="240px" className="object-contain opacity-90" />
+              </div>
+            </div>
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="font-black text-6xl text-white/10">{entity.name?.[0] || '?'}</span>
+            </div>
           )}
-        </div>
-        <div className="min-w-0">
-          <h3 className="font-bold text-white text-lg truncate">{entity.name}</h3>
-          <div className="flex flex-wrap gap-1.5 mt-1.5">
-            <span className="text-[10px] text-gray-400 bg-gray-800 px-2 py-0.5 rounded-full">{entityTypeLabel(entity.type)}</span>
-            {entity.country && <span className="text-[10px] text-gray-400 bg-gray-800 px-2 py-0.5 rounded-full">{entity.country}</span>}
-          </div>
+
+          <span className="absolute top-3 right-3 px-2.5 py-1 bg-black/70 backdrop-blur-sm rounded-full text-[10px] font-semibold text-gray-200 uppercase tracking-wide">
+            {entityTypeLabel(entity.type)}
+          </span>
+
+          {hasCover && hasLogo && (
+            <div className="absolute -bottom-8 left-5 w-20 h-20 rounded-xl bg-[#161616] border-4 border-[#0A0A0A] overflow-hidden flex items-center justify-center">
+              <div className="relative w-full h-full">
+                <Image src={entity.logo} alt="" fill sizes="80px" className="object-contain p-2" />
+              </div>
+            </div>
+          )}
         </div>
       </Link>
 
-      <div className="p-5 flex flex-col flex-grow">
+      <div className={`p-5 flex flex-col flex-grow ${hasCover && hasLogo ? 'pt-11' : ''}`}>
+        <h3 className="font-bold text-white text-lg mb-1 truncate">{entity.name}</h3>
+        {entity.country && <p className="text-xs text-gray-500 mb-3">{entity.country}</p>}
+
         <div className="mb-3">
           {top ? (
             <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-yellow-500">
@@ -108,14 +138,14 @@ function EntityCard({ entity }) {
               {rest.length > 0 && <span className="text-gray-500 font-normal">+{rest.length}</span>}
             </span>
           ) : (
-            <span className="text-xs font-semibold text-gray-500">No badges yet</span>
+            <span className="text-xs font-semibold text-gray-500">Not yet verified</span>
           )}
         </div>
         {entity.description && (
           <p className="text-sm text-gray-400 leading-relaxed mb-4 line-clamp-3">{entity.description}</p>
         )}
 
-        <div className="mt-auto flex flex-wrap items-center gap-4 pt-3">
+        <div className="mt-auto flex flex-wrap items-center gap-4 pt-3 border-t border-white/5">
           <Link href={`/directory/${entity.slug}`} className="inline-flex items-center gap-1 text-sm font-semibold text-yellow-500 hover:text-yellow-400 transition-colors">
             View profile <ArrowUpRight size={14} />
           </Link>

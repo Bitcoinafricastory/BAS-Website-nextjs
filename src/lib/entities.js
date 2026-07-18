@@ -66,6 +66,7 @@ export async function getEntityCoverage(slug) {
         title: data.title,
         url: `/news/${data.slug || d.id}`,
         date: data.date || '',
+        image: data.image || null,
         external: false,
       };
     });
@@ -77,6 +78,7 @@ export async function getEntityCoverage(slug) {
         title: data.title,
         url: data.url || '#',
         date: data.date || '',
+        image: data.image || null,
         external: true,
       };
     });
