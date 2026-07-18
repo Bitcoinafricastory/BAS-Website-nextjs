@@ -19,6 +19,8 @@ const staticRoutes = [
   { path: '/resources', priority: 0.7, changeFrequency: 'weekly' },
   { path: '/authors', priority: 0.7, changeFrequency: 'weekly' },
   { path: '/search', priority: 0.4, changeFrequency: 'monthly' },
+  { path: '/privacy', priority: 0.2, changeFrequency: 'yearly' },
+  { path: '/terms', priority: 0.2, changeFrequency: 'yearly' },
 ];
 
 const CATEGORIES = ['adoption', 'regulations', 'education', 'technology', 'economy', 'security', 'community'];
