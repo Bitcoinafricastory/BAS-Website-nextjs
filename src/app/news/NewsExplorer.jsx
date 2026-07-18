@@ -191,21 +191,41 @@ export default function NewsExplorer({ initialPosts = [] }) {
 
       <section className="py-20 mt-8 border-t border-gray-800">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Share Your Bitcoin <span className="text-yellow-500">Story</span>
-            </h2>
-            <p className="text-lg text-gray-300">
-              Have a Bitcoin adoption story or education content to share? Submit your story below.
-            </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 bg-[#0A0A0A] border border-white/10 rounded-2xl overflow-hidden mb-8">
+            <div className="relative p-8 sm:p-11 flex flex-col justify-center">
+              <span
+                className="absolute top-1 left-6 font-black text-yellow-500/10 leading-none pointer-events-none"
+                style={{ fontSize: '110px' }}
+                aria-hidden="true"
+              >
+                &ldquo;
+              </span>
+              <h2 className="relative text-2xl sm:text-3xl font-bold mb-3">
+                Share Your Bitcoin <span className="text-yellow-500">Story</span>
+              </h2>
+              <p className="relative text-gray-400 text-sm sm:text-base mb-7 max-w-md">
+                Have a Bitcoin adoption story or education content to share? Submit it below — our
+                reporters review every story before it goes live.
+              </p>
+              <button
+                onClick={() => setShowForm(!showForm)}
+                className="relative w-fit inline-flex items-center gap-2 px-7 py-3.5 bg-yellow-500 text-black font-bold hover:bg-yellow-400 transition-all duration-200 hover:scale-105 rounded-lg"
+              >
+                {showForm ? 'Cancel' : 'Submit Your Story →'}
+              </button>
+            </div>
+            <div
+              className="flex items-center justify-center p-8"
+              style={{ background: 'linear-gradient(160deg, rgba(234,179,8,0.14), rgba(0,0,0,0.9))' }}
+            >
+              <div className="text-center">
+                <div className="text-4xl sm:text-5xl font-black text-yellow-500">{initialPosts.length}+</div>
+                <div className="text-xs uppercase tracking-wider text-gray-400 mt-1">
+                  Stories published<br />from submissions like yours
+                </div>
+              </div>
+            </div>
           </div>
-
-          <button
-            onClick={() => setShowForm(!showForm)}
-            className="w-full mb-6 px-8 py-4 bg-yellow-500 text-black font-bold text-lg hover:bg-yellow-400 transition-all duration-200 hover:scale-105"
-          >
-            {showForm ? 'Cancel' : 'Submit Your Story'}
-          </button>
 
           {showForm && (
             <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-2xl p-6 mb-8 shadow-2xl">
