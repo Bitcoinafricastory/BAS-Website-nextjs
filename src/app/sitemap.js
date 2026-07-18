@@ -1,12 +1,15 @@
 import { getAllNews } from '@/lib/news';
 import { getAllEvents } from '@/lib/events';
 import { getActiveAuthors } from '@/lib/authors';
+import { getEntities } from '@/lib/entities';
+import { getAllEducationPrograms, getAllOtherPrograms } from '@/lib/education';
 
 export const revalidate = 300;
 
 const staticRoutes = [
   { path: '/', priority: 1.0, changeFrequency: 'daily' },
   { path: '/news', priority: 0.9, changeFrequency: 'daily' },
+  { path: '/directory', priority: 0.85, changeFrequency: 'daily' },
   { path: '/donate', priority: 0.7, changeFrequency: 'monthly' },
   { path: '/contact', priority: 0.6, changeFrequency: 'monthly' },
   { path: '/events', priority: 0.8, changeFrequency: 'weekly' },
@@ -63,6 +66,42 @@ export default async function sitemap() {
     console.warn('sitemap: could not fetch authors', err);
   }
 
+  let entityEntries = [];
+  try {
+    const entities = await getEntities();
+    entityEntries = entities
+      .filter((e) => e.slug)
+      .map((e) => ({
+        url: `${base}/directory/${e.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.65,
+      }));
+  } catch (err) {
+    console.warn('sitemap: could not fetch directory entities', err);
+  }
+
+  let programEntries = [];
+  try {
+    const [ownPrograms, otherPrograms] = await Promise.all([getAllEducationPrograms(), getAllOtherPrograms()]);
+    programEntries = [
+      ...ownPrograms.map((p) => ({
+        url: `${base}/education/our-programs/${p.id}`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.6,
+      })),
+      ...otherPrograms.map((p) => ({
+        url: `${base}/education/programs/${p.id}`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.55,
+      })),
+    ];
+  } catch (err) {
+    console.warn('sitemap: could not fetch education programs', err);
+  }
+
   const staticEntries = staticRoutes.map((r) => ({
     url: `${base}${r.path}`,
     lastModified: new Date(),
@@ -77,5 +116,5 @@ export default async function sitemap() {
     priority: 0.7,
   }));
 
-  return [...staticEntries, ...categoryEntries, ...articleEntries, ...eventEntries, ...authorEntries];
+  return [...staticEntries, ...categoryEntries, ...articleEntries, ...eventEntries, ...authorEntries, ...entityEntries, ...programEntries];
 }

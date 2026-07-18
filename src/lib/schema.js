@@ -66,7 +66,7 @@ export function directoryEntitySchema(entity) {
     url: pageUrl,
   };
   if (entity.description) base.description = entity.description;
-  if (entity.logo) base.image = resolveImageUrl(entity.logo);
+  if (entity.coverImage || entity.logo) base.image = resolveImageUrl(entity.coverImage || entity.logo);
   if (sameAs.length > 0) base.sameAs = sameAs;
   if (entity.country) base.areaServed = entity.country;
   if (entity.type !== 'person' && entity.yearFounded) base.foundingDate = String(entity.yearFounded);

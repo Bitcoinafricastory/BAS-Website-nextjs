@@ -21,7 +21,10 @@ export default async function EducationPage() {
 
   // Course schema from real program data — makes free programs eligible for
   // Google's course rich results and readable by AI answer engines.
-  const coursesSchema = courseListSchema([...(programs || []), ...(otherPrograms || [])]);
+  // Programs store their blurb in `desc`, not `description` — remap it here,
+  // otherwise every course in this list emits with an empty description.
+  const allPrograms = [...(programs || []), ...(otherPrograms || [])].map((p) => ({ ...p, description: p.desc }));
+  const coursesSchema = courseListSchema(allPrograms);
 
   return (
     <div className="pt-16">

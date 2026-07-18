@@ -24,7 +24,7 @@ export async function generateMetadata({ params }) {
   if (!entity) return {};
 
   const pageUrl = `${SITE_URL}/directory/${entity.slug}`;
-  const imageUrl = resolveImageUrl(entity.logo);
+  const imageUrl = resolveImageUrl(entity.coverImage || entity.logo);
 
   return {
     title: `${entity.name} — ${entityTypeLabel(entity.type)}`,
