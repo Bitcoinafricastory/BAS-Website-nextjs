@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default function PostCard({ post }) {
   return (
-    <Link href={`/news/${post.slug || post.id}`} className="group bg-gray-900 border border-gray-800 overflow-hidden hover:border-yellow-500 transition-all duration-300 hover:scale-105">
+    <Link href={`/news/${post.slug || post.id}`} className="group bg-gray-900/50 border border-gray-800 overflow-hidden hover:border-yellow-500 transition-all duration-300 hover:scale-105">
       <div className="aspect-video overflow-hidden relative bg-gray-800">
         {post.image && (
           <Image

@@ -237,7 +237,7 @@ export default async function BlogPostPage({ params }) {
                 <Link
                   key={relatedPost.id}
                   href={`/news/${relatedPost.slug || relatedPost.id}`}
-                  className="group bg-gray-900 border border-gray-800 rounded-xl overflow-hidden hover:border-yellow-500 transition-all duration-300"
+                  className="group bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden hover:border-yellow-500 transition-all duration-300"
                 >
                   <div className="aspect-video overflow-hidden relative bg-gray-800">
                     {resolveImageUrl(relatedPost.image) && (

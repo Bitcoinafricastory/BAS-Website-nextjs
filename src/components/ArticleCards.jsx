@@ -15,7 +15,7 @@ export function FeaturedCard({ post }) {
   return (
     <Link
       href={href}
-      className="group flex flex-col md:block md:relative overflow-hidden rounded-2xl border border-gray-800 hover:border-yellow-500/50 transition-all duration-500 bg-gray-900"
+      className="group flex flex-col md:block md:relative overflow-hidden rounded-2xl border border-gray-800 hover:border-yellow-500/50 transition-all duration-500 bg-gray-900/50"
     >
       <div className="aspect-[16/10] md:aspect-[21/9] overflow-hidden relative bg-gray-900">
         {resolveImageUrl(post.image) && (
@@ -59,7 +59,7 @@ export function StoryCard({ post }) {
   if (!post) return null;
   const href = `/news/${post.slug || post.id}`;
   return (
-    <Link href={href} className="group flex flex-col bg-gray-900 border border-gray-800 rounded-xl overflow-hidden hover:border-yellow-500 transition-all duration-300">
+    <Link href={href} className="group flex flex-col bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden hover:border-yellow-500 transition-all duration-300">
       <div className="aspect-video overflow-hidden relative bg-gray-800">
         {resolveImageUrl(post.image) && (
           <Image
@@ -107,7 +107,7 @@ export function HorizontalCard({ post }) {
   if (!post) return null;
   const href = `/news/${post.slug || post.id}`;
   return (
-    <Link href={href} className="group flex gap-4 items-center bg-gray-900 border border-gray-800 rounded-xl overflow-hidden hover:border-yellow-500 transition-all duration-300 p-3">
+    <Link href={href} className="group flex gap-4 items-center bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden hover:border-yellow-500 transition-all duration-300 p-3">
       <div className="w-24 h-24 flex-shrink-0 overflow-hidden rounded-lg relative bg-gray-800">
         {resolveImageUrl(post.image) && (
           <Image
