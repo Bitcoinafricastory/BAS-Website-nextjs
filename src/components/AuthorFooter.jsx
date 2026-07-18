@@ -36,7 +36,7 @@ export default function AuthorFooter({ author }) {
         <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 rounded-full overflow-hidden bg-gray-800">
           {author.avatar && (
             isLinked ? (
-              <Link href={`/authors/${author.slug}`} className="block w-full h-full">
+              <Link href={`/authors/${author.slug}`} className="relative block w-full h-full">
                 <Image src={author.avatar} alt={author.name} fill sizes="80px" className="object-cover" />
               </Link>
             ) : (
