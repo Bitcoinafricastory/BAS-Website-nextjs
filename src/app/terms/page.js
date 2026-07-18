@@ -43,7 +43,7 @@ export default function TermsPage() {
           </p>
 
           <h2>3. Acceptable Use</h2>
-          <p>When using forms on this site (newsletter, contact, submissions), you agree not to:</p>
+          <p>When using forms on this site (newsletter, Directory/event submissions), you agree not to:</p>
           <ul>
             <li>Submit false, misleading, or impersonating information</li>
             <li>Use the forms to spam, harass, or send unsolicited commercial messages</li>

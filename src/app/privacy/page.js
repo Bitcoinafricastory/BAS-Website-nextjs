@@ -28,8 +28,8 @@ export default function PrivacyPage() {
           <p><strong>Newsletter signup</strong><br />
           If you subscribe, we store your email address so we can send you new stories, education updates, and event announcements. That&rsquo;s the only reason we ask for it. We do not sell, rent, or trade this list to anyone, ever.</p>
 
-          <p><strong>Contact form</strong><br />
-          If you message us through the Contact page, we store your name, email, and message so we can reply to you.</p>
+          <p><strong>Reaching out directly</strong><br />
+          Our Contact page links to <a href="mailto:bitcoinafricastory@proton.me">bitcoinafricastory@proton.me</a> — clicking it opens your own email app. We don&rsquo;t store or log anything from that; whatever you send us lives in your and our email inboxes, the same as any other email.</p>
 
           <p><strong>Directory and Event submissions</strong><br />
           If you submit a community, project, or event to be listed, we store what you provide (organisation details, contact info, links) so our reporters can review and verify it before anything goes live. Submitting something doesn&rsquo;t guarantee it gets published — our reporters check listings before they go public.</p>
@@ -51,7 +51,6 @@ export default function PrivacyPage() {
           <h2>3. How Long We Keep It</h2>
           <ul>
             <li>Newsletter emails: kept until you unsubscribe or ask us to remove them.</li>
-            <li>Contact form messages: kept as long as needed to respond and keep a reasonable record, then periodically cleared.</li>
             <li>Directory/event submissions: kept as part of our editorial record, whether or not the listing is published.</li>
           </ul>
           <p>If you want something deleted sooner, see Section 4.</p>
@@ -61,14 +60,14 @@ export default function PrivacyPage() {
           <ul>
             <li>Show you what we have on file for your email or submission</li>
             <li>Correct inaccurate information</li>
-            <li>Delete your data (unsubscribe from the newsletter, or remove a contact/submission record)</li>
+            <li>Delete your data (unsubscribe from the newsletter, or remove a submission record)</li>
           </ul>
           <p>Email us at <a href="mailto:bitcoinafricastory@proton.me">bitcoinafricastory@proton.me</a> to make any of these requests. We&rsquo;ll respond as quickly as we reasonably can.</p>
 
           <h2>5. Children&rsquo;s Privacy</h2>
           <p>
             Our education content is built to be accessible to learners of all ages, including students. We don&rsquo;t knowingly collect personal information directly
-            from children without a parent or guardian&rsquo;s involvement (for example, through the newsletter or contact form). If you believe a child has submitted
+            from children without a parent or guardian&rsquo;s involvement (for example, through the newsletter). If you believe a child has submitted
             personal information to us directly, contact us and we&rsquo;ll remove it.
           </p>
 
