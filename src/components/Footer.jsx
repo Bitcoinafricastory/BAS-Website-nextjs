@@ -49,7 +49,7 @@ const sectionLinks = [
   { label: 'News & Stories', href: '/news' },
   { label: 'Education', href: '/education' },
   { label: 'Events', href: '/events' },
-  { label: 'Podcast', href: '/education#podcast' },
+  { label: 'Podcast', href: '/podcast' },
   { label: 'Directory', href: '/directory' },
   { label: 'Resources', href: '/resources' },
 ];

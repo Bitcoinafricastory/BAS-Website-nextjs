@@ -19,6 +19,7 @@ const primaryLinks = [
 const moreLinks = [
   { name: 'Writers', path: '/authors' },
   { name: 'Directory', path: '/directory' },
+  { name: 'Podcast', path: '/podcast' },
   { name: 'Resources', path: '/resources' },
   { name: 'About', path: '/about' },
   { name: 'Contact', path: '/contact' },

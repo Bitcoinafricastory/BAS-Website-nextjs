@@ -176,7 +176,7 @@ export function podcastEpisodeSchema(episode) {
     partOfSeries: {
       '@type': 'PodcastSeries',
       name: 'Bitcoin Africa Story Podcast',
-      url: `${SITE_URL}/news`,
+      url: `${SITE_URL}/podcast`,
     },
   };
 }

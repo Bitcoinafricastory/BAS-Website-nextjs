@@ -26,6 +26,7 @@ Bitcoin Africa Story documents and shares real stories of Bitcoin adoption acros
 ## Key Pages
 - [News & Stories](${SITE_URL}/news): Latest Bitcoin news, adoption stories, and analysis from across Africa.
 - [Directory](${SITE_URL}/directory): Verified directory of Bitcoin communities, companies, projects, conferences, and people building Bitcoin across Africa — reporter-verified, not self-submitted.
+- [Podcast](${SITE_URL}/podcast): Conversations with the merchants, builders, and communities putting Bitcoin to work across Africa.
 - [Education](${SITE_URL}/education): Free Bitcoin educational programs, diplomas, videos, and resources.
 - [Events](${SITE_URL}/events): Bitcoin meetups, conferences, and workshops across Africa.
 - [About](${SITE_URL}/about): Our mission, story, and impact.

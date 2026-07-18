@@ -9,16 +9,23 @@ export default function PodcastHighlights({ episodes = [] }) {
   return (
     <section className="py-16 px-6 bg-gradient-to-b from-gray-900/40 to-transparent">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-10 h-10 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center">
-            <Mic className="text-yellow-500" size={20} />
+        <div className="flex items-center justify-between flex-wrap gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center">
+              <Mic className="text-yellow-500" size={20} />
+            </div>
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold">
+                Podcast <span className="text-yellow-500">Highlights</span>
+              </h2>
+              <p className="text-sm text-gray-400">Conversations shaping Africa&rsquo;s Bitcoin story</p>
+            </div>
           </div>
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold">
-              Podcast <span className="text-yellow-500">Highlights</span>
-            </h2>
-            <p className="text-sm text-gray-400">Conversations shaping Africa&rsquo;s Bitcoin story</p>
-          </div>
+          {hasEpisodes && (
+            <Link href="/podcast" className="text-sm font-semibold text-yellow-500 hover:text-yellow-400 transition-colors flex-shrink-0">
+              View all episodes →
+            </Link>
+          )}
         </div>
 
         {hasEpisodes ? (
@@ -72,8 +79,8 @@ export default function PodcastHighlights({ episodes = [] }) {
               <a href="https://youtube.com/@bitcoinafricastory" target="_blank" rel="noopener noreferrer" className="px-6 py-2.5 bg-yellow-500 text-black font-bold rounded-lg hover:bg-yellow-400 transition-colors">
                 Watch on YouTube
               </a>
-              <Link href="/education" className="px-6 py-2.5 border border-yellow-500 text-yellow-500 font-bold rounded-lg hover:bg-yellow-500 hover:text-black transition-colors">
-                Explore Education
+              <Link href="/podcast" className="px-6 py-2.5 border border-yellow-500 text-yellow-500 font-bold rounded-lg hover:bg-yellow-500 hover:text-black transition-colors">
+                View the Podcast
               </Link>
             </div>
           </div>

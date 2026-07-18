@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { ExternalLink, ArrowUpRight, Play } from 'lucide-react';
 
 const recommendedWallets = [
@@ -77,11 +78,16 @@ export default function ResourcesContent({ episodes = [] }) {
       {episodes.length > 0 && (
         <section className="py-16 px-6 bg-gradient-to-b from-transparent via-gray-900/30 to-transparent">
           <div className="max-w-6xl mx-auto">
-            <div className="mb-12">
-              <h2 className="text-4xl font-bold mb-4">
-                The <span className="text-yellow-500">Podcast</span>
-              </h2>
-              <p className="text-lg text-gray-400">Conversations with the people building Bitcoin across Africa</p>
+            <div className="mb-12 flex items-end justify-between flex-wrap gap-4">
+              <div>
+                <h2 className="text-4xl font-bold mb-4">
+                  The <span className="text-yellow-500">Podcast</span>
+                </h2>
+                <p className="text-lg text-gray-400">Conversations with the people building Bitcoin across Africa</p>
+              </div>
+              <Link href="/podcast" className="inline-flex items-center gap-2 text-yellow-500 font-semibold hover:text-yellow-400 transition-colors">
+                All episodes <ArrowUpRight size={16} />
+              </Link>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
