@@ -201,10 +201,10 @@ export default function EventsContent({ initialEvents = [] }) {
                         {month} {day} · {weekday.slice(0, 3).toUpperCase()}
                       </span>
                     </div>
-                    <div className="absolute top-3 right-3">
-                      <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-black/70 backdrop-blur-sm rounded-full text-[10px] font-semibold text-gray-200 uppercase tracking-wide">
-                        <MapPin size={10} className="text-yellow-500" />
-                        {e.city || (e.format === 'virtual' ? 'Online' : 'In-person')}
+                    <div className="absolute top-3 right-3 max-w-[65%]">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-black/70 backdrop-blur-sm rounded-full text-[10px] font-semibold text-gray-200 uppercase tracking-wide max-w-full">
+                        <MapPin size={10} className="text-yellow-500 flex-shrink-0" />
+                        <span className="truncate">{e.city || (e.format === 'virtual' ? 'Online' : 'In-person')}</span>
                       </span>
                     </div>
                   </div>

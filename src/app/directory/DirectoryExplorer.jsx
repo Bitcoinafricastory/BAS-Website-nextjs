@@ -113,7 +113,7 @@ function EntityCard({ entity }) {
             </div>
           )}
 
-          <span className="absolute top-3 right-3 px-2.5 py-1 bg-black/70 backdrop-blur-sm rounded-full text-[10px] font-semibold text-gray-200 uppercase tracking-wide">
+          <span className="absolute top-3 right-3 max-w-[65%] px-2.5 py-1 bg-black/70 backdrop-blur-sm rounded-full text-[10px] font-semibold text-gray-200 uppercase tracking-wide truncate">
             {entityTypeLabel(entity.type)}
           </span>
 
