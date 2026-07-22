@@ -32,6 +32,8 @@ export default function AboutContent() {
 
             <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-md mb-10">
               Our journey began with a simple belief: everyone deserves access to financial freedom.
+              Bitcoin Africa Story is an independent media and education platform — not affiliated with
+              any exchange or company.
             </p>
 
             <div className="flex flex-wrap items-center gap-6 sm:gap-8">

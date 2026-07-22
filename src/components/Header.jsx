@@ -21,6 +21,7 @@ const moreLinks = [
   { name: 'Directory', path: '/directory' },
   { name: 'Podcast', path: '/podcast' },
   { name: 'Resources', path: '/resources' },
+  { name: 'FAQ', path: '/faq' },
   { name: 'About', path: '/about' },
   { name: 'Contact', path: '/contact' },
 ];

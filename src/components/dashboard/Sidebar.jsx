@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard, Newspaper, FileText, Calendar, Inbox, Globe,
   BookOpen, GraduationCap, Video, PlayCircle, Library, Heart, Users,
-  Mail, Home, LogOut, X, Mic,
+  Mail, Home, LogOut, X, Mic, HelpCircle,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
@@ -26,6 +26,7 @@ const navGroups = [
       { name: 'Submitted Stories', path: '/dashboard/submitted-stories', icon: Inbox },
       { name: 'Authors', path: '/dashboard/authors', icon: Users },
       { name: 'Podcast Episodes', path: '/dashboard/podcasts', icon: Mic },
+      { name: 'FAQs', path: '/dashboard/faqs', icon: HelpCircle },
     ],
   },
   {

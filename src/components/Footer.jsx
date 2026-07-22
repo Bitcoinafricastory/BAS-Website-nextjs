@@ -52,6 +52,7 @@ const sectionLinks = [
   { label: 'Podcast', href: '/podcast' },
   { label: 'Directory', href: '/directory' },
   { label: 'Resources', href: '/resources' },
+  { label: 'FAQ', href: '/faq' },
 ];
 
 const companyLinks = [

@@ -52,14 +52,14 @@ export const metadata = {
     template: '%s | Bitcoin Africa Story',
   },
   description:
-    'Bitcoin Africa Story is a trusted source of news, insights, and narratives on Bitcoin adoption, innovation, and impact across the African continent.',
+    'Bitcoin Africa Story is an independent media and education platform documenting Bitcoin adoption, innovation, and impact across the African continent.',
   authors: [{ name: 'Bitcoin Africa Story' }],
   openGraph: {
     type: 'website',
     siteName: 'Bitcoin Africa Story',
     title: 'Bitcoin Africa Story - Bitcoin News, Education & Community in Africa',
     description:
-      'Bitcoin Africa Story is a trusted source of news, insights, and narratives on Bitcoin adoption, innovation, and impact across the African continent.',
+      'Bitcoin Africa Story is an independent media and education platform documenting Bitcoin adoption, innovation, and impact across the African continent.',
     images: [
       {
         url: `${currentSiteUrl}/assets/og-image.jpg`,
@@ -73,7 +73,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Bitcoin Africa Story - Bitcoin News, Education & Community in Africa',
     description:
-      'Bitcoin Africa Story is a trusted source of news, insights, and narratives on Bitcoin adoption, innovation, and impact across the African continent.',
+      'Bitcoin Africa Story is an independent media and education platform documenting Bitcoin adoption, innovation, and impact across the African continent.',
     images: [`${currentSiteUrl}/assets/og-image.jpg`],
   },
   icons: {

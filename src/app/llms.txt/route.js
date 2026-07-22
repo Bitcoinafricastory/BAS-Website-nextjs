@@ -21,12 +21,13 @@ export async function GET() {
 > Bitcoin Africa Story is a trusted source of news, insights, education, and narratives on Bitcoin adoption, innovation, and impact across the African continent. We tell Africa's Bitcoin story through journalism, podcasts, education, and community reporting.
 
 ## About
-Bitcoin Africa Story documents and shares real stories of Bitcoin adoption across Africa, provides free Bitcoin education, supports community-led circular economies, and publishes research and insights on Bitcoin usage across the continent.
+Bitcoin Africa Story is an independent media and education platform. It documents and shares real stories of Bitcoin adoption across Africa, provides free Bitcoin education, supports community-led circular economies, and publishes research and insights on Bitcoin usage across the continent.
 
 ## Key Pages
 - [News & Stories](${SITE_URL}/news): Latest Bitcoin news, adoption stories, and analysis from across Africa.
 - [Directory](${SITE_URL}/directory): Verified directory of Bitcoin communities, companies, projects, conferences, and people building Bitcoin across Africa — reporter-verified, not self-submitted.
 - [Podcast](${SITE_URL}/podcast): Conversations with the merchants, builders, and communities putting Bitcoin to work across Africa.
+- [FAQ](${SITE_URL}/faq): Answers to common questions about our news coverage, education programs, directory, events, podcast, and how to get involved.
 - [Education](${SITE_URL}/education): Free Bitcoin educational programs, diplomas, videos, and resources.
 - [Events](${SITE_URL}/events): Bitcoin meetups, conferences, and workshops across Africa.
 - [About](${SITE_URL}/about): Our mission, story, and impact.

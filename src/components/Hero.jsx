@@ -28,7 +28,7 @@ export default function Hero() {
           </h1>
 
           <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-md mb-10">
-            Driving Bitcoin adoption across Africa through education, community building, and real stories from the people living it.
+            An independent media and education platform driving Bitcoin adoption across Africa through education, community building, and real stories from the people living it.
           </p>
 
           <div className="flex flex-wrap items-center gap-6 sm:gap-8">
