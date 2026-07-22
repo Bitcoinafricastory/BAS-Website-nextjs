@@ -192,7 +192,7 @@ export default async function Footer() {
               />
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-              Bitcoin Africa Story is a trusted source of news, insights, and narratives on Bitcoin
+              Bitcoin Africa Story is an independent media and education platform documenting Bitcoin
               adoption across the African continent.
             </p>
             <NewsletterSignup variant="compact" />

@@ -18,7 +18,7 @@ export async function GET() {
 
   const body = `# Bitcoin Africa Story
 
-> Bitcoin Africa Story is a trusted source of news, insights, education, and narratives on Bitcoin adoption, innovation, and impact across the African continent. We tell Africa's Bitcoin story through journalism, podcasts, education, and community reporting.
+> Bitcoin Africa Story is an independent media and education platform documenting Bitcoin adoption, innovation, and impact across the African continent. We tell Africa's Bitcoin story through journalism, podcasts, education, and community reporting.
 
 ## About
 Bitcoin Africa Story is an independent media and education platform. It documents and shares real stories of Bitcoin adoption across Africa, provides free Bitcoin education, supports community-led circular economies, and publishes research and insights on Bitcoin usage across the continent.
