@@ -64,6 +64,20 @@ const fontCss = FONT_CHOICES
   `)
   .join('\n');
 
+// Light-mode baseline — without this, the page's own (often white, on a
+// dark-themed site) text color inherits straight into Quill's white canvas,
+// making typed text invisible. Always applied; darkStyles below layers on
+// top of this when dark=true.
+const lightStyles = `
+.bas-quill-light .ql-editor {
+  color: #1f2937;
+}
+.bas-quill-light .ql-editor.ql-blank::before {
+  color: #9ca3af;
+  font-style: normal;
+}
+`;
+
 // Dark-theme overrides for use inside the dashboard (Quill's default "snow"
 // theme is light). Scoped to .bas-quill-dark so the public light editor is
 // unaffected.
@@ -136,8 +150,9 @@ export default function StoryEditor({ value, onChange, dark = false }) {
   }, []);
 
   return (
-    <div className={dark ? 'bas-quill-dark' : ''}>
+    <div className={dark ? 'bas-quill-dark' : 'bas-quill-light'}>
       <style dangerouslySetInnerHTML={{ __html: fontCss }} />
+      <style dangerouslySetInnerHTML={{ __html: lightStyles }} />
       {dark && <style dangerouslySetInnerHTML={{ __html: darkStyles }} />}
       <ReactQuill theme="snow" value={value} onChange={onChange} modules={modules} formats={formats} />
     </div>
