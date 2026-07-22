@@ -2,7 +2,6 @@ import { getFAQs, getAllFAQsFlat } from '@/lib/faq';
 import { faqSchema, breadcrumbSchema, jsonLdScript, SITE_URL } from '@/lib/schema';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import FAQAccordion from '@/components/FAQAccordion';
-import { HelpCircle } from 'lucide-react';
 
 export const revalidate = 300;
 
@@ -31,12 +30,12 @@ export default async function FAQPage() {
       <div className="max-w-3xl mx-auto px-6">
         <Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'FAQ' }]} className="mb-6" />
 
-        <div className="mb-14 text-center">
-          <div className="w-14 h-14 rounded-full bg-yellow-500/10 flex items-center justify-center mx-auto mb-5">
-            <HelpCircle className="text-yellow-500" size={26} />
-          </div>
+        <div className="mb-14">
+          <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-5 inline-block">
+            Help Center
+          </span>
           <h1 className="text-4xl md:text-5xl font-semibold mb-4">Frequently Asked Questions</h1>
-          <p className="text-gray-400 text-base sm:text-lg max-w-lg mx-auto">
+          <p className="text-gray-400 text-base sm:text-lg max-w-lg">
             Answers about our news coverage, education programs, directory, events, podcast, and how to get involved.
           </p>
         </div>

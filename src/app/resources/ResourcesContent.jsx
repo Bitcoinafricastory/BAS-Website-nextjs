@@ -41,14 +41,14 @@ export default function ResourcesContent({ episodes = [] }) {
   return (
     <div className="pt-16">
       <section className="py-20 px-6 bg-gradient-to-b from-gray-900/30 to-transparent">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="hidden sm:inline-block mb-6 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full">
-            <span className="text-yellow-500 text-sm font-semibold">Learning Resources</span>
-          </div>
+        <div className="max-w-6xl mx-auto">
+          <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-6 inline-block">
+            Learning Resources
+          </span>
           <h1 className="text-5xl md:text-6xl font-semibold mb-6">
             Bitcoin <span className="text-yellow-500">Resources</span>
           </h1>
-          <p className="text-xl text-gray-300 leading-relaxed">
+          <p className="text-xl text-gray-300 leading-relaxed max-w-xl">
             Everything you need to start your Bitcoin journey. Guides, tools, and trusted resources to
             help you learn and grow.
           </p>
@@ -92,7 +92,7 @@ export default function ResourcesContent({ episodes = [] }) {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {episodes.map((ep) => (
-                <a key={ep.id} href={ep.url} target="_blank" rel="noopener noreferrer" className="group block bg-gray-900 border border-gray-800 rounded-xl overflow-hidden hover:border-yellow-500 transition-all duration-300">
+                <a key={ep.id} href={ep.url} target="_blank" rel="noopener noreferrer" className="group block bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden hover:border-yellow-500 transition-all duration-300">
                   <div className="relative aspect-video bg-gray-800">
                     {ep.image && (
                       <Image src={ep.image} alt={ep.title} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
@@ -143,7 +143,7 @@ export default function ResourcesContent({ episodes = [] }) {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {recommendedWallets.map((wallet) => (
-              <div key={wallet.name} className="p-8 bg-gray-900 border border-gray-800 rounded-xl hover:border-yellow-500 transition-all duration-300 text-center">
+              <div key={wallet.name} className="p-8 bg-gray-900/50 border border-gray-800 rounded-xl hover:border-yellow-500 transition-all duration-300 text-center">
                 <div className="relative w-full h-16 mb-6">
                   <Image src={wallet.logo} alt={`${wallet.name} logo`} fill sizes="200px" className="object-contain" />
                 </div>
