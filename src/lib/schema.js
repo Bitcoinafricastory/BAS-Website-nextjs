@@ -8,7 +8,7 @@ const SITE_NAME = 'Bitcoin Africa Story';
 const LOGO_URL = `${SITE_URL}/assets/BitcoinAfricaStoryLogo.png`;
 
 export const SOCIAL_PROFILES = [
-  'https://x.com/story_bitcoin',
+  'https://x.com/btcafricastory',
   'https://youtube.com/@bitcoinafricastory',
   'https://t.me/+KirVlW8gMMtlNDI8',
   'https://www.linkedin.com/company/bitcoin-africa-story/',

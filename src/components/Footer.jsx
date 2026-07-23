@@ -34,7 +34,7 @@ const NostrIcon = () => (
 );
 
 const socialLinks = [
-  { href: 'https://x.com/story_bitcoin', label: 'X (Twitter)', icon: <XIcon /> },
+  { href: 'https://x.com/btcafricastory', label: 'X (Twitter)', icon: <XIcon /> },
   { href: 'https://youtube.com/@bitcoinafricastory', label: 'YouTube', icon: <YoutubeIcon /> },
   { href: 'https://www.linkedin.com/company/bitcoin-africa-story/', label: 'LinkedIn', icon: <LinkedinIcon /> },
   { href: 'https://t.me/+KirVlW8gMMtlNDI8', label: 'Telegram', icon: <TelegramIcon /> },

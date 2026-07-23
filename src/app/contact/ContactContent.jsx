@@ -72,7 +72,7 @@ export default function ContactContent() {
               <div>
                 <h3 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Connect on Social Media</h3>
                 <div className="space-y-3 sm:space-y-4">
-                  <a href="https://x.com/story_bitcoin" target="_blank" rel="noopener noreferrer" className="flex items-center p-3 sm:p-4 bg-gray-900 border border-gray-800 hover:border-yellow-500 hover:bg-gray-800 transition-all duration-300 group">
+                  <a href="https://x.com/btcafricastory" target="_blank" rel="noopener noreferrer" className="flex items-center p-3 sm:p-4 bg-gray-900 border border-gray-800 hover:border-yellow-500 hover:bg-gray-800 transition-all duration-300 group">
                     <div className="w-9 h-9 sm:w-10 sm:h-10 bg-yellow-500/10 flex items-center justify-center mr-3 sm:mr-4">
                       <AtSign className="text-yellow-500" size={MINIMAL_ICON_SIZE} />
                     </div>
