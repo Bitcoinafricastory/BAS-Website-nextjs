@@ -1,4 +1,5 @@
 import { getAllEvents } from '@/lib/events';
+import { eventListSchema, jsonLdScript } from '@/lib/schema';
 import EventsContent from './EventsContent';
 
 export const revalidate = 300;
@@ -12,5 +13,13 @@ export const metadata = {
 
 export default async function EventsPage() {
   const events = await getAllEvents();
-  return <EventsContent initialEvents={events} />;
+  const listSchema = eventListSchema(events);
+  return (
+    <>
+      {listSchema && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(listSchema)} />
+      )}
+      <EventsContent initialEvents={events} />
+    </>
+  );
 }

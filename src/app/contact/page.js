@@ -1,4 +1,5 @@
 import ContactContent from './ContactContent';
+import { contactPageSchema, jsonLdScript } from '@/lib/schema';
 
 export const metadata = {
   title: 'Contact Us',
@@ -8,5 +9,10 @@ export const metadata = {
 };
 
 export default function ContactPage() {
-  return <ContactContent />;
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(contactPageSchema())} />
+      <ContactContent />
+    </>
+  );
 }

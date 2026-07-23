@@ -1,5 +1,5 @@
 import { getEntities } from '@/lib/entities';
-import { SITE_URL } from '@/lib/schema';
+import { SITE_URL, entityListSchema, breadcrumbSchema, jsonLdScript } from '@/lib/schema';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import DirectoryExplorer from './DirectoryExplorer';
 
@@ -15,8 +15,19 @@ export const metadata = {
 export default async function DirectoryPage() {
   const entities = await getEntities();
 
+  const schemas = [
+    entityListSchema(entities),
+    breadcrumbSchema([
+      { name: 'Home', url: SITE_URL },
+      { name: 'Directory', url: `${SITE_URL}/directory` },
+    ]),
+  ].filter(Boolean);
+
   return (
     <div className="min-h-screen pt-24 pb-24">
+      {schemas.map((schema, i) => (
+        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(schema)} />
+      ))}
       <div className="max-w-6xl mx-auto px-6">
         <Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Directory' }]} className="mb-6" />
 

@@ -1,5 +1,5 @@
 import { getActiveAuthors } from '@/lib/authors';
-import { SITE_URL } from '@/lib/schema';
+import { SITE_URL, personListSchema, jsonLdScript } from '@/lib/schema';
 import AuthorCard from '@/components/AuthorCard';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
@@ -14,9 +14,13 @@ export const metadata = {
 
 export default async function AuthorsPage() {
   const authors = await getActiveAuthors();
+  const listSchema = personListSchema(authors);
 
   return (
     <div className="min-h-screen pt-24 pb-24">
+      {listSchema && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(listSchema)} />
+      )}
       <div className="max-w-5xl mx-auto px-6">
         <Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Writers' }]} className="mb-6" />
 

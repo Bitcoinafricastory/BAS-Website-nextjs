@@ -208,7 +208,6 @@ export function eventSchema(event) {
           '@type': 'PostalAddress',
           streetAddress: event.address || undefined,
           addressLocality: event.city || undefined,
-          addressCountry: 'NG',
         },
       };
 
@@ -318,6 +317,97 @@ export function authorProfileSchema(author, articles = []) {
 }
 
 // Render helper: turns any schema object into a <script> tag payload.
+// Strips the @context key so a full schema object can be nested inside a
+// list without repeating context declarations (invalid per JSON-LD).
+function stripContext(schema) {
+  if (!schema) return schema;
+  const { '@context': _context, ...rest } = schema;
+  return rest;
+}
+
+/**
+ * CollectionPage + ItemList for the /directory hub. Tells crawlers and AI
+ * engines what the directory contains as one structured unit, complementing
+ * the per-entity schema already on each profile page.
+ */
+export function entityListSchema(entities = []) {
+  if (entities.length === 0) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Bitcoin Africa Directory',
+    description:
+      'A directory of Bitcoin communities, organizations, and projects across Africa, verified by Bitcoin Africa Story reporters.',
+    url: `${SITE_URL}/directory`,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: entities.length,
+      itemListElement: entities.map((entity, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        item: stripContext(directoryEntitySchema(entity)),
+      })),
+    },
+  };
+}
+
+/** ItemList of Event for the /events listing page. */
+export function eventListSchema(events = []) {
+  const withSchema = events.map((e) => eventSchema(e)).filter(Boolean);
+  if (withSchema.length === 0) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Bitcoin Events in Africa',
+    url: `${SITE_URL}/events`,
+    numberOfItems: withSchema.length,
+    itemListElement: withSchema.map((schema, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: stripContext(schema),
+    })),
+  };
+}
+
+/** ItemList of Person for the /authors listing page. */
+export function personListSchema(authors = []) {
+  if (authors.length === 0) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Bitcoin Africa Story Writers',
+    url: `${SITE_URL}/authors`,
+    numberOfItems: authors.length,
+    itemListElement: authors.map((author, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: personSchema(author),
+    })),
+  };
+}
+
+/** AboutPage — the canonical "what is this organization" signal for AI engines. */
+export function aboutPageSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: `About ${SITE_NAME}`,
+    url: `${SITE_URL}/about`,
+    mainEntity: stripContext(organizationSchema()),
+  };
+}
+
+/** ContactPage schema for /contact. */
+export function contactPageSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: `Contact ${SITE_NAME}`,
+    url: `${SITE_URL}/contact`,
+    mainEntity: stripContext(organizationSchema()),
+  };
+}
+
 export function jsonLdScript(schema) {
   return { __html: JSON.stringify(schema) };
 }
