@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Play, Mic } from 'lucide-react';
 import { getPodcastEpisodes } from '@/lib/news';
-import { podcastListSchema, breadcrumbSchema, jsonLdScript, resolveImageUrl, SITE_URL } from '@/lib/schema';
+import { podcastListSchema, podcastSeriesSchema, breadcrumbSchema, jsonLdScript, resolveImageUrl, SITE_URL } from '@/lib/schema';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
 export const revalidate = 300;
@@ -29,7 +29,7 @@ export default async function PodcastPage() {
     { name: 'Podcast', url: `${SITE_URL}/podcast` },
   ];
   const listSchema = podcastListSchema(episodes);
-  const schemas = [breadcrumbSchema(breadcrumbs), listSchema].filter(Boolean);
+  const schemas = [breadcrumbSchema(breadcrumbs), podcastSeriesSchema(), listSchema].filter(Boolean);
 
   return (
     <div className="pt-24 pb-24 bg-black text-white min-h-screen">

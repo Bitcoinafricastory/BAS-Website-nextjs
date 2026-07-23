@@ -25,9 +25,26 @@ export function organizationSchema() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: SITE_NAME,
+    alternateName: 'BAS',
     url: SITE_URL,
     logo: LOGO_URL,
+    description:
+      'Independent media and education platform documenting Bitcoin adoption, innovation, and impact across the African continent.',
+    foundingDate: '2024',
     sameAs: SOCIAL_PROFILES,
+    contactPoint: {
+      '@type': 'ContactPoint',
+      email: 'bitcoinafricastory@proton.me',
+      contactType: 'editorial',
+    },
+    knowsAbout: [
+      'Bitcoin',
+      'Bitcoin adoption in Africa',
+      'Bitcoin education',
+      'Circular economies',
+      'Lightning Network',
+      'African fintech',
+    ],
   };
 }
 
@@ -129,6 +146,10 @@ export function newsArticleSchema(post, author) {
     ? personSchema(author)
     : personSchema(post.author || post.authorName);
 
+  const wordCount = post.content
+    ? String(post.content).replace(/<[^>]*>/g, ' ').split(/\s+/).filter(Boolean).length
+    : undefined;
+
   return {
     '@context': 'https://schema.org',
     '@type': 'NewsArticle',
@@ -144,6 +165,9 @@ export function newsArticleSchema(post, author) {
     },
     description: post.excerpt,
     articleSection: post.category,
+    inLanguage: 'en',
+    isAccessibleForFree: true,
+    wordCount,
     mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
   };
 }
@@ -159,6 +183,20 @@ export function faqSchema(faqs) {
       name: f.question,
       acceptedAnswer: { '@type': 'Answer', text: f.answer },
     })),
+  };
+}
+
+/** PodcastSeries — the series-level entity for the /podcast hub page. */
+export function podcastSeriesSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'PodcastSeries',
+    name: 'Bitcoin Africa Story Podcast',
+    url: `${SITE_URL}/podcast`,
+    description:
+      'Conversations with the merchants, builders, and communities putting Bitcoin to work across Africa.',
+    publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL, logo: LOGO_URL },
+    inLanguage: 'en',
   };
 }
 
