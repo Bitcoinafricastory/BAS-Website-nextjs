@@ -4,18 +4,18 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
-import { Menu, X, Search, ChevronDown } from 'lucide-react';
+import { Menu, X, Search, ChevronDown, Newspaper, GraduationCap, Calendar, Globe, Mic } from 'lucide-react';
 
-// Primary destinations — always visible on desktop.
+// Primary destinations — always visible on desktop. Home is intentionally
+// absent: the logo links home (universal convention), as do the breadcrumbs
+// on every content page.
 const primaryLinks = [
-  { name: 'Home', path: '/' },
   { name: 'News', path: '/news' },
   { name: 'Education', path: '/education' },
   { name: 'Events', path: '/events' },
 ];
 
-// Secondary destinations — collapsed under a "More" dropdown on desktop,
-// listed inline in the mobile menu.
+// Secondary destinations — collapsed under a "More" dropdown on desktop.
 const moreLinks = [
   { name: 'Writers', path: '/authors' },
   { name: 'Directory', path: '/directory' },
@@ -24,6 +24,17 @@ const moreLinks = [
   { name: 'FAQ', path: '/faq' },
   { name: 'About', path: '/about' },
   { name: 'Contact', path: '/contact' },
+];
+
+// Mobile drawer — deliberately trimmed to the five core sections (plus the
+// Search and Donate rows below). Secondary pages stay reachable via the
+// footer on every page; keeping the drawer short is the point.
+const mobileLinks = [
+  { name: 'News', path: '/news', icon: Newspaper },
+  { name: 'Education', path: '/education', icon: GraduationCap },
+  { name: 'Events', path: '/events', icon: Calendar },
+  { name: 'Directory', path: '/directory', icon: Globe },
+  { name: 'Podcast', path: '/podcast', icon: Mic },
 ];
 
 export default function Header() {
@@ -166,20 +177,24 @@ export default function Header() {
 
         {isOpen && (
           <div className="md:hidden mt-4 pb-4 space-y-1 relative z-50 bg-black/80 backdrop-blur-sm rounded-lg p-4">
-            {[...primaryLinks, ...moreLinks].map((link) => (
-              <Link
-                key={link.path}
-                href={link.path}
-                onClick={() => setIsOpen(false)}
-                className={`block px-4 py-2 text-sm font-medium transition-colors duration-200 ${
-                  isActive(link.path)
-                    ? 'text-yellow-500 bg-yellow-500/10'
-                    : 'text-gray-300 hover:text-yellow-500 hover:bg-yellow-500/5'
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
+            {mobileLinks.map((link) => {
+              const Icon = link.icon;
+              return (
+                <Link
+                  key={link.path}
+                  href={link.path}
+                  onClick={() => setIsOpen(false)}
+                  className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors duration-200 ${
+                    isActive(link.path)
+                      ? 'text-yellow-500 bg-yellow-500/10'
+                      : 'text-gray-300 hover:text-yellow-500 hover:bg-yellow-500/5'
+                  }`}
+                >
+                  <Icon size={16} />
+                  {link.name}
+                </Link>
+              );
+            })}
 
             <Link
               href="/search"
