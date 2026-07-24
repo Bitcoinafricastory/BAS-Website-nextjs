@@ -37,7 +37,7 @@ export default function MentionedEntities({ entities = [] }) {
               </div>
               <div className="min-w-0">
                 <div className="font-semibold text-[15px] leading-tight truncate">{entity.name}</div>
-                {meta && <div className="text-xs text-gray-500 mt-0.5 truncate">{meta}</div>}
+                {meta && <div className="text-xs text-gray-400 mt-0.5 truncate">{meta}</div>}
               </div>
               <ArrowRight
                 size={16}

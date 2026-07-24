@@ -243,3 +243,25 @@ body {
 .article-body .ql-font-georgia { font-family: Georgia, "Times New Roman", serif; }
 .article-body .ql-font-merriweather { font-family: var(--font-merriweather), Georgia, serif; }
 .article-body .ql-font-courier { font-family: "Courier New", Courier, monospace; }
+
+/* ─────────────────────────────────────────────────────────────
+   Keyboard focus visibility
+   Cards and links across the site have hover states but no focus
+   states, leaving keyboard users with an invisible cursor. This
+   gives every interactive element a gold ring on keyboard focus
+   only (:focus-visible) — mouse and touch interaction is
+   unaffected. Inputs that swap the outline for a yellow border
+   via focus: utilities keep their own treatment (higher
+   specificity), so forms look the same as before.
+   ──────────────────────────────────────────────────────────── */
+a:focus-visible,
+button:focus-visible,
+[role='button']:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 2px solid rgba(234, 179, 8, 0.9);
+  outline-offset: 2px;
+  border-radius: 4px;
+}

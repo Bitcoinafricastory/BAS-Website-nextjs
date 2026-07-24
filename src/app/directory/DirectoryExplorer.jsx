@@ -43,7 +43,7 @@ export default function DirectoryExplorer({ entities }) {
 
       <div className="flex flex-col sm:flex-row gap-3 mb-8">
         <div className="relative flex-1">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -129,16 +129,16 @@ function EntityCard({ entity }) {
 
       <div className={`p-5 flex flex-col flex-grow ${hasCover && hasLogo ? 'pt-11' : ''}`}>
         <h3 className="font-bold text-white text-lg mb-1 truncate">{entity.name}</h3>
-        {entity.country && <p className="text-xs text-gray-500 mb-3">{entity.country}</p>}
+        {entity.country && <p className="text-xs text-gray-400 mb-3">{entity.country}</p>}
 
         <div className="mb-3">
           {top ? (
             <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-yellow-500">
               <CheckCircle2 size={13} /> {badgeLabel(top.level)}
-              {rest.length > 0 && <span className="text-gray-500 font-normal">+{rest.length}</span>}
+              {rest.length > 0 && <span className="text-gray-400 font-normal">+{rest.length}</span>}
             </span>
           ) : (
-            <span className="text-xs font-semibold text-gray-500">Not yet verified</span>
+            <span className="text-xs font-semibold text-gray-400">Not yet verified</span>
           )}
         </div>
         {entity.description && (

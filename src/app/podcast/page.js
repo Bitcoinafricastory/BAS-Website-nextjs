@@ -99,7 +99,7 @@ export default async function PodcastPage() {
                 {featured.description && (
                   <p className="text-gray-400 text-sm leading-relaxed mb-5 line-clamp-3">{featured.description}</p>
                 )}
-                {featured.date && <span className="text-xs text-gray-500">{featured.date}</span>}
+                {featured.date && <span className="text-xs text-gray-400">{featured.date}</span>}
               </div>
             </a>
 

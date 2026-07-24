@@ -139,13 +139,13 @@ export default async function DirectoryProfilePage({ params }) {
 
         {sortedBadges.length > 0 && (
           <div className="mb-8">
-            <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">Verification</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Verification</p>
             <div className="space-y-2">
               {sortedBadges.map((b, i) => (
                 <div key={i} className="flex items-center gap-3 bg-gray-900 border border-gray-800 rounded-xl px-4 py-3">
                   <span className="w-2 h-2 rounded-full bg-yellow-500 flex-shrink-0" />
                   <span className="text-sm font-semibold flex-1">{badgeLabel(b.level)}</span>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-gray-400">
                     {b.dateEarned}{b.evidence ? ` · ${b.evidence}` : ''}
                   </span>
                 </div>
@@ -165,7 +165,7 @@ export default async function DirectoryProfilePage({ params }) {
             <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-px bg-gray-800 border border-gray-800 rounded-xl overflow-hidden mb-8">
               {stats.map((s) => (
                 <div key={s.label} className="bg-gray-900 p-4">
-                  <p className="text-[11px] text-gray-500 mb-1">{s.label}</p>
+                  <p className="text-[11px] text-gray-400 mb-1">{s.label}</p>
                   <p className="text-sm font-semibold">{s.value}</p>
                 </div>
               ))}
@@ -178,7 +178,7 @@ export default async function DirectoryProfilePage({ params }) {
             real thumbnails instead of a bare text row. */}
         {coverage.length > 0 && (
           <div className="mb-8">
-            <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">
+            <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">
               Coverage · {coverage.length}
             </p>
             <div className="space-y-2.5">
@@ -189,13 +189,13 @@ export default async function DirectoryProfilePage({ params }) {
                       {c.image ? (
                         <Image src={c.image} alt="" fill sizes="96px" className="object-cover" />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-700 text-xs font-bold uppercase">{c.type[0]}</div>
+                        <div className="w-full h-full flex items-center justify-center text-gray-500 text-xs font-bold uppercase">{c.type[0]}</div>
                       )}
                     </div>
                     <div className="min-w-0 flex-1">
                       <span className="text-[10px] font-bold text-yellow-500 uppercase tracking-wide">{c.type}</span>
                       <p className="text-sm font-medium truncate">{c.title}</p>
-                      {c.date && <span className="text-xs text-gray-500">{c.date}</span>}
+                      {c.date && <span className="text-xs text-gray-400">{c.date}</span>}
                     </div>
                   </>
                 );
@@ -212,11 +212,11 @@ export default async function DirectoryProfilePage({ params }) {
 
         {relatedEntities.length > 0 && (
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">Related</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Related</p>
             <div className="flex flex-wrap gap-2">
               {relatedEntities.map((r) => (
                 <Link key={r.slug} href={`/directory/${r.slug}`} className="text-sm px-4 py-2 bg-gray-900 border border-gray-800 rounded-full hover:border-yellow-500 hover:text-yellow-500 transition-colors">
-                  {r.name} <span className="text-gray-500">({entityTypeLabel(r.type)})</span>
+                  {r.name} <span className="text-gray-400">({entityTypeLabel(r.type)})</span>
                 </Link>
               ))}
             </div>

@@ -158,7 +158,7 @@ export default function EventsContent({ initialEvents = [] }) {
         />
         <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
           <div className="relative flex-1 max-w-2xl group">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-yellow-500 transition-colors" size={20} />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-yellow-500 transition-colors" size={20} />
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -243,7 +243,7 @@ export default function EventsContent({ initialEvents = [] }) {
             </button>
           </div>
           {notice && <p className="text-sm text-yellow-400 mt-4">{notice}</p>}
-          <p className="text-gray-500 text-xs mt-6">
+          <p className="text-gray-400 text-xs mt-6">
             Or join the community on{' '}
             <a href="https://t.me/+KirVlW8gMMtlNDI8" target="_blank" rel="noreferrer" className="text-yellow-500 hover:underline">Telegram</a>
             {' '}or{' '}

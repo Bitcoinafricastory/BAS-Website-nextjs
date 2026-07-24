@@ -27,15 +27,15 @@ export default function PillarPage({ pillar, entities = [], articles = [] }) {
           <div className="flex gap-8 mt-8">
             <div>
               <div className="font-black text-2xl text-yellow-500">{entities.length}</div>
-              <div className="text-[11px] uppercase tracking-wider text-gray-500 mt-0.5">Communities</div>
+              <div className="text-[11px] uppercase tracking-wider text-gray-400 mt-0.5">Communities</div>
             </div>
             <div>
               <div className="font-black text-2xl text-yellow-500">{articles.length}</div>
-              <div className="text-[11px] uppercase tracking-wider text-gray-500 mt-0.5">Stories</div>
+              <div className="text-[11px] uppercase tracking-wider text-gray-400 mt-0.5">Stories</div>
             </div>
             <div>
               <div className="font-black text-2xl text-yellow-500">{countries.size}</div>
-              <div className="text-[11px] uppercase tracking-wider text-gray-500 mt-0.5">Countries</div>
+              <div className="text-[11px] uppercase tracking-wider text-gray-400 mt-0.5">Countries</div>
             </div>
           </div>
         </div>
@@ -88,7 +88,7 @@ export default function PillarPage({ pillar, entities = [], articles = [] }) {
                       <div className="font-bold text-base group-hover:text-yellow-500 transition-colors">
                         {entity.name}
                       </div>
-                      <div className="text-xs text-gray-500 mt-0.5 mb-2">
+                      <div className="text-xs text-gray-400 mt-0.5 mb-2">
                         {[entity.city, entity.country].filter(Boolean).join(' · ')}
                       </div>
                       {entity.description && (
@@ -131,7 +131,7 @@ export default function PillarPage({ pillar, entities = [], articles = [] }) {
                       <div className="font-semibold text-[15.5px] leading-snug group-hover:text-yellow-500 transition-colors">
                         {post.title}
                       </div>
-                      <div className="text-xs text-gray-500 mt-1">
+                      <div className="text-xs text-gray-400 mt-1">
                         {[post.author, post.category].filter(Boolean).join(' · ')}
                       </div>
                     </div>
