@@ -53,6 +53,7 @@ const sectionLinks = [
   { label: 'Directory', href: '/directory' },
   { label: 'Resources', href: '/resources' },
   { label: 'FAQ', href: '/faq' },
+  { label: 'Bitcoin Circular Economies', href: '/bitcoin-circular-economies' },
 ];
 
 const companyLinks = [

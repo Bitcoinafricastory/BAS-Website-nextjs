@@ -3,10 +3,12 @@ import { getAllEvents } from '@/lib/events';
 import { getActiveAuthors } from '@/lib/authors';
 import { getEntities } from '@/lib/entities';
 import { getAllEducationPrograms, getAllOtherPrograms } from '@/lib/education';
+import { PILLARS } from '@/lib/pillars';
 
 export const revalidate = 300;
 
 const staticRoutes = [
+  ...PILLARS.map((p) => ({ path: `/${p.slug}`, priority: 0.85, changeFrequency: 'weekly' })),
   { path: '/', priority: 1.0, changeFrequency: 'daily' },
   { path: '/news', priority: 0.9, changeFrequency: 'daily' },
   { path: '/directory', priority: 0.85, changeFrequency: 'daily' },
