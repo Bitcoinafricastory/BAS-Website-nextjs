@@ -53,12 +53,12 @@ const sectionLinks = [
   { label: 'Directory', href: '/directory' },
   { label: 'Resources', href: '/resources' },
   { label: 'FAQ', href: '/faq' },
-  { label: 'Bitcoin Circular Economies', href: '/bitcoin-circular-economies' },
 ];
 
 const companyLinks = [
   { label: 'About', href: '/about' },
   { label: 'Writers', href: '/authors' },
+  { label: 'Bitcoin Circular Economies', href: '/bitcoin-circular-economies' },
   { label: 'Contact', href: '/contact' },
   { label: 'Donate', href: '/donate' },
   { label: 'Search', href: '/search' },
