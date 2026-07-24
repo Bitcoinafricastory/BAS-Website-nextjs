@@ -12,8 +12,10 @@ import {
 } from '@/lib/schema';
 import { computeReadingTime, deriveKeyTakeaways, getFaqs, addHeadingIds, extractHeadings } from '@/lib/article-content';
 import { resolveArticleAuthor } from '@/lib/authors';
+import { getEntitiesBySlugs } from '@/lib/entities';
 import ArticleSidebar from '@/components/ArticleSidebar';
 import AuthorFooter from '@/components/AuthorFooter';
+import MentionedEntities from '@/components/MentionedEntities';
 
 export const revalidate = 300;
 
@@ -82,6 +84,7 @@ export default async function BlogPostPage({ params }) {
   // Resolve full author record (handles both authorId-linked articles and
   // legacy string bylines). Powers the footer card and Person schema.
   const author = await resolveArticleAuthor(post);
+  const mentionedEntities = await getEntitiesBySlugs(post.linkedEntityIds || []);
 
   const breadcrumbs = [
     { name: 'Home', url: SITE_URL },
@@ -189,6 +192,8 @@ export default async function BlogPostPage({ params }) {
             className="article-body mx-auto"
             dangerouslySetInnerHTML={{ __html: contentWithIds }}
           />
+
+          <MentionedEntities entities={mentionedEntities} />
 
           <AuthorFooter author={author} />
 

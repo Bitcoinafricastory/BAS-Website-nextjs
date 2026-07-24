@@ -90,6 +90,24 @@ export async function getEntityCoverage(slug) {
   }
 }
 
+/**
+ * Batch-resolve entities for an article's linkedEntityIds. One collection
+ * fetch, then filtered/ordered to match the article's list — fine at the
+ * directory's current size, and the callsite doesn't change if this later
+ * becomes a real `in` query.
+ */
+export async function getEntitiesBySlugs(slugs = []) {
+  if (!slugs.length) return [];
+  try {
+    const all = await getEntities();
+    const bySlug = new Map(all.map((e) => [e.slug, e]));
+    return slugs.map((s) => bySlug.get(s)).filter(Boolean);
+  } catch (err) {
+    console.warn('getEntitiesBySlugs: could not fetch', err);
+    return [];
+  }
+}
+
 export async function getEntityBySlug(slug) {
   try {
     const snap = await getDocs(query(entitiesCollectionRef, where('slug', '==', slug)));
