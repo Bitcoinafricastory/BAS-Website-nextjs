@@ -45,7 +45,7 @@ export default function ResourcesContent({ episodes = [] }) {
           <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-6 inline-block">
             Learning Resources
           </span>
-          <h1 className="text-5xl md:text-6xl font-semibold mb-6">
+          <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-semibold mb-6">
             Bitcoin <span className="text-yellow-500">Resources</span>
           </h1>
           <p className="text-xl text-gray-300 leading-relaxed max-w-xl">
@@ -60,7 +60,7 @@ export default function ResourcesContent({ episodes = [] }) {
       <section className="py-16 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
-            <h2 className="text-4xl font-bold mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
               Foundational <span className="text-yellow-500">Learning</span>
             </h2>
             <p className="text-lg text-gray-400">Start here — from the original whitepaper to the definitive technical reference</p>
@@ -80,7 +80,7 @@ export default function ResourcesContent({ episodes = [] }) {
           <div className="max-w-6xl mx-auto">
             <div className="mb-12 flex items-end justify-between flex-wrap gap-4">
               <div>
-                <h2 className="text-4xl font-bold mb-4">
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">
                   The <span className="text-yellow-500">Podcast</span>
                 </h2>
                 <p className="text-lg text-gray-400">Conversations with the people building Bitcoin across Africa</p>
@@ -119,7 +119,7 @@ export default function ResourcesContent({ episodes = [] }) {
       <section className="py-16 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
-            <h2 className="text-4xl font-bold mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
               Tools &amp; <span className="text-yellow-500">Development</span>
             </h2>
             <p className="text-lg text-gray-400">Live network data and technical references for using and building on Bitcoin</p>
@@ -135,7 +135,7 @@ export default function ResourcesContent({ episodes = [] }) {
       <section className="py-16 px-6 bg-gradient-to-b from-transparent via-gray-900/30 to-transparent">
         <div className="max-w-4xl mx-auto">
           <div className="mb-12">
-            <h2 className="text-4xl font-bold mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
               Recommended <span className="text-yellow-500">Wallets</span>
             </h2>
             <p className="text-lg text-gray-400">The two wallets our community actually uses and trusts</p>
@@ -179,17 +179,17 @@ export default function ResourcesContent({ episodes = [] }) {
         <div className="relative max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-end justify-between gap-8">
           <div className="max-w-xl">
             <span className="inline-block text-yellow-500 text-xs font-bold uppercase tracking-widest mb-4">Still have questions?</span>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Need more help?</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Need more help?</h2>
             <p className="text-lg text-gray-300">
               Reach out and we&rsquo;ll help you on your Bitcoin journey — no question too basic.
             </p>
           </div>
-          <a
+          <Link
             href="/contact"
             className="flex-shrink-0 inline-flex items-center gap-2 px-8 py-4 bg-yellow-500 text-black font-bold text-lg rounded-lg hover:bg-yellow-400 hover:gap-3 transition-all duration-200"
           >
             Contact Us <ArrowUpRight size={20} />
-          </a>
+          </Link>
         </div>
       </section>
     </div>

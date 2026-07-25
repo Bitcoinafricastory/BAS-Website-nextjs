@@ -2,6 +2,7 @@ import { getFAQs, getAllFAQsFlat } from '@/lib/faq';
 import { faqSchema, breadcrumbSchema, jsonLdScript, SITE_URL } from '@/lib/schema';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import FAQAccordion from '@/components/FAQAccordion';
+import Link from 'next/link';
 
 export const revalidate = 300;
 
@@ -34,7 +35,7 @@ export default async function FAQPage() {
           <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-5 inline-block">
             Help Center
           </span>
-          <h1 className="text-4xl md:text-5xl font-semibold mb-4">Frequently Asked Questions</h1>
+          <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-semibold mb-4">Frequently Asked Questions</h1>
           <p className="text-gray-400 text-base sm:text-lg max-w-lg">
             Answers about our news coverage, education programs, directory, events, podcast, and how to get involved.
           </p>
@@ -50,12 +51,12 @@ export default async function FAQPage() {
 
         <div className="mt-16 pt-10 border-t border-gray-800 text-center">
           <p className="text-gray-400 mb-4">Didn&rsquo;t find what you&rsquo;re looking for?</p>
-          <a
+          <Link
             href="/contact"
             className="inline-block px-7 py-3.5 bg-yellow-500 text-black font-bold rounded-lg hover:bg-yellow-400 transition-colors"
           >
             Contact Us
-          </a>
+          </Link>
         </div>
       </div>
     </div>

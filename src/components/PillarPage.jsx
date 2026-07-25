@@ -19,7 +19,7 @@ export default function PillarPage({ pillar, entities = [], articles = [] }) {
           <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-5 inline-block">
             {pillar.eyebrow}
           </span>
-          <h1 className="text-4xl md:text-5xl lg:text-[52px] font-semibold leading-[1.08] tracking-tight mb-5 max-w-2xl">
+          <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-semibold leading-[1.08] tracking-tight mb-5 max-w-2xl">
             {pillar.title} <em className="italic text-yellow-500">{pillar.accent}</em> in Africa
           </h1>
           <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-xl">{pillar.intro}</p>

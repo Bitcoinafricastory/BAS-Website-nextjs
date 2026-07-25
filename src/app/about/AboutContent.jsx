@@ -26,7 +26,7 @@ export default function AboutContent() {
               Since 2024 &middot; Operating across Africa
             </span>
 
-            <h1 className="font-semibold text-white text-[36px] sm:text-[46px] lg:text-[54px] leading-[1.05] tracking-tight mb-6 max-w-xl">
+            <h1 className="font-semibold text-white text-4xl sm:text-5xl lg:text-[54px] leading-[1.05] tracking-tight mb-6 max-w-xl">
               Empowering Africa through <em className="italic text-yellow-500">Bitcoin.</em>
             </h1>
 
@@ -91,7 +91,7 @@ export default function AboutContent() {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-4xl font-bold mb-6">
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">
                 Our <span className="text-yellow-500">Story</span>
               </h2>
               <div className="space-y-4 text-lg text-gray-300 leading-relaxed">
@@ -176,7 +176,7 @@ export default function AboutContent() {
       <section className="py-20 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
               Our <span className="text-yellow-500">Journey</span>
             </h2>
             <p className="text-xl text-gray-400">Milestones on the Road to Africa&rsquo;s Bitcoin Future</p>
@@ -215,7 +215,7 @@ export default function AboutContent() {
       <section className="py-20 px-6 bg-gradient-to-b from-gray-900/30 to-transparent">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
               Our <span className="text-yellow-500">Values</span>
             </h2>
             <p className="text-xl text-gray-400">The principles that guide everything we do</p>

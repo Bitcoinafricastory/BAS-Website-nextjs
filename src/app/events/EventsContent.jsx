@@ -168,7 +168,7 @@ export default function EventsContent({ initialEvents = [] }) {
           <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-6 inline-block">
             Your network is your networth
           </span>
-          <h1 className="font-semibold text-white text-[32px] sm:text-[48px] lg:text-[66px] leading-[1.05] tracking-tight mb-6 max-w-2xl">
+          <h1 className="font-semibold text-white text-4xl sm:text-5xl lg:text-[54px] leading-[1.05] tracking-tight mb-6 max-w-2xl">
             Bitcoin events <em className="italic text-yellow-500">across Africa.</em>
           </h1>
           <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-md">

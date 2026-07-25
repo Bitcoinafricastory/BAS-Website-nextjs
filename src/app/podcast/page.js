@@ -41,7 +41,7 @@ export default async function PodcastPage() {
         <Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Podcast' }]} className="mb-6" />
 
         <div className="mb-10 max-w-xl">
-          <h1 className="text-4xl md:text-5xl font-semibold leading-tight mb-4">
+          <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-semibold leading-tight mb-4">
             Conversations from the <em className="italic text-yellow-500">ground.</em>
           </h1>
           <p className="text-gray-400 text-base sm:text-lg leading-relaxed">
