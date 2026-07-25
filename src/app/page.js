@@ -9,44 +9,13 @@ import TestimonialCarousel from '@/components/TestimonialCarousel';
 
 export const revalidate = 300;
 
-const features = [
-  {
-    id: '1',
-    title: 'Education',
-    description:
-      'We provide practical Bitcoin training for schools, youth, merchants, and communities, helping people understand and use Bitcoin confidently.',
-    image: '/assets/education.jpg',
-  },
-  {
-    id: '2',
-    title: 'Storytelling',
-    description:
-      'We document and share real stories of Bitcoin adoption across Africa, highlighting the people, challenges, and progress in each community.',
-    image: '/assets/story.jpg',
-  },
-  {
-    id: '3',
-    title: 'Community Development ',
-    description:
-      'We support communities in building sustainable Bitcoin circular economies through merchant onboarding, local spending, and hands-on guidance.',
-    image: '/assets/communities.jpg',
-  },
-  {
-    id: '4',
-    title: 'Research and Insights',
-    description:
-      'We study Bitcoin usage, community needs, adoption patterns, and emerging trends to guide our programs and share valuable insights with the ecosystem.',
-    image: '/assets/research.jpg',
-  },
-];
-
 export default async function HomePage() {
   const [posts, entities, testimonials] = await Promise.all([
     getAllNews(),
     getEntities(),
     getTestimonials(),
   ]);
-  const featuredEntities = selectFeaturedEntities(entities, 9);
+  const featuredEntities = selectFeaturedEntities(entities, 6);
 
   const groupedPosts = posts.slice(0).reverse().reduce((acc, post) => {
     const cat = post.category || 'Uncategorized';
@@ -60,41 +29,6 @@ export default async function HomePage() {
     <div className="pt-16">
 
       <Hero />
-
-      <section className="py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-16 max-w-2xl">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Pillars of <span className="text-yellow-500">Bitcoin Africa Story</span>
-            </h2>
-            <p className="text-xl text-gray-400">
-              Discover how Bitcoin is transforming lives and creating opportunities across Africa
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature) => (
-              <div key={feature.id} className="group relative overflow-hidden bg-gray-900 border border-gray-800 hover:border-yellow-500 transition-all duration-300 hover:scale-105">
-                <div className="aspect-video overflow-hidden relative bg-gray-800">
-                  {feature.image && (
-                    <Image
-                      src={feature.image}
-                      alt={feature.title}
-                      fill
-                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                      className="object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
-                  )}
-                </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold mb-3 text-yellow-500">{feature.title}</h3>
-                  <p className="text-gray-400 leading-relaxed">{feature.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       <Mission />
 
@@ -166,23 +100,23 @@ export default async function HomePage() {
               <p className="text-gray-400">No entities available yet.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-9 gap-4 mb-8">
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-6 mb-8">
               {featuredEntities.map((entity, i) => {
-                // 3 on mobile, 6 on tablet (sm+), 9 on desktop (lg+).
-                const visibility = i < 3 ? '' : i < 6 ? 'hidden sm:flex' : 'hidden lg:flex';
+                // 2 on mobile, 4 on tablet (sm+), 6 on desktop (lg+).
+                const visibility = i < 2 ? '' : i < 4 ? 'hidden sm:flex' : 'hidden lg:flex';
                 return (
                   <Link
                     key={entity.id}
                     href={`/directory/${entity.slug}`}
                     title={entity.name}
-                    className={`flex-col items-center gap-2 group ${visibility || 'flex'}`}
+                    className={`flex-col items-center gap-3 group ${visibility || 'flex'}`}
                   >
                     <div className="relative w-full aspect-square bg-gray-900 border border-gray-800 rounded-xl overflow-hidden group-hover:border-yellow-500/50 transition-colors">
                       {entity.logo && (
-                        <Image src={entity.logo} alt={entity.name} fill sizes="120px" className="object-contain p-3" />
+                        <Image src={entity.logo} alt={entity.name} fill sizes="(min-width: 1024px) 200px, (min-width: 640px) 25vw, 45vw" className="object-contain p-5" />
                       )}
                     </div>
-                    <p className="text-[11px] text-gray-500 text-center truncate w-full group-hover:text-gray-300 transition-colors">{entity.name}</p>
+                    <p className="text-sm text-gray-400 text-center truncate w-full group-hover:text-gray-300 transition-colors">{entity.name}</p>
                   </Link>
                 );
               })}

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Users, Shield, TrendingUp } from 'lucide-react';
+import { ArrowRight, BookOpen, Users, Mic, TrendingUp } from 'lucide-react';
 
 export default function Mission() {
   return (
@@ -27,25 +27,25 @@ export default function Mission() {
             <div className="space-y-4">
               <div className="p-6 bg-gray-900 border border-gray-800">
                 <BookOpen className="text-yellow-500 mb-3" size={32} />
-                <h3 className="text-lg font-semibold mb-2">Education First</h3>
-                <p className="text-sm text-gray-400">Comprehensive Bitcoin courses for all levels</p>
+                <h3 className="text-lg font-semibold mb-2">Education</h3>
+                <p className="text-sm text-gray-400">Practical Bitcoin training for schools, youth, and merchants</p>
               </div>
               <div className="p-6 bg-gray-900 border border-gray-800">
-                <Shield className="text-yellow-500 mb-3" size={32} />
-                <h3 className="text-lg font-semibold mb-2">Security Focus</h3>
-                <p className="text-sm text-gray-400">Learn to protect your Bitcoin safely</p>
+                <Mic className="text-yellow-500 mb-3" size={32} />
+                <h3 className="text-lg font-semibold mb-2">Storytelling</h3>
+                <p className="text-sm text-gray-400">Real stories of Bitcoin adoption across Africa</p>
               </div>
             </div>
             <div className="space-y-4 mt-8">
               <div className="p-6 bg-gray-900 border border-gray-800">
                 <Users className="text-yellow-500 mb-3" size={32} />
-                <h3 className="text-lg font-semibold mb-2">Community Driven</h3>
-                <p className="text-sm text-gray-400">Join a network of Bitcoin enthusiasts</p>
+                <h3 className="text-lg font-semibold mb-2">Community Development</h3>
+                <p className="text-sm text-gray-400">Building sustainable Bitcoin circular economies</p>
               </div>
               <div className="p-6 bg-gray-900 border border-gray-800">
                 <TrendingUp className="text-yellow-500 mb-3" size={32} />
-                <h3 className="text-lg font-semibold mb-2">Practical Skills</h3>
-                <p className="text-sm text-gray-400">Real-world Bitcoin usage and strategies</p>
+                <h3 className="text-lg font-semibold mb-2">Research and Insights</h3>
+                <p className="text-sm text-gray-400">Studying adoption patterns to guide our programs</p>
               </div>
             </div>
           </div>

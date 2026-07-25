@@ -6,6 +6,37 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import CountUp from '@/components/ui/CountUp';
 
+const pillars = [
+  {
+    id: '1',
+    title: 'Education',
+    description:
+      'We provide practical Bitcoin training for schools, youth, merchants, and communities, helping people understand and use Bitcoin confidently.',
+    image: '/assets/education.jpg',
+  },
+  {
+    id: '2',
+    title: 'Storytelling',
+    description:
+      'We document and share real stories of Bitcoin adoption across Africa, highlighting the people, challenges, and progress in each community.',
+    image: '/assets/story.jpg',
+  },
+  {
+    id: '3',
+    title: 'Community Development ',
+    description:
+      'We support communities in building sustainable Bitcoin circular economies through merchant onboarding, local spending, and hands-on guidance.',
+    image: '/assets/communities.jpg',
+  },
+  {
+    id: '4',
+    title: 'Research and Insights',
+    description:
+      'We study Bitcoin usage, community needs, adoption patterns, and emerging trends to guide our programs and share valuable insights with the ecosystem.',
+    image: '/assets/research.jpg',
+  },
+];
+
 const milestones = [
   { year: '2024', title: 'The Beginning', description: 'Started teaching Bitcoin to local communities in Nigeria.' },
   { year: '2024', title: 'First 100 Students', description: 'Reached our first 100 students across multiple cities' },
@@ -169,6 +200,41 @@ export default function AboutContent() {
                 opportunity.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-16 max-w-2xl">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
+              Pillars of <span className="text-yellow-500">Bitcoin Africa Story</span>
+            </h2>
+            <p className="text-xl text-gray-400">
+              Discover how Bitcoin is transforming lives and creating opportunities across Africa
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {pillars.map((pillar) => (
+              <div key={pillar.id} className="group relative overflow-hidden bg-gray-900 border border-gray-800 hover:border-yellow-500 transition-all duration-300 hover:scale-105">
+                <div className="aspect-video overflow-hidden relative bg-gray-800">
+                  {pillar.image && (
+                    <Image
+                      src={pillar.image}
+                      alt={pillar.title}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                  )}
+                </div>
+                <div className="p-6">
+                  <h3 className="text-2xl font-bold mb-3 text-yellow-500">{pillar.title}</h3>
+                  <p className="text-gray-400 leading-relaxed">{pillar.description}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
