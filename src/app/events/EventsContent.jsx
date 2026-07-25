@@ -141,7 +141,7 @@ export default function EventsContent({ initialEvents = [] }) {
           <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-6 inline-block">
             Your network is your networth
           </span>
-          <h1 className="font-semibold text-white text-[44px] sm:text-[56px] lg:text-[66px] leading-[1.03] tracking-tight mb-6 max-w-2xl">
+          <h1 className="font-semibold text-white text-[32px] sm:text-[48px] lg:text-[66px] leading-[1.05] tracking-tight mb-6 max-w-2xl">
             Bitcoin events <em className="italic text-yellow-500">across Africa.</em>
           </h1>
           <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-md">
@@ -183,7 +183,7 @@ export default function EventsContent({ initialEvents = [] }) {
             {filtered.map((e) => {
               const { day, month, weekday } = parseEventDate(e.date);
               return (
-                <Link href={`/events/${e.id}`} key={e.id} className="group relative flex flex-col bg-[#0A0A0A] overflow-hidden border border-white/5 hover:border-yellow-500/50 transition-all duration-500">
+                <Link href={`/events/${e.id}`} key={e.id} className="group relative flex flex-col bg-[#0A0A0A] overflow-hidden border border-white/5 hover:border-yellow-500/50 active:border-yellow-500/50 transition-all duration-500">
                   <div className="relative h-[200px] overflow-hidden">
                     {e.banner ? (
                       <Image
@@ -191,7 +191,7 @@ export default function EventsContent({ initialEvents = [] }) {
                         alt={e.eventName}
                         fill
                         sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                        className="object-cover opacity-60 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-80"
+                        className="object-cover opacity-60 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-80 group-active:scale-105 group-active:opacity-80"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gray-900"><Ticket size={32} className="text-gray-700" /></div>
@@ -209,12 +209,12 @@ export default function EventsContent({ initialEvents = [] }) {
                     </div>
                   </div>
                   <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="text-lg font-bold mb-2 line-clamp-2 leading-tight group-hover:text-yellow-500 transition-colors uppercase tracking-tight min-h-[52px]">{e.eventName}</h3>
+                    <h3 className="text-lg font-bold mb-2 line-clamp-2 leading-tight group-hover:text-yellow-500 group-active:text-yellow-500 transition-colors uppercase tracking-tight min-h-[52px]">{e.eventName}</h3>
                     <p className="text-gray-400 text-sm mb-4 truncate">{e.venue || '\u00A0'}</p>
                     <div className="mt-auto pt-4 border-t border-white/5">
-                      <span className="flex items-center gap-2 text-[10px] font-black text-yellow-500 group-hover:text-white transition-colors uppercase tracking-widest">
+                      <span className="flex items-center gap-2 text-[10px] font-black text-yellow-500 group-hover:text-white group-active:text-white transition-colors uppercase tracking-widest">
                         View details &amp; register
-                        <ArrowUpRight className="w-3 h-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                        <ArrowUpRight className="w-3 h-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-active:-translate-y-0.5 group-active:translate-x-0.5" />
                       </span>
                     </div>
                   </div>
