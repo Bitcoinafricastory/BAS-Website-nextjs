@@ -1,4 +1,5 @@
 import AboutContent from './AboutContent';
+import { aboutPageSchema, jsonLdScript } from '@/lib/schema';
 
 export const metadata = {
   title: 'About Us',
@@ -8,5 +9,10 @@ export const metadata = {
 };
 
 export default function AboutPage() {
-  return <AboutContent />;
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(aboutPageSchema())} />
+      <AboutContent />
+    </>
+  );
 }

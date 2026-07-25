@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 
 import { useState } from 'react';
 import { Clock, Layers, ChevronRight, Activity } from 'lucide-react';
@@ -29,20 +30,20 @@ export default function BitcoinVideos({ videos = [] }) {
 
   return (
     <div className="bg-black min-h-screen text-white font-mono uppercase tracking-tighter">
-      <div className="border-b border-white/10 px-8 py-3 flex justify-between items-center text-[10px] text-gray-500">
-        <div className="flex gap-6">
+      <div className="border-b border-white/10 px-4 sm:px-8 py-3 flex flex-wrap gap-y-2 justify-between items-center text-[10px] text-gray-500">
+        <div className="flex gap-3 sm:gap-6">
           <span className="flex items-center gap-2"><Activity className="w-3 h-3 text-yellow-500" /> NETWORK: MAINNET</span>
           <span>EST. 2009</span>
         </div>
         <div className="flex gap-4">
-          <span>LATENCY: 24MS</span>
+          <span className="hidden sm:inline">LATENCY: 24MS</span>
           <span className="text-yellow-500">LIVE FEED</span>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[calc(100vh-45px)]">
         <div className="lg:col-span-8 border-r border-white/10 flex flex-col">
-          <div className="p-8 lg:p-12 flex-grow">
+          <div className="p-4 sm:p-8 lg:p-12 flex-grow">
             <div className="relative aspect-video bg-[#0A0A0A] border border-white/20">
               {embedSrc ? (
                 <iframe className="w-full h-full" src={`${embedSrc}${embedSrc.includes('?') ? '&' : '?'}autoplay=0&controls=1&modestbranding=1`} title={currentVideo.title} allowFullScreen />
@@ -62,7 +63,7 @@ export default function BitcoinVideos({ videos = [] }) {
                     <Layers className="w-4 h-4" />
                     MODULE: {currentVideo.category}
                   </div>
-                  <h1 className="text-3xl md:text-5xl font-black leading-none">{currentVideo.title}</h1>
+                  <h1 className="text-3xl md:text-5xl font-semibold leading-none">{currentVideo.title}</h1>
                 </div>
               </div>
 
@@ -101,8 +102,15 @@ export default function BitcoinVideos({ videos = [] }) {
               >
                 <div className="p-6 flex gap-6">
                   <div className="w-24 aspect-square bg-zinc-900 flex-shrink-0 border border-white/10 overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={video.thumbnailUrl} alt="" className={`w-full h-full object-cover transition-opacity duration-500 ${currentVideo.id === video.id ? 'opacity-100' : 'opacity-40 group-hover:opacity-100'}`} />
+                    {video.thumbnailUrl && (
+                      <Image
+                        src={video.thumbnailUrl}
+                        alt=""
+                        fill
+                        sizes="96px"
+                        className={`object-cover transition-opacity duration-500 ${currentVideo.id === video.id ? 'opacity-100' : 'opacity-40 group-hover:opacity-100'}`}
+                      />
+                    )}
                   </div>
                   <div className="flex flex-col justify-between py-1">
                     <h3 className={`text-xs font-black leading-tight tracking-tight ${currentVideo.id === video.id ? 'text-black' : 'text-gray-300 group-hover:text-white'}`}>{video.title}</h3>
