@@ -4,20 +4,6 @@ import { db } from './firebase';
 const NEWS_COLLECTION = 'news';
 const newsCollectionRef = collection(db, NEWS_COLLECTION);
 
-async function fetchSimpleCollection(name) {
-  try {
-    const snap = await getDocs(collection(db, name));
-    // Serialize any Firestore Timestamp fields to ISO strings — these documents
-    // are passed straight from Server Components to Client Components, and
-    // Timestamp objects (they carry a toJSON method) trigger a Next.js
-    // "Only plain objects can be passed" runtime error otherwise.
-    return snap.docs.map((d) => ({ id: d.id, ...serializeDates(d.data()) }));
-  } catch (err) {
-    console.warn(`fetchSimpleCollection(${name}): could not fetch`, err);
-    return [];
-  }
-}
-
 // Firestore Timestamp -> plain ISO string, so it's safe to pass from
 // Server Components to Client Components and to JSON-LD.
 function serializeDates(data) {
@@ -29,20 +15,6 @@ function serializeDates(data) {
     }
   }
   return out;
-}
-
-export async function getTestimonials() {
-  return fetchSimpleCollection('testimonials');
-}
-
-export async function getPodcastEpisodes() {
-  const eps = await fetchSimpleCollection('podcasts');
-  // Sort newest first if a date field exists.
-  return eps.sort((a, b) => {
-    const da = a.date ? new Date(a.date).getTime() : 0;
-    const db = b.date ? new Date(b.date).getTime() : 0;
-    return db - da;
-  });
 }
 
 export async function getAllNews() {
@@ -69,19 +41,4 @@ export async function getAllSlugs() {
   return snapshot.docs
     .map((d) => d.data().slug)
     .filter(Boolean);
-}
-
-/**
- * All articles written by a specific author. Falls back to matching by name
- * so pre-migration articles (no authorId yet) still show up on their author's
- * profile page as long as the byline string matches the author's name.
- */
-export async function getArticlesByAuthor(author) {
-  if (!author) return [];
-  const all = await getAllNews();
-  return all.filter((post) => {
-    if (post.authorId && author.id) return post.authorId === author.id;
-    if (author.name) return (post.author || post.authorName) === author.name;
-    return false;
-  });
 }

@@ -2,7 +2,6 @@
 
 import { Calendar, Users, Target, Heart, ArrowRight, BookOpen } from 'lucide-react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import CountUp from '@/components/ui/CountUp';
 
@@ -19,69 +18,87 @@ const milestones = [
 export default function AboutContent() {
   return (
     <div className="pt-16">
-      <section id="hero" className="relative bg-black">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] lg:min-h-[70vh]">
-          <div className="order-2 lg:order-1 flex flex-col justify-center px-6 sm:px-10 lg:pl-6 lg:pr-14 py-14 lg:py-20 border-b lg:border-b-0 lg:border-r border-gray-800">
-            <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-6">
-              Since 2024 &middot; Operating across Africa
-            </span>
+      <section id="hero" className="relative flex items-center overflow-hidden">
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: "url('/assets/aboutus.png')",
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
+          <div className="absolute inset-0 bg-black/80" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black" />
+        </div>
 
-            <h1 className="font-semibold text-white text-4xl sm:text-5xl lg:text-[54px] leading-[1.05] tracking-tight mb-6 max-w-xl">
-              Empowering Africa through <em className="italic text-yellow-500">Bitcoin.</em>
-            </h1>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+          <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-16">
+            <div className="w-full lg:w-1/2 text-left mt-12 md:mt-10 lg:text-left">
+              <div className="hidden sm:inline-block mb-6 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full">
+                <span className="text-yellow-500 text-sm font-semibold">2+ Years of Proof-of-Quality-Works</span>
+              </div>
 
-            <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-md mb-10">
-              Our journey began with a simple belief: everyone deserves access to financial freedom.
-              Bitcoin Africa Story is an independent media and education platform — not affiliated with
-              any exchange or company.
-            </p>
+              <h1 className="text-5xl sm:text-7xl md:text-6xl lg:text-7xl md:font-extrabold mb-4 leading-tight">
+                <span> Empowering </span> <br className="sm:hidden" /> <span> Africa </span> <br className="sm:hidden" /> <span> Through </span> <br /> <span className="text-[#FAD604]"> Bitcoin. </span>
+              </h1>
 
-            <div className="flex flex-wrap items-center gap-6 sm:gap-8">
-              <Link
-                href="/donate"
-                className="inline-flex items-center gap-2 bg-yellow-500 text-black font-bold text-sm sm:text-base px-6 py-4 sm:px-7 hover:brightness-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-              >
-                Donate
-                <ArrowRight size={18} />
-              </Link>
-              <Link
-                href="/contact"
-                className="text-sm sm:text-base font-semibold text-gray-200 border-b border-gray-700 pb-1 hover:text-yellow-500 hover:border-yellow-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-              >
-                Contact Us
-              </Link>
-            </div>
-          </div>
+              <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl">
+                Our journey began with a simple belief: everyone deserves access to financial freedom.
+              </p>
 
-          <div className="order-1 lg:order-2 relative min-h-[380px] sm:min-h-[440px] lg:min-h-0 overflow-hidden">
-            <Image
-              src="/assets/aboutus.png"
-              alt="Bitcoin Africa Story classroom"
-              fill
-              priority
-              sizes="(min-width: 1024px) 45vw, 100vw"
-              className="object-cover"
-            />
-            <div className="hidden lg:block absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.85)_0%,rgba(0,0,0,0.25)_30%,rgba(0,0,0,0)_60%)]" />
-            <div className="lg:hidden absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.15)_0%,rgba(0,0,0,0)_35%)]" />
-            <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black via-black/70 to-transparent" />
+              <div className="flex mt-5 sm:flex-row gap-4 justify-start mb-6 w-full max-w-md">
+                <Link
+                  href="/donate"
+                  className="inline-flex w-full sm:w-auto items-center justify-center px-6 py-2 sm:py-3 bg-yellow-500 text-black font-bold text-base sm:text-lg hover:bg-yellow-400 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-yellow-500/50"
+                >
+                  Donate
+                  <ArrowRight className="ml-2" size={18} />
+                </Link>
+                <Link
+                  href="/contact"
+                  className="inline-flex w-full sm:w-auto items-center justify-center px-6 py-2 sm:py-3 bg-transparent border-2 border-yellow-500 text-yellow-500 font-bold text-base sm:text-lg hover:bg-yellow-500 hover:text-black transition-all duration-200"
+                >
+                  Contact Us
+                </Link>
+              </div>
 
-            <div className="absolute bottom-0 left-0 right-0 grid grid-cols-2 gap-x-6 gap-y-5 px-6 sm:px-8 py-6 sm:py-8">
-              {[
-                { value: 2, suffix: '+', label: 'Years Teaching' },
-                { value: 500, suffix: '+', label: 'Lives Changed' },
-                { value: 50, suffix: '+', label: 'Communities' },
-                { value: 100, suffix: '%', label: 'Free Education' },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <div className="font-bold text-white text-[22px] sm:text-[26px] leading-none">
-                    <CountUp end={stat.value} suffix={stat.suffix} />
-                  </div>
-                  <div className="font-semibold text-[10px] tracking-[0.14em] uppercase text-gray-300 mt-1.5">
-                    {stat.label}
-                  </div>
+              <div className="grid grid-cols-2 max-sm:hidden sm:grid-cols-4 gap-6 mt-6 max-w-md mx-auto lg:mx-0">
+                <div>
+                  <div className="text-3xl md:text-4xl font-bold text-yellow-500 mb-1"><CountUp end={2} suffix="+" /></div>
+                  <div className="text-gray-400 text-sm">Years Teaching</div>
                 </div>
-              ))}
+                <div>
+                  <div className="text-3xl md:text-4xl font-bold text-yellow-500 mb-1"><CountUp end={500} suffix="+" /></div>
+                  <div className="text-gray-400 text-sm">Lives Changed</div>
+                </div>
+                <div>
+                  <div className="text-3xl md:text-4xl font-bold text-yellow-500 mb-1"><CountUp end={50} suffix="+" /></div>
+                  <div className="text-gray-400 text-sm">Communities</div>
+                </div>
+                <div>
+                  <div className="text-3xl md:text-4xl font-bold text-yellow-500 mb-1"><CountUp end={100} suffix="%" /></div>
+                  <div className="text-gray-400 text-sm">Free Education</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="w-full hidden lg:w-1/2 lg:flex items-center justify-center">
+              <div className="relative w-[460px] h-[300px] lg:w-[520px] lg:h-[360px]">
+                <div className="absolute right-0 top-0 w-[320px] h-[240px] lg:w-[360px] lg:h-[270px] rounded-2xl overflow-hidden border border-gray-800 shadow-lg">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=1000&q=80" alt="student-1" className="w-full h-full object-cover grayscale-[10%]" />
+                </div>
+                <div className="absolute left-0 bottom-[-70px] w-[300px] h-[260px] lg:w-[340px] lg:h-[300px] rounded-2xl overflow-hidden border border-gray-800 shadow-xl transform -translate-y-6 lg:-translate-y-8">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=1000&q=80" alt="student-2" className="w-full h-full object-cover grayscale-[10%]" />
+                </div>
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[212px] h-[212px] lg:w-[232px] lg:h-[232px] rounded-xl overflow-hidden border-2 border-yellow-500 shadow-md bg-gradient-to-tr from-yellow-500/10 to-transparent flex items-center justify-center">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&q=80" alt="student-3" className="w-full h-full object-cover rounded-lg filter grayscale-[10%]" />
+                </div>
+                <div className="absolute -left-6 -top-6 w-6 h-6 rounded-full bg-yellow-500/80 blur-sm" aria-hidden="true" />
+              </div>
             </div>
           </div>
         </div>
@@ -91,7 +108,7 @@ export default function AboutContent() {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-6">
+              <h2 className="text-4xl font-bold mb-6">
                 Our <span className="text-yellow-500">Story</span>
               </h2>
               <div className="space-y-4 text-lg text-gray-300 leading-relaxed">
@@ -116,14 +133,8 @@ export default function AboutContent() {
             </div>
 
             <div className="space-y-6">
-              <Image
-                src="/assets/communities.jpg"
-                alt="Community"
-                width={2100}
-                height={1500}
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="w-full h-auto shadow-2xl"
-              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/assets/communities.jpg" alt="Community" className="w-full shadow-2xl" />
               <div className="grid grid-cols-2 gap-6">
                 <div className="p-6 bg-gray-900 border border-gray-800">
                   <div className="text-3xl font-bold text-yellow-500 mb-2"><CountUp end={2} suffix="+" /></div>
@@ -176,7 +187,7 @@ export default function AboutContent() {
       <section className="py-20 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
               Our <span className="text-yellow-500">Journey</span>
             </h2>
             <p className="text-xl text-gray-400">Milestones on the Road to Africa&rsquo;s Bitcoin Future</p>
@@ -215,7 +226,7 @@ export default function AboutContent() {
       <section className="py-20 px-6 bg-gradient-to-b from-gray-900/30 to-transparent">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
               Our <span className="text-yellow-500">Values</span>
             </h2>
             <p className="text-xl text-gray-400">The principles that guide everything we do</p>
@@ -263,7 +274,7 @@ export default function AboutContent() {
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="inline-block mb-4 px-4 py-2 bg-yellow-500/10 border border-yellow-500/20 rounded-full">
               <span className="text-yellow-500 text-sm font-bold uppercase tracking-widest">Join The Movement</span>
             </motion.div>
-            <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="text-4xl md:text-5xl font-semibold mb-6 text-white">
+            <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="text-4xl md:text-5xl font-black mb-6 text-white">
               Ready to Shape the <br className="hidden md:block" />
               <span className="text-yellow-500">Future of Africa?</span>
             </motion.h2>
