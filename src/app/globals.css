@@ -244,6 +244,11 @@ body {
 .article-body .ql-font-merriweather { font-family: var(--font-merriweather), Georgia, serif; }
 .article-body .ql-font-courier { font-family: "Courier New", Courier, monospace; }
 
+/* Editorial serif display face, used on the About page redesign
+   (headline, pull-quotes, pillar numerals, journey heading). */
+.font-fraunces { font-family: var(--font-fraunces), Georgia, serif; }
+
+
 /* ─────────────────────────────────────────────────────────────
    Keyboard focus visibility
    Cards and links across the site have hover states but no focus

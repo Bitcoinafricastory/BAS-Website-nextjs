@@ -8,32 +8,28 @@ import CountUp from '@/components/ui/CountUp';
 
 const pillars = [
   {
-    id: '1',
+    id: '01',
     title: 'Education',
     description:
-      'We provide practical Bitcoin training for schools, youth, merchants, and communities, helping people understand and use Bitcoin confidently.',
-    image: '/assets/education.jpg',
+      'Practical Bitcoin training for schools, youth, merchants, and communities — helping people understand and use Bitcoin confidently.',
   },
   {
-    id: '2',
+    id: '02',
     title: 'Storytelling',
     description:
-      'We document and share real stories of Bitcoin adoption across Africa, highlighting the people, challenges, and progress in each community.',
-    image: '/assets/story.jpg',
+      'Real stories of Bitcoin adoption across Africa, highlighting the people, challenges, and progress in each community.',
   },
   {
-    id: '3',
-    title: 'Community Development ',
+    id: '03',
+    title: 'Community Development',
     description:
-      'We support communities in building sustainable Bitcoin circular economies through merchant onboarding, local spending, and hands-on guidance.',
-    image: '/assets/communities.jpg',
+      'Supporting communities in building sustainable Bitcoin circular economies through merchant onboarding, local spending, and hands-on guidance.',
   },
   {
-    id: '4',
+    id: '04',
     title: 'Research and Insights',
     description:
-      'We study Bitcoin usage, community needs, adoption patterns, and emerging trends to guide our programs and share valuable insights with the ecosystem.',
-    image: '/assets/research.jpg',
+      'Studying Bitcoin usage, community needs, adoption patterns, and emerging trends to guide our programs and share insights with the ecosystem.',
   },
 ];
 
@@ -47,9 +43,16 @@ const milestones = [
   { year: '2025', title: 'Building Circular Economies', description: 'Launched initiatives like Bitcoin Ikorodu and continued scaling real Bitcoin adoption across African communities.' },
 ];
 
+const fadeUp = {
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+};
+
 export default function AboutContent() {
   return (
     <div className="pt-16">
+      {/* ===== Hero ===== */}
       <section id="hero" className="relative bg-black">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] lg:min-h-[70vh]">
           <div className="order-2 lg:order-1 flex flex-col justify-center px-6 sm:px-10 lg:pl-6 lg:pr-14 py-14 lg:py-20 border-b lg:border-b-0 lg:border-r border-gray-800">
@@ -57,8 +60,8 @@ export default function AboutContent() {
               Since 2024 &middot; Operating across Africa
             </span>
 
-            <h1 className="font-semibold text-white text-4xl sm:text-5xl lg:text-[54px] leading-[1.05] tracking-tight mb-6 max-w-xl">
-              Empowering Africa through <em className="italic text-yellow-500">Bitcoin.</em>
+            <h1 className="font-fraunces italic font-medium text-white text-4xl sm:text-5xl lg:text-[56px] leading-[1.08] tracking-tight mb-6 max-w-xl">
+              Empowering Africa through <span className="not-italic font-semibold text-yellow-500">Bitcoin.</span>
             </h1>
 
             <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-md mb-10">
@@ -118,35 +121,65 @@ export default function AboutContent() {
         </div>
       </section>
 
+      {/* ===== Pull-quote ===== */}
+      <section className="py-20 sm:py-24 px-6 border-t border-b border-gray-800">
+        <div className="max-w-4xl mx-auto">
+          <motion.p
+            {...fadeUp}
+            className="font-fraunces italic font-medium text-2xl sm:text-3xl lg:text-[40px] leading-[1.35] text-gray-100"
+          >
+            <span className="text-yellow-500">&ldquo;</span>Why are so many Africans still excluded from
+            financial opportunities when Bitcoin exists?<span className="text-yellow-500">&rdquo;</span>
+          </motion.p>
+          <motion.p
+            {...fadeUp}
+            transition={{ delay: 0.15 }}
+            className="mt-6 text-xs font-semibold tracking-[0.14em] uppercase text-gray-500"
+          >
+            The question that started it all — 2024
+          </motion.p>
+        </div>
+      </section>
+
+      {/* ===== Story row 1 ===== */}
       <section className="py-20 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-6">
-                Our <span className="text-yellow-500">Story</span>
-              </h2>
+              <motion.h2 {...fadeUp} className="font-fraunces text-2xl md:text-3xl font-semibold mb-6">
+                From One Question to a <span className="text-yellow-500">Continental Movement</span>
+              </motion.h2>
               <div className="space-y-4 text-lg text-gray-300 leading-relaxed">
-                <h5>From One Question to a Continental Movement</h5>
-                <h5>Bitcoin Africa Story started with a question:</h5>
-                <p>&ldquo;Why are so many Africans still excluded from financial opportunities when Bitcoin exists?&rdquo;</p>
-                <p>
-                  That question sparked a journey — from small, informal meetups in Nigeria to a growing
-                  pan-African network of learners, merchants, educators, youths, and creators discovering
-                  Bitcoin together.
-                </p>
-                <p>
-                  Through collaboration with Bitcoin initiatives across the continent. We&rsquo;ve seen the impact
-                  firsthand: When Africans understand Bitcoin, everything changes.
-                </p>
-                <p>
-                  Today, Bitcoin Africa Story stands at the intersection of education, community empowerment,
-                  storytelling, and circular economy building. We&rsquo;re helping people not only learn Bitcoin,
-                  but use it in their daily lives.
-                </p>
+                {[
+                  <p key="p1">
+                    That question sparked a journey — from small, informal meetups in Nigeria to a growing
+                    pan-African network of learners, merchants, educators, youths, and creators discovering
+                    Bitcoin together.
+                  </p>,
+                  <p key="p2">
+                    Through collaboration with Bitcoin initiatives across the continent, we&rsquo;ve seen the
+                    impact firsthand: when Africans understand Bitcoin, everything changes.
+                  </p>,
+                ].map((node, index) => (
+                  <motion.div
+                    key={node.key}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                  >
+                    {node}
+                  </motion.div>
+                ))}
               </div>
             </div>
 
-            <div className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.97 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7 }}
+              viewport={{ once: true }}
+            >
               <Image
                 src="/assets/communities.jpg"
                 alt="Community"
@@ -155,29 +188,60 @@ export default function AboutContent() {
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 className="w-full h-auto shadow-2xl"
               />
-              <div className="grid grid-cols-2 gap-6">
-                <div className="p-6 bg-gray-900 border border-gray-800">
-                  <div className="text-3xl font-bold text-yellow-500 mb-2"><CountUp end={2} suffix="+" /></div>
-                  <div className="text-gray-400">Years of Teaching</div>
-                </div>
-                <div className="p-6 bg-gray-900 border border-gray-800">
-                  <div className="text-3xl font-bold text-yellow-500 mb-2"><CountUp end={500} suffix="+" /></div>
-                  <div className="text-gray-400">Lives Changed</div>
-                </div>
-              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== Story row 2 (reversed) ===== */}
+      <section className="py-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.97 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7 }}
+              viewport={{ once: true }}
+              className="order-2 lg:order-1"
+            >
+              <Image
+                src="/assets/education.jpg"
+                alt="Community workshop"
+                width={2100}
+                height={1500}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="w-full h-auto shadow-2xl"
+              />
+            </motion.div>
+
+            <div className="order-1 lg:order-2">
+              <motion.h2 {...fadeUp} className="font-fraunces text-2xl md:text-3xl font-semibold mb-6">
+                What We <span className="text-yellow-500">Stand On</span>
+              </motion.h2>
+              <motion.p
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-lg text-gray-300 leading-relaxed"
+              >
+                Today, Bitcoin Africa Story stands at the intersection of education, community empowerment,
+                storytelling, and circular economy building. We&rsquo;re helping people not only learn Bitcoin,
+                but use it in their daily lives.
+              </motion.p>
             </div>
           </div>
         </div>
       </section>
 
+      {/* ===== Mission / Vision ===== */}
       <section className="py-20 px-6 bg-gradient-to-b from-transparent via-gray-900/30 to-transparent">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="p-10 bg-gray-900 border border-gray-800">
+            <motion.div {...fadeUp} className="p-10 bg-gray-900 border border-gray-800">
               <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mb-6">
                 <Target className="text-yellow-500" size={32} />
               </div>
-              <h2 className="text-3xl font-bold mb-4">
+              <h2 className="font-fraunces text-3xl font-semibold mb-4">
                 Our <span className="text-yellow-500">Mission</span>
               </h2>
               <p className="text-lg text-gray-300 leading-relaxed">
@@ -185,13 +249,13 @@ export default function AboutContent() {
                 grassroots initiatives, and storytelling all aimed at making Bitcoin practical for
                 everyday Africans.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="p-10 bg-gray-900 border border-gray-800">
+            <motion.div {...fadeUp} transition={{ delay: 0.1 }} className="p-10 bg-gray-900 border border-gray-800">
               <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mb-6">
                 <Heart className="text-yellow-500" size={32} />
               </div>
-              <h2 className="text-3xl font-bold mb-4">
+              <h2 className="font-fraunces text-3xl font-semibold mb-4">
                 Our <span className="text-yellow-500">Vision</span>
               </h2>
               <p className="text-lg text-gray-300 leading-relaxed">
@@ -199,96 +263,86 @@ export default function AboutContent() {
                 understand Bitcoin, use Bitcoin, and benefit from its freedom, transparency, and
                 opportunity.
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
+      {/* ===== Pillars — editorial numbered strip ===== */}
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-16 max-w-2xl">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">
-              Pillars of <span className="text-yellow-500">Bitcoin Africa Story</span>
+          <motion.div {...fadeUp} className="mb-12 max-w-2xl">
+            <h2 className="font-fraunces text-2xl md:text-3xl font-semibold mb-4">
+              Four pillars, <span className="text-yellow-500">one story</span>
             </h2>
-            <p className="text-xl text-gray-400">
+            <p className="text-lg text-gray-400">
               Discover how Bitcoin is transforming lives and creating opportunities across Africa
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {pillars.map((pillar) => (
-              <div key={pillar.id} className="group relative overflow-hidden bg-gray-900 border border-gray-800 hover:border-yellow-500 transition-all duration-300 hover:scale-105">
-                <div className="aspect-video overflow-hidden relative bg-gray-800">
-                  {pillar.image && (
-                    <Image
-                      src={pillar.image}
-                      alt={pillar.title}
-                      fill
-                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                      className="object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
-                  )}
-                </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold mb-3 text-yellow-500">{pillar.title}</h3>
-                  <p className="text-gray-400 leading-relaxed">{pillar.description}</p>
-                </div>
-              </div>
+          <div className="flex gap-5 overflow-x-auto pb-4 -mx-6 px-6 snap-x snap-mandatory scrollbar-thin">
+            {pillars.map((pillar, index) => (
+              <motion.div
+                key={pillar.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.08 }}
+                className="min-w-[270px] sm:min-w-[300px] snap-start bg-gray-900 border border-gray-800 hover:border-yellow-500 transition-colors duration-300 p-8"
+              >
+                <div className="font-fraunces italic text-gray-700 text-4xl mb-4">{pillar.id}</div>
+                <h3 className="text-xl font-bold mb-3 text-yellow-500">{pillar.title}</h3>
+                <p className="text-gray-400 leading-relaxed">{pillar.description}</p>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* ===== Journey ===== */}
       <section className="py-20 px-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">
-              Our <span className="text-yellow-500">Journey</span>
+        <div className="max-w-4xl mx-auto">
+          <motion.div {...fadeUp} className="mb-16">
+            <h2 className="font-fraunces text-2xl md:text-3xl font-semibold mb-4">
+              Milestones on the <span className="text-yellow-500">Road</span>
             </h2>
-            <p className="text-xl text-gray-400">Milestones on the Road to Africa&rsquo;s Bitcoin Future</p>
-          </div>
+            <p className="text-lg text-gray-400">To Africa&rsquo;s Bitcoin Future</p>
+          </motion.div>
 
-          <div className="relative">
-            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-yellow-500/30" />
-            <div className="space-y-12">
-              {milestones.map((milestone, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                  className={`relative flex items-center ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
-                >
-                  <div className="absolute left-8 md:left-1/2 w-4 h-4 bg-yellow-500 border-4 border-black transform -translate-x-1/2" />
-                  <div className={`w-full md:w-1/2 ${index % 2 === 0 ? 'md:pr-12 pl-16 md:pl-0' : 'md:pl-12 pl-16 md:pl-0'}`}>
-                    <div className="p-6 bg-gray-900 border border-gray-800 hover:border-yellow-500 transition-colors duration-300">
-                      <div className="flex items-center mb-3">
-                        <Calendar className="text-yellow-500 mr-2" size={20} />
-                        <span className="text-yellow-500 font-bold">{milestone.year}</span>
-                      </div>
-                      <h3 className="text-xl font-bold mb-2">{milestone.title}</h3>
-                      <p className="text-gray-400">{milestone.description}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+          <div className="relative border-l border-gray-800 ml-4">
+            {milestones.map((milestone, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.08 }}
+                viewport={{ once: true }}
+                className="relative pl-10 pb-12 last:pb-0"
+              >
+                <div className="absolute -left-[15px] top-0 w-[30px] h-[30px] rounded-full bg-black border border-yellow-500 text-yellow-500 flex items-center justify-center text-xs font-bold">
+                  {index + 1}
+                </div>
+                <span className="text-yellow-500 text-xs font-bold tracking-[0.1em]">{milestone.year}</span>
+                <h3 className="text-xl font-bold mt-1 mb-2">{milestone.title}</h3>
+                <p className="text-gray-400 leading-relaxed max-w-lg">{milestone.description}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
+      {/* ===== Values ===== */}
       <section className="py-20 px-6 bg-gradient-to-b from-gray-900/30 to-transparent">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">
+          <motion.div {...fadeUp} className="text-center mb-16">
+            <h2 className="font-fraunces text-2xl md:text-3xl font-semibold mb-4">
               Our <span className="text-yellow-500">Values</span>
             </h2>
             <p className="text-xl text-gray-400">The principles that guide everything we do</p>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-8 bg-gray-900 border border-gray-800 text-center hover:border-yellow-500 transition-colors duration-300">
+            <motion.div {...fadeUp} className="p-8 bg-gray-900 border border-gray-800 text-center hover:border-yellow-500 transition-colors duration-300">
               <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Users className="text-yellow-500" size={32} />
               </div>
@@ -296,9 +350,9 @@ export default function AboutContent() {
               <p className="text-gray-400 leading-relaxed">
                 Bitcoin adoption grows from the grassroots — through people, not institutions.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="p-8 bg-gray-900 border border-gray-800 text-center hover:border-yellow-500 transition-colors duration-300">
+            <motion.div {...fadeUp} transition={{ delay: 0.1 }} className="p-8 bg-gray-900 border border-gray-800 text-center hover:border-yellow-500 transition-colors duration-300">
               <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Target className="text-yellow-500" size={32} />
               </div>
@@ -306,9 +360,9 @@ export default function AboutContent() {
               <p className="text-gray-400 leading-relaxed">
                 We prioritize accuracy, clarity, and accessibility in every lesson and resource.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="p-8 bg-gray-900 border border-gray-800 text-center hover:border-yellow-500 transition-colors duration-300">
+            <motion.div {...fadeUp} transition={{ delay: 0.2 }} className="p-8 bg-gray-900 border border-gray-800 text-center hover:border-yellow-500 transition-colors duration-300">
               <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Heart className="text-yellow-500" size={32} />
               </div>
@@ -316,11 +370,12 @@ export default function AboutContent() {
               <p className="text-gray-400 leading-relaxed">
                 We equip people with tools for independence, not dependency.
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
+      {/* ===== CTA ===== */}
       <section className="py-24 px-6 relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-yellow-500/5 blur-[120px] rounded-full -z-10" />
 
@@ -329,9 +384,9 @@ export default function AboutContent() {
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="inline-block mb-4 px-4 py-2 bg-yellow-500/10 border border-yellow-500/20 rounded-full">
               <span className="text-yellow-500 text-sm font-bold uppercase tracking-widest">Join The Movement</span>
             </motion.div>
-            <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="text-4xl md:text-5xl font-semibold mb-6 text-white">
+            <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="font-fraunces italic text-4xl md:text-5xl font-semibold mb-6 text-white">
               Ready to Shape the <br className="hidden md:block" />
-              <span className="text-yellow-500">Future of Africa?</span>
+              <span className="not-italic text-yellow-500">Future of Africa?</span>
             </motion.h2>
             <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="text-xl text-gray-400 max-w-2xl mx-auto">
               Whether you&rsquo;re a beginner or a builder, there&rsquo;s a place for you in the Bitcoin revolution.
