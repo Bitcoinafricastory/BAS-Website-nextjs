@@ -331,43 +331,51 @@ export default function AboutContent() {
         </div>
       </section>
 
-      {/* ===== Values ===== */}
+      {/* ===== Values — asymmetric bento ===== */}
       <section className="py-20 px-6 bg-gradient-to-b from-gray-900/30 to-transparent">
         <div className="max-w-6xl mx-auto">
-          <motion.div {...fadeUp} className="text-center mb-16">
-            <h2 className="font-fraunces text-2xl md:text-3xl font-semibold mb-4">
-              Our <span className="text-yellow-500">Values</span>
+          <motion.div {...fadeUp} className="mb-12">
+            <span className="text-xs font-bold tracking-[0.14em] uppercase text-gray-500">Our Values</span>
+            <h2 className="font-fraunces text-2xl md:text-3xl font-semibold mt-3">
+              The principles that guide <span className="text-yellow-500">everything we do</span>
             </h2>
-            <p className="text-xl text-gray-400">The principles that guide everything we do</p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <motion.div {...fadeUp} className="p-8 bg-gray-900 border border-gray-800 text-center hover:border-yellow-500 transition-colors duration-300">
-              <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Users className="text-yellow-500" size={32} />
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Community First</h3>
-              <p className="text-gray-400 leading-relaxed">
+          <div className="grid grid-cols-1 md:grid-cols-[1.3fr_1fr] md:grid-rows-2 gap-5">
+            <motion.div
+              {...fadeUp}
+              className="md:row-span-2 relative overflow-hidden bg-gray-900 border border-gray-800 hover:border-yellow-500 transition-colors duration-300 p-10 flex flex-col justify-end min-h-[280px]"
+            >
+              <span className="font-fraunces absolute top-6 right-7 text-[90px] leading-none font-bold text-gray-800/80 select-none">01</span>
+              <Users className="text-yellow-500 mb-4 relative" size={30} />
+              <h3 className="text-2xl font-bold mb-3 relative">Community First</h3>
+              <p className="text-gray-400 leading-relaxed relative max-w-sm">
                 Bitcoin adoption grows from the grassroots — through people, not institutions.
               </p>
             </motion.div>
 
-            <motion.div {...fadeUp} transition={{ delay: 0.1 }} className="p-8 bg-gray-900 border border-gray-800 text-center hover:border-yellow-500 transition-colors duration-300">
-              <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Target className="text-yellow-500" size={32} />
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Education Excellence</h3>
-              <p className="text-gray-400 leading-relaxed">
+            <motion.div
+              {...fadeUp}
+              transition={{ delay: 0.1 }}
+              className="relative overflow-hidden bg-gray-900 border border-gray-800 hover:border-yellow-500 transition-colors duration-300 p-8"
+            >
+              <span className="font-fraunces absolute top-4 right-5 text-5xl leading-none font-bold text-gray-800/80 select-none">02</span>
+              <Target className="text-yellow-500 mb-4 relative" size={26} />
+              <h3 className="text-xl font-bold mb-2 relative">Education Excellence</h3>
+              <p className="text-gray-400 leading-relaxed relative text-sm">
                 We prioritize accuracy, clarity, and accessibility in every lesson and resource.
               </p>
             </motion.div>
 
-            <motion.div {...fadeUp} transition={{ delay: 0.2 }} className="p-8 bg-gray-900 border border-gray-800 text-center hover:border-yellow-500 transition-colors duration-300">
-              <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Heart className="text-yellow-500" size={32} />
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Empowerment</h3>
-              <p className="text-gray-400 leading-relaxed">
+            <motion.div
+              {...fadeUp}
+              transition={{ delay: 0.2 }}
+              className="relative overflow-hidden bg-gray-900 border border-gray-800 hover:border-yellow-500 transition-colors duration-300 p-8"
+            >
+              <span className="font-fraunces absolute top-4 right-5 text-5xl leading-none font-bold text-gray-800/80 select-none">03</span>
+              <Heart className="text-yellow-500 mb-4 relative" size={26} />
+              <h3 className="text-xl font-bold mb-2 relative">Empowerment</h3>
+              <p className="text-gray-400 leading-relaxed relative text-sm">
                 We equip people with tools for independence, not dependency.
               </p>
             </motion.div>
@@ -375,65 +383,65 @@ export default function AboutContent() {
         </div>
       </section>
 
-      {/* ===== CTA ===== */}
+      {/* ===== CTA — photo banner with pill rows ===== */}
       <section className="py-24 px-6 relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-yellow-500/5 blur-[120px] rounded-full -z-10" />
 
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="inline-block mb-4 px-4 py-2 bg-yellow-500/10 border border-yellow-500/20 rounded-full">
-              <span className="text-yellow-500 text-sm font-bold uppercase tracking-widest">Join The Movement</span>
-            </motion.div>
-            <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="font-fraunces italic text-4xl md:text-5xl font-semibold mb-6 text-white">
-              Ready to Shape the <br className="hidden md:block" />
-              <span className="not-italic text-yellow-500">Future of Africa?</span>
-            </motion.h2>
-            <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="text-xl text-gray-400 max-w-2xl mx-auto">
+        <motion.div
+          {...fadeUp}
+          className="max-w-6xl mx-auto bg-gray-900 border border-gray-800 grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] overflow-hidden"
+        >
+          <div className="relative min-h-[280px] lg:min-h-[440px]">
+            <Image
+              src="/assets/story.jpg"
+              alt="Bitcoin Africa Story community"
+              fill
+              sizes="(min-width: 1024px) 40vw, 100vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-black/10" />
+          </div>
+
+          <div className="p-8 sm:p-12 lg:p-14 flex flex-col justify-center">
+            <span className="text-yellow-500 text-xs font-bold uppercase tracking-widest mb-4">Join The Movement</span>
+            <h2 className="font-fraunces text-3xl sm:text-4xl font-semibold mb-4 text-white leading-tight">
+              Ready to shape the <span className="text-yellow-500">future of Africa?</span>
+            </h2>
+            <p className="text-gray-400 mb-8 max-w-md leading-relaxed">
               Whether you&rsquo;re a beginner or a builder, there&rsquo;s a place for you in the Bitcoin revolution.
-            </motion.p>
+            </p>
+
+            <div className="flex flex-col gap-3">
+              <Link
+                href="/education"
+                className="group flex items-center justify-between px-6 py-4 bg-black border border-gray-700 hover:border-yellow-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500"
+              >
+                <span className="flex items-center gap-3 font-semibold text-gray-100 group-hover:text-yellow-500 transition-colors">
+                  <BookOpen size={18} className="text-yellow-500" /> Learn Bitcoin
+                </span>
+                <ArrowRight size={18} className="text-gray-600 group-hover:text-yellow-500 group-hover:translate-x-1 transition-all" />
+              </Link>
+              <Link
+                href="/donate"
+                className="group flex items-center justify-between px-6 py-4 bg-black border border-gray-700 hover:border-yellow-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500"
+              >
+                <span className="flex items-center gap-3 font-semibold text-gray-100 group-hover:text-yellow-500 transition-colors">
+                  <Heart size={18} className="text-yellow-500" /> Support Our Work
+                </span>
+                <ArrowRight size={18} className="text-gray-600 group-hover:text-yellow-500 group-hover:translate-x-1 transition-all" />
+              </Link>
+              <Link
+                href="/events"
+                className="group flex items-center justify-between px-6 py-4 bg-black border border-gray-700 hover:border-yellow-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500"
+              >
+                <span className="flex items-center gap-3 font-semibold text-gray-100 group-hover:text-yellow-500 transition-colors">
+                  <Users size={18} className="text-yellow-500" /> Join Our Events
+                </span>
+                <ArrowRight size={18} className="text-gray-600 group-hover:text-yellow-500 group-hover:translate-x-1 transition-all" />
+              </Link>
+            </div>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="group bg-gray-900/50 border border-white/5 p-8 hover:border-yellow-500/30 transition-all duration-500 flex flex-col h-full">
-              <div className="w-14 h-14 bg-yellow-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <BookOpen className="text-yellow-500" size={28} />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Learn Bitcoin</h3>
-              <p className="text-gray-400 mb-8 flex-grow leading-relaxed">
-                Start your journey with our free comprehensive Bitcoin programs. Master the fundamentals of sound money.
-              </p>
-              <Link href="/education" className="inline-flex items-center text-yellow-500 font-bold hover:gap-3 transition-all">
-                Get Started <ArrowRight className="ml-2" size={20} />
-              </Link>
-            </motion.div>
-
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="group bg-gray-900/50 border border-white/5 p-8 hover:border-yellow-500/30 transition-all duration-500 flex flex-col h-full">
-              <div className="w-14 h-14 bg-yellow-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Heart className="text-yellow-500" size={28} />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Support Our Work</h3>
-              <p className="text-gray-400 mb-8 flex-grow leading-relaxed">
-                Your contributions help us reach more communities and provide free Bitcoin education across Africa.
-              </p>
-              <Link href="/donate" className="inline-flex items-center text-yellow-500 font-bold hover:gap-3 transition-all">
-                Donate Now <ArrowRight className="ml-2" size={20} />
-              </Link>
-            </motion.div>
-
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="group bg-gray-900/50 border border-white/5 p-8 hover:border-yellow-500/30 transition-all duration-500 flex flex-col h-full">
-              <div className="w-14 h-14 bg-yellow-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Users className="text-yellow-500" size={28} />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Join Our Events</h3>
-              <p className="text-gray-400 mb-8 flex-grow leading-relaxed">
-                Connect with local Bitcoiners. Discover meetups, workshops, and conferences happening near you.
-              </p>
-              <Link href="/events" className="inline-flex items-center text-yellow-500 font-bold hover:gap-3 transition-all">
-                Find Meetups <ArrowRight className="ml-2" size={20} />
-              </Link>
-            </motion.div>
-          </div>
-        </div>
+        </motion.div>
       </section>
     </div>
   );
