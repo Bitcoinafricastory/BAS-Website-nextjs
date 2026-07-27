@@ -1,5 +1,5 @@
 import './globals.css';
-import { Montserrat, Poppins, Inter, Merriweather, Fraunces } from 'next/font/google';
+import { Montserrat, Poppins, Inter, Merriweather, Fraunces, JetBrains_Mono } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import AppShell from '@/components/AppShell';
@@ -43,6 +43,15 @@ const fraunces = Fraunces({
   weight: ['400', '500', '600'],
   style: ['normal', 'italic'],
   variable: '--font-fraunces',
+  display: 'swap',
+});
+
+// Monospace face — used on the Donate page's Bitcoin-native styling
+// (status bar, tx labels, ledger figures).
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-jetbrains-mono',
   display: 'swap',
 });
 
@@ -99,7 +108,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${montserrat.variable} ${poppins.variable} ${inter.variable} ${merriweather.variable} ${fraunces.variable}`}>
+    <html lang="en" className={`${montserrat.variable} ${poppins.variable} ${inter.variable} ${merriweather.variable} ${fraunces.variable} ${jetbrainsMono.variable}`}>
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(organizationSchema())} />
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(websiteSchema())} />

@@ -248,6 +248,16 @@ body {
    (headline, pull-quotes, pillar numerals, journey heading). */
 .font-fraunces { font-family: var(--font-fraunces), Georgia, serif; }
 
+/* Bitcoin-native monospace face, used on the Donate page. */
+.font-mono-brand { font-family: var(--font-jetbrains-mono), 'Courier New', monospace; }
+
+/* Live status dot pulse — used on the Donate page's "mainnet" indicator. */
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.live-dot { animation: live-pulse 2s ease-in-out infinite; }
+
 
 /* ─────────────────────────────────────────────────────────────
    Keyboard focus visibility

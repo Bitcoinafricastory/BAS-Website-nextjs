@@ -3,7 +3,8 @@
 import { Calendar, Users, Target, Heart, ArrowRight, BookOpen } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 import CountUp from '@/components/ui/CountUp';
 
 const pillars = [
@@ -44,16 +45,24 @@ const milestones = [
 ];
 
 const fadeUp = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
+  viewport: { once: true, margin: '-80px' },
+  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
 };
 
 export default function AboutContent() {
+  const heroRef = useRef(null);
+  const { scrollYProgress: heroScroll } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  const heroImageY = useTransform(heroScroll, [0, 1], ['0%', '18%']);
+
   return (
     <div className="pt-16">
       {/* ===== Hero ===== */}
-      <section id="hero" className="relative bg-black">
+      <section id="hero" ref={heroRef} className="relative bg-black">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] lg:min-h-[70vh]">
           <div className="order-2 lg:order-1 flex flex-col justify-center px-6 sm:px-10 lg:pl-6 lg:pr-14 py-14 lg:py-20 border-b lg:border-b-0 lg:border-r border-gray-800">
             <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-6">
@@ -88,14 +97,16 @@ export default function AboutContent() {
           </div>
 
           <div className="order-1 lg:order-2 relative min-h-[380px] sm:min-h-[440px] lg:min-h-0 overflow-hidden">
-            <Image
-              src="/assets/aboutus.png"
-              alt="Bitcoin Africa Story classroom"
-              fill
-              priority
-              sizes="(min-width: 1024px) 45vw, 100vw"
-              className="object-cover"
-            />
+            <motion.div style={{ y: heroImageY }} className="absolute inset-0 -top-[10%] h-[120%]">
+              <Image
+                src="/assets/aboutus.png"
+                alt="Bitcoin Africa Story classroom"
+                fill
+                priority
+                sizes="(min-width: 1024px) 45vw, 100vw"
+                className="object-cover"
+              />
+            </motion.div>
             <div className="hidden lg:block absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.85)_0%,rgba(0,0,0,0.25)_30%,rgba(0,0,0,0)_60%)]" />
             <div className="lg:hidden absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.15)_0%,rgba(0,0,0,0)_35%)]" />
             <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black via-black/70 to-transparent" />
@@ -165,7 +176,7 @@ export default function AboutContent() {
                     key={node.key}
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, margin: '-80px' }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                   >
                     {node}
@@ -178,7 +189,7 @@ export default function AboutContent() {
               initial={{ opacity: 0, scale: 0.97 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-80px' }}
             >
               <Image
                 src="/assets/communities.jpg"
@@ -201,7 +212,7 @@ export default function AboutContent() {
               initial={{ opacity: 0, scale: 0.97 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-80px' }}
               className="order-2 lg:order-1"
             >
               <Image
@@ -221,7 +232,7 @@ export default function AboutContent() {
               <motion.p
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: '-80px' }}
                 className="text-lg text-gray-300 leading-relaxed"
               >
                 Today, Bitcoin Africa Story stands at the intersection of education, community empowerment,
@@ -286,7 +297,7 @@ export default function AboutContent() {
                 key={pillar.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: '-80px' }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
                 className="min-w-[270px] sm:min-w-[300px] snap-start bg-gray-900 border border-gray-800 hover:border-yellow-500 transition-colors duration-300 p-8"
               >
@@ -316,7 +327,7 @@ export default function AboutContent() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: '-80px' }}
                 className="relative pl-10 pb-12 last:pb-0"
               >
                 <div className="absolute -left-[15px] top-0 w-[30px] h-[30px] rounded-full bg-black border border-yellow-500 text-yellow-500 flex items-center justify-center text-xs font-bold">
