@@ -50,7 +50,7 @@ export default async function PodcastPage() {
         </div>
 
         {episodes.length === 0 ? (
-          <div className="bg-gray-900 border border-gray-800 rounded-2xl p-10 text-center">
+          <div className="bg-[#0A0A0A] border border-white/5 p-10 text-center">
             <div className="w-16 h-16 rounded-full bg-yellow-500/10 flex items-center justify-center mx-auto mb-4">
               <Mic className="text-yellow-500" size={28} />
             </div>
@@ -69,7 +69,7 @@ export default async function PodcastPage() {
               href={featured.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group grid grid-cols-1 md:grid-cols-2 bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden mb-14 hover:border-yellow-500/50 transition-colors"
+              className="group grid grid-cols-1 md:grid-cols-2 bg-[#0A0A0A] border border-white/5 overflow-hidden mb-14 hover:border-yellow-500/50 transition-all duration-500"
             >
               <div className="relative aspect-square md:aspect-auto bg-black">
                 {featured.image ? (
@@ -92,7 +92,7 @@ export default async function PodcastPage() {
                 </div>
               </div>
               <div className="p-8 md:p-10 flex flex-col justify-center">
-                <span className="text-yellow-500 text-xs font-extrabold uppercase tracking-widest mb-3">
+                <span className="inline-block w-fit bg-yellow-500 text-black text-[10px] font-bold px-3 py-1 uppercase tracking-widest mb-4">
                   Latest{featured.episodeNumber ? ` · Episode ${featured.episodeNumber}` : ''}
                 </span>
                 <h2 className="text-2xl font-bold leading-snug mb-3 group-hover:text-yellow-500 transition-colors">{featured.title}</h2>
@@ -113,7 +113,7 @@ export default async function PodcastPage() {
                       href={ep.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group bg-gray-900 border border-gray-800 rounded-xl overflow-hidden hover:border-yellow-500 transition-all duration-300"
+                      className="group bg-[#0A0A0A] border border-white/5 overflow-hidden hover:border-yellow-500/50 transition-all duration-500"
                     >
                       <div className="relative aspect-video bg-black">
                         {ep.image ? (
@@ -134,9 +134,15 @@ export default async function PodcastPage() {
                             <Play size={16} className="text-white group-hover:text-black ml-0.5" fill="currentColor" />
                           </div>
                         </div>
+                        {ep.episodeNumber && (
+                          <div className="absolute bottom-0 left-0">
+                            <span className="inline-block bg-yellow-500 text-black text-[10px] font-bold px-3 py-1 uppercase tracking-widest">
+                              Episode {ep.episodeNumber}
+                            </span>
+                          </div>
+                        )}
                       </div>
                       <div className="p-5">
-                        {ep.episodeNumber && <span className="text-[10px] font-bold text-yellow-500 uppercase tracking-wide">Episode {ep.episodeNumber}</span>}
                         <h3 className="font-bold mt-1 group-hover:text-yellow-500 transition-colors line-clamp-2 leading-snug">{ep.title}</h3>
                       </div>
                     </a>
