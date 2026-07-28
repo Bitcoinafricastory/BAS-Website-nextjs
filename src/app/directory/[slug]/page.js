@@ -78,79 +78,53 @@ export default async function DirectoryProfilePage({ params }) {
       <div className="max-w-4xl mx-auto px-6">
         <Breadcrumbs items={breadcrumbs.map((b) => ({ name: b.name, url: b.url === SITE_URL ? '/' : b.url.replace(SITE_URL, '') }))} className="mb-6" />
 
-        {entity.coverImage ? (
-          <div className="relative h-[280px] rounded-2xl overflow-hidden mb-14">
-            <Image src={entity.coverImage} alt={entity.name} fill sizes="(min-width: 1024px) 800px, 100vw" className="object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10" />
-            <div className="absolute left-0 right-0 bottom-0 px-6 sm:px-8 pb-6 flex items-end gap-5">
-              {entity.logo && (
-                <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0 bg-[#161616] border-4 border-black rounded-2xl overflow-hidden -mb-14">
-                  <Image src={entity.logo} alt={entity.name} fill sizes="112px" className="object-contain p-3" />
-                </div>
-              )}
-              <div className="min-w-0 pb-1">
-                <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-yellow-500 bg-yellow-500/10 px-2.5 py-1 rounded-full mb-2">
-                  {entityTypeLabel(entity.type)}{entity.country ? ` · ${entity.country}` : ''}
-                </span>
-                <h1 className="text-2xl sm:text-3xl font-semibold leading-tight">{entity.name}</h1>
-              </div>
-            </div>
+        <div className="flex gap-5 items-center mb-2">
+          <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 bg-[#0A0A0A] border border-white/5 rounded-2xl overflow-hidden">
+            {entity.logo && (
+              <Image src={entity.logo} alt={entity.name} fill sizes="96px" className="object-contain p-3" />
+            )}
           </div>
-        ) : (
-          <div className="border-b border-gray-800 pb-6 mb-6">
-            <p className="text-xs font-bold uppercase tracking-widest text-yellow-500 mb-3">
+          <div className="min-w-0">
+            <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-yellow-500 bg-yellow-500/10 px-2.5 py-1 rounded-full mb-2">
               {entityTypeLabel(entity.type)}{entity.country ? ` · ${entity.country}` : ''}
-            </p>
-            <div className="flex gap-5 items-center mb-4">
-              <div className="relative w-24 h-24 flex-shrink-0 bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden">
-                {entity.logo && (
-                  <Image src={entity.logo} alt={entity.name} fill sizes="96px" className="object-contain p-3" />
-                )}
-              </div>
-              <div className="min-w-0">
-                <h1 className="text-2xl sm:text-3xl font-semibold mb-2 leading-tight">{entity.name}</h1>
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div className="border-b border-gray-800 pb-6 mb-6">
-          {entity.description && (
-            <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-xl mb-4">{entity.description}</p>
-          )}
-          <div className="flex flex-wrap gap-4 text-sm">
-            {entity.website && (
-              <a href={entity.website} target="_blank" rel="noopener noreferrer" className="font-semibold hover:text-yellow-500 transition-colors">{entity.website.replace(/^https?:\/\//, '')}</a>
-            )}
-            {entity.socialLinks?.twitter && (
-              <a href={entity.socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-yellow-500 transition-colors">X / Twitter</a>
-            )}
-            {entity.socialLinks?.linkedin && (
-              <a href={entity.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-yellow-500 transition-colors">LinkedIn</a>
-            )}
-            {entity.socialLinks?.telegram && (
-              <a href={entity.socialLinks.telegram} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-yellow-500 transition-colors">Telegram</a>
-            )}
-            {entity.contactEmail && (
-              <a href={`mailto:${entity.contactEmail}`} className="text-gray-400 hover:text-yellow-500 transition-colors">{entity.contactEmail}</a>
-            )}
+            </span>
+            <h1 className="text-2xl sm:text-3xl font-semibold leading-tight">{entity.name}</h1>
           </div>
         </div>
 
+        {entity.description && (
+          <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-xl mt-5 mb-4">{entity.description}</p>
+        )}
+
+        <div className="flex flex-wrap gap-4 text-sm mb-8">
+          {entity.website && (
+            <a href={entity.website} target="_blank" rel="noopener noreferrer" className="font-semibold hover:text-yellow-500 transition-colors">{entity.website.replace(/^https?:\/\//, '')}</a>
+          )}
+          {entity.socialLinks?.twitter && (
+            <a href={entity.socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-yellow-500 transition-colors">X / Twitter</a>
+          )}
+          {entity.socialLinks?.linkedin && (
+            <a href={entity.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-yellow-500 transition-colors">LinkedIn</a>
+          )}
+          {entity.socialLinks?.telegram && (
+            <a href={entity.socialLinks.telegram} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-yellow-500 transition-colors">Telegram</a>
+          )}
+          {entity.contactEmail && (
+            <a href={`mailto:${entity.contactEmail}`} className="text-gray-400 hover:text-yellow-500 transition-colors">{entity.contactEmail}</a>
+          )}
+        </div>
+
         {sortedBadges.length > 0 && (
-          <div className="mb-8">
-            <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Verification</p>
-            <div className="space-y-2">
-              {sortedBadges.map((b, i) => (
-                <div key={i} className="flex items-center gap-3 bg-gray-900 border border-gray-800 rounded-xl px-4 py-3">
-                  <span className="w-2 h-2 rounded-full bg-yellow-500 flex-shrink-0" />
-                  <span className="text-sm font-semibold flex-1">{badgeLabel(b.level)}</span>
-                  <span className="text-xs text-gray-400">
-                    {b.dateEarned}{b.evidence ? ` · ${b.evidence}` : ''}
-                  </span>
-                </div>
-              ))}
-            </div>
+          <div className="flex flex-wrap gap-2 mb-8">
+            {sortedBadges.map((b, i) => (
+              <span key={i} className="inline-flex items-center gap-2 bg-[#0A0A0A] border border-white/5 rounded-full px-4 py-2 text-xs font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-yellow-500 flex-shrink-0" />
+                {badgeLabel(b.level)}
+                <span className="text-gray-500 font-normal">
+                  {b.dateEarned}{b.evidence ? ` · ${b.evidence}` : ''}
+                </span>
+              </span>
+            ))}
           </div>
         )}
 
@@ -162,10 +136,10 @@ export default async function DirectoryProfilePage({ params }) {
           ].filter(Boolean);
           if (stats.length === 0) return null;
           return (
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-px bg-gray-800 border border-gray-800 rounded-xl overflow-hidden mb-8">
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-px bg-white/5 border border-white/5 rounded-xl overflow-hidden mb-8">
               {stats.map((s) => (
-                <div key={s.label} className="bg-gray-900 p-4">
-                  <p className="text-[11px] text-gray-400 mb-1">{s.label}</p>
+                <div key={s.label} className="bg-[#0A0A0A] p-4">
+                  <p className="text-[11px] text-gray-500 uppercase tracking-wide mb-1">{s.label}</p>
                   <p className="text-sm font-semibold">{s.value}</p>
                 </div>
               ))}
@@ -174,32 +148,32 @@ export default async function DirectoryProfilePage({ params }) {
         })()}
 
         {/* Automatic coverage from linked articles/podcasts, merged with manually-added
-            external items (third-party interviews, reports, videos) — now shown with
-            real thumbnails instead of a bare text row. */}
+            external items (third-party interviews, reports, videos) — shown as a photo-card
+            grid rather than list rows, so multiple pieces of coverage read like a mini archive. */}
         {coverage.length > 0 && (
           <div className="mb-8">
             <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">
               Coverage · {coverage.length}
             </p>
-            <div className="space-y-2.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
               {coverage.map((c, i) => {
                 const content = (
                   <>
-                    <div className="relative w-20 h-14 sm:w-24 sm:h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-800">
+                    <div className="relative aspect-video bg-gray-800">
                       {c.image ? (
-                        <Image src={c.image} alt="" fill sizes="96px" className="object-cover" />
+                        <Image src={c.image} alt="" fill sizes="(min-width: 640px) 50vw, 100vw" className="object-cover" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-gray-500 text-xs font-bold uppercase">{c.type[0]}</div>
                       )}
                     </div>
-                    <div className="min-w-0 flex-1">
+                    <div className="p-3.5">
                       <span className="text-[10px] font-bold text-yellow-500 uppercase tracking-wide">{c.type}</span>
-                      <p className="text-sm font-medium truncate">{c.title}</p>
-                      {c.date && <span className="text-xs text-gray-400">{c.date}</span>}
+                      <p className="text-sm font-semibold leading-snug mt-1">{c.title}</p>
+                      {c.date && <span className="text-xs text-gray-500 mt-1.5 block">{c.date}</span>}
                     </div>
                   </>
                 );
-                const className = 'flex items-center gap-4 bg-gray-900 border border-gray-800 rounded-xl p-3 hover:border-yellow-500/50 transition-colors';
+                const className = 'block bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden hover:border-yellow-500/40 transition-colors';
                 return c.external ? (
                   <a key={i} href={c.url} target="_blank" rel="noopener noreferrer" className={className}>{content}</a>
                 ) : (
@@ -213,10 +187,10 @@ export default async function DirectoryProfilePage({ params }) {
         {relatedEntities.length > 0 && (
           <div>
             <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Related</p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex gap-2 overflow-x-auto pb-1">
               {relatedEntities.map((r) => (
-                <Link key={r.slug} href={`/directory/${r.slug}`} className="text-sm px-4 py-2 bg-gray-900 border border-gray-800 rounded-full hover:border-yellow-500 hover:text-yellow-500 transition-colors">
-                  {r.name} <span className="text-gray-400">({entityTypeLabel(r.type)})</span>
+                <Link key={r.slug} href={`/directory/${r.slug}`} className="flex-shrink-0 text-sm px-4 py-2 bg-[#0A0A0A] border border-white/5 rounded-full hover:border-yellow-500/50 hover:text-yellow-500 transition-colors whitespace-nowrap">
+                  {r.name} <span className="text-gray-500">({entityTypeLabel(r.type)})</span>
                 </Link>
               ))}
             </div>

@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { ExternalLink, ArrowUpRight, Play } from 'lucide-react';
 
 const recommendedWallets = [
-  { name: 'Blink', description: 'The Lightning wallet the Bitcoin Africa Story community actually uses day to day.', url: 'https://www.blink.sv', logo: '/assets/wallets/blink-logo.png' },
-  { name: 'Sparrow', description: 'Desktop Bitcoin wallet for power users who want full control.', url: 'https://sparrowwallet.com', logo: '/assets/wallets/sparrow-logo.png' },
+  { name: 'Blink', description: 'A Lightning wallet some members of our community use for everyday Bitcoin payments.', url: 'https://www.blink.sv', logo: '/assets/wallets/blink-logo.png' },
+  { name: 'Sparrow', description: 'A desktop Bitcoin wallet some community members use for self-custody.', url: 'https://sparrowwallet.com', logo: '/assets/wallets/sparrow-logo.png' },
 ];
 
 const foundationalLearning = [
@@ -136,14 +136,16 @@ export default function ResourcesContent({ episodes = [] }) {
         <div className="max-w-4xl mx-auto">
           <div className="mb-12">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">
-              Recommended <span className="text-yellow-500">Wallets</span>
+              Wallets <span className="text-yellow-500">Community Members Use</span>
             </h2>
-            <p className="text-lg text-gray-400">The two wallets our community actually uses and trusts</p>
+            <p className="text-lg text-gray-400">
+              A couple of wallets that come up often in conversations with our community
+            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {recommendedWallets.map((wallet) => (
-              <div key={wallet.name} className="p-8 bg-gray-900/50 border border-gray-800 rounded-xl hover:border-yellow-500 transition-all duration-300 text-center">
+              <div key={wallet.name} className="p-8 bg-[#0A0A0A] border border-white/5 rounded-xl hover:border-yellow-500/50 transition-all duration-300 text-center">
                 <div className="relative w-full h-16 mb-6">
                   <Image src={wallet.logo} alt={`${wallet.name} logo`} fill sizes="200px" className="object-contain" />
                 </div>
@@ -159,9 +161,10 @@ export default function ResourcesContent({ episodes = [] }) {
 
           <div className="mt-8 p-6 bg-yellow-500/10 border border-yellow-500/30 rounded-xl max-w-4xl">
             <p className="text-gray-300 text-center">
-              <strong className="text-yellow-500">Security Tip:</strong> Always download wallets from
-              official websites. Never share your seed phrase with anyone, and always keep backups in a
-              secure location.
+              <strong className="text-yellow-500">Not an endorsement:</strong> Bitcoin Africa Story is not
+              affiliated with, sponsored by, or responsible for any wallet listed here. Always do your own
+              research, download wallets only from official sources, never share your seed phrase with
+              anyone, and keep backups in a secure location.
             </p>
           </div>
         </div>
