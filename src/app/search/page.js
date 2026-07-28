@@ -103,7 +103,7 @@ export default async function SearchPage({ searchParams }) {
                   <Link
                     key={t}
                     href={`/search?q=${encodeURIComponent(t.toLowerCase())}`}
-                    className="px-4 py-2 bg-gray-900 border border-gray-800 rounded-full text-sm text-gray-300 hover:border-yellow-500 hover:text-yellow-500 transition-colors"
+                    className="px-4 py-2 bg-[#0A0A0A] border border-white/5 rounded-full text-sm text-gray-300 hover:border-yellow-500/50 hover:text-yellow-500 transition-colors"
                   >
                     {t}
                   </Link>
@@ -122,7 +122,7 @@ export default async function SearchPage({ searchParams }) {
             </p>
 
             {total === 0 && (
-              <div className="py-16 text-center bg-gray-900/50 border border-gray-800 rounded-xl">
+              <div className="py-16 text-center bg-[#0A0A0A] border border-white/5 rounded-xl">
                 <SearchIcon className="mx-auto text-gray-700 mb-4" size={40} />
                 <p className="text-lg text-gray-300 font-medium mb-2">No results found</p>
                 <p className="text-sm text-gray-500 mb-6">
@@ -153,7 +153,7 @@ export default async function SearchPage({ searchParams }) {
                     <Link
                       key={post.id}
                       href={`/news/${post.slug || post.id}`}
-                      className="group flex gap-5 p-4 bg-gray-900 border border-gray-800 rounded-xl hover:border-yellow-500/50 transition-colors"
+                      className="group flex gap-5 p-4 bg-[#0A0A0A] border border-white/5 rounded-xl hover:border-yellow-500/50 transition-colors"
                     >
                       {post.image && (
                         /* eslint-disable-next-line @next/next/no-img-element */
@@ -195,7 +195,7 @@ export default async function SearchPage({ searchParams }) {
                     <Link
                       key={event.id}
                       href={`/events/${event.id}`}
-                      className="group flex gap-5 p-4 bg-gray-900 border border-gray-800 rounded-xl hover:border-yellow-500/50 transition-colors"
+                      className="group flex gap-5 p-4 bg-[#0A0A0A] border border-white/5 rounded-xl hover:border-yellow-500/50 transition-colors"
                     >
                       <div className="min-w-0">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-500">

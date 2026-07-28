@@ -96,7 +96,7 @@ export default async function HomePage() {
           </div>
 
           {featuredEntities.length === 0 ? (
-            <div className="text-center py-12 bg-gray-900/50 border border-gray-800 rounded-xl">
+            <div className="text-center py-12 bg-[#0A0A0A] border border-white/5 rounded-xl">
               <p className="text-gray-400">No entities available yet.</p>
             </div>
           ) : (
@@ -111,7 +111,7 @@ export default async function HomePage() {
                     title={entity.name}
                     className={`flex-col items-center gap-3 group ${visibility || 'flex'}`}
                   >
-                    <div className="relative w-full aspect-square bg-gray-900 border border-gray-800 rounded-xl overflow-hidden group-hover:border-yellow-500/50 transition-colors">
+                    <div className="relative w-full aspect-square bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden group-hover:border-yellow-500/50 transition-colors">
                       {entity.logo && (
                         <Image src={entity.logo} alt={entity.name} fill sizes="(min-width: 1024px) 200px, (min-width: 640px) 25vw, 45vw" className="object-contain p-5" />
                       )}

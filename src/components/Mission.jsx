@@ -25,24 +25,24 @@ export default function Mission() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-4">
-              <div className="p-6 bg-gray-900 border border-gray-800">
+              <div className="p-6 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-colors duration-300">
                 <BookOpen className="text-yellow-500 mb-3" size={32} />
                 <h3 className="text-lg font-semibold mb-2">Education</h3>
                 <p className="text-sm text-gray-400">Practical Bitcoin training for schools, youth, and merchants</p>
               </div>
-              <div className="p-6 bg-gray-900 border border-gray-800">
+              <div className="p-6 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-colors duration-300">
                 <Mic className="text-yellow-500 mb-3" size={32} />
                 <h3 className="text-lg font-semibold mb-2">Storytelling</h3>
                 <p className="text-sm text-gray-400">Real stories of Bitcoin adoption across Africa</p>
               </div>
             </div>
             <div className="space-y-4 mt-8">
-              <div className="p-6 bg-gray-900 border border-gray-800">
+              <div className="p-6 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-colors duration-300">
                 <Users className="text-yellow-500 mb-3" size={32} />
                 <h3 className="text-lg font-semibold mb-2">Community Development</h3>
                 <p className="text-sm text-gray-400">Building sustainable Bitcoin circular economies</p>
               </div>
-              <div className="p-6 bg-gray-900 border border-gray-800">
+              <div className="p-6 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-colors duration-300">
                 <TrendingUp className="text-yellow-500 mb-3" size={32} />
                 <h3 className="text-lg font-semibold mb-2">Research and Insights</h3>
                 <p className="text-sm text-gray-400">Studying adoption patterns to guide our programs</p>

@@ -40,7 +40,7 @@ export default function ContactContent() {
               </h2>
 
               <div className="space-y-4 sm:space-y-6 mb-8 sm:mb-12">
-                <div className="p-3 sm:p-4 md:p-6 bg-gray-900 border border-gray-800 hover:border-yellow-500 transition-colors duration-300">
+                <div className="p-3 sm:p-4 md:p-6 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-colors duration-300">
                   <div className="flex items-start">
                     <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-yellow-500/10 flex items-center justify-center mr-3 sm:mr-4 flex-shrink-0">
                       <Mail className="text-yellow-500" size={MINIMAL_ICON_SIZE} />
@@ -54,7 +54,7 @@ export default function ContactContent() {
                   </div>
                 </div>
 
-                <div className="p-3 sm:p-4 md:p-6 bg-gray-900 border border-gray-800 hover:border-yellow-500 transition-colors duration-300">
+                <div className="p-3 sm:p-4 md:p-6 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-colors duration-300">
                   <div className="flex items-start">
                     <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-yellow-500/10 flex items-center justify-center mr-3 sm:mr-4 flex-shrink-0">
                       <MapPin className="text-yellow-500" size={MINIMAL_ICON_SIZE} />
@@ -72,7 +72,7 @@ export default function ContactContent() {
               <div>
                 <h3 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Connect on Social Media</h3>
                 <div className="space-y-3 sm:space-y-4">
-                  <a href="https://x.com/btcafricastory" target="_blank" rel="noopener noreferrer" className="flex items-center p-3 sm:p-4 bg-gray-900 border border-gray-800 hover:border-yellow-500 hover:bg-gray-800 transition-all duration-300 group">
+                  <a href="https://x.com/btcafricastory" target="_blank" rel="noopener noreferrer" className="flex items-center p-3 sm:p-4 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 hover:bg-white/[0.03] transition-all duration-300 group">
                     <div className="w-9 h-9 sm:w-10 sm:h-10 bg-yellow-500/10 flex items-center justify-center mr-3 sm:mr-4">
                       <AtSign className="text-yellow-500" size={MINIMAL_ICON_SIZE} />
                     </div>
@@ -82,7 +82,7 @@ export default function ContactContent() {
                     </div>
                   </a>
 
-                  <a href="https://t.me/+KirVlW8gMMtlNDI8" target="_blank" rel="noopener noreferrer" className="flex items-center p-3 sm:p-4 bg-gray-900 border border-gray-800 hover:border-yellow-500 hover:bg-gray-800 transition-all duration-300 group">
+                  <a href="https://t.me/+KirVlW8gMMtlNDI8" target="_blank" rel="noopener noreferrer" className="flex items-center p-3 sm:p-4 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 hover:bg-white/[0.03] transition-all duration-300 group">
                     <div className="w-9 h-9 sm:w-10 sm:h-10 bg-yellow-500/10 flex items-center justify-center mr-3 sm:mr-4">
                       <Send className="text-yellow-500" size={MINIMAL_ICON_SIZE} />
                     </div>
@@ -92,7 +92,7 @@ export default function ContactContent() {
                     </div>
                   </a>
 
-                  <a href="https://primal.net/p/nprofile1qqs0tmrphute79adfe4r3h8qdkdgqw3fz9244238x2ss53lmhft3jug4hhw4r" target="_blank" rel="noopener noreferrer" className="flex items-center p-3 sm:p-4 bg-gray-900 border border-gray-800 hover:border-yellow-500 hover:bg-gray-800 transition-all duration-300 group">
+                  <a href="https://primal.net/p/nprofile1qqs0tmrphute79adfe4r3h8qdkdgqw3fz9244238x2ss53lmhft3jug4hhw4r" target="_blank" rel="noopener noreferrer" className="flex items-center p-3 sm:p-4 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 hover:bg-white/[0.03] transition-all duration-300 group">
                     <div className="w-9 h-9 sm:w-10 sm:h-10 bg-yellow-500/10 flex items-center justify-center mr-3 sm:mr-4">
                       <MessageCircle className="text-yellow-500" size={MINIMAL_ICON_SIZE} />
                     </div>

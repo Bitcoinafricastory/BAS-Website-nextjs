@@ -248,7 +248,7 @@ export default function AboutContent() {
       <section className="py-20 px-6 bg-gradient-to-b from-transparent via-gray-900/30 to-transparent">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <motion.div {...fadeUp} className="p-10 bg-gray-900 border border-gray-800">
+            <motion.div {...fadeUp} className="p-10 bg-[#0A0A0A] border border-white/5">
               <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mb-6">
                 <Target className="text-yellow-500" size={32} />
               </div>
@@ -262,7 +262,7 @@ export default function AboutContent() {
               </p>
             </motion.div>
 
-            <motion.div {...fadeUp} transition={{ delay: 0.1 }} className="p-10 bg-gray-900 border border-gray-800">
+            <motion.div {...fadeUp} transition={{ delay: 0.1 }} className="p-10 bg-[#0A0A0A] border border-white/5">
               <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mb-6">
                 <Heart className="text-yellow-500" size={32} />
               </div>
@@ -299,7 +299,7 @@ export default function AboutContent() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
-                className="min-w-[270px] sm:min-w-[300px] snap-start bg-gray-900 border border-gray-800 hover:border-yellow-500 transition-colors duration-300 p-8"
+                className="min-w-[270px] sm:min-w-[300px] snap-start bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-colors duration-300 p-8"
               >
                 <div className="font-fraunces italic text-gray-700 text-4xl mb-4">{pillar.id}</div>
                 <h3 className="text-xl font-bold mb-3 text-yellow-500">{pillar.title}</h3>
@@ -355,7 +355,7 @@ export default function AboutContent() {
           <div className="grid grid-cols-1 md:grid-cols-[1.3fr_1fr] md:grid-rows-2 gap-5">
             <motion.div
               {...fadeUp}
-              className="md:row-span-2 relative overflow-hidden bg-gray-900 border border-gray-800 hover:border-yellow-500 transition-colors duration-300 p-10 flex flex-col justify-end min-h-[280px]"
+              className="md:row-span-2 relative overflow-hidden bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-colors duration-300 p-10 flex flex-col justify-end min-h-[280px]"
             >
               <span className="font-fraunces absolute top-6 right-7 text-[90px] leading-none font-bold text-gray-800/80 select-none">01</span>
               <Users className="text-yellow-500 mb-4 relative" size={30} />
@@ -368,7 +368,7 @@ export default function AboutContent() {
             <motion.div
               {...fadeUp}
               transition={{ delay: 0.1 }}
-              className="relative overflow-hidden bg-gray-900 border border-gray-800 hover:border-yellow-500 transition-colors duration-300 p-8"
+              className="relative overflow-hidden bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-colors duration-300 p-8"
             >
               <span className="font-fraunces absolute top-4 right-5 text-5xl leading-none font-bold text-gray-800/80 select-none">02</span>
               <Target className="text-yellow-500 mb-4 relative" size={26} />
@@ -381,7 +381,7 @@ export default function AboutContent() {
             <motion.div
               {...fadeUp}
               transition={{ delay: 0.2 }}
-              className="relative overflow-hidden bg-gray-900 border border-gray-800 hover:border-yellow-500 transition-colors duration-300 p-8"
+              className="relative overflow-hidden bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-colors duration-300 p-8"
             >
               <span className="font-fraunces absolute top-4 right-5 text-5xl leading-none font-bold text-gray-800/80 select-none">03</span>
               <Heart className="text-yellow-500 mb-4 relative" size={26} />
@@ -400,7 +400,7 @@ export default function AboutContent() {
 
         <motion.div
           {...fadeUp}
-          className="max-w-6xl mx-auto bg-gray-900 border border-gray-800 grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] overflow-hidden"
+          className="max-w-6xl mx-auto bg-[#0A0A0A] border border-white/5 grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] overflow-hidden"
         >
           <div className="relative min-h-[280px] lg:min-h-[440px]">
             <Image
