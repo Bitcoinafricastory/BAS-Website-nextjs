@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ExternalLink, ArrowUpRight, Play } from 'lucide-react';
 
 const recommendedWallets = [
-  { name: 'Blink', description: 'A Lightning wallet some members of our community use for everyday Bitcoin payments.', url: 'https://www.blink.sv', logo: '/assets/wallets/blink-logo.png' },
+  { name: 'Blink', description: 'The everyday Bitcoin wallet. A reliable and secure Bitcoin payments experience for all.', url: 'https://www.blink.sv', logo: '/assets/wallets/blink-logo.png' },
   { name: 'Sparrow', description: 'A desktop Bitcoin wallet some community members use for self-custody.', url: 'https://sparrowwallet.com', logo: '/assets/wallets/sparrow-logo.png' },
 ];
 
