@@ -41,31 +41,31 @@ export default function DirectoryExplorer({ entities }) {
         <span><span className="text-white font-bold">{entities.length}</span> entities listed</span>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-3 mb-8">
-        <div className="relative flex-1">
+      <div className="flex flex-col sm:flex-row flex-wrap gap-3 mb-8 p-3.5 bg-[#0A0A0A] border border-white/5 rounded-xl">
+        <div className="relative flex-1 min-w-[180px]">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search the directory…"
-            className="w-full pl-9 pr-4 py-2.5 bg-gray-900 border border-gray-800 rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:border-yellow-500"
+            className="w-full pl-9 pr-4 py-2.5 bg-black border border-white/10 rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:border-yellow-500"
           />
         </div>
-        <select value={country} onChange={(e) => setCountry(e.target.value)} className="px-4 py-2.5 bg-gray-900 border border-gray-800 rounded-lg text-sm text-white focus:outline-none focus:border-yellow-500">
+        <select value={country} onChange={(e) => setCountry(e.target.value)} className="px-4 py-2.5 bg-black border border-white/10 rounded-lg text-sm text-white focus:outline-none focus:border-yellow-500">
           {countries.map((c) => <option key={c} value={c}>{c === 'All' ? 'All Countries' : c}</option>)}
         </select>
-        <select value={type} onChange={(e) => setType(e.target.value)} className="px-4 py-2.5 bg-gray-900 border border-gray-800 rounded-lg text-sm text-white focus:outline-none focus:border-yellow-500">
+        <select value={type} onChange={(e) => setType(e.target.value)} className="px-4 py-2.5 bg-black border border-white/10 rounded-lg text-sm text-white focus:outline-none focus:border-yellow-500">
           <option value="All">All Types</option>
           {ENTITY_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
         </select>
-        <select value={badgeFilter} onChange={(e) => setBadgeFilter(e.target.value)} className="px-4 py-2.5 bg-gray-900 border border-gray-800 rounded-lg text-sm text-white focus:outline-none focus:border-yellow-500">
+        <select value={badgeFilter} onChange={(e) => setBadgeFilter(e.target.value)} className="px-4 py-2.5 bg-black border border-white/10 rounded-lg text-sm text-white focus:outline-none focus:border-yellow-500">
           <option value="All">Any Verification Level</option>
           {BADGE_LEVELS.map((b) => <option key={b.value} value={b.value}>{b.label}</option>)}
         </select>
       </div>
 
       {filtered.length === 0 ? (
-        <div className="py-16 text-center bg-gray-900/50 border border-gray-800 rounded-xl mb-12">
+        <div className="py-16 text-center bg-[#0A0A0A] border border-white/5 rounded-xl mb-12">
           <p className="text-gray-400">No entities match your filters.</p>
         </div>
       ) : (
@@ -190,7 +190,7 @@ function SubmitEntitySection({ open, onToggle }) {
   };
 
   return (
-    <div className="border-t border-gray-800 pt-10">
+    <div className="border-t border-white/5 pt-10">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div>
           <h2 className="text-xl font-bold text-white mb-1">Don&rsquo;t see it in the directory?</h2>
@@ -209,44 +209,44 @@ function SubmitEntitySection({ open, onToggle }) {
       </div>
 
       {open && (
-        <form onSubmit={handleSubmit} className="bg-gray-900 border border-gray-800 rounded-xl p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="bg-[#0A0A0A] border border-white/5 rounded-xl p-6 space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-gray-400 mb-1.5">Name *</label>
-              <input required value={form.name} onChange={handleChange('name')} placeholder="e.g. Bitcoin Ikorodu" className="w-full px-4 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500" />
+              <input required value={form.name} onChange={handleChange('name')} placeholder="e.g. Bitcoin Ikorodu" className="w-full px-4 py-2.5 bg-black border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500" />
             </div>
             <div>
               <label className="block text-xs font-semibold text-gray-400 mb-1.5">Type</label>
-              <select value={form.type} onChange={handleChange('type')} className="w-full px-4 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white focus:outline-none focus:border-yellow-500">
+              <select value={form.type} onChange={handleChange('type')} className="w-full px-4 py-2.5 bg-black border border-white/10 rounded-lg text-white focus:outline-none focus:border-yellow-500">
                 {ENTITY_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
               </select>
             </div>
             <div>
               <label className="block text-xs font-semibold text-gray-400 mb-1.5">Country</label>
-              <select value={form.country} onChange={handleChange('country')} className="w-full px-4 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white focus:outline-none focus:border-yellow-500">
+              <select value={form.country} onChange={handleChange('country')} className="w-full px-4 py-2.5 bg-black border border-white/10 rounded-lg text-white focus:outline-none focus:border-yellow-500">
                 <option value="">Select…</option>
                 {ENTITY_COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
             <div>
               <label className="block text-xs font-semibold text-gray-400 mb-1.5">Website / Social Link</label>
-              <input type="url" value={form.website} onChange={handleChange('website')} placeholder="https://…" className="w-full px-4 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500" />
+              <input type="url" value={form.website} onChange={handleChange('website')} placeholder="https://…" className="w-full px-4 py-2.5 bg-black border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500" />
             </div>
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-gray-400 mb-1.5">Logo URL (optional)</label>
-            <input type="url" value={form.logo} onChange={handleChange('logo')} placeholder="https://…/logo.png" className="w-full px-4 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500" />
+            <input type="url" value={form.logo} onChange={handleChange('logo')} placeholder="https://…/logo.png" className="w-full px-4 py-2.5 bg-black border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500" />
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-gray-400 mb-1.5">Tell us the story *</label>
-            <textarea required rows={4} value={form.description} onChange={handleChange('description')} placeholder="What is it, and what makes it worth our reporters' time?" className="w-full px-4 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 resize-none" />
+            <textarea required rows={4} value={form.description} onChange={handleChange('description')} placeholder="What is it, and what makes it worth our reporters' time?" className="w-full px-4 py-2.5 bg-black border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 resize-none" />
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-gray-400 mb-1.5">Contact Email (so we can reach out)</label>
-            <input type="email" value={form.contactEmail} onChange={handleChange('contactEmail')} placeholder="you@example.com" className="w-full px-4 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500" />
+            <input type="email" value={form.contactEmail} onChange={handleChange('contactEmail')} placeholder="you@example.com" className="w-full px-4 py-2.5 bg-black border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500" />
           </div>
 
           <button type="submit" disabled={busy} className="w-full sm:w-auto px-6 py-3 bg-yellow-500 text-black font-bold rounded-lg hover:bg-yellow-400 transition-colors disabled:opacity-50">
