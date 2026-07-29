@@ -67,19 +67,10 @@ export default function BitcoinVideos({ videos = [] }) {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-8 border-y border-white/10">
-                <div>
-                  <span className="block text-gray-500 text-[10px] mb-1">DURATION</span>
-                  <span className="text-xl font-bold">{currentVideo.duration}</span>
-                </div>
-                <div>
-                  <span className="block text-gray-500 text-[10px] mb-1">FORMAT</span>
-                  <span className="text-xl font-bold underline decoration-yellow-500">4K HDR</span>
-                </div>
-                <div>
-                  <span className="block text-gray-500 text-[10px] mb-1">LEVEL</span>
-                  <span className="text-xl font-bold">PRO-VERIFIED</span>
-                </div>
+              <div className="flex items-center gap-3 py-6 border-y border-white/10">
+                <Clock className="w-4 h-4 text-yellow-500" />
+                <span className="text-gray-500 text-[10px]">DURATION</span>
+                <span className="text-xl font-bold">{currentVideo.duration}</span>
               </div>
 
               <p className="text-gray-400 font-sans normal-case text-lg leading-relaxed max-w-3xl">{currentVideo.description}</p>
@@ -108,7 +99,7 @@ export default function BitcoinVideos({ videos = [] }) {
                         alt=""
                         fill
                         sizes="96px"
-                        className={`object-cover transition-opacity duration-500 ${currentVideo.id === video.id ? 'opacity-100' : 'opacity-40 group-hover:opacity-100'}`}
+                        className={`object-cover transition-opacity duration-500 ${currentVideo.id === video.id ? 'opacity-100' : 'opacity-75 group-hover:opacity-100'}`}
                       />
                     )}
                   </div>
