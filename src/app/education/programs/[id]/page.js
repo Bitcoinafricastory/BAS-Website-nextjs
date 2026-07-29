@@ -55,11 +55,11 @@ export default async function ProgramDetailsPage({ params }) {
       <div className="relative h-[300px] md:h-[400px] w-full overflow-hidden">
         {program.image ? (
           <>
-            <Image src={program.image} alt={program.title} fill priority sizes="100vw" className="object-cover opacity-70" />
+            <Image src={program.image} alt={program.title} fill priority sizes="100vw" className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
           </>
         ) : (
-          <div className="w-full h-full bg-gray-900 border-b border-gray-800 flex items-center justify-center">
+          <div className="w-full h-full bg-[#0A0A0A] border-b border-white/5 flex items-center justify-center">
             <span className="text-gray-600 italic">No cover image</span>
           </div>
         )}
@@ -81,7 +81,7 @@ export default async function ProgramDetailsPage({ params }) {
           ]}
           className="mb-4"
         />
-        <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 md:p-10 shadow-2xl">
+        <div className="bg-[#0A0A0A] border border-white/5 rounded-2xl p-6 md:p-10 shadow-2xl">
           <div className="flex flex-wrap gap-2 mb-4">
             {program.level && (
               <span className="px-3 py-1 bg-yellow-500/10 text-yellow-500 text-xs font-bold uppercase tracking-wider rounded-full">
@@ -89,7 +89,7 @@ export default async function ProgramDetailsPage({ params }) {
               </span>
             )}
             {program.price && (
-              <span className="px-3 py-1 bg-gray-800 text-gray-400 text-xs font-bold uppercase tracking-wider rounded-full">
+              <span className="px-3 py-1 bg-white/5 border border-white/10 text-gray-300 text-xs font-bold uppercase tracking-wider rounded-full">
                 {program.price}
               </span>
             )}
