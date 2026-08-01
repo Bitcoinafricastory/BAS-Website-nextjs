@@ -72,7 +72,7 @@ export default async function BlogPostPage({ params }) {
   const imageUrl = resolveImageUrl(post.image);
   const readingTime = computeReadingTime(post.content, post.readTime);
   const keyTakeaways = deriveKeyTakeaways(post);
-  const faqs = getFaqs(post);
+  const faqs = post.showFaqs ? getFaqs(post) : [];
   const contentWithIds = preventHyphenBreaks(addHeadingIds(post.content));
   const headings = extractHeadings(post.content);
 

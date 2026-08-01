@@ -51,6 +51,7 @@ const emptyForm = {
   tags: [],
   keyTakeaways: [],
   faqs: [],
+  showFaqs: false,
   linkedEntityIds: [],
 };
 
@@ -426,6 +427,60 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
               <input type="checkbox" checked={!!form.isTopStory} onChange={(e) => update({ isTopStory: e.target.checked })} className="accent-yellow-500 w-4 h-4" />
               Mark as Top Story
             </label>
+            <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
+              <input type="checkbox" checked={!!form.showFaqs} onChange={(e) => update({ showFaqs: e.target.checked })} className="accent-yellow-500 w-4 h-4" />
+              Show FAQ section on published article
+            </label>
+
+            {form.showFaqs && (
+              <div className="mt-2 space-y-3">
+                {(form.faqs || []).map((faq, i) => (
+                  <div key={i} className="p-3 bg-black/40 border border-gray-800 rounded-lg space-y-2">
+                    <div className="flex items-start gap-2">
+                      <input
+                        value={faq.question || ''}
+                        onChange={(e) => {
+                          const next = [...(form.faqs || [])];
+                          next[i] = { ...next[i], question: e.target.value };
+                          update({ faqs: next });
+                        }}
+                        placeholder="Question"
+                        className="flex-1 px-2.5 py-1.5 bg-black border border-gray-800 rounded-md text-sm font-medium text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => update({ faqs: (form.faqs || []).filter((_, idx) => idx !== i) })}
+                        className="p-1.5 text-gray-500 hover:text-red-400 transition-colors"
+                        aria-label="Remove FAQ"
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+                    <textarea
+                      value={faq.answer || ''}
+                      onChange={(e) => {
+                        const next = [...(form.faqs || [])];
+                        next[i] = { ...next[i], answer: e.target.value };
+                        update({ faqs: next });
+                      }}
+                      rows={2}
+                      placeholder="Answer"
+                      className="w-full px-2.5 py-1.5 bg-black border border-gray-800 rounded-md text-sm text-gray-300 placeholder-gray-600 focus:outline-none focus:border-yellow-500 resize-none"
+                    />
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => update({ faqs: [...(form.faqs || []), { question: '', answer: '' }] })}
+                  className="w-full px-3 py-2 bg-white/5 hover:bg-white/10 border border-dashed border-gray-700 rounded-lg text-sm text-gray-400 transition-colors"
+                >
+                  + Add FAQ
+                </button>
+                {form.faqs?.length === 0 && (
+                  <p className="text-xs text-yellow-500/80">No FAQs yet — add one above or use AI Tools to draft a starting point.</p>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
