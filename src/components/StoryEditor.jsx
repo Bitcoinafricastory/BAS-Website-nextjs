@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef, useMemo, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import 'react-quill-new/dist/quill.snow.css';
 
@@ -23,21 +23,19 @@ const FONT_CHOICES = [
 
 const FONT_WHITELIST = FONT_CHOICES.map((f) => f.value);
 
-const modules = {
-  toolbar: [
-    [{ header: [1, 2, 3, 4, 5, 6, false] }],
-    [{ font: FONT_WHITELIST }],
-    [{ size: fontSizeArr }],
-    [{ align: [] }],
-    ['bold', 'italic', 'underline', 'strike'],
-    [{ color: [] }, { background: [] }],
-    [{ script: 'sub' }, { script: 'super' }],
-    ['blockquote', 'code-block'],
-    [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
-    ['link', 'image', 'video'],
-    ['clean'],
-  ],
-};
+const toolbarConfig = [
+  [{ header: [1, 2, 3, 4, 5, 6, false] }],
+  [{ font: FONT_WHITELIST }],
+  [{ size: fontSizeArr }],
+  [{ align: [] }],
+  ['bold', 'italic', 'underline', 'strike'],
+  [{ color: [] }, { background: [] }],
+  [{ script: 'sub' }, { script: 'super' }],
+  ['blockquote', 'code-block'],
+  [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+  ['link', 'image', 'video'],
+  ['clean'],
+];
 
 const formats = [
   'header', 'font', 'size',
@@ -129,7 +127,9 @@ const darkStyles = `
 .bas-quill-dark .ql-toolbar .ql-picker-label { border-color: transparent; }
 `;
 
-export default function StoryEditor({ value, onChange, dark = false }) {
+export default function StoryEditor({ value, onChange, dark = false, onImageUpload }) {
+  const quillRef = useRef(null);
+
   // Register the named fonts with Quill's Parchment. Must run only on the
   // client (Quill imports break during SSR) and only once per page load.
   useEffect(() => {
@@ -149,12 +149,66 @@ export default function StoryEditor({ value, onChange, dark = false }) {
     return () => { cancelled = true; };
   }, []);
 
+  // Without this, Quill's default image button base64-encodes the picked file
+  // directly into the article HTML. A single photo becomes 1-2MB+ of inline
+  // text, and Firestore hard-caps a document at 1MB — so articles with a few
+  // images silently fail to save (or hang) once that limit is crossed. If the
+  // caller passes onImageUpload, we upload to Firebase Storage instead and
+  // insert just the resulting URL, keeping the saved document tiny regardless
+  // of how many images the article has.
+  const imageHandler = useCallback(() => {
+    if (!onImageUpload) return; // fall back to Quill's default (base64) behavior
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+    input.onchange = async () => {
+      const file = input.files?.[0];
+      if (!file) return;
+      const editor = quillRef.current?.getEditor?.();
+      const range = editor?.getSelection(true);
+      const insertAt = range ? range.index : editor?.getLength() - 1 || 0;
+      // Placeholder text so the writer sees something is happening instead of
+      // a dead toolbar click while the upload is in flight.
+      editor?.insertText(insertAt, 'Uploading image…', 'italic', true);
+      try {
+        const withTimeout = (promise, ms) =>
+          Promise.race([
+            promise,
+            new Promise((_, reject) => setTimeout(() => reject(new Error('Upload timed out')), ms)),
+          ]);
+        const url = await withTimeout(onImageUpload(file), 20000);
+        editor?.deleteText(insertAt, 'Uploading image…'.length);
+        editor?.insertEmbed(insertAt, 'image', url, 'user');
+        editor?.setSelection(insertAt + 1, 0);
+      } catch (err) {
+        editor?.deleteText(insertAt, 'Uploading image…'.length);
+        console.error('Inline image upload failed:', err);
+        alert(
+          err?.message === 'Upload timed out'
+            ? 'Image upload timed out after 20 seconds. This usually means a network or permissions issue with image storage — check your connection and try again, or contact your developer if it keeps happening.'
+            : 'Image upload failed. Please try again.'
+        );
+      }
+    };
+  }, [onImageUpload]);
+
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: toolbarConfig,
+        handlers: { image: imageHandler },
+      },
+    }),
+    [imageHandler]
+  );
+
   return (
     <div className={dark ? 'bas-quill-dark' : 'bas-quill-light'}>
       <style dangerouslySetInnerHTML={{ __html: fontCss }} />
       <style dangerouslySetInnerHTML={{ __html: lightStyles }} />
       {dark && <style dangerouslySetInnerHTML={{ __html: darkStyles }} />}
-      <ReactQuill theme="snow" value={value} onChange={onChange} modules={modules} formats={formats} />
+      <ReactQuill ref={quillRef} theme="snow" value={value} onChange={onChange} modules={modules} formats={formats} />
     </div>
   );
 }

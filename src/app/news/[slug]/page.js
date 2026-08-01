@@ -10,7 +10,7 @@ import {
   jsonLdScript,
   SITE_URL,
 } from '@/lib/schema';
-import { computeReadingTime, deriveKeyTakeaways, getFaqs, addHeadingIds, extractHeadings } from '@/lib/article-content';
+import { computeReadingTime, deriveKeyTakeaways, getFaqs, addHeadingIds, extractHeadings, preventHyphenBreaks } from '@/lib/article-content';
 import { resolveArticleAuthor } from '@/lib/authors';
 import { getEntitiesBySlugs } from '@/lib/entities';
 import ArticleSidebar from '@/components/ArticleSidebar';
@@ -73,7 +73,7 @@ export default async function BlogPostPage({ params }) {
   const readingTime = computeReadingTime(post.content, post.readTime);
   const keyTakeaways = deriveKeyTakeaways(post);
   const faqs = getFaqs(post);
-  const contentWithIds = addHeadingIds(post.content);
+  const contentWithIds = preventHyphenBreaks(addHeadingIds(post.content));
   const headings = extractHeadings(post.content);
 
   const allNews = await getAllNews();

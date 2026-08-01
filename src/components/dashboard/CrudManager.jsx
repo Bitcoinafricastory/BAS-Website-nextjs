@@ -117,7 +117,14 @@ export default function CrudManager({ config }) {
       backToList();
     } catch (err) {
       console.error('save error', err);
-      notify('error', 'Save failed. Please try again.');
+      if (/longer than \d+ bytes/i.test(err?.message || '')) {
+        notify(
+          'error',
+          'This is too large to save — usually caused by an image pasted or dragged directly into a text field instead of using the image button. Delete any images inside the text and re-add them with the image toolbar button, then save again.'
+        );
+      } else {
+        notify('error', 'Save failed. Please try again.');
+      }
     } finally {
       setBusy(false);
     }
@@ -161,7 +168,12 @@ export default function CrudManager({ config }) {
               ) : fld.type === 'entities' ? (
                 <EntityLinker value={form[fld.name] || []} onChange={(vals) => setForm({ ...form, [fld.name]: vals })} />
               ) : fld.type === 'richtext' ? (
-                <StoryEditor value={form[fld.name] || ''} onChange={(html) => setForm({ ...form, [fld.name]: html })} dark />
+                <StoryEditor
+                  value={form[fld.name] || ''}
+                  onChange={(html) => setForm({ ...form, [fld.name]: html })}
+                  dark
+                  onImageUpload={(file) => uploadIfFile(file, `${collectionName}/inline_${Date.now()}_${Math.random().toString(36).slice(2)}`)}
+                />
               ) : (
                 <input type={fld.type === 'url' ? 'url' : 'text'} value={form[fld.name] || ''} onChange={(e) => setForm({ ...form, [fld.name]: e.target.value })} placeholder={fld.placeholder} className="w-full px-4 py-3 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500" />
               )}

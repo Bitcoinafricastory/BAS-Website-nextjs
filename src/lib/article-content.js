@@ -55,7 +55,27 @@ export function extractHeadings(html) {
   return headings;
 }
 
-// Inject id attributes into h2/h3 so the TOC can link to them.
+// Prevents browsers from splitting hyphenated compound words (e.g. "non-custodial",
+// "human-readable") across two lines. Browsers treat any hyphen sitting directly
+// between two letters as a valid line-break point by default — this is normal
+// typography, but our article column is narrow enough that it happens constantly
+// and looks broken. Swapping the ASCII hyphen for a non-breaking hyphen (U+2011)
+// keeps the whole compound word together, while leaving spaced dashes ("2024 - 2025")
+// untouched. Applied at render time so it covers content already saved, not just
+// new writing.
+//
+// Only touches text between tags — never inside a tag itself — so hyphens in
+// URLs (href="...my-page"), CSS classes (ql-font-sans-serif), or any other
+// attribute are left completely untouched and links keep working.
+export function preventHyphenBreaks(html) {
+  if (!html) return html;
+  return html.replace(/(<[^>]*>)|([^<]+)/g, (full, tag, text) => {
+    if (tag) return tag;
+    return text.replace(/([A-Za-z])-([A-Za-z])/g, '$1\u2011$2');
+  });
+}
+
+
 export function addHeadingIds(html) {
   if (!html) return html;
   return html.replace(/<(h2|h3)([^>]*)>([\s\S]*?)<\/\1>/gi, (full, tag, attrs, inner) => {

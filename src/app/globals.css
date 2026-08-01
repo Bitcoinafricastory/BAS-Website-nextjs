@@ -186,7 +186,6 @@ body {
   color: #e5e7eb;
   white-space: pre-wrap;
   overflow-wrap: break-word;
-  word-break: break-word;
 }
 
 .article-body code {

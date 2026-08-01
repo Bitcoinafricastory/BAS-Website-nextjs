@@ -5,6 +5,7 @@ import { Save, Eye, X, LoaderCircle, FileText, CheckCircle2, Archive, Clock, Sen
 import { db, storage, auth } from '@/lib/firebase';
 import { collection, addDoc, updateDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { preventHyphenBreaks } from '@/lib/article-content';
 import StoryEditor from '@/components/StoryEditor';
 import ImageUploader from '@/components/dashboard/ImageUploader';
 import SeoPanel from '@/components/dashboard/SeoPanel';
@@ -119,6 +120,42 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
     return fileOrUrl;
   }, []);
 
+  // Older articles (or images pasted/dragged straight into the body instead of
+  // using the toolbar button) can end up with base64 images embedded directly
+  // in the HTML — each one bloats the saved document and can push it past
+  // Firestore's 1MB-per-document limit, causing saves to fail with no visible
+  // cause. This scans the content for any embedded base64 image, uploads it to
+  // Storage, and swaps in the small resulting URL — so the writer doesn't have
+  // to hunt through a long article by hand to find the culprit.
+  const [fixingImages, setFixingImages] = useState(false);
+  const embeddedImageCount = (form.content?.match(/<img[^>]*\ssrc="data:image\/[^;]+;base64,/g) || []).length;
+
+  const fixEmbeddedImages = async () => {
+    const matches = [...(form.content || '').matchAll(/<img([^>]*)\ssrc="(data:image\/[^;"]+;base64,[^"]+)"([^>]*)>/g)];
+    if (matches.length === 0) return;
+    setFixingImages(true);
+    let updated = form.content;
+    let fixed = 0;
+    try {
+      for (const match of matches) {
+        const [fullTag, , dataUri] = match;
+        try {
+          const blob = await (await fetch(dataUri)).blob();
+          const url = await uploadIfFile(blob, `news/inline_${Date.now()}_${Math.random().toString(36).slice(2)}`);
+          const newTag = fullTag.replace(dataUri, url);
+          updated = updated.replace(fullTag, newTag);
+          fixed += 1;
+        } catch (err) {
+          console.error('Failed to convert one embedded image:', err);
+        }
+      }
+      update({ content: updated });
+      onNotify?.('success', `Fixed ${fixed} of ${matches.length} embedded image${matches.length === 1 ? '' : 's'}. Save the article again now.`);
+    } finally {
+      setFixingImages(false);
+    }
+  };
+
   const handleSubmit = async (statusOverride) => {
     if (!form.title || !form.category || !form.excerpt) {
       onNotify?.('error', 'Please fill in title, category, and excerpt.');
@@ -166,7 +203,14 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
       }
     } catch (err) {
       console.error('Save error:', err);
-      onNotify?.('error', 'Something went wrong. Please try again.');
+      if (/longer than \d+ bytes/i.test(err?.message || '')) {
+        onNotify?.(
+          'error',
+          'This article is too large to save — usually caused by an image pasted or dragged directly into the body instead of using the image button. Delete any images inside the text and re-add them with the image toolbar button, then save again.'
+        );
+      } else {
+        onNotify?.('error', 'Something went wrong. Please try again.');
+      }
     } finally {
       setBusy(false);
     }
@@ -264,7 +308,28 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
 
         <div className="bg-[#0A0A0A] border border-gray-800 rounded-2xl p-6">
           <label className="block text-sm font-medium text-gray-300 mb-3">Article Body</label>
-          <StoryEditor value={form.content} onChange={(content) => update({ content })} dark />
+          {embeddedImageCount > 0 && (
+            <div className="mb-3 p-4 bg-red-500/10 border border-red-500/30 rounded-lg flex items-center justify-between gap-4 flex-wrap">
+              <p className="text-sm text-red-300">
+                Found {embeddedImageCount} embedded image{embeddedImageCount === 1 ? '' : 's'} that will likely be too large to save.
+              </p>
+              <button
+                type="button"
+                onClick={fixEmbeddedImages}
+                disabled={fixingImages}
+                className="flex items-center gap-2 px-4 py-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 rounded-lg text-sm font-semibold text-red-200 transition-colors disabled:opacity-50 whitespace-nowrap"
+              >
+                {fixingImages ? <LoaderCircle className="animate-spin" size={14} /> : null}
+                {fixingImages ? 'Fixing…' : 'Fix automatically'}
+              </button>
+            </div>
+          )}
+          <StoryEditor
+            value={form.content}
+            onChange={(content) => update({ content })}
+            dark
+            onImageUpload={(file) => uploadIfFile(file, `news/inline_${Date.now()}_${Math.random().toString(36).slice(2)}`)}
+          />
         </div>
 
         <div className="bg-[#0A0A0A] border border-gray-800 rounded-2xl p-6">
@@ -467,7 +532,7 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img src={imagePreview} alt={form.title} className="w-full rounded-xl mb-8" />
               )}
-              <div className="article-body" dangerouslySetInnerHTML={{ __html: form.content }} />
+              <div className="article-body" dangerouslySetInnerHTML={{ __html: preventHyphenBreaks(form.content) }} />
             </article>
           </div>
         </div>
