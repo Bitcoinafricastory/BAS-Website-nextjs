@@ -51,14 +51,14 @@ export default function DirectoryExplorer({ entities }) {
             className="w-full pl-9 pr-4 py-2.5 bg-black border border-white/10 rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:border-yellow-500"
           />
         </div>
-        <select value={country} onChange={(e) => setCountry(e.target.value)} className="px-4 py-2.5 bg-black border border-white/10 rounded-lg text-sm text-white focus:outline-none focus:border-yellow-500">
+        <select value={country} onChange={(e) => setCountry(e.target.value)} className="px-4 py-2.5 bg-black border border-white/10 rounded-lg text-base text-white focus:outline-none focus:border-yellow-500">
           {countries.map((c) => <option key={c} value={c}>{c === 'All' ? 'All Countries' : c}</option>)}
         </select>
-        <select value={type} onChange={(e) => setType(e.target.value)} className="px-4 py-2.5 bg-black border border-white/10 rounded-lg text-sm text-white focus:outline-none focus:border-yellow-500">
+        <select value={type} onChange={(e) => setType(e.target.value)} className="px-4 py-2.5 bg-black border border-white/10 rounded-lg text-base text-white focus:outline-none focus:border-yellow-500">
           <option value="All">All Types</option>
           {ENTITY_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
         </select>
-        <select value={badgeFilter} onChange={(e) => setBadgeFilter(e.target.value)} className="px-4 py-2.5 bg-black border border-white/10 rounded-lg text-sm text-white focus:outline-none focus:border-yellow-500">
+        <select value={badgeFilter} onChange={(e) => setBadgeFilter(e.target.value)} className="px-4 py-2.5 bg-black border border-white/10 rounded-lg text-base text-white focus:outline-none focus:border-yellow-500">
           <option value="All">Any Verification Level</option>
           {BADGE_LEVELS.map((b) => <option key={b.value} value={b.value}>{b.label}</option>)}
         </select>

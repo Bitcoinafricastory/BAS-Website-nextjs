@@ -24,7 +24,7 @@ export default function ProgramsSection({ programs = [] }) {
           <span className="inline-block px-4 py-1.5 rounded-lg bg-yellow-500 text-black text-xs font-bold uppercase tracking-widest mb-6">
             Bitcoin Education Programs
           </span>
-          <h2 className="text-5xl font-bold mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
             New to <span className="text-yellow-500">Bitcoin?</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl">

@@ -59,7 +59,7 @@ export default function EducationalHero() {
             </button>
           </div>
 
-          <div className="grid grid-cols-3 gap-x-6 gap-y-6 mt-12 pt-8 border-t border-gray-800 max-w-md">
+          <div className="grid grid-cols-3 gap-x-4 sm:gap-x-6 gap-y-6 mt-12 pt-8 border-t border-gray-800 max-w-md">
             {stats.map((stat) => {
               const Icon = stat.icon;
               return (

@@ -397,7 +397,7 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
 
           <div>
             <label className="block text-xs font-medium text-gray-400 mb-2">Category</label>
-            <select value={form.category} onChange={(e) => update({ category: e.target.value })} className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white focus:outline-none focus:border-yellow-500 text-sm">
+            <select value={form.category} onChange={(e) => update({ category: e.target.value })} className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white focus:outline-none focus:border-yellow-500 text-base">
               {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
           </div>
@@ -405,17 +405,17 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-medium text-gray-400 mb-2">Date</label>
-              <input type="date" value={form.date} onChange={(e) => update({ date: e.target.value })} className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white focus:outline-none focus:border-yellow-500 text-sm" />
+              <input type="date" value={form.date} onChange={(e) => update({ date: e.target.value })} className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white focus:outline-none focus:border-yellow-500 text-base" />
             </div>
             <div>
               <label className="block text-xs font-medium text-gray-400 mb-2">Read Time</label>
-              <input value={form.readTime} onChange={(e) => update({ readTime: e.target.value })} placeholder="5 min read" className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 text-sm" />
+              <input value={form.readTime} onChange={(e) => update({ readTime: e.target.value })} placeholder="5 min read" className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 text-base" />
             </div>
           </div>
 
           <div>
             <label className="block text-xs font-medium text-gray-400 mb-2">YouTube URL (optional)</label>
-            <input value={form.youtubeUrl} onChange={(e) => update({ youtubeUrl: e.target.value })} placeholder="https://youtube.com/watch?v=…" className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 text-sm" />
+            <input value={form.youtubeUrl} onChange={(e) => update({ youtubeUrl: e.target.value })} placeholder="https://youtube.com/watch?v=…" className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 text-base" />
           </div>
 
           <div className="flex flex-col gap-2 pt-2">

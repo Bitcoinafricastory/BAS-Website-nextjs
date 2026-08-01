@@ -181,7 +181,7 @@ export default async function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 pt-12 border-t border-gray-800 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10">
+        <div className="mt-14 pt-12 border-t border-gray-800 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10">
           <div className="col-span-2 md:col-span-1 space-y-4">
             <Link href="/" className="inline-block">
               <Image

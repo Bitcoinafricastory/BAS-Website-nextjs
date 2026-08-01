@@ -63,28 +63,28 @@ export default function SeoPanel({ form, update }) {
           <div className="space-y-4">
             <div>
               <label className="block text-xs font-medium text-gray-400 mb-1.5">SEO Title <span className="text-gray-600">({(form.seoTitle || form.title || '').length} chars)</span></label>
-              <input value={form.seoTitle || ''} onChange={(e) => update({ seoTitle: e.target.value })} placeholder={form.title || 'Defaults to article title'} className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 text-sm" />
+              <input value={form.seoTitle || ''} onChange={(e) => update({ seoTitle: e.target.value })} placeholder={form.title || 'Defaults to article title'} className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 text-base" />
             </div>
             <div>
               <label className="block text-xs font-medium text-gray-400 mb-1.5">Meta Description <span className="text-gray-600">({(form.metaDescription || form.excerpt || '').length} chars)</span></label>
-              <textarea value={form.metaDescription || ''} onChange={(e) => update({ metaDescription: e.target.value })} rows={2} placeholder={form.excerpt || 'Defaults to excerpt'} className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 text-sm resize-none" />
+              <textarea value={form.metaDescription || ''} onChange={(e) => update({ metaDescription: e.target.value })} rows={2} placeholder={form.excerpt || 'Defaults to excerpt'} className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 text-base resize-none" />
             </div>
             <div className="grid grid-cols-1 gap-4">
               <div>
                 <label className="block text-xs font-medium text-gray-400 mb-1.5">Focus Keyword(s)</label>
-                <input value={form.focusKeywords || ''} onChange={(e) => update({ focusKeywords: e.target.value })} placeholder="e.g. bitcoin adoption nigeria" className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 text-sm" />
+                <input value={form.focusKeywords || ''} onChange={(e) => update({ focusKeywords: e.target.value })} placeholder="e.g. bitcoin adoption nigeria" className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 text-base" />
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-400 mb-1.5">Canonical URL <span className="text-gray-600">(optional)</span></label>
-                <input value={form.canonicalUrl || ''} onChange={(e) => update({ canonicalUrl: e.target.value })} placeholder="Leave blank to auto-generate" className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 text-sm" />
+                <input value={form.canonicalUrl || ''} onChange={(e) => update({ canonicalUrl: e.target.value })} placeholder="Leave blank to auto-generate" className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 text-base" />
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-400 mb-1.5">Featured Image Alt Text</label>
-                <input value={form.imageAlt || ''} onChange={(e) => update({ imageAlt: e.target.value })} placeholder="Describe the image" className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 text-sm" />
+                <input value={form.imageAlt || ''} onChange={(e) => update({ imageAlt: e.target.value })} placeholder="Describe the image" className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 text-base" />
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-400 mb-1.5">Tags <span className="text-gray-600">(comma-separated)</span></label>
-                <input value={Array.isArray(form.tags) ? form.tags.join(', ') : (form.tags || '')} onChange={(e) => update({ tags: e.target.value.split(',').map((t) => t.trim()).filter(Boolean) })} placeholder="lightning, merchants, lagos" className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 text-sm" />
+                <input value={Array.isArray(form.tags) ? form.tags.join(', ') : (form.tags || '')} onChange={(e) => update({ tags: e.target.value.split(',').map((t) => t.trim()).filter(Boolean) })} placeholder="lightning, merchants, lagos" className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 text-base" />
               </div>
             </div>
           </div>
