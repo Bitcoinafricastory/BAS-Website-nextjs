@@ -6,6 +6,28 @@ import Hero from '@/components/Hero';
 import Mission from '@/components/Mission';
 import PostsGrid from '@/components/PostsGrid';
 import TestimonialCarousel from '@/components/TestimonialCarousel';
+import { SITE_URL } from '@/lib/schema';
+
+export const metadata = {
+  title: 'Bitcoin Africa Story | Bitcoin Adoption, News & Stories from Africa',
+  description:
+    'Independent media and education platform documenting Bitcoin adoption, innovation, and impact across Africa — through journalism, podcasts, education, and community reporting.',
+  alternates: { canonical: SITE_URL },
+  openGraph: {
+    title: 'Bitcoin Africa Story | Bitcoin Adoption, News & Stories from Africa',
+    description:
+      'Documenting Bitcoin adoption, innovation, and impact across Africa — through journalism, podcasts, education, and community reporting.',
+    url: SITE_URL,
+    siteName: 'Bitcoin Africa Story',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Bitcoin Africa Story',
+    description:
+      'Documenting Bitcoin adoption, innovation, and impact across Africa.',
+  },
+};
 
 export const revalidate = 300;
 

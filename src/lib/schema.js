@@ -150,6 +150,12 @@ export function newsArticleSchema(post, author) {
     ? String(post.content).replace(/<[^>]*>/g, ' ').split(/\s+/).filter(Boolean).length
     : undefined;
 
+  // Emit the article's tags as schema keywords — a direct signal that helps the
+  // article surface when someone searches those terms.
+  const keywords = Array.isArray(post.tags) && post.tags.length > 0
+    ? post.tags.join(', ')
+    : (typeof post.tags === 'string' && post.tags ? post.tags : undefined);
+
   return {
     '@context': 'https://schema.org',
     '@type': 'NewsArticle',
@@ -165,9 +171,16 @@ export function newsArticleSchema(post, author) {
     },
     description: post.excerpt,
     articleSection: post.category,
+    keywords,
     inLanguage: 'en',
     isAccessibleForFree: true,
     wordCount,
+    // Tells voice assistants and AI answer engines which parts of the page are
+    // the best candidates to read aloud as a spoken answer.
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['h1', '.article-body'],
+    },
     mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
   };
 }
