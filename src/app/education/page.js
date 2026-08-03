@@ -5,7 +5,7 @@ import ProgramsSection from './ProgramsSection';
 import OtherBitcoinPrograms from './OtherBitcoinPrograms';
 import BitcoinVideos from './BitcoinVideos';
 import BitcoinResources from './BitcoinResources';
-import { courseListSchema, jsonLdScript } from '@/lib/schema';
+import { courseListSchema, jsonLdScript, educationVideoSchema } from '@/lib/schema';
 
 export const revalidate = 300;
 
@@ -26,6 +26,11 @@ export default async function EducationPage() {
   const allPrograms = [...(programs || []), ...(otherPrograms || [])].map((p) => ({ ...p, description: p.desc }));
   const coursesSchema = courseListSchema(allPrograms);
 
+  // VideoObject per education video — makes each eligible for a video thumbnail
+  // in normal search and for Google's Videos tab. Gracefully empty when no
+  // videos exist in the collection.
+  const videoSchemas = (videos || []).map((v) => educationVideoSchema(v)).filter(Boolean);
+
   return (
     <div className="pt-16">
       {coursesSchema && (
@@ -34,6 +39,9 @@ export default async function EducationPage() {
           dangerouslySetInnerHTML={jsonLdScript(coursesSchema)}
         />
       )}
+      {videoSchemas.map((schema, i) => (
+        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(schema)} />
+      ))}
       <EducationalHero />
       <WhyBitcoin testimonials={testimonials} videoData={videoData} />
       <ProgramsSection programs={programs} />

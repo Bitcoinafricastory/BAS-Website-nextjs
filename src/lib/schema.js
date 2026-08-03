@@ -464,3 +464,98 @@ export function jsonLdScript(schema) {
 }
 
 export { SITE_URL, SITE_NAME, LOGO_URL };
+
+// ─────────────────────────────────────────────────────────────
+// VideoObject schema — lets Google show a video thumbnail beside
+// our result in normal search and consider the page for the Videos
+// tab. Works for both the education videos (bitcoin_videos) and the
+// podcast episodes, since both are YouTube-hosted.
+// ─────────────────────────────────────────────────────────────
+
+// Pull the YouTube video id out of any of the common URL shapes
+// (watch?v=, youtu.be/, /embed/, /shorts/) so we can build canonical
+// embed + thumbnail URLs even when the stored link varies.
+function youtubeId(url) {
+  if (!url) return null;
+  const patterns = [
+    /[?&]v=([\w-]{11})/,
+    /youtu\.be\/([\w-]{11})/,
+    /\/embed\/([\w-]{11})/,
+    /\/shorts\/([\w-]{11})/,
+  ];
+  for (const re of patterns) {
+    const m = url.match(re);
+    if (m) return m[1];
+  }
+  return null;
+}
+
+// Convert "12:45" or "1:02:30" style durations into ISO-8601 (PT12M45S),
+// which is what schema.org duration expects. Returns undefined if absent.
+function isoDuration(raw) {
+  if (!raw || typeof raw !== 'string') return undefined;
+  const parts = raw.split(':').map((n) => parseInt(n, 10));
+  if (parts.some(Number.isNaN)) return undefined;
+  let h = 0, m = 0, s = 0;
+  if (parts.length === 3) [h, m, s] = parts;
+  else if (parts.length === 2) [m, s] = parts;
+  else if (parts.length === 1) [s] = parts;
+  else return undefined;
+  return `PT${h ? `${h}H` : ''}${m ? `${m}M` : ''}${s ? `${s}S` : ''}` || undefined;
+}
+
+/**
+ * VideoObject for an education video (bitcoin_videos record).
+ * Falls back to YouTube's own thumbnail if no custom one was uploaded.
+ */
+export function educationVideoSchema(video, pageUrl = `${SITE_URL}/education`) {
+  if (!video) return null;
+  const id = youtubeId(video.embedUrl);
+  const thumbnail = video.thumbnailUrl
+    ? resolveImageUrl(video.thumbnailUrl)
+    : (id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : undefined);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: video.title,
+    description: video.description || video.title,
+    thumbnailUrl: thumbnail ? [thumbnail] : undefined,
+    uploadDate: video.createdAt
+      ? new Date(video.createdAt?.seconds ? video.createdAt.seconds * 1000 : video.createdAt).toISOString()
+      : undefined,
+    duration: isoDuration(video.duration),
+    embedUrl: id ? `https://www.youtube.com/embed/${id}` : video.embedUrl,
+    contentUrl: id ? `https://www.youtube.com/watch?v=${id}` : video.embedUrl,
+    publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL, logo: { '@type': 'ImageObject', url: LOGO_URL } },
+    isFamilyFriendly: true,
+    inLanguage: 'en',
+    mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
+  };
+}
+
+/**
+ * VideoObject for a podcast episode (YouTube video). An episode can validly
+ * carry both PodcastEpisode and VideoObject markup, so this runs alongside
+ * the existing podcast schema rather than replacing it.
+ */
+export function podcastVideoSchema(episode) {
+  if (!episode) return null;
+  const id = youtubeId(episode.url);
+  const thumbnail = episode.image
+    ? resolveImageUrl(episode.image)
+    : (id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : undefined);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: episode.title,
+    description: episode.description || episode.title,
+    thumbnailUrl: thumbnail ? [thumbnail] : undefined,
+    uploadDate: episode.date ? new Date(episode.date).toISOString() : undefined,
+    embedUrl: id ? `https://www.youtube.com/embed/${id}` : episode.url,
+    contentUrl: episode.url,
+    publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL, logo: { '@type': 'ImageObject', url: LOGO_URL } },
+    isFamilyFriendly: true,
+    inLanguage: 'en',
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/podcast` },
+  };
+}

@@ -10,6 +10,7 @@ export default function robots() {
     sitemap: [
       'https://bitcoinafricastory.com/sitemap.xml',
       'https://bitcoinafricastory.com/news-sitemap.xml',
+      'https://bitcoinafricastory.com/video-sitemap.xml',
     ],
   };
 }
