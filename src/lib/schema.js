@@ -160,7 +160,13 @@ export function newsArticleSchema(post, author) {
     '@context': 'https://schema.org',
     '@type': 'NewsArticle',
     headline: post.title,
-    image: imageUrl ? [imageUrl] : undefined,
+    // ImageObject with declared dimensions rather than a bare URL — helps Google
+    // pick the image for rich results and large-image treatment. 1200x630 is the
+    // OG/social standard used as a sensible default (article images aren't stored
+    // with real pixel dimensions).
+    image: imageUrl
+      ? [{ '@type': 'ImageObject', url: imageUrl, width: 1200, height: 630 }]
+      : undefined,
     datePublished: published,
     dateModified: modified,
     author: [authorSchema],
