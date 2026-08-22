@@ -240,9 +240,28 @@ export default async function Footer() {
         </div>
 
         <div className="mt-10 pt-6 border-t border-gray-800 flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
-          <p className="text-gray-500 text-xs text-center sm:text-left">
-            © {new Date().getFullYear()} Bitcoin Africa Story. All rights reserved.
-          </p>
+          <div className="text-center sm:text-left">
+            <p className="text-gray-500 text-xs">
+              © {new Date().getFullYear()} Bitcoin Africa Story. All rights reserved.
+            </p>
+            {/* Signals to developers, researchers, and AI agents that our
+                reporting is machine-readable and citable. Same muted style as the
+                copyright line so it reads as metadata, not a second nav. */}
+            <p className="text-gray-500 text-xs mt-1.5">
+              Also as{' '}
+              <a href="/llms.txt" className="hover:text-yellow-500 transition-colors duration-200 underline underline-offset-2">
+                Markdown
+              </a>
+              {' · '}
+              <a href="/api/content.json" className="hover:text-yellow-500 transition-colors duration-200 underline underline-offset-2">
+                JSON
+              </a>
+              {' · '}
+              <a href="/rss.xml" className="hover:text-yellow-500 transition-colors duration-200 underline underline-offset-2">
+                RSS
+              </a>
+            </p>
+          </div>
           <div className="flex items-center gap-3">
             {socialLinks.map((s) => (
               <a

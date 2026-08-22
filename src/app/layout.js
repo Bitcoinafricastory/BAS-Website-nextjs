@@ -100,8 +100,27 @@ export const metadata = {
     apple: '/favicon-192.png',
   },
   alternates: {
+    canonical: 'https://bitcoinafricastory.com',
+    languages: {
+      en: 'https://bitcoinafricastory.com',
+      'x-default': 'https://bitcoinafricastory.com',
+    },
     types: {
       'application/rss+xml': [{ url: '/rss.xml', title: 'Bitcoin Africa Story RSS Feed' }],
+      'text/plain': [{ url: '/llms.txt', title: 'Bitcoin Africa Story for LLMs' }],
+    },
+  },
+  // Lets Google show large image previews and untruncated snippets, which
+  // materially improves how stories appear in search and Discover.
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
     },
   },
 };

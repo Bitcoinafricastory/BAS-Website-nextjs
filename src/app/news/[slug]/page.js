@@ -139,7 +139,7 @@ export default async function BlogPostPage({ params }) {
               <span>{post.author || post.authorName}</span>
             )}
             <span>·</span>
-            <span>{post.date ? new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''}</span>
+            <time dateTime={post.date ? new Date(post.date).toISOString().slice(0, 10) : undefined}>{post.date ? new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''}</time>
             <span>·</span>
             <span>{readingTime}</span>
           </div>

@@ -11,8 +11,18 @@ export default function AppShell({ header, footer, children }) {
 
   return (
     <AuthProvider>
+      {/* Skip link: visually hidden until keyboard-focused, so the page looks
+          unchanged but keyboard and screen-reader users can jump past the nav. */}
+      {!isAdmin && (
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-yellow-500 focus:text-black focus:px-4 focus:py-2 focus:font-semibold"
+        >
+          Skip to content
+        </a>
+      )}
       {!isAdmin && header}
-      {children}
+      {isAdmin ? children : <main id="main">{children}</main>}
       {!isAdmin && footer}
     </AuthProvider>
   );

@@ -23,11 +23,20 @@ export function resolveImageUrl(image) {
 export function organizationSchema() {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
+    // Stable @id so other schema nodes on the same page (NewsArticle,
+    // PodcastSeries, VideoObject, WebSite) can reference this node by @id
+    // instead of re-declaring the organization inline. Browsers/crawlers
+    // resolve @id references across every JSON-LD <script> block present on
+    // a rendered page, not just within one block.
+    '@id': `${SITE_URL}/#organization`,
+    // Both types are accurate: we publish news (NewsMediaOrganization) and run
+    // free Bitcoin education programs (EducationalOrganization). Declaring both
+    // is a stronger, more specific entity signal than the generic "Organization".
+    '@type': ['NewsMediaOrganization', 'EducationalOrganization'],
     name: SITE_NAME,
     alternateName: 'BAS',
     url: SITE_URL,
-    logo: LOGO_URL,
+    logo: { '@type': 'ImageObject', url: LOGO_URL },
     description:
       'Independent media and education platform documenting Bitcoin adoption, innovation, and impact across the African continent.',
     foundingDate: '2024',
@@ -51,9 +60,11 @@ export function organizationSchema() {
 export function websiteSchema() {
   return {
     '@context': 'https://schema.org',
+    '@id': `${SITE_URL}/#website`,
     '@type': 'WebSite',
     name: SITE_NAME,
     url: SITE_URL,
+    publisher: { '@id': `${SITE_URL}/#organization` },
     potentialAction: {
       '@type': 'SearchAction',
       target: {
@@ -170,11 +181,7 @@ export function newsArticleSchema(post, author) {
     datePublished: published,
     dateModified: modified,
     author: [authorSchema],
-    publisher: {
-      '@type': 'Organization',
-      name: SITE_NAME,
-      logo: { '@type': 'ImageObject', url: LOGO_URL },
-    },
+    publisher: { '@id': `${SITE_URL}/#organization` },
     description: post.excerpt,
     articleSection: post.category,
     keywords,
@@ -214,7 +221,7 @@ export function podcastSeriesSchema() {
     url: `${SITE_URL}/podcast`,
     description:
       'Conversations with the merchants, builders, and communities putting Bitcoin to work across Africa.',
-    publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL, logo: LOGO_URL },
+    publisher: { '@id': `${SITE_URL}/#organization` },
     inLanguage: 'en',
   };
 }
@@ -281,11 +288,7 @@ export function eventSchema(event) {
     location,
     image: event.banner ? [resolveImageUrl(event.banner)] : undefined,
     url: pageUrl,
-    organizer: {
-      '@type': 'Organization',
-      name: SITE_NAME,
-      url: SITE_URL,
-    },
+    organizer: { '@id': `${SITE_URL}/#organization` },
     offers: event.registrationUrl
       ? {
           '@type': 'Offer',
@@ -305,11 +308,7 @@ export function courseSchema(program) {
     name: program.title,
     description: program.description,
     url: program.link || `${SITE_URL}/education`,
-    provider: {
-      '@type': 'Organization',
-      name: SITE_NAME,
-      url: SITE_URL,
-    },
+    provider: { '@id': `${SITE_URL}/#organization` },
     isAccessibleForFree: true,
     inLanguage: 'en',
   };
@@ -532,7 +531,7 @@ export function educationVideoSchema(video, pageUrl = `${SITE_URL}/education`) {
     duration: isoDuration(video.duration),
     embedUrl: id ? `https://www.youtube.com/embed/${id}` : video.embedUrl,
     contentUrl: id ? `https://www.youtube.com/watch?v=${id}` : video.embedUrl,
-    publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL, logo: { '@type': 'ImageObject', url: LOGO_URL } },
+    publisher: { '@id': `${SITE_URL}/#organization` },
     isFamilyFriendly: true,
     inLanguage: 'en',
     mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
@@ -559,7 +558,7 @@ export function podcastVideoSchema(episode) {
     uploadDate: episode.date ? new Date(episode.date).toISOString() : undefined,
     embedUrl: id ? `https://www.youtube.com/embed/${id}` : episode.url,
     contentUrl: episode.url,
-    publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL, logo: { '@type': 'ImageObject', url: LOGO_URL } },
+    publisher: { '@id': `${SITE_URL}/#organization` },
     isFamilyFriendly: true,
     inLanguage: 'en',
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/podcast` },
