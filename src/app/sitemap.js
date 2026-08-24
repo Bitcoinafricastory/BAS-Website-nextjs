@@ -4,6 +4,7 @@ import { getActiveAuthors } from '@/lib/authors';
 import { getEntities } from '@/lib/entities';
 import { getAllEducationPrograms, getAllOtherPrograms } from '@/lib/education';
 import { PILLARS } from '@/lib/pillars';
+import { listableCategorySlugs } from '@/lib/resources-data';
 
 export const revalidate = 300;
 
@@ -122,5 +123,25 @@ export default async function sitemap() {
     priority: 0.7,
   }));
 
-  return [...staticEntries, ...categoryEntries, ...articleEntries, ...eventEntries, ...authorEntries, ...entityEntries, ...programEntries];
+  // Resource category pages (/resources/learning, /tools, /wallets). Derived from
+  // the same list that generates the pages, so adding a category in
+  // resources-data.js automatically lists it here instead of silently going
+  // undiscovered.
+  const resourceCategoryEntries = listableCategorySlugs().map((slug) => ({
+    url: `${base}/resources/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.65,
+  }));
+
+  return [
+    ...staticEntries,
+    ...categoryEntries,
+    ...resourceCategoryEntries,
+    ...articleEntries,
+    ...eventEntries,
+    ...authorEntries,
+    ...entityEntries,
+    ...programEntries,
+  ];
 }
