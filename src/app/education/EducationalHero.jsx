@@ -44,7 +44,7 @@ export default function EducationalHero() {
           />
           {/* Strong bottom-weighted scrim so the white headline stays readable
               over the bright, busy parts of the photo. */}
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0.55)_45%,rgba(0,0,0,0.96)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.72)_40%,rgba(0,0,0,0.97)_100%)]" />
           <div className="relative mt-auto px-6 pb-8 pt-24 w-full">
             <span className="font-bold text-[11px] tracking-[0.16em] uppercase text-yellow-500">
               Free &middot; Self-paced &middot; Open to all
@@ -55,19 +55,21 @@ export default function EducationalHero() {
             <p className="text-gray-300 text-sm leading-relaxed mb-6">
               Practical Bitcoin education built for the African context.
             </p>
-            <button
-              onClick={() => scrollToSection('education-programs')}
-              className="w-full inline-flex items-center justify-center gap-2 bg-yellow-500 text-black font-bold text-base px-6 py-4 hover:brightness-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-            >
-              Explore Bitcoin Programs
-              <ArrowRight size={18} />
-            </button>
-            <button
-              onClick={() => scrollToSection('bitcoin-resources')}
-              className="mt-4 mx-auto block text-sm font-semibold text-gray-200 border-b border-gray-600 pb-1 hover:text-yellow-500 hover:border-yellow-500 transition-colors"
-            >
-              Explore Bitcoin Resources
-            </button>
+            <div className="flex gap-2.5">
+              <button
+                onClick={() => scrollToSection('education-programs')}
+                className="flex-1 inline-flex items-center justify-center gap-1.5 bg-yellow-500 text-black font-bold text-sm px-3 py-3.5 hover:brightness-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              >
+                Programs
+                <ArrowRight size={16} />
+              </button>
+              <button
+                onClick={() => scrollToSection('bitcoin-resources')}
+                className="flex-1 inline-flex items-center justify-center border border-gray-500 text-white font-semibold text-sm px-3 py-3.5 hover:border-yellow-500 hover:text-yellow-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              >
+                Resources
+              </button>
+            </div>
           </div>
         </div>
 
