@@ -18,6 +18,12 @@ const config = {
     { name: 'twitter', label: 'X / Twitter URL', type: 'url', placeholder: 'https://x.com/username' },
     { name: 'linkedin', label: 'LinkedIn URL', type: 'url', placeholder: 'https://linkedin.com/in/username' },
     { name: 'nostr', label: 'Nostr npub', type: 'text', placeholder: 'npub1…' },
+    {
+      name: 'blinkUsername',
+      label: 'Blink Username (for reader tips)',
+      type: 'text',
+      placeholder: 'e.g. destiny_smart — leave blank to use the Bitcoin Africa Story account',
+    },
     { name: 'website', label: 'Personal Website', type: 'url', placeholder: 'https://…' },
     { name: 'email', label: 'Public Email', type: 'text', placeholder: 'writer@example.com (leave blank to hide)' },
     {

@@ -15,6 +15,7 @@ import { resolveArticleAuthor } from '@/lib/authors';
 import { getEntitiesBySlugs } from '@/lib/entities';
 import ArticleSidebar from '@/components/ArticleSidebar';
 import AuthorFooter from '@/components/AuthorFooter';
+import BlinkDonateButton from '@/components/BlinkDonateButton';
 import MentionedEntities from '@/components/MentionedEntities';
 
 export const revalidate = 300;
@@ -192,6 +193,26 @@ export default async function BlogPostPage({ params }) {
             className="article-body mx-auto"
             dangerouslySetInnerHTML={{ __html: contentWithIds }}
           />
+
+          {/* Reader tipping. Uses the writer's own Blink username when they've
+              set one in the dashboard, so tips reach the person who did the
+              work; otherwise it falls back to the publication account. */}
+          <div className="mt-12 pt-10 border-t border-gray-800 max-w-[68ch] mx-auto">
+            <div className="bg-[#0A0A0A] border border-white/5 rounded-2xl p-6 sm:p-8">
+              <h3 className="text-lg font-bold mb-2">
+                Found this useful? <span className="text-yellow-500">Tip the writer.</span>
+              </h3>
+              <p className="text-gray-400 text-sm leading-relaxed mb-6">
+                {author?.blinkUsername
+                  ? `Send sats directly to ${author.name} over Lightning. Independent reporting is funded by readers like you.`
+                  : 'Send sats over Lightning to support independent Bitcoin reporting from Africa.'}
+              </p>
+              <BlinkDonateButton
+                username={author?.blinkUsername || 'bitcoin_africa_story'}
+                defaultAmount={1000}
+              />
+            </div>
+          </div>
 
           <MentionedEntities entities={mentionedEntities} />
 
