@@ -34,7 +34,7 @@ export default function PodcastHighlights({ episodes = [] }) {
               const Wrapper = ep.url ? 'a' : 'div';
               const props = ep.url ? { href: ep.url, target: '_blank', rel: 'noopener noreferrer' } : {};
               return (
-                <Wrapper key={ep.id} {...props} className="group bg-gray-900 border border-gray-800 rounded-xl overflow-hidden hover:border-yellow-500 transition-all duration-300">
+                <Wrapper key={ep.id} {...props} className="group bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden hover:border-yellow-500/50 transition-all duration-300">
                   <div className="aspect-video overflow-hidden relative bg-black">
                     {ep.image ? (
                       <Image
@@ -42,7 +42,7 @@ export default function PodcastHighlights({ episodes = [] }) {
                         alt={ep.title}
                         fill
                         sizes="(min-width: 768px) 33vw, 100vw"
-                        className="object-cover opacity-70 group-hover:opacity-90 transition-opacity"
+                        className="object-cover opacity-90 group-hover:opacity-100 transition-opacity"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-yellow-500/10 to-transparent">
@@ -66,7 +66,7 @@ export default function PodcastHighlights({ episodes = [] }) {
           </div>
         ) : (
           // Clean placeholder until podcast episodes are wired into Firestore.
-          <div className="bg-gray-900 border border-gray-800 rounded-2xl p-10 text-center">
+          <div className="bg-[#0A0A0A] border border-white/5 rounded-2xl p-10 text-center">
             <div className="w-16 h-16 rounded-full bg-yellow-500/10 flex items-center justify-center mx-auto mb-4">
               <Mic className="text-yellow-500" size={28} />
             </div>

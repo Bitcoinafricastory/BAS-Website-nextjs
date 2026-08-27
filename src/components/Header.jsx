@@ -155,14 +155,14 @@ export default function Header() {
             </Link>
 
             <Link
-              href="/donate"
+              href="/subscribe"
               className={`text-sm font-bold px-4 py-2 shadow-lg transition-colors duration-200 ${
-                isActive('/donate')
+                isActive('/subscribe')
                   ? 'bg-yellow-400 text-black'
                   : 'bg-yellow-500 text-black hover:bg-yellow-400'
               }`}
             >
-              Donate
+              Subscribe
             </Link>
           </div>
 
@@ -210,9 +210,16 @@ export default function Header() {
             </Link>
 
             <Link
-              href="/donate"
+              href="/subscribe"
               onClick={() => setIsOpen(false)}
               className="block px-4 py-2 text-sm font-bold text-black bg-yellow-500 mt-2"
+            >
+              Subscribe
+            </Link>
+            <Link
+              href="/donate"
+              onClick={() => setIsOpen(false)}
+              className="block px-4 py-2 text-sm font-semibold text-gray-300 border border-gray-800 mt-2 hover:text-yellow-500 hover:border-yellow-500/50 transition-colors"
             >
               Donate
             </Link>
