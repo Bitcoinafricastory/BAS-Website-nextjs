@@ -103,12 +103,12 @@ export default function SubscribeForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="you@email.com"
-          className="flex-1 bg-black border border-gray-800 text-white text-base px-4 py-4 focus:outline-none focus:border-yellow-500 transition-colors"
+          className="flex-1 bg-transparent border border-[#2b2b2b] sm:border-r-0 text-white text-base px-4 py-4 focus:outline-none focus:border-yellow-500 transition-colors"
         />
         <button
           type="submit"
           disabled={busy}
-          className="inline-flex items-center justify-center gap-2 bg-yellow-500 text-black font-bold text-base px-7 py-4 hover:brightness-95 transition-all disabled:opacity-60"
+          className="inline-flex items-center justify-center gap-2 bg-yellow-500 text-black font-bold text-base px-7 py-4 hover:brightness-95 transition-all disabled:opacity-60 whitespace-nowrap"
         >
           {busy ? <LoaderCircle size={17} className="animate-spin" /> : null}
           Subscribe
@@ -126,8 +126,8 @@ export default function SubscribeForm() {
         ))}
       </select>
 
-      <p className="text-gray-500 text-xs mt-4 leading-relaxed">
-        Free forever. The weekly email is delivered via Substack — you can unsubscribe any time.
+      <p className="font-mono-brand text-[10.5px] tracking-[0.04em] uppercase text-gray-600 mt-4">
+        Unsubscribe any time
       </p>
     </form>
   );

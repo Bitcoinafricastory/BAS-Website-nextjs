@@ -1,92 +1,100 @@
 import Link from 'next/link';
-import { ArrowRight, Zap } from 'lucide-react';
+import Image from 'next/image';
+import { getLatestNews } from '@/lib/news';
 import SubscribeForm from '@/components/SubscribeForm';
+
+export const revalidate = 300;
 
 export const metadata = {
   title: 'Subscribe',
   description:
-    'A weekly email on what is actually happening in African Bitcoin — adoption, communities, merchants, and the people building on the ground. Free to read.',
+    'Get every Bitcoin Africa Story article by email. Reporting on Bitcoin adoption, communities, merchants, and education across Africa.',
   alternates: { canonical: 'https://bitcoinafricastory.com/subscribe' },
 };
 
-const WHAT_YOU_GET = [
-  {
-    n: '01',
-    title: 'The weekly digest',
-    body: 'What moved in African Bitcoin — adoption, policy, merchants, communities. Curated by people paying attention, not scraped.',
-  },
-  {
-    n: '02',
-    title: 'Original reporting',
-    body: 'Field reporting from circular economies, meetups, and the people actually running them.',
-  },
-  {
-    n: '03',
-    title: 'Written by practitioners',
-    body: "We don't only cover this. We run a Bitcoin circular economy in Ikorodu and have taught 100+ alumni across Africa.",
-  },
-];
+function formatShortDate(value) {
+  if (!value) return '';
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return '';
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
 
-export default function SubscribePage() {
+export default async function SubscribePage() {
+  // Pulled live rather than hardcoded, so the preview always shows what we
+  // actually published — it can't drift into looking staged.
+  let recent = [];
+  try {
+    recent = await getLatestNews(3);
+  } catch (err) {
+    console.warn('subscribe: could not load recent articles', err);
+  }
+
   return (
     <div className="pt-16 bg-black text-white min-h-screen">
-      <section className="max-w-5xl mx-auto px-6 py-16 sm:py-20">
-        <span className="font-bold text-[11px] tracking-[0.16em] uppercase text-yellow-500">
-          Free weekly &middot; Paid optional
-        </span>
-        <h1 className="text-4xl sm:text-5xl lg:text-[52px] font-semibold leading-[1.06] tracking-tight mt-4 mb-5 max-w-[17ch]">
-          What actually happened in <span className="text-yellow-500">African Bitcoin</span> this week.
-        </h1>
-        <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-xl mb-9">
-          One email, every week. The stories, the numbers, and the people building on the
-          ground &mdash; written by people building here too.
-        </p>
+      <section className="max-w-6xl mx-auto px-6 py-16 sm:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-        <SubscribeForm />
+          {/* Pitch */}
+          <div>
+            <h1 className="text-3xl sm:text-4xl lg:text-[46px] font-bold leading-[1.1] tracking-tight mb-5">
+              Our stories, <span className="text-yellow-500">in your inbox.</span>
+            </h1>
+            <p className="text-gray-400 text-base leading-relaxed max-w-md mb-7">
+              We report on Bitcoin across Africa &mdash; adoption, communities, merchants,
+              education. Subscribe and the stories come to you.
+            </p>
+            <SubscribeForm />
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-14">
-          {WHAT_YOU_GET.map((item) => (
-            <div key={item.n} className="bg-[#0A0A0A] border border-white/5 rounded-xl p-6">
-              <span className="text-[11px] font-bold tracking-[0.1em] text-yellow-500">{item.n}</span>
-              <h3 className="text-base font-semibold mt-2.5 mb-1.5">{item.title}</h3>
-              <p className="text-gray-400 text-sm leading-relaxed">{item.body}</p>
+          {/* Inbox preview */}
+          <div className="bg-[#0A0A0A] border border-white/[0.07]">
+            <div className="flex items-center justify-between px-4 sm:px-5 py-3.5 border-b border-white/[0.07] font-mono-brand text-[10px] tracking-[0.09em] uppercase text-gray-600">
+              <span>From Bitcoin Africa Story</span>
+              <span>{recent.length} recent</span>
             </div>
-          ))}
-        </div>
-      </section>
 
-      <section className="max-w-5xl mx-auto px-6 py-16 border-t border-gray-900">
-        <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-4">
-          Why <span className="text-yellow-500">paid?</span>
-        </h2>
-        <p className="text-gray-400 text-base leading-relaxed max-w-2xl mb-3">
-          Everything stays free to read. Paying is how this stays independent &mdash; no ads,
-          no sponsors, no exchange behind us.
-        </p>
-        <p className="text-gray-400 text-base leading-relaxed max-w-2xl mb-8">
-          Two years of reporting and education ran on $2,125 in total contributions, published
-          line by line. When funding ran short we paused volunteer stipends and monthly meetups,
-          and kept teaching anyway.
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
-          <Link
-            href="/donate"
-            className="inline-flex items-center justify-center gap-2 border border-gray-700 text-gray-200 font-semibold px-6 py-3.5 hover:border-yellow-500 hover:text-yellow-500 transition-colors"
-          >
-            See where every sat went
-            <ArrowRight size={17} />
-          </Link>
-          <Link
-            href="/donate"
-            className="inline-flex items-center justify-center gap-2 border border-gray-700 text-gray-200 font-semibold px-6 py-3.5 hover:border-yellow-500 hover:text-yellow-500 transition-colors"
-          >
-            <Zap size={16} />
-            Support over Lightning
-          </Link>
+            {recent.length === 0 ? (
+              <p className="px-5 py-8 text-sm text-gray-600">Recent stories load here.</p>
+            ) : (
+              recent.map((post) => (
+                <div
+                  key={post.id}
+                  className="flex gap-3.5 px-4 sm:px-5 py-4 border-b border-white/[0.07] last:border-b-0 items-start"
+                >
+                  <span className="relative w-[46px] h-[46px] rounded overflow-hidden flex-shrink-0 bg-white/5">
+                    {post.image && (
+                      <Image
+                        src={post.image}
+                        alt=""
+                        fill
+                        sizes="46px"
+                        className="object-cover"
+                      />
+                    )}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold leading-snug mb-1">{post.title}</p>
+                    {post.excerpt && (
+                      <p className="text-[12.5px] text-gray-600 leading-relaxed line-clamp-2">
+                        {post.excerpt}
+                      </p>
+                    )}
+                  </div>
+                  <span className="ml-auto pl-2.5 font-mono-brand text-[10px] text-gray-600 whitespace-nowrap">
+                    {formatShortDate(post.date)}
+                  </span>
+                </div>
+              ))
+            )}
+          </div>
         </div>
-        <p className="text-gray-500 text-xs mt-5">
-          Prefer sats? Lightning support goes straight to the work &mdash; no card, no processor, no cut.
+
+        <p className="text-gray-600 text-sm mt-14">
+          Prefer to support the work directly?{' '}
+          <Link href="/donate" className="text-yellow-500 hover:text-yellow-400 transition-colors">
+            See where every sat goes
+          </Link>
+          .
         </p>
       </section>
     </div>
