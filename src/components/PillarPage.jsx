@@ -55,7 +55,7 @@ export default function PillarPage({ pillar, entities = [], articles = [] }) {
       {entities.length > 0 && (
         <section className="px-6 pt-12">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold mt-2 mb-6">{pillar.entitiesHeading.title}</h2>
+            <h2 className="text-2xl font-semibold mt-2 mb-6">{pillar.entitiesHeading.title}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {entities.map((entity) => {
                 const coverUrl = resolveImageUrl(entity.coverImage);
@@ -103,7 +103,7 @@ export default function PillarPage({ pillar, entities = [], articles = [] }) {
       {articles.length > 0 && (
         <section className="px-6 pt-12">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold mt-2 mb-4">{pillar.coverageHeading.title}</h2>
+            <h2 className="text-2xl font-semibold mt-2 mb-4">{pillar.coverageHeading.title}</h2>
             <div>
               {articles.map((post, i) => {
                 const thumb = resolveImageUrl(post.image);

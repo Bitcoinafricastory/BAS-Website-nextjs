@@ -89,7 +89,7 @@ export default async function EventDetailsPage({ params }) {
                 )}
               </div>
 
-              <h1 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">{event.eventName}</h1>
+              <h1 className="text-3xl md:text-5xl font-semibold text-white mb-6 leading-tight">{event.eventName}</h1>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-300 mb-8">
                 <div className="flex items-center gap-3 p-3 bg-black/30 rounded-lg border border-gray-800">
@@ -126,7 +126,7 @@ export default async function EventDetailsPage({ params }) {
 
             <div className="w-full md:w-80 shrink-0 space-y-4">
               <div className="p-6 bg-black/50 border border-gray-800 rounded-xl">
-                <h3 className="text-lg font-bold text-white mb-4">Organized by</h3>
+                <h3 className="text-lg font-semibold text-white mb-4">Organized by</h3>
                 <p className="text-yellow-500 font-medium text-lg mb-6">{event.organiser || 'Bitcoin Africa Community'}</p>
 
                 {event.registrationUrl ? (
@@ -143,7 +143,7 @@ export default async function EventDetailsPage({ params }) {
           </div>
 
           <div className="mt-12 pt-10 border-t border-gray-800">
-            <h3 className="text-2xl font-bold text-white mb-6">About this Event</h3>
+            <h3 className="text-2xl font-semibold text-white mb-6">About this Event</h3>
             <div className="prose prose-invert prose-lg max-w-none text-gray-400">
               <p className="whitespace-pre-wrap leading-relaxed">{event.description || event.details || 'No description provided for this event.'}</p>
             </div>

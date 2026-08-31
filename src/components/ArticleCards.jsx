@@ -73,7 +73,7 @@ export function StoryCard({ post }) {
         <span className="absolute top-3 left-3 text-[10px] font-bold text-black bg-yellow-500 px-2.5 py-1 rounded-full uppercase tracking-wide">{post.category}</span>
       </div>
       <div className="p-5 flex flex-col flex-grow">
-        <h3 className="text-lg font-bold mb-2 group-hover:text-yellow-500 transition-colors duration-200 line-clamp-2">{post.title}</h3>
+        <h3 className="text-lg font-semibold mb-2 group-hover:text-yellow-500 transition-colors duration-200 line-clamp-2">{post.title}</h3>
         <p className="text-gray-400 text-sm mb-4 line-clamp-2 flex-grow">{post.excerpt}</p>
         <div className="flex items-center justify-between text-xs text-gray-400 mt-auto">
           <span>{formatDate(post.date)}</span>

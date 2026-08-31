@@ -12,7 +12,7 @@ export default function OtherBitcoinPrograms({ programs = [] }) {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg bg-yellow-500 text-black text-[10px] font-bold uppercase tracking-widest mb-6">
             OTHER BITCOIN EDUCATION PROGRAMS
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-4xl md:text-5xl font-semibold mb-4">
             Other Bitcoin <span className="text-yellow-500">Programs</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl">
@@ -44,7 +44,7 @@ export default function OtherBitcoinPrograms({ programs = [] }) {
                 </div>
               </div>
               <div className="p-6 flex flex-col flex-grow">
-                <h3 className="text-lg font-bold mb-3 line-clamp-2 leading-tight group-hover:text-yellow-500 transition-colors uppercase tracking-tight">{program.title}</h3>
+                <h3 className="text-lg font-semibold mb-3 line-clamp-2 leading-tight group-hover:text-yellow-500 transition-colors uppercase tracking-tight">{program.title}</h3>
                 <p className="text-gray-400 text-sm mb-6 line-clamp-3 leading-relaxed">{program.desc}</p>
                 <div className="mt-auto pt-4 border-t border-white/5">
                   <span className="flex items-center gap-2 text-[10px] font-black text-yellow-500 group-hover:text-white transition-colors uppercase tracking-widest">

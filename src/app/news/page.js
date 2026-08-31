@@ -29,7 +29,7 @@ function SectionHeading({ eyebrow, title, href }) {
     <div className="flex items-end justify-between mb-6">
       <div>
         {eyebrow && <span className="text-xs font-bold text-yellow-500 uppercase tracking-widest">{eyebrow}</span>}
-        <h2 className="text-2xl md:text-3xl font-bold mt-1">{title}</h2>
+        <h2 className="text-2xl md:text-3xl font-semibold mt-1">{title}</h2>
       </div>
       {href && (
         <Link href={href} className="hidden md:inline-flex items-center text-sm text-yellow-500 font-semibold hover:text-yellow-400 transition-colors">

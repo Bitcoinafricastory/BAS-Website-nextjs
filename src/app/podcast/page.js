@@ -55,7 +55,7 @@ export default async function PodcastPage() {
             <div className="w-16 h-16 rounded-full bg-yellow-500/10 flex items-center justify-center mx-auto mb-4">
               <Mic className="text-yellow-500" size={28} />
             </div>
-            <h2 className="text-xl font-bold mb-2">New episodes coming soon</h2>
+            <h2 className="text-xl font-semibold mb-2">New episodes coming soon</h2>
             <p className="text-gray-400 max-w-lg mx-auto mb-6">
               In-depth conversations with builders, educators, and everyday Africans using Bitcoin.
             </p>
@@ -96,7 +96,7 @@ export default async function PodcastPage() {
                 <span className="inline-block w-fit bg-yellow-500 text-black text-[10px] font-bold px-3 py-1 uppercase tracking-widest mb-4">
                   Latest{featured.episodeNumber ? ` · Episode ${featured.episodeNumber}` : ''}
                 </span>
-                <h2 className="text-2xl font-bold leading-snug mb-3 group-hover:text-yellow-500 transition-colors">{featured.title}</h2>
+                <h2 className="text-2xl font-semibold leading-snug mb-3 group-hover:text-yellow-500 transition-colors">{featured.title}</h2>
                 {featured.description && (
                   <p className="text-gray-400 text-sm leading-relaxed mb-5 line-clamp-3">{featured.description}</p>
                 )}
@@ -106,7 +106,7 @@ export default async function PodcastPage() {
 
             {rest.length > 0 && (
               <>
-                <h2 className="text-2xl font-bold mb-6">All episodes</h2>
+                <h2 className="text-2xl font-semibold mb-6">All episodes</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {rest.map((ep) => (
                     <a
@@ -144,7 +144,7 @@ export default async function PodcastPage() {
                         )}
                       </div>
                       <div className="p-5">
-                        <h3 className="font-bold mt-1 group-hover:text-yellow-500 transition-colors line-clamp-2 leading-snug">{ep.title}</h3>
+                        <h3 className="font-semibold mt-1 group-hover:text-yellow-500 transition-colors line-clamp-2 leading-snug">{ep.title}</h3>
                       </div>
                     </a>
                   ))}

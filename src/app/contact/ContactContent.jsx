@@ -25,14 +25,14 @@ export default function ContactContent() {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             <div>
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold mb-4 sm:mb-6">
                 Send Us a <span className="text-yellow-500">Message</span>
               </h2>
               <ContactForm />
             </div>
 
             <div>
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold mb-4 sm:mb-6">
                 Other Ways to <span className="text-yellow-500">Reach Us</span>
               </h2>
 
@@ -43,7 +43,7 @@ export default function ContactContent() {
                       <Mail className="text-yellow-500" size={MINIMAL_ICON_SIZE} />
                     </div>
                     <div>
-                      <h3 className="text-base sm:text-lg font-bold mb-1">Email</h3>
+                      <h3 className="text-base sm:text-lg font-semibold mb-1">Email</h3>
                       <a href="mailto:Bitcoinafricastory@proton.me" className="text-gray-400 hover:text-yellow-500 transition-colors duration-200 text-xs sm:text-sm">
                         Bitcoinafricastory@proton.me
                       </a>
@@ -57,7 +57,7 @@ export default function ContactContent() {
                       <MapPin className="text-yellow-500" size={MINIMAL_ICON_SIZE} />
                     </div>
                     <div>
-                      <h3 className="text-base sm:text-lg font-bold mb-1">Location</h3>
+                      <h3 className="text-base sm:text-lg font-semibold mb-1">Location</h3>
                       <p className="text-gray-400 text-xs sm:text-sm">
                         Operating across Africa<br />Based in Nigeria
                       </p>
@@ -67,7 +67,7 @@ export default function ContactContent() {
               </div>
 
               <div>
-                <h3 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Connect on Social Media</h3>
+                <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">Connect on Social Media</h3>
                 <div className="space-y-3 sm:space-y-4">
                   <a href="https://x.com/btcafricastory" target="_blank" rel="noopener noreferrer" className="flex items-center p-3 sm:p-4 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 hover:bg-white/[0.03] transition-all duration-300 group">
                     <div className="w-9 h-9 sm:w-10 sm:h-10 bg-yellow-500/10 flex items-center justify-center mr-3 sm:mr-4">

@@ -23,7 +23,7 @@ export default function PostCard({ post }) {
           <span className="text-xs font-semibold text-yellow-500 bg-yellow-500/10 px-3 py-1 rounded-full">{post.category}</span>
           <span className="text-xs text-gray-400">{post.readTime}</span>
         </div>
-        <h3 className="text-xl font-bold mb-3 group-hover:text-yellow-500 transition-colors duration-200">{post.title}</h3>
+        <h3 className="text-xl font-semibold mb-3 group-hover:text-yellow-500 transition-colors duration-200">{post.title}</h3>
         <p className="text-gray-400 text-sm mb-4 line-clamp-3">{post.excerpt}</p>
         <div className="flex items-center justify-between text-sm text-gray-400">
           <div className="flex items-center space-x-4">

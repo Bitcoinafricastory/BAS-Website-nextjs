@@ -136,7 +136,7 @@ export default async function AuthorProfilePage({ params }) {
 
         <div className="border-t border-gray-800 pt-12">
           <div className="flex items-baseline justify-between mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold">
+            <h2 className="text-2xl md:text-3xl font-semibold">
               Articles by <span className="text-yellow-500">{author.name.split(' ')[0]}</span>
             </h2>
             <span className="text-sm text-gray-500">
@@ -171,7 +171,7 @@ export default async function AuthorProfilePage({ params }) {
                         {post.category}
                       </span>
                     )}
-                    <h3 className="font-bold mt-2 group-hover:text-yellow-500 transition-colors line-clamp-2">
+                    <h3 className="font-semibold mt-2 group-hover:text-yellow-500 transition-colors line-clamp-2">
                       {post.title}
                     </h3>
                     {post.date && (

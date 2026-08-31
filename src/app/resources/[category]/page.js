@@ -96,7 +96,7 @@ export default async function ResourceCategoryPage({ params }) {
               className="group flex items-start justify-between gap-5 p-5 bg-[#0A0A0A] border border-white/5 rounded-xl hover:border-yellow-500/50 transition-colors"
             >
               <div>
-                <h3 className="text-base font-bold mb-1.5 group-hover:text-yellow-500 transition-colors">
+                <h3 className="text-base font-semibold mb-1.5 group-hover:text-yellow-500 transition-colors">
                   {item.name}
                 </h3>
                 <p className="text-gray-400 text-sm leading-relaxed max-w-xl">{item.description}</p>

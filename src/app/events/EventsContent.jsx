@@ -273,7 +273,7 @@ export default function EventsContent({ initialEvents = [] }) {
                     </div>
                   </div>
                   <div className="p-5 flex flex-col flex-grow">
-                    <h3 className="text-base font-bold mb-1.5 line-clamp-2 leading-tight group-hover:text-yellow-500 group-active:text-yellow-500 transition-colors uppercase tracking-tight min-h-[44px]">{e.eventName}</h3>
+                    <h3 className="text-base font-semibold mb-1.5 line-clamp-2 leading-tight group-hover:text-yellow-500 group-active:text-yellow-500 transition-colors uppercase tracking-tight min-h-[44px]">{e.eventName}</h3>
                     <p className="text-gray-400 text-sm mb-4 truncate">{e.venue || '\u00A0'}</p>
                     <div className="mt-auto pt-3.5 border-t border-white/5">
                       <span className="flex items-center gap-2 text-[10px] font-black text-yellow-500 group-hover:text-white group-active:text-white transition-colors uppercase tracking-widest">
@@ -293,7 +293,7 @@ export default function EventsContent({ initialEvents = [] }) {
         <div className="border-t border-gray-800 pt-10">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h2 className="text-xl font-bold text-white mb-1">Hosting a Bitcoin event in Africa?</h2>
+              <h2 className="text-xl font-semibold text-white mb-1">Hosting a Bitcoin event in Africa?</h2>
               <p className="text-gray-400 text-sm max-w-xl">
                 Add your event to our directory to reach thousands of builders, educators, and
                 enthusiasts across the continent.
@@ -321,7 +321,7 @@ export default function EventsContent({ initialEvents = [] }) {
           <div className="relative bg-[#0A0A0A] border border-white/10 rounded-3xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-[#0A0A0A] border-b border-white/10 p-6 flex items-center justify-between z-10">
               <div>
-                <h2 className="text-2xl font-bold text-white">Submit Your Event</h2>
+                <h2 className="text-2xl font-semibold text-white">Submit Your Event</h2>
                 <p className="text-sm text-gray-400 mt-1">Share your Bitcoin event with the community</p>
               </div>
               <button onClick={() => { setShowSubmitModal(false); resetForm(); }} className="p-2 hover:bg-white/5 rounded-full transition-colors">

@@ -95,7 +95,7 @@ export default async function ProgramDetailsPage({ params }) {
             )}
           </div>
 
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">{program.title}</h1>
+          <h1 className="text-3xl md:text-5xl font-semibold text-white mb-6 leading-tight">{program.title}</h1>
 
           {program.content ? (
             <div className="article-body mx-auto mb-8" dangerouslySetInnerHTML={{ __html: program.content }} />

@@ -299,7 +299,7 @@ export default function AboutContent() {
                 className="min-w-[270px] sm:min-w-[300px] snap-start bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-colors duration-300 p-8"
               >
                 <div className="font-fraunces italic text-gray-700 text-4xl mb-4">{pillar.id}</div>
-                <h3 className="text-xl font-bold mb-3 text-yellow-500">{pillar.title}</h3>
+                <h3 className="text-xl font-semibold mb-3 text-yellow-500">{pillar.title}</h3>
                 <p className="text-gray-400 leading-relaxed">{pillar.description}</p>
               </motion.div>
             ))}
@@ -331,7 +331,7 @@ export default function AboutContent() {
                   {index + 1}
                 </div>
                 <span className="text-yellow-500 text-xs font-bold tracking-[0.1em]">{milestone.year}</span>
-                <h3 className="text-xl font-bold mt-1 mb-2">{milestone.title}</h3>
+                <h3 className="text-xl font-semibold mt-1 mb-2">{milestone.title}</h3>
                 <p className="text-gray-400 leading-relaxed max-w-lg">{milestone.description}</p>
               </motion.div>
             ))}
@@ -356,7 +356,7 @@ export default function AboutContent() {
             >
               <span className="font-fraunces absolute top-6 right-7 text-[90px] leading-none font-bold text-gray-800/80 select-none">01</span>
               <Users className="text-yellow-500 mb-4 relative" size={30} />
-              <h3 className="text-2xl font-bold mb-3 relative">Community First</h3>
+              <h3 className="text-2xl font-semibold mb-3 relative">Community First</h3>
               <p className="text-gray-400 leading-relaxed relative max-w-sm">
                 Bitcoin adoption grows from the grassroots — through people, not institutions.
               </p>
@@ -369,7 +369,7 @@ export default function AboutContent() {
             >
               <span className="font-fraunces absolute top-4 right-5 text-5xl leading-none font-bold text-gray-800/80 select-none">02</span>
               <Target className="text-yellow-500 mb-4 relative" size={26} />
-              <h3 className="text-xl font-bold mb-2 relative">Education Excellence</h3>
+              <h3 className="text-xl font-semibold mb-2 relative">Education Excellence</h3>
               <p className="text-gray-400 leading-relaxed relative text-sm">
                 We prioritize accuracy, clarity, and accessibility in every lesson and resource.
               </p>
@@ -382,7 +382,7 @@ export default function AboutContent() {
             >
               <span className="font-fraunces absolute top-4 right-5 text-5xl leading-none font-bold text-gray-800/80 select-none">03</span>
               <Heart className="text-yellow-500 mb-4 relative" size={26} />
-              <h3 className="text-xl font-bold mb-2 relative">Empowerment</h3>
+              <h3 className="text-xl font-semibold mb-2 relative">Empowerment</h3>
               <p className="text-gray-400 leading-relaxed relative text-sm">
                 We equip people with tools for independence, not dependency.
               </p>

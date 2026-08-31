@@ -20,7 +20,7 @@ export default function FAQAccordion({ groups }) {
     <div className="space-y-14">
       {groups.map(({ category, items }) => (
         <div key={category}>
-          <h2 className="text-2xl font-bold mb-5 text-yellow-500">{category}</h2>
+          <h2 className="text-2xl font-semibold mb-5 text-yellow-500">{category}</h2>
           <div className="border-t border-gray-800">
             {items.map((faq) => {
               const anchor = slugifyQuestion(faq.question, faq.id);

@@ -24,7 +24,7 @@ export default function ProgramsSection({ programs = [] }) {
           <span className="inline-block px-4 py-1.5 rounded-lg bg-yellow-500 text-black text-xs font-bold uppercase tracking-widest mb-6">
             Bitcoin Education Programs
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-4">
             New to <span className="text-yellow-500">Bitcoin?</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl">
@@ -52,7 +52,7 @@ export default function ProgramsSection({ programs = [] }) {
                           {course.level} | {course.price}
                         </span>
                       </div>
-                      <h3 className="text-2xl font-bold mb-3 group-hover/card:text-yellow-500 transition-colors uppercase tracking-tight">{course.title}</h3>
+                      <h3 className="text-2xl font-semibold mb-3 group-hover/card:text-yellow-500 transition-colors uppercase tracking-tight">{course.title}</h3>
                       <p className="text-gray-300 text-sm mb-6 line-clamp-2">{course.desc}</p>
                       <div className="flex items-center gap-4 pt-6 border-t border-white/10">
                         <div className="flex items-center gap-1.5 text-xs text-gray-400">

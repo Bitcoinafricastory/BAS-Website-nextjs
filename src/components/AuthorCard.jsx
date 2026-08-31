@@ -25,7 +25,7 @@ export default function AuthorCard({ author }) {
         )}
       </div>
       <div className="min-w-0 flex-1">
-        <h3 className="font-bold text-white group-hover:text-yellow-500 transition-colors">
+        <h3 className="font-semibold text-white group-hover:text-yellow-500 transition-colors">
           {author.name}
         </h3>
         {author.role && (

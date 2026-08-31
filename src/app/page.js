@@ -58,7 +58,7 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4 mb-12">
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <h2 className="text-4xl md:text-5xl font-semibold mb-4">
                 From Our News and <span className="text-yellow-500">Stories</span>
               </h2>
               <p className="text-xl text-gray-400">Latest insights on Bitcoin Movement and adoption in Africa</p>
@@ -73,7 +73,7 @@ export default async function HomePage() {
             if (catPosts.length === 0) return null;
             return (
               <div key={cat} className="mb-16">
-                <h3 className="text-2xl md:text-3xl font-bold mb-8">{cat}</h3>
+                <h3 className="text-2xl md:text-3xl font-semibold mb-8">{cat}</h3>
                 <PostsGrid posts={catPosts} />
               </div>
             );
@@ -90,7 +90,7 @@ export default async function HomePage() {
       <section className="py-20 px-6 bg-gradient-to-b from-gray-900/30 to-transparent">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 className="text-4xl md:text-5xl font-semibold mb-4">
               Success <span className="text-yellow-500">Stories</span>
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
@@ -106,7 +106,7 @@ export default async function HomePage() {
         <div className="max-w-6xl mx-auto">
           <div className="flex items-end justify-between mb-8">
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold text-white">Featured in the Directory</h2>
+              <h2 className="text-2xl md:text-3xl font-semibold text-white">Featured in the Directory</h2>
               <p className="text-sm text-gray-400 mt-2 max-w-xl">
                 Communities, companies, projects, and people building Bitcoin across Africa — verified
                 by our reporters, not scraped from a database.

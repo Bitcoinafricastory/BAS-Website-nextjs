@@ -80,7 +80,7 @@ export default function BitcoinVideos({ videos = [] }) {
 
         <div className="lg:col-span-4 bg-[#050505] flex flex-col">
           <div className="p-6 border-b border-white/10 flex justify-between items-center">
-            <h2 className="text-sm font-black tracking-[0.3em]">CURRICULUM</h2>
+            <h2 className="text-sm font-semibold tracking-[0.3em]">CURRICULUM</h2>
             <span className="text-[10px] text-yellow-500 font-bold">{videos.length} MODULES AVAILABLE</span>
           </div>
 
@@ -104,7 +104,7 @@ export default function BitcoinVideos({ videos = [] }) {
                     )}
                   </div>
                   <div className="flex flex-col justify-between py-1">
-                    <h3 className={`text-xs font-black leading-tight tracking-tight ${currentVideo.id === video.id ? 'text-black' : 'text-gray-300 group-hover:text-white'}`}>{video.title}</h3>
+                    <h3 className={`text-xs font-semibold leading-tight tracking-tight ${currentVideo.id === video.id ? 'text-black' : 'text-gray-300 group-hover:text-white'}`}>{video.title}</h3>
                     <div className={`flex items-center gap-2 text-[10px] font-bold ${currentVideo.id === video.id ? 'text-black/60' : 'text-gray-500'}`}>
                       <Clock className="w-3 h-3" />
                       {video.duration}

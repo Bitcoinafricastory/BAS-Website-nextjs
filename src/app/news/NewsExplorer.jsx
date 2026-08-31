@@ -174,7 +174,7 @@ export default function NewsExplorer({ initialPosts = [] }) {
               if (catPosts.length === 0) return null;
               return (
                 <div key={cat} className="mb-16">
-                  <h3 className="text-2xl md:text-3xl font-bold mb-8">{cat}</h3>
+                  <h3 className="text-2xl md:text-3xl font-semibold mb-8">{cat}</h3>
                   <PostsGrid posts={catPosts} />
                 </div>
               );
@@ -200,7 +200,7 @@ export default function NewsExplorer({ initialPosts = [] }) {
               >
                 &ldquo;
               </span>
-              <h2 className="relative text-2xl sm:text-3xl font-bold mb-3">
+              <h2 className="relative text-2xl sm:text-3xl font-semibold mb-3">
                 Share Your Bitcoin <span className="text-yellow-500">Story</span>
               </h2>
               <p className="relative text-gray-400 text-sm sm:text-base mb-7 max-w-md">
@@ -234,7 +234,7 @@ export default function NewsExplorer({ initialPosts = [] }) {
                   <PlusCircle className="text-yellow-500" size={20} />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-white">Submit Your Story</h2>
+                  <h2 className="text-xl font-semibold text-white">Submit Your Story</h2>
                   <p className="text-xs text-gray-500">Fill in the details below</p>
                 </div>
               </div>

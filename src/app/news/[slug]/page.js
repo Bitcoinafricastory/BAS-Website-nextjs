@@ -162,7 +162,7 @@ export default async function BlogPostPage({ params }) {
           {/* Key Takeaways — AEO-friendly summary block that answer engines love */}
           {keyTakeaways.length > 0 && (
             <div className="mb-10 p-6 bg-yellow-500/5 border border-yellow-500/20 rounded-xl">
-              <h2 className="text-lg font-bold text-yellow-500 mb-4 uppercase tracking-wide">Key Takeaways</h2>
+              <h2 className="text-lg font-semibold text-yellow-500 mb-4 uppercase tracking-wide">Key Takeaways</h2>
               <ul className="space-y-2">
                 {keyTakeaways.map((t, i) => (
                   <li key={i} className="flex gap-3 text-gray-200">
@@ -178,7 +178,7 @@ export default async function BlogPostPage({ params }) {
               sidebar TOC replaces it so the reader doesn't see two. */}
           {headings.length > 2 && (
             <div className="xl:hidden mb-10 p-6 bg-gray-900 border border-gray-800 rounded-xl">
-              <h2 className="text-sm font-bold text-gray-400 mb-3 uppercase tracking-wide">In This Article</h2>
+              <h2 className="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wide">In This Article</h2>
               <ul className="space-y-2">
                 {headings.map((h, i) => (
                   <li key={i} className={h.level === 'h3' ? 'ml-4' : ''}>
@@ -199,7 +199,7 @@ export default async function BlogPostPage({ params }) {
               work; otherwise it falls back to the publication account. */}
           <div className="mt-12 pt-10 border-t border-gray-800 max-w-[68ch] mx-auto">
             <div className="bg-[#0A0A0A] border border-white/5 rounded-2xl p-6 sm:p-8">
-              <h3 className="text-lg font-bold mb-2">
+              <h3 className="text-lg font-semibold mb-2">
                 Found this useful? <span className="text-yellow-500">Tip the writer.</span>
               </h3>
               <p className="text-gray-400 text-sm leading-relaxed mb-6">
@@ -221,11 +221,11 @@ export default async function BlogPostPage({ params }) {
           {/* FAQ section — rendered visibly AND emitted as FAQPage schema above */}
           {faqs.length > 0 && (
             <div className="mt-12 pt-12 border-t border-gray-800">
-              <h2 className="text-3xl font-bold mb-8">Frequently Asked <span className="text-yellow-500">Questions</span></h2>
+              <h2 className="text-3xl font-semibold mb-8">Frequently Asked <span className="text-yellow-500">Questions</span></h2>
               <div className="space-y-6">
                 {faqs.map((f, i) => (
                   <div key={i} className="p-6 bg-gray-900 border border-gray-800 rounded-xl">
-                    <h3 className="text-lg font-bold mb-2">{f.question}</h3>
+                    <h3 className="text-lg font-semibold mb-2">{f.question}</h3>
                     <p className="text-gray-400 leading-relaxed">{f.answer}</p>
                   </div>
                 ))}
@@ -255,7 +255,7 @@ export default async function BlogPostPage({ params }) {
       {relatedPosts.length > 0 && (
         <section className="max-w-3xl xl:max-w-6xl mx-auto px-6 pb-20">
           <div className="pt-12 mt-4 border-t border-gray-800">
-            <h2 className="text-3xl font-bold mb-8">
+            <h2 className="text-3xl font-semibold mb-8">
               Related <span className="text-yellow-500">Articles</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -283,7 +283,7 @@ export default async function BlogPostPage({ params }) {
                       </span>
                       <span className="text-xs text-gray-400">{computeReadingTime(relatedPost.content, relatedPost.readTime)}</span>
                     </div>
-                    <h3 className="text-xl font-bold mb-2 group-hover:text-yellow-500 transition-colors duration-200">
+                    <h3 className="text-xl font-semibold mb-2 group-hover:text-yellow-500 transition-colors duration-200">
                       {relatedPost.title}
                     </h3>
                   </div>

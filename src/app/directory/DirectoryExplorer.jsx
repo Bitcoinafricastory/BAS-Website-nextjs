@@ -128,7 +128,7 @@ function EntityCard({ entity }) {
       </Link>
 
       <div className={`p-5 flex flex-col flex-grow ${hasCover && hasLogo ? 'pt-11' : ''}`}>
-        <h3 className="font-bold text-white text-lg mb-1 truncate">{entity.name}</h3>
+        <h3 className="font-semibold text-white text-lg mb-1 truncate">{entity.name}</h3>
         {entity.country && <p className="text-xs text-gray-400 mb-3">{entity.country}</p>}
 
         <div className="mb-3">
@@ -193,7 +193,7 @@ function SubmitEntitySection({ open, onToggle }) {
     <div className="border-t border-white/5 pt-10">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div>
-          <h2 className="text-xl font-bold text-white mb-1">Don&rsquo;t see it in the directory?</h2>
+          <h2 className="text-xl font-semibold text-white mb-1">Don&rsquo;t see it in the directory?</h2>
           <p className="text-gray-400 text-sm max-w-xl">
             Tell us your story. Every submission joins our coverage queue — badges get added as our
             reporters actually verify, interview, or visit.

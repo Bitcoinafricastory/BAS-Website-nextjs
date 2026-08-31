@@ -122,7 +122,7 @@ export default async function Footer() {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-16">
           <div className="space-y-6">
-            <h2 className="text-lg font-bold text-yellow-500 uppercase tracking-wider">Popular Posts</h2>
+            <h2 className="text-lg font-semibold text-yellow-500 uppercase tracking-wider">Popular Posts</h2>
             <div className="space-y-4">
               {popularList.length === 0 ? (
                 <p className="text-gray-500 italic text-sm">Popular posts will be uploaded soon.</p>
@@ -141,7 +141,7 @@ export default async function Footer() {
           </div>
 
           <div className="space-y-6">
-            <h2 className="text-lg font-bold text-yellow-500 uppercase tracking-wider">Top Stories</h2>
+            <h2 className="text-lg font-semibold text-yellow-500 uppercase tracking-wider">Top Stories</h2>
             <div className="space-y-4">
               {topList.length === 0 ? (
                 <p className="text-gray-500 italic text-sm">Top stories will be uploaded soon.</p>
@@ -160,7 +160,7 @@ export default async function Footer() {
           </div>
 
           <div className="space-y-6">
-            <h2 className="text-lg font-bold text-yellow-500 uppercase tracking-wider">Categories</h2>
+            <h2 className="text-lg font-semibold text-yellow-500 uppercase tracking-wider">Categories</h2>
             <ul className="space-y-2">
               {categories.length === 0 ? (
                 <p className="text-gray-500 italic text-sm">No categories found.</p>
@@ -200,7 +200,7 @@ export default async function Footer() {
           </div>
 
           <div>
-            <h3 className="text-xs font-bold text-white uppercase tracking-widest mb-4">Sections</h3>
+            <h3 className="text-xs font-semibold text-white uppercase tracking-widest mb-4">Sections</h3>
             <ul className="space-y-3">
               {sectionLinks.map((link) => (
                 <li key={link.label}>
@@ -213,7 +213,7 @@ export default async function Footer() {
           </div>
 
           <div>
-            <h3 className="text-xs font-bold text-white uppercase tracking-widest mb-4">Company</h3>
+            <h3 className="text-xs font-semibold text-white uppercase tracking-widest mb-4">Company</h3>
             <ul className="space-y-3">
               {companyLinks.map((link) => (
                 <li key={link.label}>
@@ -226,7 +226,7 @@ export default async function Footer() {
           </div>
 
           <div>
-            <h3 className="text-xs font-bold text-white uppercase tracking-widest mb-4">Follow &amp; More</h3>
+            <h3 className="text-xs font-semibold text-white uppercase tracking-widest mb-4">Follow &amp; More</h3>
             <ul className="space-y-3">
               {moreLinks.map((link) => (
                 <li key={link.label}>

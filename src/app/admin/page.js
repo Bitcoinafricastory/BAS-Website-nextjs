@@ -48,12 +48,12 @@ export default function AdminLoginPage() {
             <span className="font-black text-black text-lg">B</span>
           </div>
           <div>
-            <h1 className="text-xl font-bold">Bitcoin Africa Story</h1>
+            <h1 className="text-xl font-semibold">Bitcoin Africa Story</h1>
             <p className="text-xs text-gray-500">Editorial Dashboard</p>
           </div>
         </div>
 
-        <h2 className="text-2xl font-bold mb-1">Welcome back</h2>
+        <h2 className="text-2xl font-semibold mb-1">Welcome back</h2>
         <p className="text-sm text-gray-400 mb-6">Sign in to manage your publication.</p>
 
         {error && (

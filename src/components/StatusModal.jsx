@@ -17,7 +17,7 @@ export default function StatusModal({ open, title, message, onClose }) {
         >
           {isError ? <X size={32} /> : <CheckCircle size={32} />}
         </div>
-        <h3 className="text-2xl font-bold text-white text-center mb-2">{title}</h3>
+        <h3 className="text-2xl font-semibold text-white text-center mb-2">{title}</h3>
         <p className="text-gray-400 text-center mb-6">{message}</p>
         <button
           onClick={onClose}

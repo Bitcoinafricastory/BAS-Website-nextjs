@@ -65,7 +65,7 @@ export default function NewsletterSignup({ variant = 'full' }) {
 
   return (
     <div className="bg-gradient-to-r from-yellow-500/10 to-yellow-600/5 border border-yellow-500/30 rounded-2xl p-8 md:p-12 text-center">
-      <h2 className="text-2xl md:text-3xl font-bold mb-3">
+      <h2 className="text-2xl md:text-3xl font-semibold mb-3">
         Never Miss a <span className="text-yellow-500">Story</span>
       </h2>
       <p className="text-gray-300 mb-6 max-w-2xl mx-auto text-sm md:text-base">

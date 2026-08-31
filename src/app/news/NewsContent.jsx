@@ -183,7 +183,7 @@ export default function NewsContent({ initialPosts = [] }) {
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
           <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-16">
             <div className="w-full lg:w-1/2 text-left mt-12 md:mt-10 lg:text-left">
-              <h1 className="text-4xl sm:text-6xl md:text-6xl lg:text-7xl md:font-extrabold mb-4 leading-tight">
+              <h1 className="text-4xl sm:text-6xl md:text-6xl lg:text-7xl md:font-semibold mb-4 leading-tight">
                 <span>The </span> <br className="sm:hidden" /> <span>Pulse of </span> <br className="sm:hidden" /> <span>Bitcoin </span> <br /> <span className="text-yellow-400">in Africa</span>
               </h1>
               <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl">
@@ -219,7 +219,7 @@ export default function NewsContent({ initialPosts = [] }) {
               if (catPosts.length === 0) return null;
               return (
                 <div key={cat} className="mb-16">
-                  <h3 className="text-2xl md:text-3xl font-bold mb-8">{cat}</h3>
+                  <h3 className="text-2xl md:text-3xl font-semibold mb-8">{cat}</h3>
                   <PostsGrid posts={catPosts} />
                 </div>
               );
@@ -237,7 +237,7 @@ export default function NewsContent({ initialPosts = [] }) {
       <section className="py-20 px-6 bg-gradient-to-b from-gray-900/30 to-transparent">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-semibold mb-4">
               Share Your Bitcoin <span className="text-yellow-500">Story</span>
             </h2>
             <p className="text-lg text-gray-300">
@@ -259,7 +259,7 @@ export default function NewsContent({ initialPosts = [] }) {
                   <PlusCircle className="text-yellow-500" size={20} />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-white">Submit Your Story</h2>
+                  <h2 className="text-xl font-semibold text-white">Submit Your Story</h2>
                   <p className="text-xs text-gray-500">Fill in the details below</p>
                 </div>
               </div>

@@ -19,7 +19,7 @@ function CategoryTile({ category }) {
       <div className="flex items-center justify-center rounded-xl border border-yellow-500/40 mb-5" style={{ width: '52px', height: '52px' }}>
         <Icon size={24} className="text-yellow-500" />
       </div>
-      <h3 className="text-lg font-bold mb-1.5">{category.title}</h3>
+      <h3 className="text-lg font-semibold mb-1.5">{category.title}</h3>
       <p className="text-gray-400 text-sm leading-relaxed flex-1">{category.blurb}</p>
       <div className="flex items-center justify-between mt-4">
         <span className="text-xs text-gray-500">{count}</span>

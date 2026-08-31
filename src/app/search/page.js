@@ -143,7 +143,7 @@ export default async function SearchPage({ searchParams }) {
               <section className="mb-14">
                 <div className="flex items-center gap-2 mb-6">
                   <Newspaper size={18} className="text-yellow-500" />
-                  <h2 className="text-xl font-bold">
+                  <h2 className="text-xl font-semibold">
                     News &amp; Stories{' '}
                     <span className="text-gray-600 font-normal">({articles.length})</span>
                   </h2>
@@ -169,7 +169,7 @@ export default async function SearchPage({ searchParams }) {
                             {post.category}
                           </span>
                         )}
-                        <h3 className="font-bold mt-1 group-hover:text-yellow-500 transition-colors line-clamp-2">
+                        <h3 className="font-semibold mt-1 group-hover:text-yellow-500 transition-colors line-clamp-2">
                           {post.title}
                         </h3>
                         {post.excerpt && (
@@ -186,7 +186,7 @@ export default async function SearchPage({ searchParams }) {
               <section>
                 <div className="flex items-center gap-2 mb-6">
                   <Calendar size={18} className="text-yellow-500" />
-                  <h2 className="text-xl font-bold">
+                  <h2 className="text-xl font-semibold">
                     Events <span className="text-gray-600 font-normal">({events.length})</span>
                   </h2>
                 </div>
@@ -201,7 +201,7 @@ export default async function SearchPage({ searchParams }) {
                         <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-500">
                           {event.format === 'virtual' ? 'Online Event' : 'In-Person'}
                         </span>
-                        <h3 className="font-bold mt-1 group-hover:text-yellow-500 transition-colors line-clamp-2">
+                        <h3 className="font-semibold mt-1 group-hover:text-yellow-500 transition-colors line-clamp-2">
                           {event.eventName}
                         </h3>
                         <p className="text-sm text-gray-500 mt-1">

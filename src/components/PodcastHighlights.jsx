@@ -15,7 +15,7 @@ export default function PodcastHighlights({ episodes = [] }) {
               <Mic className="text-yellow-500" size={20} />
             </div>
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold">
+              <h2 className="text-2xl md:text-3xl font-semibold">
                 Podcast <span className="text-yellow-500">Highlights</span>
               </h2>
               <p className="text-sm text-gray-400">Conversations shaping Africa&rsquo;s Bitcoin story</p>
@@ -57,7 +57,7 @@ export default function PodcastHighlights({ episodes = [] }) {
                   </div>
                   <div className="p-5">
                     {ep.episodeNumber && <span className="text-[10px] font-bold text-yellow-500 uppercase tracking-wide">Episode {ep.episodeNumber}</span>}
-                    <h3 className="text-lg font-bold mt-1 group-hover:text-yellow-500 transition-colors line-clamp-2">{ep.title}</h3>
+                    <h3 className="text-lg font-semibold mt-1 group-hover:text-yellow-500 transition-colors line-clamp-2">{ep.title}</h3>
                     {ep.description && <p className="text-gray-400 text-sm mt-2 line-clamp-2">{ep.description}</p>}
                   </div>
                 </Wrapper>
@@ -70,7 +70,7 @@ export default function PodcastHighlights({ episodes = [] }) {
             <div className="w-16 h-16 rounded-full bg-yellow-500/10 flex items-center justify-center mx-auto mb-4">
               <Mic className="text-yellow-500" size={28} />
             </div>
-            <h3 className="text-xl font-bold mb-2">The Bitcoin Africa Story Podcast</h3>
+            <h3 className="text-xl font-semibold mb-2">The Bitcoin Africa Story Podcast</h3>
             <p className="text-gray-400 max-w-lg mx-auto mb-6">
               In-depth conversations with builders, educators, and everyday Africans using Bitcoin. New
               episodes coming soon.

@@ -36,7 +36,7 @@ export default async function SubscribePage() {
 
           {/* Pitch */}
           <div>
-            <h1 className="text-3xl sm:text-4xl lg:text-[46px] font-bold leading-[1.1] tracking-tight mb-5">
+            <h1 className="text-3xl sm:text-4xl lg:text-[46px] font-semibold leading-[1.1] tracking-tight mb-5">
               Our stories, <span className="text-yellow-500">in your inbox.</span>
             </h1>
             <p className="text-gray-400 text-base leading-relaxed max-w-md mb-7">
