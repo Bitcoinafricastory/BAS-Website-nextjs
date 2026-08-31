@@ -32,9 +32,6 @@ export default async function FAQPage() {
         <Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'FAQ' }]} className="mb-6" />
 
         <div className="mb-14">
-          <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-5 inline-block">
-            Help Center
-          </span>
           <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-semibold mb-4">Frequently Asked Questions</h1>
           <p className="text-gray-400 text-base sm:text-lg max-w-lg">
             Answers about our news coverage, education programs, directory, events, podcast, and how to get involved.

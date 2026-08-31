@@ -11,9 +11,6 @@ export default function ContactContent() {
     <div className="pt-16">
       <section id="hero" className="pt-16 pb-10 sm:pt-20 sm:pb-12 px-4">
         <div className="max-w-6xl mx-auto">
-          <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-4 block">
-            Get in touch
-          </span>
           <h1 className="font-semibold text-white text-4xl sm:text-5xl lg:text-[54px] leading-[1.05] tracking-tight mb-4 sm:mb-6">
             Let&rsquo;s <em className="italic text-yellow-500">connect.</em>
           </h1>

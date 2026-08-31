@@ -46,9 +46,6 @@ export default function EducationalHero() {
               over the bright, busy parts of the photo. */}
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.72)_40%,rgba(0,0,0,0.97)_100%)]" />
           <div className="relative mt-auto px-6 pb-8 pt-24 w-full">
-            <span className="font-bold text-[11px] tracking-[0.16em] uppercase text-yellow-500">
-              Free &middot; Self-paced &middot; Open to all
-            </span>
             <h1 className="font-semibold text-white text-[30px] leading-[1.08] tracking-tight mt-3 mb-4">
               Learn Bitcoin. <em className="italic text-yellow-500">Free</em>, at your own pace.
             </h1>
@@ -95,9 +92,6 @@ export default function EducationalHero() {
       <div className="hidden lg:grid max-w-7xl mx-auto grid-cols-[1.05fr_0.95fr]">
         {/* Copy column */}
         <div className="order-1 flex flex-col justify-center pl-6 pr-14 py-20 border-r border-gray-800">
-          <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-6">
-            Free &middot; Self-paced &middot; Open to all
-          </span>
 
           <h1 className="font-semibold text-white text-[54px] leading-[1.05] tracking-tight mb-6 max-w-xl">
             Learn Bitcoin. <em className="italic text-yellow-500">Free</em>, at your own pace.

@@ -16,9 +16,6 @@ export default function PillarPage({ pillar, entities = [], articles = [] }) {
       {/* Hero */}
       <section className="py-16 px-6 bg-gradient-to-b from-gray-900/30 to-transparent">
         <div className="max-w-6xl mx-auto">
-          <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-5 inline-block">
-            {pillar.eyebrow}
-          </span>
           <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-semibold leading-[1.08] tracking-tight mb-5 max-w-2xl">
             {pillar.title} <em className="italic text-yellow-500">{pillar.accent}</em> in Africa
           </h1>
@@ -58,9 +55,6 @@ export default function PillarPage({ pillar, entities = [], articles = [] }) {
       {entities.length > 0 && (
         <section className="px-6 pt-12">
           <div className="max-w-6xl mx-auto">
-            <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 inline-block">
-              {pillar.entitiesHeading.eyebrow}
-            </span>
             <h2 className="text-2xl font-bold mt-2 mb-6">{pillar.entitiesHeading.title}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {entities.map((entity) => {
@@ -109,9 +103,6 @@ export default function PillarPage({ pillar, entities = [], articles = [] }) {
       {articles.length > 0 && (
         <section className="px-6 pt-12">
           <div className="max-w-6xl mx-auto">
-            <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 inline-block">
-              {pillar.coverageHeading.eyebrow}
-            </span>
             <h2 className="text-2xl font-bold mt-2 mb-4">{pillar.coverageHeading.title}</h2>
             <div>
               {articles.map((post, i) => {

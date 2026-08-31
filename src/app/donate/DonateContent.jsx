@@ -101,7 +101,7 @@ function TrackCard({ track, className = '' }) {
         <span className="font-mono-brand text-[10px] tracking-[0.14em] uppercase text-yellow-500">
           {track.n} · {track.tag}
         </span>
-        <h3 className="text-xl font-extrabold tracking-tight mt-3 mb-2.5 leading-tight">{track.title}</h3>
+        <h3 className="text-xl font-semibold tracking-tight mt-3 mb-2.5 leading-tight">{track.title}</h3>
         <p className="text-[13.5px] text-gray-300 leading-relaxed">{track.body}</p>
         <div className="flex gap-5 mt-5 pt-4 border-t border-white/[0.17]">
           {track.figs.map((f) => (
@@ -151,11 +151,8 @@ export default function DonateContent() {
       <section className="max-w-[1140px] mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-[1.04fr_0.96fr] items-stretch">
           <div className="flex flex-col justify-center py-12 lg:py-20 lg:pr-12 order-2 lg:order-1">
-            <motion.span {...fadeUp} className="font-mono-brand text-[10.5px] tracking-[0.15em] uppercase text-yellow-500">
-              Volunteer-led · Nigeria · Since 2024
-            </motion.span>
             <motion.h1 {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.08 }}
-              className="text-[31px] sm:text-4xl lg:text-[50px] font-extrabold leading-[1.06] tracking-[-1.6px] my-5">
+              className="text-[31px] sm:text-4xl lg:text-[50px] font-semibold leading-[1.06] tracking-[-1.6px] mb-5">
               All of this was built on{' '}
               <span className="text-yellow-500">less than most people spend on coffee.</span>
             </motion.h1>
@@ -184,10 +181,7 @@ export default function DonateContent() {
 
       {/* ═══ 2 · WHERE THE MONEY GOES ═══ */}
       <section className="max-w-[1140px] mx-auto px-6 py-20 border-t border-white/[0.08]">
-        <motion.span {...fadeUp} className="font-mono-brand text-[10.5px] tracking-[0.15em] uppercase text-yellow-500">
-          Where the money goes
-        </motion.span>
-        <motion.h2 {...fadeUp} className="text-[25px] sm:text-3xl lg:text-[36px] font-extrabold tracking-[-1px] leading-[1.14] mt-3.5 mb-3.5">
+        <motion.h2 {...fadeUp} className="text-[25px] sm:text-3xl lg:text-[36px] font-semibold tracking-[-1px] leading-[1.14] mb-4">
           What your contribution <span className="text-yellow-500">actually funds</span>
         </motion.h2>
         <motion.p {...fadeUp} className="text-gray-400 text-base leading-relaxed max-w-2xl">
@@ -239,8 +233,7 @@ export default function DonateContent() {
       {/* ═══ 3 · THE ASK ═══ */}
       <section id="give" className="max-w-[1140px] mx-auto px-6 py-20 border-t border-white/[0.08]">
         <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-10">
-          <span className="font-mono-brand text-[10.5px] tracking-[0.15em] uppercase text-yellow-500">Support</span>
-          <h2 className="text-[25px] sm:text-3xl lg:text-[36px] font-extrabold tracking-[-1px] leading-[1.14] mt-3.5 mb-3.5">
+          <h2 className="text-[25px] sm:text-3xl lg:text-[36px] font-semibold tracking-[-1px] leading-[1.14] mb-4">
             Add to the work
           </h2>
           <p className="text-gray-400 text-base leading-relaxed">
@@ -367,10 +360,7 @@ export default function DonateContent() {
 
       {/* ═══ 4 · LEDGER ═══ */}
       <section id="ledger" className="max-w-[1140px] mx-auto px-6 py-20 border-t border-white/[0.08]">
-        <motion.span {...fadeUp} className="font-mono-brand text-[10.5px] tracking-[0.15em] uppercase text-yellow-500">
-          Full transparency
-        </motion.span>
-        <motion.h2 {...fadeUp} className="text-[25px] sm:text-3xl lg:text-[36px] font-extrabold tracking-[-1px] leading-[1.14] mt-3.5 mb-3.5">
+        <motion.h2 {...fadeUp} className="text-[25px] sm:text-3xl lg:text-[36px] font-semibold tracking-[-1px] leading-[1.14] mb-4">
           Where every sat <span className="text-yellow-500">has gone</span>
         </motion.h2>
         <motion.p {...fadeUp} className="text-gray-400 text-base leading-relaxed max-w-2xl mb-7">
@@ -402,7 +392,7 @@ export default function DonateContent() {
         ))}
 
         <motion.div {...fadeUp} className="grid grid-cols-[1fr_auto_auto] gap-6 py-4 border-b-2 border-white/15 items-baseline">
-          <span className="font-bold text-[14.5px]">Total received</span>
+          <span className="font-semibold text-[14.5px]">Total received</span>
           <span className="font-mono-brand text-xs text-gray-500 text-right min-w-[40px]">100%</span>
           <span className="font-mono-brand text-[15.5px] text-yellow-500 text-right min-w-[76px]">$2,125.43</span>
         </motion.div>
@@ -421,10 +411,7 @@ export default function DonateContent() {
 
       {/* ═══ 5 · CLOSE ═══ */}
       <section className="max-w-[1140px] mx-auto px-6 py-24 border-t border-white/[0.08] text-center">
-        <motion.span {...fadeUp} className="font-mono-brand text-[10.5px] tracking-[0.15em] uppercase text-yellow-500">
-          One more thing
-        </motion.span>
-        <motion.h2 {...fadeUp} className="text-[25px] sm:text-3xl lg:text-[36px] font-extrabold tracking-[-1px] leading-[1.14] mt-3.5 mb-3.5 max-w-[20ch] mx-auto">
+        <motion.h2 {...fadeUp} className="text-[25px] sm:text-3xl lg:text-[36px] font-semibold tracking-[-1px] leading-[1.14] mb-4 max-w-[20ch] mx-auto">
           Not ready to give? <span className="text-yellow-500">Read us instead.</span>
         </motion.h2>
         <motion.p {...fadeUp} className="text-gray-400 text-base leading-relaxed max-w-xl mx-auto mb-8">

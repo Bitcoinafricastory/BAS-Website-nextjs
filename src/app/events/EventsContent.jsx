@@ -165,9 +165,6 @@ export default function EventsContent({ initialEvents = [] }) {
     <div className="mt-[75px] pb-32">
       <section id="hero" className="relative bg-black border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-6 py-16 sm:py-20">
-          <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-6 inline-block">
-            Your network is your networth
-          </span>
           <h1 className="font-semibold text-white text-4xl sm:text-5xl lg:text-[54px] leading-[1.05] tracking-tight mb-6 max-w-2xl">
             Bitcoin events <em className="italic text-yellow-500">across Africa.</em>
           </h1>
