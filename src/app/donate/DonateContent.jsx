@@ -78,11 +78,6 @@ const LEDGER = [
   { label: 'Platform fees', pct: 5, amount: 101 },
 ];
 
-const UNIT_COSTS = [
-  { label: 'One community meetup', cost: '~$25' },
-  { label: 'One merchant onboarded', cost: '~$43' },
-  { label: 'A month of data for a teacher', cost: '~$10' },
-];
 
 const fadeUp = {
   initial: { opacity: 0, y: 22 },
@@ -243,52 +238,40 @@ export default function DonateContent() {
 
       {/* ═══ 3 · THE ASK ═══ */}
       <section id="give" className="max-w-[1140px] mx-auto px-6 py-20 border-t border-white/[0.08]">
-        <div className="grid grid-cols-1 lg:grid-cols-[0.92fr_1.08fr] gap-10 lg:gap-14 items-start">
-          <motion.div {...fadeUp}>
-            <span className="font-mono-brand text-[10.5px] tracking-[0.15em] uppercase text-yellow-500">Support</span>
-            <h2 className="text-[25px] sm:text-3xl font-extrabold tracking-[-1px] leading-[1.14] mt-3.5 mb-3.5">
-              Add to the work
-            </h2>
-            <p className="text-gray-400 text-base leading-relaxed">
-              There is no fundraising target here. Bitcoin adoption in Africa is not a project that
-              finishes — this scales with what comes in.
-            </p>
-            <div className="mt-6">
-              {UNIT_COSTS.map((u) => (
-                <div key={u.label} className="flex justify-between items-baseline gap-5 py-3.5 border-b border-white/[0.08]">
-                  <span className="text-[14.5px]">{u.label}</span>
-                  <span className="font-mono-brand text-[13.5px] text-yellow-500 whitespace-nowrap">{u.cost}</span>
-                </div>
-              ))}
-            </div>
-            <p className="font-mono-brand text-[10px] text-gray-600 tracking-[0.07em] uppercase mt-5">
-              Derived from our own books, not projections
-            </p>
-          </motion.div>
+        <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-10">
+          <span className="font-mono-brand text-[10.5px] tracking-[0.15em] uppercase text-yellow-500">Support</span>
+          <h2 className="text-[25px] sm:text-3xl lg:text-[36px] font-extrabold tracking-[-1px] leading-[1.14] mt-3.5 mb-3.5">
+            Add to the work
+          </h2>
+          <p className="text-gray-400 text-base leading-relaxed">
+            There is no fundraising target here. Bitcoin adoption in Africa is not a project that
+            finishes &mdash; this scales with what comes in.
+          </p>
+        </motion.div>
 
-          <motion.div {...fadeUp} className="bg-[#0A0A0A] border border-white/[0.08]">
-            <div className="p-2 border-b border-white/[0.08]">
-              <nav role="tablist" className="flex gap-1 bg-black p-1 relative">
-                {tabs.map((tab) => (
-                  <button
-                    key={tab.id}
-                    role="tab"
-                    aria-selected={activeTab === tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`relative flex-1 px-4 py-3.5 text-base font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 ${
-                      activeTab === tab.id ? 'text-black' : 'text-gray-400 hover:text-gray-200'
-                    }`}
-                  >
-                    {activeTab === tab.id && (
-                      <motion.span layoutId="donate-tab-fill" className="absolute inset-0 bg-yellow-500 -z-10"
-                        transition={{ type: 'spring', bounce: 0.15, duration: 0.4 }} />
-                    )}
-                    {tab.label}
-                  </button>
-                ))}
-              </nav>
-            </div>
-            <div className="p-8 sm:p-12">
+        <motion.div {...fadeUp} className="bg-[#0A0A0A] border border-white/[0.08] max-w-4xl mx-auto">
+          <div className="p-2 border-b border-white/[0.08]">
+            <nav role="tablist" className="flex gap-1 bg-black p-1 relative">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  role="tab"
+                  aria-selected={activeTab === tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`relative flex-1 px-4 py-4 text-base sm:text-lg font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 ${
+                    activeTab === tab.id ? 'text-black' : 'text-gray-400 hover:text-gray-200'
+                  }`}
+                >
+                  {activeTab === tab.id && (
+                    <motion.span layoutId="donate-tab-fill" className="absolute inset-0 bg-yellow-500 -z-10"
+                      transition={{ type: 'spring', bounce: 0.15, duration: 0.4 }} />
+                  )}
+                  {tab.label}
+                </button>
+              ))}
+            </nav>
+          </div>
+            <div className="p-6 sm:p-12 lg:p-16">
             <AnimatePresence mode="wait">
               {activeTab === 'geyser' && (
                 <motion.div
@@ -299,15 +282,15 @@ export default function DonateContent() {
                   transition={{ duration: 0.25 }}
                   className="flex flex-col items-center"
                 >
-                  <p className="text-base text-gray-400 mb-8 text-center max-w-md">
+                  <p className="text-base sm:text-lg text-gray-400 mb-9 text-center max-w-lg">
                     Support our ongoing storytelling, Bitcoin education, circular economy, and community building initiatives.
                   </p>
                   <div className="w-full flex justify-center">
-                    <div className="w-full max-w-[480px]">
+                    <div className="w-full max-w-[620px]">
                       <iframe
                         src="https://geyser.fund/widget/project/bitcoinafricastory/contribution?view=compact&colorMode=light"
                         title="Geyser Project Contribution Widget"
-                        style={{ width: '100%', minHeight: '320px', border: 'none', maxWidth: '480px', backgroundColor: 'transparent' }}
+                        style={{ width: '100%', minHeight: '460px', border: 'none', maxWidth: '620px', backgroundColor: 'transparent' }}
                       />
                     </div>
                   </div>
@@ -323,7 +306,7 @@ export default function DonateContent() {
                   transition={{ duration: 0.25 }}
                   className="flex flex-col items-center"
                 >
-                  <p className="text-base text-gray-400 mb-8 text-center max-w-md">
+                  <p className="text-base sm:text-lg text-gray-400 mb-9 text-center max-w-lg">
                     Pay directly with Bitcoin using our self-hosted BTCPay Server — no third-party processor.
                   </p>
                   <style>{`
@@ -342,7 +325,7 @@ export default function DonateContent() {
 .btcpay-input-price::-webkit-outer-spin-button, .btcpay-input-price::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
                   `}</style>
 
-                  <div className="flex justify-center scale-125 py-4">
+                  <div className="flex justify-center scale-150 py-8">
                     <form method="POST" action="https://btcpay.ideasarelikeflames.org/api/v1/invoices" className="btcpay-form btcpay-form--block">
                       <input type="hidden" name="storeId" value="3dCgxFoFx9P8RaoetmngFa32H3PVXZRNykJgSat83fsc" />
                       <input type="hidden" name="currency" value="USD" />
@@ -361,25 +344,25 @@ export default function DonateContent() {
                   transition={{ duration: 0.25 }}
                   className="flex flex-col items-center"
                 >
-                  <p className="text-base text-gray-400 mb-8 text-center max-w-md">
+                  <p className="text-base sm:text-lg text-gray-400 mb-9 text-center max-w-lg">
                     Scan the QR code below to donate directly.
                   </p>
-                  <div className="w-full flex justify-center -mx-10 sm:-mx-14 px-4">
+                  <div className="w-full flex justify-center">
                     <Image
                       src="/assets/qrcode.jpg"
                       alt="Static QR Code for donations"
-                      width={1200}
-                      height={1200}
-                      sizes="(min-width: 768px) 1000px, 100vw"
-                      className="w-full max-w-[1000px] h-auto"
+                      width={1600}
+                      height={1600}
+                      priority
+                      sizes="(min-width: 1024px) 860px, 100vw"
+                      className="w-full max-w-[860px] h-auto"
                     />
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
             </div>
-          </motion.div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ═══ 4 · LEDGER ═══ */}
