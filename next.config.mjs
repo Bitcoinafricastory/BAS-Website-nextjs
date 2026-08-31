@@ -1,11 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Don't fail the production build on ESLint warnings (e.g. unescaped
-  // entities, no-danger). These are stylistic and shouldn't block deploys;
-  // real TypeScript/compile errors still fail the build as normal.
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   // Remote images.
   //
   // next/image THROWS a runtime error on any host not matched here, which would
@@ -20,6 +14,14 @@ const nextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: '**' },
     ],
+  },
+  // Markdown twins: agents fetch /news/{slug}.md, which Next can't express as a
+  // route folder (a dynamic segment can't carry a literal .md suffix), so the
+  // public URL is rewritten onto the handler that generates it.
+  async rewrites() {
+    return [
+      { source: '/news/:slug.md', destination: '/api/md/:slug' },
+    ];
   },
 };
 
