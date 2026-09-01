@@ -91,7 +91,7 @@ export default async function NewsPage() {
 
           <aside className="lg:col-span-1">
             <SectionHeading eyebrow="Reader favorites" title="Most Read" />
-            <div className="bg-gray-900/50 border border-gray-800 rounded-xl px-5">
+            <div className="bg-[#0A0A0A] border border-white/5 rounded-xl px-5">
               {mostRead.map((post, i) => (
                 <RankedItem key={post.id} post={post} rank={i + 1} />
               ))}
@@ -105,7 +105,7 @@ export default async function NewsPage() {
                   <Link
                     key={cat.name}
                     href={`/news/category/${cat.name.toLowerCase()}`}
-                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-900 border border-gray-800 rounded-full text-sm text-gray-300 hover:border-yellow-500 hover:text-yellow-500 transition-all"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#0A0A0A] border border-white/5 rounded-full text-sm text-gray-300 hover:border-yellow-500 hover:text-yellow-500 transition-all"
                   >
                     {cat.name}
                     <span className="text-xs text-gray-500">{cat.count}</span>
@@ -119,7 +119,7 @@ export default async function NewsPage() {
 
       {/* ===== Editor's Picks ===== */}
       {editorsPicks.length > 0 && (
-        <section className="max-w-7xl mx-auto px-6 py-12 border-t border-gray-800">
+        <section className="max-w-7xl mx-auto px-6 py-12 border-t border-white/[0.08]">
           <SectionHeading eyebrow="Handpicked by our team" title="Editor's Picks" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {editorsPicks.map((post) => (
@@ -131,7 +131,7 @@ export default async function NewsPage() {
 
       {/* ===== Trending ===== */}
       {trending.length > 0 && (
-        <section className="max-w-7xl mx-auto px-6 py-12 border-t border-gray-800">
+        <section className="max-w-7xl mx-auto px-6 py-12 border-t border-white/[0.08]">
           <SectionHeading eyebrow="What people are reading now" title="Trending Stories" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {trending.map((post) => (
@@ -146,14 +146,14 @@ export default async function NewsPage() {
 
       {/* ===== Topic Tags ===== */}
       {tags.length > 0 && (
-        <section className="max-w-7xl mx-auto px-6 py-12 border-t border-gray-800">
+        <section className="max-w-7xl mx-auto px-6 py-12 border-t border-white/[0.08]">
           <SectionHeading eyebrow="Explore by topic" title="Topics & Tags" />
           <div className="flex flex-wrap gap-3">
             {tags.map((tag) => (
               <Link
                 key={tag.name}
                 href={`/news/category/${tag.name.toLowerCase()}`}
-                className="px-4 py-2 bg-gray-900 border border-gray-800 rounded-lg text-sm text-gray-300 hover:border-yellow-500 hover:text-yellow-500 transition-all"
+                className="px-4 py-2 bg-[#0A0A0A] border border-white/5 rounded-lg text-sm text-gray-300 hover:border-yellow-500 hover:text-yellow-500 transition-all"
               >
                 #{tag.name}
               </Link>
@@ -168,7 +168,7 @@ export default async function NewsPage() {
       </section>
 
       {/* ===== Full archive: category filter + submit story (client) ===== */}
-      <section className="max-w-7xl mx-auto px-6 py-12 border-t border-gray-800">
+      <section className="max-w-7xl mx-auto px-6 py-12 border-t border-white/[0.08]">
         <SectionHeading eyebrow="The full archive" title="All Stories" />
         <NewsExplorer initialPosts={posts} />
       </section>

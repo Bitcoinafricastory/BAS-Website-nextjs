@@ -17,7 +17,7 @@ export default function Hero() {
     <section id="hero" className="relative bg-black">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] lg:min-h-[78vh]">
         {/* Copy column */}
-        <div className="order-2 lg:order-1 flex flex-col justify-center px-6 sm:px-10 lg:pl-6 lg:pr-14 py-14 lg:py-20 border-b lg:border-b-0 lg:border-r border-gray-800">
+        <div className="order-2 lg:order-1 flex flex-col justify-center px-6 sm:px-10 lg:pl-6 lg:pr-14 py-14 lg:py-20 border-b lg:border-b-0 lg:border-r border-white/[0.08]">
           <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-6">
             Est. 2024 &middot; Reporting from the ground
           </span>

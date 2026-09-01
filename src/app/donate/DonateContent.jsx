@@ -15,7 +15,7 @@ const tabs = [
 
 // The four things contributions fund. Figures come from our published
 // transparency report — every number here must match that document.
-const TRACKS = [
+const buildTracks = (verifiedCount) => [
   {
     n: '01',
     tag: 'Education',
@@ -59,8 +59,8 @@ const TRACKS = [
     body: 'We verify and document the people, projects, and communities driving Bitcoin adoption across Africa — checked by our reporters, not scraped from a database.',
     image: '/assets/research.jpg',
     figs: [
-      { v: 13, suffix: '', k: 'Verified' },
-      { v: 2, suffix: '', k: 'Reports' },
+      { v: verifiedCount, suffix: '', k: 'Verified entries' },
+      { label: 'Public', k: 'Directory' },
       { label: 'Open', k: 'To all' },
     ],
   },
@@ -118,7 +118,8 @@ function TrackCard({ track, className = '' }) {
   );
 }
 
-export default function DonateContent() {
+export default function DonateContent({ verifiedCount = 0 }) {
+  const TRACKS = buildTracks(verifiedCount);
   const [activeTab, setActiveTab] = useState('geyser');
   const trackRef = useRef(null);
   const [atStart, setAtStart] = useState(true);

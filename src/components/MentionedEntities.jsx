@@ -14,7 +14,7 @@ export default function MentionedEntities({ entities = [] }) {
   if (!entities.length) return null;
 
   return (
-    <section className="mt-14 pt-8 border-t border-gray-800">
+    <section className="mt-14 pt-8 border-t border-white/[0.08]">
       <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-4 inline-block">
         Mentioned in this story
       </span>
@@ -26,9 +26,9 @@ export default function MentionedEntities({ entities = [] }) {
             <Link
               key={entity.slug}
               href={`/directory/${entity.slug}`}
-              className="group flex items-center gap-3 p-3.5 bg-gray-900/50 border border-gray-800 rounded-xl hover:border-yellow-500 transition-colors duration-200"
+              className="group flex items-center gap-3 p-3.5 bg-[#0A0A0A] border border-white/5 rounded-xl hover:border-yellow-500 transition-colors duration-200"
             >
-              <div className="relative w-11 h-11 rounded-lg bg-[#161616] border border-gray-800 overflow-hidden flex items-center justify-center flex-shrink-0">
+              <div className="relative w-11 h-11 rounded-lg bg-[#161616] border border-white/5 overflow-hidden flex items-center justify-center flex-shrink-0">
                 {logoUrl ? (
                   <Image src={logoUrl} alt={entity.name} fill sizes="44px" className="object-cover" />
                 ) : (

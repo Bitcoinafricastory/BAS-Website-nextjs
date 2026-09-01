@@ -30,7 +30,7 @@ export default function AuthorFooter({ author }) {
   ].filter(Boolean);
 
   return (
-    <div className="mt-14 pt-10 border-t border-gray-800">
+    <div className="mt-14 pt-10 border-t border-white/[0.08]">
       <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-4">Written by</p>
       <div className="flex gap-5 items-start">
         <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 rounded-full overflow-hidden bg-gray-800">

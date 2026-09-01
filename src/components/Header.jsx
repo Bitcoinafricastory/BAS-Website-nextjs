@@ -59,7 +59,7 @@ export default function Header() {
   }, [moreOpen]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-sm border-b border-gray-800">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-sm border-b border-white/[0.08]">
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/60 z-40"
@@ -123,7 +123,7 @@ export default function Header() {
                   className="absolute right-0 top-full pt-3 w-48"
                   role="menu"
                 >
-                  <div className="bg-[#111113] border border-gray-800 rounded-lg shadow-xl overflow-hidden py-2">
+                  <div className="bg-[#111113] border border-white/5 rounded-lg shadow-xl overflow-hidden py-2">
                     {moreLinks.map((link) => (
                       <Link
                         key={link.path}
@@ -219,7 +219,7 @@ export default function Header() {
             <Link
               href="/donate"
               onClick={() => setIsOpen(false)}
-              className="block px-4 py-2 text-sm font-semibold text-gray-300 border border-gray-800 mt-2 hover:text-yellow-500 hover:border-yellow-500/50 transition-colors"
+              className="block px-4 py-2 text-sm font-semibold text-gray-300 border border-white/5 mt-2 hover:text-yellow-500 hover:border-yellow-500/50 transition-colors"
             >
               Donate
             </Link>

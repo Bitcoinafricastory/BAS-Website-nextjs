@@ -42,7 +42,7 @@ export default function AdminLoginPage() {
       <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-yellow-500/5 blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute top-[60%] -right-[10%] w-[30%] h-[30%] bg-yellow-600/5 blur-[100px] rounded-full pointer-events-none" />
 
-      <form onSubmit={handleSubmit} className="relative z-10 bg-[#0A0A0A] border border-gray-800 p-8 rounded-2xl w-full max-w-md shadow-2xl">
+      <form onSubmit={handleSubmit} className="relative z-10 bg-[#0A0A0A] border border-white/5 p-8 rounded-2xl w-full max-w-md shadow-2xl">
         <div className="flex items-center gap-3 mb-8">
           <div className="w-10 h-10 bg-yellow-500 flex items-center justify-center rounded-xl">
             <span className="font-black text-black text-lg">B</span>
@@ -70,7 +70,7 @@ export default function AdminLoginPage() {
             onChange={(e) => setEmail(e.target.value)}
             type="email"
             required
-            className="w-full pl-10 pr-4 py-3 rounded-lg bg-black/50 border border-gray-800 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-500"
+            className="w-full pl-10 pr-4 py-3 rounded-lg bg-black/50 border border-white/5 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-500"
             placeholder="you@bitcoinafricastory.com"
           />
         </div>
@@ -83,7 +83,7 @@ export default function AdminLoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             type="password"
             required
-            className="w-full pl-10 pr-4 py-3 rounded-lg bg-black/50 border border-gray-800 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-500"
+            className="w-full pl-10 pr-4 py-3 rounded-lg bg-black/50 border border-white/5 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-500"
             placeholder="••••••••"
           />
         </div>

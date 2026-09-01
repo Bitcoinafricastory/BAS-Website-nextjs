@@ -55,7 +55,7 @@ export default async function EventDetailsPage({ params }) {
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
           </>
         ) : (
-          <div className="w-full h-full bg-gray-900 border-b border-gray-800 flex items-center justify-center">
+          <div className="w-full h-full bg-[#0A0A0A] border-b border-white/[0.08] flex items-center justify-center">
             <span className="text-gray-600 italic">No Banner Image</span>
           </div>
         )}
@@ -77,7 +77,7 @@ export default async function EventDetailsPage({ params }) {
           ]}
           className="mb-4"
         />
-        <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 md:p-10 shadow-2xl">
+        <div className="bg-[#0A0A0A] border border-white/5 rounded-2xl p-6 md:p-10 shadow-2xl">
           <div className="flex flex-col md:flex-row gap-8 justify-between items-start">
             <div className="flex-1">
               <div className="flex flex-wrap gap-2 mb-4">
@@ -92,7 +92,7 @@ export default async function EventDetailsPage({ params }) {
               <h1 className="text-3xl md:text-5xl font-semibold text-white mb-6 leading-tight">{event.eventName}</h1>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-300 mb-8">
-                <div className="flex items-center gap-3 p-3 bg-black/30 rounded-lg border border-gray-800">
+                <div className="flex items-center gap-3 p-3 bg-black/30 rounded-lg border border-white/5">
                   <div className="w-10 h-10 rounded-full bg-yellow-500/10 flex items-center justify-center text-yellow-500">
                     <Calendar size={20} />
                   </div>
@@ -102,7 +102,7 @@ export default async function EventDetailsPage({ params }) {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-black/30 rounded-lg border border-gray-800">
+                <div className="flex items-center gap-3 p-3 bg-black/30 rounded-lg border border-white/5">
                   <div className="w-10 h-10 rounded-full bg-yellow-500/10 flex items-center justify-center text-yellow-500">
                     <Clock size={20} />
                   </div>
@@ -112,7 +112,7 @@ export default async function EventDetailsPage({ params }) {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-black/30 rounded-lg border border-gray-800 sm:col-span-2">
+                <div className="flex items-center gap-3 p-3 bg-black/30 rounded-lg border border-white/5 sm:col-span-2">
                   <div className="w-10 h-10 rounded-full bg-yellow-500/10 flex items-center justify-center text-yellow-500">
                     <MapPin size={20} />
                   </div>
@@ -125,7 +125,7 @@ export default async function EventDetailsPage({ params }) {
             </div>
 
             <div className="w-full md:w-80 shrink-0 space-y-4">
-              <div className="p-6 bg-black/50 border border-gray-800 rounded-xl">
+              <div className="p-6 bg-black/50 border border-white/5 rounded-xl">
                 <h3 className="text-lg font-semibold text-white mb-4">Organized by</h3>
                 <p className="text-yellow-500 font-medium text-lg mb-6">{event.organiser || 'Bitcoin Africa Community'}</p>
 
@@ -142,7 +142,7 @@ export default async function EventDetailsPage({ params }) {
             </div>
           </div>
 
-          <div className="mt-12 pt-10 border-t border-gray-800">
+          <div className="mt-12 pt-10 border-t border-white/[0.08]">
             <h3 className="text-2xl font-semibold text-white mb-6">About this Event</h3>
             <div className="prose prose-invert prose-lg max-w-none text-gray-400">
               <p className="whitespace-pre-wrap leading-relaxed">{event.description || event.details || 'No description provided for this event.'}</p>

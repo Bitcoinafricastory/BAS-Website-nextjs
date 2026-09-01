@@ -181,7 +181,7 @@ export default async function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 pt-12 border-t border-gray-800 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10">
+        <div className="mt-14 pt-12 border-t border-white/[0.08] grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10">
           <div className="col-span-2 md:col-span-1 space-y-4">
             <Link href="/" className="inline-block">
               <Image
@@ -239,7 +239,7 @@ export default async function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-gray-800 flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
+        <div className="mt-10 pt-6 border-t border-white/[0.08] flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
           <div className="text-center sm:text-left">
             <p className="text-gray-500 text-xs">
               © {new Date().getFullYear()} Bitcoin Africa Story. All rights reserved.

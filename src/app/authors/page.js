@@ -33,7 +33,7 @@ export default async function AuthorsPage() {
         </p>
 
         {authors.length === 0 ? (
-          <div className="py-16 text-center bg-gray-900/50 border border-gray-800 rounded-xl">
+          <div className="py-16 text-center bg-[#0A0A0A] border border-white/5 rounded-xl">
             <p className="text-gray-400">No writers yet — check back soon.</p>
           </div>
         ) : (

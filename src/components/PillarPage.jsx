@@ -64,7 +64,7 @@ export default function PillarPage({ pillar, entities = [], articles = [] }) {
                   <Link
                     key={entity.slug}
                     href={`/directory/${entity.slug}`}
-                    className="group bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden hover:border-yellow-500/50 transition-colors"
+                    className="group bg-[#0A0A0A] border border-white/5 rounded-2xl overflow-hidden hover:border-yellow-500/50 transition-colors"
                   >
                     <div className="relative h-[110px] bg-[#101408]">
                       {coverUrl && (
@@ -112,10 +112,10 @@ export default function PillarPage({ pillar, entities = [], articles = [] }) {
                     key={post.slug || post.id}
                     href={`/news/${post.slug || post.id}`}
                     className={`group flex gap-4 items-center py-3.5 ${
-                      i < articles.length - 1 ? 'border-b border-gray-800' : ''
+                      i < articles.length - 1 ? 'border-b border-white/[0.08]' : ''
                     }`}
                   >
-                    <div className="relative w-[88px] h-[60px] rounded-lg overflow-hidden bg-gray-900 flex-shrink-0">
+                    <div className="relative w-[88px] h-[60px] rounded-lg overflow-hidden bg-[#0A0A0A] flex-shrink-0">
                       {thumb && <Image src={thumb} alt="" fill sizes="88px" className="object-cover" />}
                     </div>
                     <div className="min-w-0">
@@ -136,7 +136,7 @@ export default function PillarPage({ pillar, entities = [], articles = [] }) {
 
       {/* CTA */}
       <section className="px-6 py-12">
-        <div className="max-w-6xl mx-auto bg-gray-900/50 border border-gray-800 rounded-2xl px-6 py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="max-w-6xl mx-auto bg-[#0A0A0A] border border-white/5 rounded-2xl px-6 py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <p className="text-gray-400 text-[14.5px]">{pillar.cta.text}</p>
           <Link
             href={pillar.cta.href}

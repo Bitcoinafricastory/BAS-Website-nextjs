@@ -39,14 +39,14 @@ export default async function FAQPage() {
         </div>
 
         {groups.length === 0 ? (
-          <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-10 text-center">
+          <div className="bg-[#0A0A0A] border border-white/5 rounded-2xl p-10 text-center">
             <p className="text-gray-400">Questions are being added — check back soon.</p>
           </div>
         ) : (
           <FAQAccordion groups={groups} />
         )}
 
-        <div className="mt-16 pt-10 border-t border-gray-800 text-center">
+        <div className="mt-16 pt-10 border-t border-white/[0.08] text-center">
           <p className="text-gray-400 mb-4">Didn&rsquo;t find what you&rsquo;re looking for?</p>
           <Link
             href="/contact"

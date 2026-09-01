@@ -64,7 +64,7 @@ export default function AboutContent() {
       {/* ===== Hero ===== */}
       <section id="hero" ref={heroRef} className="relative bg-black">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] lg:min-h-[70vh]">
-          <div className="order-2 lg:order-1 flex flex-col justify-center px-6 sm:px-10 lg:pl-6 lg:pr-14 py-14 lg:py-20 border-b lg:border-b-0 lg:border-r border-gray-800">
+          <div className="order-2 lg:order-1 flex flex-col justify-center px-6 sm:px-10 lg:pl-6 lg:pr-14 py-14 lg:py-20 border-b lg:border-b-0 lg:border-r border-white/[0.08]">
 
             <h1 className="font-fraunces italic font-medium text-white text-4xl sm:text-5xl lg:text-[56px] leading-[1.08] tracking-tight mb-6 max-w-xl">
               Empowering Africa through <span className="not-italic font-semibold text-yellow-500">Bitcoin.</span>
@@ -130,7 +130,7 @@ export default function AboutContent() {
       </section>
 
       {/* ===== Pull-quote ===== */}
-      <section className="py-20 sm:py-24 px-6 border-t border-b border-gray-800">
+      <section className="py-20 sm:py-24 px-6 border-t border-b border-white/[0.08]">
         <div className="max-w-4xl mx-auto">
           <motion.p
             {...fadeUp}
@@ -317,7 +317,7 @@ export default function AboutContent() {
             <p className="text-lg text-gray-400">To Africa&rsquo;s Bitcoin Future</p>
           </motion.div>
 
-          <div className="relative border-l border-gray-800 ml-4">
+          <div className="relative border-l border-white/[0.08] ml-4">
             {milestones.map((milestone, index) => (
               <motion.div
                 key={index}

@@ -124,7 +124,7 @@ export default async function AuthorProfilePage({ params }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`${author.name} on ${s.label}`}
-                    className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-800 text-gray-400 hover:text-yellow-500 hover:border-yellow-500 transition-colors"
+                    className="flex items-center justify-center w-10 h-10 rounded-full border border-white/5 text-gray-400 hover:text-yellow-500 hover:border-yellow-500 transition-colors"
                   >
                     {s.icon}
                   </a>
@@ -134,7 +134,7 @@ export default async function AuthorProfilePage({ params }) {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 pt-12">
+        <div className="border-t border-white/[0.08] pt-12">
           <div className="flex items-baseline justify-between mb-8">
             <h2 className="text-2xl md:text-3xl font-semibold">
               Articles by <span className="text-yellow-500">{author.name.split(' ')[0]}</span>
@@ -152,7 +152,7 @@ export default async function AuthorProfilePage({ params }) {
                 <Link
                   key={post.id}
                   href={`/news/${post.slug || post.id}`}
-                  className="group bg-gray-900 border border-gray-800 rounded-xl overflow-hidden hover:border-yellow-500/50 transition-colors"
+                  className="group bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden hover:border-yellow-500/50 transition-colors"
                 >
                   <div className="aspect-video overflow-hidden relative bg-gray-800">
                     {resolveImageUrl(post.image) && (

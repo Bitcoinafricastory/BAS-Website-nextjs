@@ -72,7 +72,7 @@ export default function EducationalHero() {
 
         {/* Slim 3-stat strip — the three most meaningful numbers, condensed from
             the full six so the hero doesn't run long on mobile. */}
-        <div className="grid grid-cols-3 border-t border-gray-800">
+        <div className="grid grid-cols-3 border-t border-white/[0.08]">
           {[
             { label: 'Learners', value: 250, suffix: '+' },
             { label: 'Alumni', value: 100, suffix: '+' },
@@ -91,7 +91,7 @@ export default function EducationalHero() {
       {/* ===== DESKTOP (lg+): original two-column layout, unchanged ===== */}
       <div className="hidden lg:grid max-w-7xl mx-auto grid-cols-[1.05fr_0.95fr]">
         {/* Copy column */}
-        <div className="order-1 flex flex-col justify-center pl-6 pr-14 py-20 border-r border-gray-800">
+        <div className="order-1 flex flex-col justify-center pl-6 pr-14 py-20 border-r border-white/[0.08]">
 
           <h1 className="font-semibold text-white text-[54px] leading-[1.05] tracking-tight mb-6 max-w-xl">
             Learn Bitcoin. <em className="italic text-yellow-500">Free</em>, at your own pace.
@@ -117,7 +117,7 @@ export default function EducationalHero() {
             </button>
           </div>
 
-          <div className="grid grid-cols-3 gap-x-6 gap-y-6 mt-12 pt-8 border-t border-gray-800 max-w-md">
+          <div className="grid grid-cols-3 gap-x-6 gap-y-6 mt-12 pt-8 border-t border-white/[0.08] max-w-md">
             {stats.map((stat) => {
               const Icon = stat.icon;
               return (

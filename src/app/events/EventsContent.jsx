@@ -163,7 +163,7 @@ export default function EventsContent({ initialEvents = [] }) {
 
   return (
     <div className="mt-[75px] pb-32">
-      <section id="hero" className="relative bg-black border-b border-gray-800">
+      <section id="hero" className="relative bg-black border-b border-white/[0.08]">
         <div className="max-w-7xl mx-auto px-6 py-16 sm:py-20">
           <h1 className="font-semibold text-white text-4xl sm:text-5xl lg:text-[54px] leading-[1.05] tracking-tight mb-6 max-w-2xl">
             Bitcoin events <em className="italic text-yellow-500">across Africa.</em>
@@ -188,7 +188,7 @@ export default function EventsContent({ initialEvents = [] }) {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search by event, organiser, city or tag..."
-                className="w-full pl-12 pr-4 py-3.5 bg-gray-900 border border-gray-800 rounded-xl text-gray-200 focus:outline-none focus:border-yellow-500/50 focus:ring-4 focus:ring-yellow-500/10 transition-all placeholder:text-gray-600"
+                className="w-full pl-12 pr-4 py-3.5 bg-black border border-white/10 rounded-xl text-gray-200 focus:outline-none focus:border-yellow-500/50 focus:ring-4 focus:ring-yellow-500/10 transition-all placeholder:text-gray-600"
               />
             </div>
             <div className="flex items-center gap-2 px-4 py-2.5 bg-yellow-500/10 border border-yellow-500/20 rounded-xl flex-shrink-0 self-start sm:self-auto">
@@ -217,7 +217,7 @@ export default function EventsContent({ initialEvents = [] }) {
                   className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide transition-colors ${
                     active
                       ? 'bg-yellow-500 text-black'
-                      : 'bg-gray-900 border border-gray-800 text-gray-400 hover:border-yellow-500/40 hover:text-gray-200 active:border-yellow-500/40'
+                      : 'bg-[#0A0A0A] border border-white/5 text-gray-400 hover:border-yellow-500/40 hover:text-gray-200 active:border-yellow-500/40'
                   }`}
                 >
                   {chip.label}
@@ -228,7 +228,7 @@ export default function EventsContent({ initialEvents = [] }) {
         </div>
 
         {filtered.length === 0 ? (
-          <div className="py-24 text-center bg-gray-900/50 border border-gray-800 rounded-2xl">
+          <div className="py-24 text-center bg-[#0A0A0A] border border-white/5 rounded-2xl">
             <Box className="mx-auto text-gray-700 mb-4" size={48} />
             <p className="text-xl text-gray-400 font-medium">No events match these filters</p>
             <p className="text-gray-600 text-sm mt-1">Try widening your search or switching to past events.</p>
@@ -257,7 +257,7 @@ export default function EventsContent({ initialEvents = [] }) {
                         className="object-cover opacity-70 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-90 group-active:scale-105 group-active:opacity-90"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-gray-900"><Ticket size={32} className="text-gray-700" /></div>
+                      <div className="w-full h-full flex items-center justify-center bg-[#0A0A0A]"><Ticket size={32} className="text-gray-700" /></div>
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" aria-hidden="true" />
                     <div className="absolute bottom-3 left-3">
@@ -290,7 +290,7 @@ export default function EventsContent({ initialEvents = [] }) {
       </div>
 
       <div className="max-w-7xl mx-auto mt-12 px-6">
-        <div className="border-t border-gray-800 pt-10">
+        <div className="border-t border-white/[0.08] pt-10">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h2 className="text-xl font-semibold text-white mb-1">Hosting a Bitcoin event in Africa?</h2>

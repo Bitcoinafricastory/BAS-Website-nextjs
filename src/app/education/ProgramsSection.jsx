@@ -43,7 +43,7 @@ export default function ProgramsSection({ programs = [] }) {
                         alt={course.title}
                         fill
                         sizes="320px"
-                        className="object-cover opacity-50 group-hover/card:scale-110 group-hover/card:opacity-70 transition-all duration-700"
+                        className="object-cover opacity-90 group-hover/card:scale-110 group-hover/card:opacity-100 transition-all duration-700"
                       />
                     )}
                     <div className="absolute inset-0 p-8 flex flex-col justify-end bg-gradient-to-t from-black via-black/40 to-transparent">

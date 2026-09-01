@@ -9,7 +9,7 @@ export default function StatusModal({ open, title, message, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-      <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-2xl p-8 w-full max-w-md shadow-2xl">
+      <div className="bg-gradient-to-br from-gray-900 to-black border border-white/5 rounded-2xl p-8 w-full max-w-md shadow-2xl">
         <div
           className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${
             isError ? 'bg-red-500/20 text-red-500' : 'bg-yellow-500/20 text-yellow-500'

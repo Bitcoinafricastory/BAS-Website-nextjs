@@ -177,7 +177,7 @@ export default async function BlogPostPage({ params }) {
           {/* Inline Table of Contents — shown only up to lg; on xl+ the sticky
               sidebar TOC replaces it so the reader doesn't see two. */}
           {headings.length > 2 && (
-            <div className="xl:hidden mb-10 p-6 bg-gray-900 border border-gray-800 rounded-xl">
+            <div className="xl:hidden mb-10 p-6 bg-[#0A0A0A] border border-white/5 rounded-xl">
               <h2 className="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wide">In This Article</h2>
               <ul className="space-y-2">
                 {headings.map((h, i) => (
@@ -197,7 +197,7 @@ export default async function BlogPostPage({ params }) {
           {/* Reader tipping. Uses the writer's own Blink username when they've
               set one in the dashboard, so tips reach the person who did the
               work; otherwise it falls back to the publication account. */}
-          <div className="mt-12 pt-10 border-t border-gray-800 max-w-[68ch] mx-auto">
+          <div className="mt-12 pt-10 border-t border-white/[0.08] max-w-[68ch] mx-auto">
             <div className="bg-[#0A0A0A] border border-white/5 rounded-2xl p-6 sm:p-8">
               <h3 className="text-lg font-semibold mb-2">
                 Found this useful? <span className="text-yellow-500">Tip the writer.</span>
@@ -220,11 +220,11 @@ export default async function BlogPostPage({ params }) {
 
           {/* FAQ section — rendered visibly AND emitted as FAQPage schema above */}
           {faqs.length > 0 && (
-            <div className="mt-12 pt-12 border-t border-gray-800">
+            <div className="mt-12 pt-12 border-t border-white/[0.08]">
               <h2 className="text-3xl font-semibold mb-8">Frequently Asked <span className="text-yellow-500">Questions</span></h2>
               <div className="space-y-6">
                 {faqs.map((f, i) => (
-                  <div key={i} className="p-6 bg-gray-900 border border-gray-800 rounded-xl">
+                  <div key={i} className="p-6 bg-[#0A0A0A] border border-white/5 rounded-xl">
                     <h3 className="text-lg font-semibold mb-2">{f.question}</h3>
                     <p className="text-gray-400 leading-relaxed">{f.answer}</p>
                   </div>
@@ -254,7 +254,7 @@ export default async function BlogPostPage({ params }) {
 
       {relatedPosts.length > 0 && (
         <section className="max-w-3xl xl:max-w-6xl mx-auto px-6 pb-20">
-          <div className="pt-12 mt-4 border-t border-gray-800">
+          <div className="pt-12 mt-4 border-t border-white/[0.08]">
             <h2 className="text-3xl font-semibold mb-8">
               Related <span className="text-yellow-500">Articles</span>
             </h2>
@@ -263,7 +263,7 @@ export default async function BlogPostPage({ params }) {
                 <Link
                   key={relatedPost.id}
                   href={`/news/${relatedPost.slug || relatedPost.id}`}
-                  className="group bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden hover:border-yellow-500 transition-all duration-300"
+                  className="group bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden hover:border-yellow-500 transition-all duration-300"
                 >
                   <div className="aspect-video overflow-hidden relative bg-gray-800">
                     {resolveImageUrl(relatedPost.image) && (

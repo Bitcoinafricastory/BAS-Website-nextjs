@@ -69,11 +69,11 @@ export default async function CategoryPage({ params }) {
           <PostsGrid posts={posts} />
         )}
 
-        <div className="mt-16 pt-8 border-t border-gray-800">
+        <div className="mt-16 pt-8 border-t border-white/[0.08]">
           <h2 className="text-sm font-semibold text-gray-400 mb-4 uppercase tracking-wide">Browse Other Categories</h2>
           <div className="flex flex-wrap gap-3">
             {KNOWN_CATEGORIES.filter((c) => c.toLowerCase() !== category.toLowerCase()).map((c) => (
-              <Link key={c} href={`/news/category/${c.toLowerCase()}`} className="px-4 py-2 bg-gray-900 border border-gray-800 rounded-full text-sm text-gray-300 hover:border-yellow-500 hover:text-yellow-500 transition-all">
+              <Link key={c} href={`/news/category/${c.toLowerCase()}`} className="px-4 py-2 bg-[#0A0A0A] border border-white/5 rounded-full text-sm text-gray-300 hover:border-yellow-500 hover:text-yellow-500 transition-all">
                 {c}
               </Link>
             ))}

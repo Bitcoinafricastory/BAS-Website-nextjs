@@ -21,12 +21,12 @@ export default function FAQAccordion({ groups }) {
       {groups.map(({ category, items }) => (
         <div key={category}>
           <h2 className="text-2xl font-semibold mb-5 text-yellow-500">{category}</h2>
-          <div className="border-t border-gray-800">
+          <div className="border-t border-white/[0.08]">
             {items.map((faq) => {
               const anchor = slugifyQuestion(faq.question, faq.id);
               const isOpen = openId === faq.id;
               return (
-                <div key={faq.id} id={anchor} className="border-b border-gray-800 scroll-mt-24">
+                <div key={faq.id} id={anchor} className="border-b border-white/[0.08] scroll-mt-24">
                   <button
                     onClick={() => setOpenId(isOpen ? null : faq.id)}
                     className="w-full flex items-center justify-between gap-4 py-5 text-left group"

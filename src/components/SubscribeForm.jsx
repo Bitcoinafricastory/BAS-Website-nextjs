@@ -118,7 +118,7 @@ export default function SubscribeForm() {
       <select
         value={country}
         onChange={(e) => setCountry(e.target.value)}
-        className="mt-3 w-full sm:w-auto bg-black border border-gray-800 text-gray-300 text-base px-4 py-3 focus:outline-none focus:border-yellow-500 transition-colors"
+        className="mt-3 w-full sm:w-auto bg-black border border-white/5 text-gray-300 text-base px-4 py-3 focus:outline-none focus:border-yellow-500 transition-colors"
       >
         <option value="">Where are you reading from? (optional)</option>
         {AFRICAN_COUNTRIES.map((c) => (

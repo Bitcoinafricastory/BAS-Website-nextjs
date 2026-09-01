@@ -34,7 +34,7 @@ export default function OtherBitcoinPrograms({ programs = [] }) {
                     alt={program.title}
                     fill
                     sizes="(min-width: 768px) 33vw, 100vw"
-                    className="object-cover opacity-60 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-80"
+                    className="object-cover opacity-90 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-100"
                   />
                 )}
                 <div className="absolute bottom-0 left-0">
