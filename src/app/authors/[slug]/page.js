@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import Avatar from '@/components/ui/Avatar';
 import { getAuthorBySlug, getActiveAuthors } from '@/lib/authors';
 import { getArticlesByAuthor } from '@/lib/news';
 import { authorProfileSchema, breadcrumbSchema, resolveImageUrl, jsonLdScript, SITE_URL } from '@/lib/schema';
@@ -89,18 +90,13 @@ export default async function AuthorProfilePage({ params }) {
         />
 
         <div className="flex flex-col sm:flex-row gap-8 items-start mb-16">
-          <div className="relative w-32 h-32 sm:w-40 sm:h-40 flex-shrink-0 rounded-full overflow-hidden bg-gray-800">
-            {author.avatar && (
-              <Image
-                src={author.avatar}
-                alt={author.name}
-                fill
-                sizes="160px"
-                priority
-                className="object-cover"
-              />
-            )}
-          </div>
+          <Avatar
+            src={author.avatar}
+            name={author.name}
+            size={160}
+            priority
+            className="w-32 h-32 sm:w-40 sm:h-40 flex-shrink-0 rounded-full"
+          />
           <div className="min-w-0 flex-1">
             <h1 className="text-3xl md:text-5xl font-semibold mb-2">{author.name}</h1>
             {(author.role || author.location) && (

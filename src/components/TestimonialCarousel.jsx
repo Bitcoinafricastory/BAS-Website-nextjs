@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import Avatar from '@/components/ui/Avatar';
 
 import { useState, useEffect } from 'react';
 import { ArrowLeft, ArrowRight, AtSign, Quote } from 'lucide-react';
@@ -42,19 +42,12 @@ export default function TestimonialCarousel({ testimonials = [] }) {
                 <Quote className="absolute top-8 right-8 w-10 h-10 text-yellow-500/10" strokeWidth={3} />
                 <a href={testimonial.twitterLink || '#'} target={testimonial.twitterLink ? '_blank' : '_self'} rel="noopener noreferrer" className={`block ${testimonial.twitterLink ? 'cursor-pointer' : 'cursor-default'}`}>
                   <div className="flex items-center gap-4 mb-8">
-                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex-shrink-0 flex items-center justify-center text-black font-extrabold text-xl shadow-lg overflow-hidden">
-                      {testimonial.image ? (
-                        <Image
-                          src={testimonial.image}
-                          alt={testimonial.name}
-                          width={56}
-                          height={56}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        testimonial.avatar || (testimonial.name ? testimonial.name[0] : 'U')
-                      )}
-                    </div>
+                    <Avatar
+                      src={testimonial.image}
+                      name={testimonial.name || testimonial.avatar || 'U'}
+                      size={56}
+                      className="w-14 h-14 rounded-full flex-shrink-0 shadow-lg"
+                    />
                     <div>
                       <h4 className="font-bold text-lg leading-none text-white">{testimonial.name || 'Anonymous'}</h4>
                       <p className="text-[10px] text-yellow-500 font-bold mt-1 tracking-widest">{testimonial.role || testimonial.location || 'Movement Member'}</p>
