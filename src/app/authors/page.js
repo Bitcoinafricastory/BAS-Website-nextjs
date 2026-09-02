@@ -24,7 +24,7 @@ export default async function AuthorsPage() {
       <div className="max-w-5xl mx-auto px-6">
         <Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Writers' }]} className="mb-6" />
 
-        <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-semibold mb-3">
+        <h1 className="text-[34px] sm:text-5xl lg:text-[56px] font-semibold mb-3">
           Our <span className="text-yellow-500">Writers</span>
         </h1>
         <p className="text-gray-400 mb-12 max-w-2xl text-base sm:text-lg leading-relaxed">

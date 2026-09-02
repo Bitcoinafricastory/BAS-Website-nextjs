@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
-import { Menu, X, Search, ChevronDown, Newspaper, GraduationCap, Calendar, Globe, Mic } from 'lucide-react';
+import { Menu, X, Search, ChevronDown, Newspaper, GraduationCap, Calendar, Globe, Mic, Mail } from 'lucide-react';
 
 // Primary destinations — always visible on desktop. Home is intentionally
 // absent: the logo links home (universal convention), as do the breadcrumbs
@@ -156,7 +156,7 @@ export default function Header() {
 
             <Link
               href="/subscribe"
-              className={`text-sm font-bold px-4 py-2 shadow-lg transition-colors duration-200 ${
+              className={`text-sm font-semibold px-4 py-2.5 shadow-lg transition-colors duration-200 ${
                 isActive('/subscribe')
                   ? 'bg-yellow-400 text-black'
                   : 'bg-yellow-500 text-black hover:bg-yellow-400'
@@ -212,16 +212,14 @@ export default function Header() {
             <Link
               href="/subscribe"
               onClick={() => setIsOpen(false)}
-              className="block px-4 py-2 text-sm font-bold text-black bg-yellow-500 mt-2"
+              className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors duration-200 mt-1 ${
+                isActive('/subscribe')
+                  ? 'text-yellow-500 bg-yellow-500/10'
+                  : 'text-gray-300 hover:text-yellow-500 hover:bg-yellow-500/5'
+              }`}
             >
+              <Mail size={16} />
               Subscribe
-            </Link>
-            <Link
-              href="/donate"
-              onClick={() => setIsOpen(false)}
-              className="block px-4 py-2 text-sm font-semibold text-gray-300 border border-white/5 mt-2 hover:text-yellow-500 hover:border-yellow-500/50 transition-colors"
-            >
-              Donate
             </Link>
           </div>
         )}

@@ -9,10 +9,10 @@ export default function OtherBitcoinPrograms({ programs = [] }) {
     <section className="py-24 bg-black text-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg bg-yellow-500 text-black text-[10px] font-bold uppercase tracking-widest mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg bg-yellow-500 text-black text-[10px] font-semibold uppercase tracking-widest mb-6">
             OTHER BITCOIN EDUCATION PROGRAMS
           </div>
-          <h2 className="text-4xl md:text-5xl font-semibold mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold mb-4">
             Other Bitcoin <span className="text-yellow-500">Programs</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl">
@@ -38,7 +38,7 @@ export default function OtherBitcoinPrograms({ programs = [] }) {
                   />
                 )}
                 <div className="absolute bottom-0 left-0">
-                  <span className={`inline-block px-3 py-1 text-[10px] font-bold ${program.level === 'EXPERT' ? 'bg-black text-white border-t border-r border-white/20' : 'bg-yellow-500 text-black'}`}>
+                  <span className={`inline-block px-3 py-1 text-[10px] font-semibold ${program.level === 'EXPERT' ? 'bg-black text-white border-t border-r border-white/20' : 'bg-yellow-500 text-black'}`}>
                     {program.level} | {program.price}
                   </span>
                 </div>

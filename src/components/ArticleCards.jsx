@@ -35,7 +35,7 @@ export function FeaturedCard({ post }) {
       </div>
       <div className="relative md:absolute md:bottom-0 md:left-0 md:right-0 p-5 md:p-10">
         <div className="flex items-center gap-3 mb-3 md:mb-4">
-          <span className="text-xs font-bold text-black bg-yellow-500 px-3 py-1.5 rounded-full uppercase tracking-wide">Featured</span>
+          <span className="text-xs font-semibold text-black bg-yellow-500 px-3 py-1.5 rounded-full uppercase tracking-wide">Featured</span>
           <span className="text-xs font-semibold text-yellow-500">{post.category}</span>
         </div>
         <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-semibold mb-3 leading-tight group-hover:text-yellow-500 transition-colors max-w-4xl">
@@ -70,7 +70,7 @@ export function StoryCard({ post }) {
             className="object-cover group-hover:scale-110 transition-transform duration-300"
           />
         )}
-        <span className="absolute top-3 left-3 text-[10px] font-bold text-black bg-yellow-500 px-2.5 py-1 rounded-full uppercase tracking-wide">{post.category}</span>
+        <span className="absolute top-3 left-3 text-[10px] font-semibold text-black bg-yellow-500 px-2.5 py-1 rounded-full uppercase tracking-wide">{post.category}</span>
       </div>
       <div className="p-5 flex flex-col flex-grow">
         <h3 className="text-lg font-semibold mb-2 group-hover:text-yellow-500 transition-colors duration-200 line-clamp-2">{post.title}</h3>
@@ -95,7 +95,7 @@ export function RankedItem({ post, rank }) {
       </span>
       <div className="flex-1 min-w-0">
         <span className="text-[10px] font-bold text-yellow-500 uppercase tracking-wide">{post.category}</span>
-        <h4 className="text-sm font-bold text-gray-200 group-hover:text-yellow-500 transition-colors line-clamp-2 mt-1">{post.title}</h4>
+        <h4 className="text-sm font-semibold text-gray-200 group-hover:text-yellow-500 transition-colors line-clamp-2 mt-1">{post.title}</h4>
         <span className="text-xs text-gray-400 mt-1 block">{computeReadingTime(post.content, post.readTime)}</span>
       </div>
     </Link>
@@ -121,7 +121,7 @@ export function HorizontalCard({ post }) {
       </div>
       <div className="flex-1 min-w-0">
         <span className="text-[10px] font-bold text-yellow-500 uppercase tracking-wide">{post.category}</span>
-        <h4 className="text-sm font-bold text-gray-200 group-hover:text-yellow-500 transition-colors line-clamp-2 mt-1">{post.title}</h4>
+        <h4 className="text-sm font-semibold text-gray-200 group-hover:text-yellow-500 transition-colors line-clamp-2 mt-1">{post.title}</h4>
         <div className="flex items-center gap-2 text-xs text-gray-400 mt-1">
           <span>{formatDate(post.date)}</span>
           <span>·</span>

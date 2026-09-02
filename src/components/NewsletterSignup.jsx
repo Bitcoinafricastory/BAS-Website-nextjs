@@ -53,7 +53,7 @@ export default function NewsletterSignup({ variant = 'full' }) {
           <button
             type="submit"
             disabled={busy}
-            className="flex-shrink-0 px-5 py-2.5 bg-yellow-500 text-black text-sm font-bold rounded-lg hover:bg-yellow-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-shrink-0 px-5 py-2.5 bg-yellow-500 text-black text-sm font-semibold rounded-lg hover:bg-yellow-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {busy ? '…' : 'Subscribe'}
           </button>
@@ -85,7 +85,7 @@ export default function NewsletterSignup({ variant = 'full' }) {
         <button
           type="submit"
           disabled={busy}
-          className="px-8 py-3 bg-yellow-500 text-black font-bold rounded-lg hover:bg-yellow-400 transition-colors hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-8 py-3 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-400 transition-colors hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {busy ? 'Subscribing…' : 'Subscribe'}
         </button>

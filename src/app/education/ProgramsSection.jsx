@@ -21,10 +21,10 @@ export default function ProgramsSection({ programs = [] }) {
     <section id="education-programs" className="py-20 bg-black text-white px-6">
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
-          <span className="inline-block px-4 py-1.5 rounded-lg bg-yellow-500 text-black text-xs font-bold uppercase tracking-widest mb-6">
+          <span className="inline-block px-4 py-1.5 rounded-lg bg-yellow-500 text-black text-xs font-semibold uppercase tracking-widest mb-6">
             Bitcoin Education Programs
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold mb-4">
             New to <span className="text-yellow-500">Bitcoin?</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl">
@@ -48,7 +48,7 @@ export default function ProgramsSection({ programs = [] }) {
                     )}
                     <div className="absolute inset-0 p-8 flex flex-col justify-end bg-gradient-to-t from-black via-black/40 to-transparent">
                       <div className="flex gap-2 mb-4">
-                        <span className="px-3 py-1 bg-yellow-500 text-black text-[10px] font-bold rounded">
+                        <span className="px-3 py-1 bg-yellow-500 text-black text-[10px] font-semibold rounded">
                           {course.level} | {course.price}
                         </span>
                       </div>

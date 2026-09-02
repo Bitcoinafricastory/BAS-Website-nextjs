@@ -40,7 +40,7 @@ export default function BitcoinResources({ resources = [] }) {
                   )}
                 </div>
                 <div className="p-6 flex flex-col flex-grow">
-                  <h4 className="text-lg font-bold mb-2 line-clamp-2 leading-tight group-hover:text-yellow-500 transition-colors uppercase text-white tracking-tight">{r.title}</h4>
+                  <h4 className="text-lg font-semibold mb-2 line-clamp-2 leading-tight group-hover:text-yellow-500 transition-colors uppercase text-white tracking-tight">{r.title}</h4>
                   <p className="text-gray-400 text-sm mb-6 line-clamp-3 leading-relaxed">{r.subtitle}</p>
                   <div className="mt-auto pt-4 border-t border-white/5">
                     <button className="flex items-center gap-2 text-[10px] font-black text-yellow-500 hover:text-white transition-colors group/btn uppercase tracking-widest">

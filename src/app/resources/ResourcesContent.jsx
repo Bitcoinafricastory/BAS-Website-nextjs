@@ -48,7 +48,7 @@ export default function ResourcesContent() {
   return (
     <div className="pt-16">
       <section className="max-w-6xl mx-auto px-6 py-16 sm:py-20">
-        <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-semibold leading-[1.05] tracking-tight mb-5">
+        <h1 className="text-[34px] sm:text-5xl lg:text-[56px] font-semibold leading-[1.05] tracking-tight mb-5">
           Bitcoin <span className="text-yellow-500">Resources</span>
         </h1>
         <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-xl mb-12">

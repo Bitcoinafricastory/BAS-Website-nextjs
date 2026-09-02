@@ -49,7 +49,7 @@ export default function ContactForm() {
           <textarea id="message" name="message" value={formData.message} onChange={handleChange} rows="6" placeholder="Tell us what's on your mind..." required
             className="w-full px-4 py-3 bg-black border border-white/10 text-white focus:outline-none focus:border-yellow-500 transition-colors duration-200 resize-none" />
         </div>
-        <button type="submit" className="w-full px-8 py-4 bg-yellow-500 text-black font-bold text-lg hover:bg-yellow-400 transition-all duration-200 hover:scale-105 flex items-center justify-center">
+        <button type="submit" className="w-full px-6 py-3.5 sm:px-8 sm:py-4 bg-yellow-500 text-black font-semibold text-base sm:text-lg hover:bg-yellow-400 transition-all duration-200 hover:scale-105 flex items-center justify-center">
           <Send size={20} className="mr-2" />
           Send Message
         </button>

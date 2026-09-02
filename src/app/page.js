@@ -4,7 +4,7 @@ import { getAllNews, getTestimonials } from '@/lib/news';
 import { getEntities, selectFeaturedEntities } from '@/lib/entities';
 import Hero from '@/components/Hero';
 import Mission from '@/components/Mission';
-import PostsGrid from '@/components/PostsGrid';
+import MagazinePostsGrid from '@/components/MagazinePostsGrid';
 import TestimonialCarousel from '@/components/TestimonialCarousel';
 import { SITE_URL } from '@/lib/schema';
 
@@ -74,7 +74,7 @@ export default async function HomePage() {
             return (
               <div key={cat} className="mb-16">
                 <h3 className="text-2xl md:text-3xl font-semibold mb-8">{cat}</h3>
-                <PostsGrid posts={catPosts} />
+                <MagazinePostsGrid posts={catPosts} />
               </div>
             );
           })}
@@ -122,35 +122,54 @@ export default async function HomePage() {
               <p className="text-gray-400">No entities available yet.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-6 mb-8">
-              {featuredEntities.map((entity, i) => {
-                // 2 on mobile, 4 on tablet (sm+), 6 on desktop (lg+).
-                const visibility = i < 2 ? '' : i < 4 ? 'hidden sm:flex' : 'hidden lg:flex';
-                return (
+            <>
+              {/* Mobile/tablet: horizontal snap carousel so all featured
+                  entries are reachable, not just the first two. */}
+              <div className="flex sm:hidden gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-6 px-6 -mx-6 pb-2 mb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {featuredEntities.map((entity) => (
                   <Link
                     key={entity.id}
                     href={`/directory/${entity.slug}`}
                     title={entity.name}
-                    className={`flex-col items-center gap-3 group ${visibility || 'flex'}`}
+                    className="snap-start shrink-0 w-28 flex flex-col items-center gap-2.5 group"
                   >
                     <div className="relative w-full aspect-square bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden group-hover:border-yellow-500/50 transition-colors">
                       {entity.logo && (
-                        <Image src={entity.logo} alt={entity.name} fill sizes="(min-width: 1024px) 200px, (min-width: 640px) 25vw, 45vw" className="object-contain p-5" />
+                        <Image src={entity.logo} alt={entity.name} fill sizes="112px" className="object-contain p-4" />
+                      )}
+                    </div>
+                    <p className="text-xs text-gray-400 text-center truncate w-full group-hover:text-gray-300 transition-colors">{entity.name}</p>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Desktop/tablet: static grid */}
+              <div className="hidden sm:grid sm:grid-cols-4 lg:grid-cols-6 gap-6 mb-8">
+                {featuredEntities.map((entity) => (
+                  <Link
+                    key={entity.id}
+                    href={`/directory/${entity.slug}`}
+                    title={entity.name}
+                    className="flex flex-col items-center gap-3 group"
+                  >
+                    <div className="relative w-full aspect-square bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden group-hover:border-yellow-500/50 transition-colors">
+                      {entity.logo && (
+                        <Image src={entity.logo} alt={entity.name} fill sizes="(min-width: 1024px) 200px, 25vw" className="object-contain p-5" />
                       )}
                     </div>
                     <p className="text-sm text-gray-400 text-center truncate w-full group-hover:text-gray-300 transition-colors">{entity.name}</p>
                   </Link>
-                );
-              })}
-            </div>
+                ))}
+              </div>
+            </>
           )}
 
           <div className="text-center md:hidden">
             <Link
               href="/directory"
-              className="inline-flex items-center gap-2 text-sm font-bold text-black bg-yellow-500 px-6 py-3 hover:bg-yellow-400 transition-colors"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-yellow-500 hover:text-yellow-400 transition-colors"
             >
-              View Full Directory
+              View Full Directory →
             </Link>
           </div>
         </div>

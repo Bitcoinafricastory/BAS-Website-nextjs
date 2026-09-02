@@ -11,7 +11,7 @@ export default function ContactContent() {
     <div className="pt-16">
       <section id="hero" className="pt-16 pb-10 sm:pt-20 sm:pb-12 px-4">
         <div className="max-w-6xl mx-auto">
-          <h1 className="font-semibold text-white text-4xl sm:text-5xl lg:text-[54px] leading-[1.05] tracking-tight mb-4 sm:mb-6">
+          <h1 className="font-semibold text-white text-[34px] sm:text-5xl lg:text-[56px] leading-[1.05] tracking-tight mb-4 sm:mb-6">
             Let&rsquo;s <em className="italic text-yellow-500">connect.</em>
           </h1>
           <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-xl">

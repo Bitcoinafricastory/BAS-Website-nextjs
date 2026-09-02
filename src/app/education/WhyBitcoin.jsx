@@ -14,7 +14,7 @@ export default function WhyBitcoin({ testimonials = [], videoData = null }) {
     <section className="py-24 bg-black text-white overflow-hidden">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-semibold mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold mb-4">
             Why Study <span className="text-yellow-500">Bitcoin?</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
@@ -70,7 +70,7 @@ export default function WhyBitcoin({ testimonials = [], videoData = null }) {
                           />
                         )}
                         <div>
-                          <h4 className="font-bold text-lg leading-none">{t.name}</h4>
+                          <h4 className="font-semibold text-lg leading-none">{t.name}</h4>
                           <p className="text-[10px] text-yellow-500 font-bold mt-1 tracking-widest">{t.role}</p>
                         </div>
                       </div>

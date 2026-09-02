@@ -10,7 +10,7 @@ export default function Mission() {
             <div className="hidden sm:inline-block mb-4 px-3 py-1 bg-yellow-500/10 border border-yellow-500/30 rounded-full">
               <span className="text-yellow-500 text-sm font-semibold">Our Mission</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-semibold mb-6">
+            <h2 className="text-2xl sm:text-3xl lg:text-[36px] font-semibold mb-6">
               Spreading Bitcoin Adoption Across <span className="text-yellow-500">Africa</span>
             </h2>
             <p className="text-lg text-gray-300 mb-6 leading-relaxed">

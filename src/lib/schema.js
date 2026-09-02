@@ -480,7 +480,7 @@ export { SITE_URL, SITE_NAME, LOGO_URL };
 // Pull the YouTube video id out of any of the common URL shapes
 // (watch?v=, youtu.be/, /embed/, /shorts/) so we can build canonical
 // embed + thumbnail URLs even when the stored link varies.
-function youtubeId(url) {
+export function youtubeId(url) {
   if (!url) return null;
   const patterns = [
     /[?&]v=([\w-]{11})/,

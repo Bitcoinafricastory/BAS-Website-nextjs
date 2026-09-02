@@ -80,7 +80,7 @@ export default function SubscribeForm() {
             href={substackHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-yellow-500 text-black font-bold px-6 py-3.5 hover:brightness-95 transition-all"
+            className="inline-flex items-center gap-2 bg-yellow-500 text-black font-semibold px-5 py-3 sm:px-6 sm:py-3.5 hover:brightness-95 transition-all"
           >
             Finish on Substack <ArrowRight size={17} />
           </a>
@@ -108,7 +108,7 @@ export default function SubscribeForm() {
         <button
           type="submit"
           disabled={busy}
-          className="inline-flex items-center justify-center gap-2 bg-yellow-500 text-black font-bold text-base px-7 py-4 hover:brightness-95 transition-all disabled:opacity-60 whitespace-nowrap"
+          className="inline-flex items-center justify-center gap-2 bg-yellow-500 text-black font-semibold text-sm sm:text-base px-5 py-3 sm:px-7 sm:py-4 hover:brightness-95 transition-all disabled:opacity-60 whitespace-nowrap"
         >
           {busy ? <LoaderCircle size={17} className="animate-spin" /> : null}
           Subscribe

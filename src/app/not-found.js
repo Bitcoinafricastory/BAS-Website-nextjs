@@ -24,14 +24,14 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row gap-3 mb-12">
           <Link
             href="/"
-            className="inline-flex items-center justify-center gap-2 bg-yellow-500 text-black font-bold text-sm sm:text-base px-6 py-4 hover:brightness-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            className="inline-flex items-center justify-center gap-2 bg-yellow-500 text-black font-semibold text-sm sm:text-base px-5 py-3 sm:px-6 sm:py-4 hover:brightness-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
           >
             Back to Home
             <ArrowRight size={18} />
           </Link>
           <Link
             href="/search"
-            className="inline-flex items-center justify-center gap-2 border border-gray-700 text-gray-200 font-semibold text-sm sm:text-base px-6 py-4 hover:border-yellow-500 hover:text-yellow-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            className="inline-flex items-center justify-center gap-2 border border-gray-700 text-gray-200 font-semibold text-sm sm:text-base px-5 py-3 sm:px-6 sm:py-4 hover:border-yellow-500 hover:text-yellow-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
           >
             <Search size={16} />
             Search the site

@@ -202,7 +202,7 @@ function SubmitEntitySection({ open, onToggle }) {
         <button
           type="button"
           onClick={onToggle}
-          className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-3 bg-yellow-500 text-black font-bold rounded-lg hover:bg-yellow-400 transition-colors"
+          className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-3 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-400 transition-colors"
         >
           {open ? (<>Close <X size={16} /></>) : 'Tell Us Your Story'}
         </button>
@@ -249,7 +249,7 @@ function SubmitEntitySection({ open, onToggle }) {
             <input type="email" value={form.contactEmail} onChange={handleChange('contactEmail')} placeholder="you@example.com" className="w-full px-4 py-2.5 bg-black border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500" />
           </div>
 
-          <button type="submit" disabled={busy} className="w-full sm:w-auto px-6 py-3 bg-yellow-500 text-black font-bold rounded-lg hover:bg-yellow-400 transition-colors disabled:opacity-50">
+          <button type="submit" disabled={busy} className="w-full sm:w-auto px-6 py-3 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-400 transition-colors disabled:opacity-50">
             {busy ? 'Submitting…' : 'Submit'}
           </button>
           {notice && <p className="text-sm text-yellow-400">{notice}</p>}

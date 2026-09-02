@@ -301,7 +301,7 @@ export default function EventsContent({ initialEvents = [] }) {
             </div>
             <button
               onClick={() => setShowSubmitModal(true)}
-              className="flex-shrink-0 px-6 py-3 bg-yellow-500 text-black font-bold rounded-lg hover:bg-yellow-400 transition-colors"
+              className="flex-shrink-0 px-6 py-3 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-400 transition-colors"
             >
               Submit Your Event
             </button>
@@ -389,7 +389,7 @@ export default function EventsContent({ initialEvents = [] }) {
               </div>
 
               <div className="flex gap-3 pt-4">
-                <button type="submit" disabled={submitting} className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-yellow-500 text-black font-bold rounded-xl hover:bg-yellow-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
+                <button type="submit" disabled={submitting} className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-yellow-500 text-black font-semibold rounded-xl hover:bg-yellow-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
                   <Save size={18} />
                   {submitting ? 'Submitting...' : 'Submit Event'}
                 </button>

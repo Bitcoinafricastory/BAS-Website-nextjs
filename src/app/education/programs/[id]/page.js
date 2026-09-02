@@ -110,7 +110,7 @@ export default async function ProgramDetailsPage({ params }) {
               href={program.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block px-8 py-4 bg-yellow-500 hover:bg-yellow-400 text-black font-extrabold text-center rounded-lg transition-colors shadow-lg shadow-yellow-500/20"
+              className="inline-block px-6 py-3 sm:px-8 sm:py-4 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold text-center rounded-lg transition-colors shadow-lg shadow-yellow-500/20"
             >
               Visit Program
             </a>

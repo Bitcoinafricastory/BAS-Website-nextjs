@@ -81,7 +81,7 @@ export default async function EventDetailsPage({ params }) {
           <div className="flex flex-col md:flex-row gap-8 justify-between items-start">
             <div className="flex-1">
               <div className="flex flex-wrap gap-2 mb-4">
-                <span className="px-3 py-1 bg-yellow-500/10 text-yellow-500 text-xs font-bold uppercase tracking-wider rounded-full">
+                <span className="px-3 py-1 bg-yellow-500/10 text-yellow-500 text-xs font-semibold uppercase tracking-wider rounded-full">
                   {event.format === 'virtual' ? 'Virtual Event' : 'In-Person Event'}
                 </span>
                 {event.city && (
@@ -89,7 +89,7 @@ export default async function EventDetailsPage({ params }) {
                 )}
               </div>
 
-              <h1 className="text-3xl md:text-5xl font-semibold text-white mb-6 leading-tight">{event.eventName}</h1>
+              <h1 className="text-[34px] sm:text-5xl lg:text-[56px] font-semibold text-white mb-6 leading-tight">{event.eventName}</h1>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-300 mb-8">
                 <div className="flex items-center gap-3 p-3 bg-black/30 rounded-lg border border-white/5">

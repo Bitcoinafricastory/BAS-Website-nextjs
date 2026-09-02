@@ -63,7 +63,7 @@ export default function BitcoinVideos({ videos = [] }) {
                     <Layers className="w-4 h-4" />
                     MODULE: {currentVideo.category}
                   </div>
-                  <h1 className="text-3xl md:text-5xl font-semibold leading-none">{currentVideo.title}</h1>
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold leading-none">{currentVideo.title}</h1>
                 </div>
               </div>
 

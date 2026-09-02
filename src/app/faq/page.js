@@ -50,7 +50,7 @@ export default async function FAQPage() {
           <p className="text-gray-400 mb-4">Didn&rsquo;t find what you&rsquo;re looking for?</p>
           <Link
             href="/contact"
-            className="inline-block px-7 py-3.5 bg-yellow-500 text-black font-bold rounded-lg hover:bg-yellow-400 transition-colors"
+            className="inline-block px-7 py-3.5 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-400 transition-colors"
           >
             Contact Us
           </Link>

@@ -31,7 +31,7 @@ export default async function DirectoryPage() {
       <div className="max-w-6xl mx-auto px-6">
         <Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Directory' }]} className="mb-6" />
 
-        <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-semibold mb-3">
+        <h1 className="text-[34px] sm:text-5xl lg:text-[56px] font-semibold mb-3">
           The African Bitcoin <span className="text-yellow-500">Directory</span>
         </h1>
         <p className="text-gray-400 mb-4 max-w-2xl text-base sm:text-lg leading-relaxed">
