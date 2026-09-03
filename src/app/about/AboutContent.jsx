@@ -66,8 +66,8 @@ export default function AboutContent() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] lg:min-h-[70vh]">
           <div className="order-2 lg:order-1 flex flex-col justify-center px-6 sm:px-10 lg:pl-6 lg:pr-14 py-14 lg:py-20 border-b lg:border-b-0 lg:border-r border-white/[0.08]">
 
-            <h1 className="font-fraunces italic font-medium text-white text-4xl sm:text-5xl lg:text-[56px] leading-[1.08] tracking-tight mb-6 max-w-xl">
-              Empowering Africa through <span className="not-italic font-semibold text-yellow-500">Bitcoin.</span>
+            <h1 className="font-semibold text-white text-3xl sm:text-4xl lg:text-5xl leading-[1.1] tracking-tight mb-6 max-w-xl">
+              Empowering Africa through <span className="text-yellow-500">Bitcoin.</span>
             </h1>
 
             <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-md mb-10">
@@ -134,7 +134,7 @@ export default function AboutContent() {
         <div className="max-w-4xl mx-auto">
           <motion.p
             {...fadeUp}
-            className="font-fraunces italic font-medium text-2xl sm:text-3xl lg:text-[40px] leading-[1.35] text-gray-100"
+            className="font-medium text-xl sm:text-2xl lg:text-[32px] leading-[1.4] text-gray-100"
           >
             <span className="text-yellow-500">&ldquo;</span>Why are so many Africans still excluded from
             financial opportunities when Bitcoin exists?<span className="text-yellow-500">&rdquo;</span>
@@ -154,7 +154,7 @@ export default function AboutContent() {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <motion.h2 {...fadeUp} className="font-fraunces text-2xl md:text-3xl font-semibold mb-6">
+              <motion.h2 {...fadeUp} className="text-2xl md:text-3xl font-semibold mb-6">
                 From One Question to a <span className="text-yellow-500">Continental Movement</span>
               </motion.h2>
               <div className="space-y-4 text-lg text-gray-300 leading-relaxed">
@@ -223,7 +223,7 @@ export default function AboutContent() {
             </motion.div>
 
             <div className="order-1 lg:order-2">
-              <motion.h2 {...fadeUp} className="font-fraunces text-2xl md:text-3xl font-semibold mb-6">
+              <motion.h2 {...fadeUp} className="text-2xl md:text-3xl font-semibold mb-6">
                 What We <span className="text-yellow-500">Stand On</span>
               </motion.h2>
               <motion.p
@@ -244,29 +244,29 @@ export default function AboutContent() {
       {/* ===== Mission / Vision ===== */}
       <section className="py-20 px-6 bg-gradient-to-b from-transparent via-gray-900/30 to-transparent">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <motion.div {...fadeUp} className="p-10 bg-[#0A0A0A] border border-white/5">
-              <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mb-6">
-                <Target className="text-yellow-500" size={32} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8">
+            <motion.div {...fadeUp} className="p-6 sm:p-10 bg-[#0A0A0A] border border-white/5">
+              <div className="w-11 h-11 sm:w-16 sm:h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mb-4 sm:mb-6">
+                <Target className="text-yellow-500" size={22} />
               </div>
-              <h2 className="font-fraunces text-3xl font-semibold mb-4">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold mb-3 sm:mb-4">
                 Our <span className="text-yellow-500">Mission</span>
               </h2>
-              <p className="text-lg text-gray-300 leading-relaxed">
+              <p className="text-sm sm:text-lg text-gray-300 leading-relaxed">
                 To accelerate Bitcoin adoption in Africa through education, community empowerment,
                 grassroots initiatives, and storytelling all aimed at making Bitcoin practical for
                 everyday Africans.
               </p>
             </motion.div>
 
-            <motion.div {...fadeUp} transition={{ delay: 0.1 }} className="p-10 bg-[#0A0A0A] border border-white/5">
-              <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mb-6">
-                <Heart className="text-yellow-500" size={32} />
+            <motion.div {...fadeUp} transition={{ delay: 0.1 }} className="p-6 sm:p-10 bg-[#0A0A0A] border border-white/5">
+              <div className="w-11 h-11 sm:w-16 sm:h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mb-4 sm:mb-6">
+                <Heart className="text-yellow-500" size={22} />
               </div>
-              <h2 className="font-fraunces text-3xl font-semibold mb-4">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold mb-3 sm:mb-4">
                 Our <span className="text-yellow-500">Vision</span>
               </h2>
-              <p className="text-lg text-gray-300 leading-relaxed">
+              <p className="text-sm sm:text-lg text-gray-300 leading-relaxed">
                 To build a financially empowered Africa where individuals, families, and communities
                 understand Bitcoin, use Bitcoin, and benefit from its freedom, transparency, and
                 opportunity.
@@ -280,7 +280,7 @@ export default function AboutContent() {
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <motion.div {...fadeUp} className="mb-12 max-w-2xl">
-            <h2 className="font-fraunces text-2xl md:text-3xl font-semibold mb-4">
+            <h2 className="text-2xl md:text-3xl font-semibold mb-4">
               Four pillars, <span className="text-yellow-500">one story</span>
             </h2>
             <p className="text-lg text-gray-400">
@@ -298,7 +298,7 @@ export default function AboutContent() {
                 transition={{ duration: 0.5, delay: index * 0.08 }}
                 className="min-w-[270px] sm:min-w-[300px] snap-start bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-colors duration-300 p-8"
               >
-                <div className="font-fraunces italic text-gray-700 text-4xl mb-4">{pillar.id}</div>
+                <div className="text-gray-700 text-4xl mb-4">{pillar.id}</div>
                 <h3 className="text-xl font-semibold mb-3 text-yellow-500">{pillar.title}</h3>
                 <p className="text-gray-400 leading-relaxed">{pillar.description}</p>
               </motion.div>
@@ -311,7 +311,7 @@ export default function AboutContent() {
       <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto">
           <motion.div {...fadeUp} className="mb-16">
-            <h2 className="font-fraunces text-2xl md:text-3xl font-semibold mb-4">
+            <h2 className="text-2xl md:text-3xl font-semibold mb-4">
               Milestones on the <span className="text-yellow-500">Road</span>
             </h2>
             <p className="text-lg text-gray-400">To Africa&rsquo;s Bitcoin Future</p>
@@ -344,7 +344,7 @@ export default function AboutContent() {
         <div className="max-w-6xl mx-auto">
           <motion.div {...fadeUp} className="mb-12">
             <span className="text-xs font-bold tracking-[0.14em] uppercase text-gray-500">Our Values</span>
-            <h2 className="font-fraunces text-2xl md:text-3xl font-semibold mt-3">
+            <h2 className="text-2xl md:text-3xl font-semibold mt-3">
               The principles that guide <span className="text-yellow-500">everything we do</span>
             </h2>
           </motion.div>
@@ -354,7 +354,7 @@ export default function AboutContent() {
               {...fadeUp}
               className="md:row-span-2 relative overflow-hidden bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-colors duration-300 p-10 flex flex-col justify-end min-h-[280px]"
             >
-              <span className="font-fraunces absolute top-6 right-7 text-[90px] leading-none font-bold text-gray-800/80 select-none">01</span>
+              <span className="absolute top-6 right-7 text-[90px] leading-none font-bold text-gray-800/80 select-none">01</span>
               <Users className="text-yellow-500 mb-4 relative" size={30} />
               <h3 className="text-2xl font-semibold mb-3 relative">Community First</h3>
               <p className="text-gray-400 leading-relaxed relative max-w-sm">
@@ -367,7 +367,7 @@ export default function AboutContent() {
               transition={{ delay: 0.1 }}
               className="relative overflow-hidden bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-colors duration-300 p-8"
             >
-              <span className="font-fraunces absolute top-4 right-5 text-5xl leading-none font-bold text-gray-800/80 select-none">02</span>
+              <span className="absolute top-4 right-5 text-5xl leading-none font-bold text-gray-800/80 select-none">02</span>
               <Target className="text-yellow-500 mb-4 relative" size={26} />
               <h3 className="text-xl font-semibold mb-2 relative">Education Excellence</h3>
               <p className="text-gray-400 leading-relaxed relative text-sm">
@@ -380,7 +380,7 @@ export default function AboutContent() {
               transition={{ delay: 0.2 }}
               className="relative overflow-hidden bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-colors duration-300 p-8"
             >
-              <span className="font-fraunces absolute top-4 right-5 text-5xl leading-none font-bold text-gray-800/80 select-none">03</span>
+              <span className="absolute top-4 right-5 text-5xl leading-none font-bold text-gray-800/80 select-none">03</span>
               <Heart className="text-yellow-500 mb-4 relative" size={26} />
               <h3 className="text-xl font-semibold mb-2 relative">Empowerment</h3>
               <p className="text-gray-400 leading-relaxed relative text-sm">
@@ -411,41 +411,53 @@ export default function AboutContent() {
           </div>
 
           <div className="p-8 sm:p-12 lg:p-14 flex flex-col justify-center">
-            <span className="text-yellow-500 text-xs font-bold uppercase tracking-widest mb-4">Join The Movement</span>
-            <h2 className="font-fraunces text-3xl sm:text-4xl font-semibold mb-4 text-white leading-tight">
+            <span className="text-yellow-500 text-xs font-medium uppercase tracking-widest mb-4">Join The Movement</span>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-4 text-white leading-tight">
               Ready to shape the <span className="text-yellow-500">future of Africa?</span>
             </h2>
-            <p className="text-gray-400 mb-8 max-w-md leading-relaxed">
+            <p className="text-gray-400 text-sm sm:text-base mb-8 max-w-md leading-relaxed">
               Whether you&rsquo;re a beginner or a builder, there&rsquo;s a place for you in the Bitcoin revolution.
             </p>
 
-            <div className="flex flex-col gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-3">
               <Link
                 href="/education"
-                className="group flex items-center justify-between px-6 py-4 bg-black border border-gray-700 hover:border-yellow-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500"
+                className="group relative flex lg:items-center gap-4 flex-col lg:flex-row items-start p-5 rounded-2xl bg-white/[0.03] hover:bg-yellow-500 transition-colors duration-300 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500"
               >
-                <span className="flex items-center gap-3 font-semibold text-gray-100 group-hover:text-yellow-500 transition-colors">
-                  <BookOpen size={18} className="text-yellow-500" /> Learn Bitcoin
-                </span>
-                <ArrowRight size={18} className="text-gray-600 group-hover:text-yellow-500 group-hover:translate-x-1 transition-all" />
+                <div className="w-10 h-10 rounded-xl bg-yellow-500/15 group-hover:bg-black/10 flex items-center justify-center flex-shrink-0 transition-colors duration-300">
+                  <BookOpen size={18} className="text-yellow-500 group-hover:text-black transition-colors duration-300" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <span className="block font-semibold text-gray-100 group-hover:text-black transition-colors duration-300">Learn Bitcoin</span>
+                  <span className="block text-xs text-gray-500 group-hover:text-black/60 transition-colors duration-300">Start with the basics</span>
+                </div>
+                <ArrowRight size={18} className="hidden lg:block text-gray-600 group-hover:text-black group-hover:translate-x-1 transition-all duration-300 flex-shrink-0" />
               </Link>
               <Link
                 href="/donate"
-                className="group flex items-center justify-between px-6 py-4 bg-black border border-gray-700 hover:border-yellow-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500"
+                className="group relative flex lg:items-center gap-4 flex-col lg:flex-row items-start p-5 rounded-2xl bg-white/[0.03] hover:bg-yellow-500 transition-colors duration-300 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500"
               >
-                <span className="flex items-center gap-3 font-semibold text-gray-100 group-hover:text-yellow-500 transition-colors">
-                  <Heart size={18} className="text-yellow-500" /> Support Our Work
-                </span>
-                <ArrowRight size={18} className="text-gray-600 group-hover:text-yellow-500 group-hover:translate-x-1 transition-all" />
+                <div className="w-10 h-10 rounded-xl bg-yellow-500/15 group-hover:bg-black/10 flex items-center justify-center flex-shrink-0 transition-colors duration-300">
+                  <Heart size={18} className="text-yellow-500 group-hover:text-black transition-colors duration-300" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <span className="block font-semibold text-gray-100 group-hover:text-black transition-colors duration-300">Support Our Work</span>
+                  <span className="block text-xs text-gray-500 group-hover:text-black/60 transition-colors duration-300">Fund the movement</span>
+                </div>
+                <ArrowRight size={18} className="hidden lg:block text-gray-600 group-hover:text-black group-hover:translate-x-1 transition-all duration-300 flex-shrink-0" />
               </Link>
               <Link
                 href="/events"
-                className="group flex items-center justify-between px-6 py-4 bg-black border border-gray-700 hover:border-yellow-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500"
+                className="group relative flex lg:items-center gap-4 flex-col lg:flex-row items-start p-5 rounded-2xl bg-white/[0.03] hover:bg-yellow-500 transition-colors duration-300 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500"
               >
-                <span className="flex items-center gap-3 font-semibold text-gray-100 group-hover:text-yellow-500 transition-colors">
-                  <Users size={18} className="text-yellow-500" /> Join Our Events
-                </span>
-                <ArrowRight size={18} className="text-gray-600 group-hover:text-yellow-500 group-hover:translate-x-1 transition-all" />
+                <div className="w-10 h-10 rounded-xl bg-yellow-500/15 group-hover:bg-black/10 flex items-center justify-center flex-shrink-0 transition-colors duration-300">
+                  <Users size={18} className="text-yellow-500 group-hover:text-black transition-colors duration-300" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <span className="block font-semibold text-gray-100 group-hover:text-black transition-colors duration-300">Join Our Events</span>
+                  <span className="block text-xs text-gray-500 group-hover:text-black/60 transition-colors duration-300">Meet the community</span>
+                </div>
+                <ArrowRight size={18} className="hidden lg:block text-gray-600 group-hover:text-black group-hover:translate-x-1 transition-all duration-300 flex-shrink-0" />
               </Link>
             </div>
           </div>

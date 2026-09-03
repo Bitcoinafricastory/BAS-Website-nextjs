@@ -10,42 +10,50 @@ export default function Mission() {
             <div className="hidden sm:inline-block mb-4 px-3 py-1 bg-yellow-500/10 border border-yellow-500/30 rounded-full">
               <span className="text-yellow-500 text-sm font-semibold">Our Mission</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-semibold mb-6">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-6">
               Spreading Bitcoin Adoption Across <span className="text-yellow-500">Africa</span>
             </h2>
-            <p className="text-lg text-gray-300 mb-6 leading-relaxed">
+            <p className="text-base sm:text-lg text-gray-300 mb-6 leading-relaxed">
               To accelerate Bitcoin adoption in Africa through education, community empowerment,
               grassroots initiatives, and storytelling all aimed at making Bitcoin practical for everyday
               Africans.
             </p>
-            <Link href="/about" className="inline-flex items-center text-yellow-500 font-semibold hover:text-yellow-400 transition-colors duration-200">
+            <Link href="/about" className="inline-flex items-center text-yellow-500 font-medium hover:text-yellow-400 transition-colors duration-200">
               Read Our Full Story
               <ArrowRight className="ml-2" size={20} />
             </Link>
           </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-4">
-              <div className="p-6 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-colors duration-300">
-                <BookOpen className="text-yellow-500 mb-3" size={32} />
-                <h3 className="text-lg font-semibold mb-2">Education</h3>
-                <p className="text-sm text-gray-400">Practical Bitcoin training for schools, youth, and merchants</p>
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            <div className="space-y-3 sm:space-y-4">
+              <div className="group p-5 sm:p-6 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 hover:-translate-y-1 hover:shadow-[0_12px_30px_-12px_rgba(234,179,8,0.25)] transition-all duration-300">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center mb-3 group-hover:bg-yellow-500/20 group-hover:scale-110 transition-all duration-300">
+                  <BookOpen className="text-yellow-500" size={20} />
+                </div>
+                <h3 className="text-base sm:text-lg font-semibold mb-1.5">Education</h3>
+                <p className="text-[13px] sm:text-sm text-gray-400">Practical Bitcoin training for schools, youth, and merchants</p>
               </div>
-              <div className="p-6 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-colors duration-300">
-                <Mic className="text-yellow-500 mb-3" size={32} />
-                <h3 className="text-lg font-semibold mb-2">Storytelling</h3>
-                <p className="text-sm text-gray-400">Real stories of Bitcoin adoption across Africa</p>
+              <div className="group p-5 sm:p-6 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 hover:-translate-y-1 hover:shadow-[0_12px_30px_-12px_rgba(234,179,8,0.25)] transition-all duration-300">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center mb-3 group-hover:bg-yellow-500/20 group-hover:scale-110 transition-all duration-300">
+                  <Mic className="text-yellow-500" size={20} />
+                </div>
+                <h3 className="text-base sm:text-lg font-semibold mb-1.5">Storytelling</h3>
+                <p className="text-[13px] sm:text-sm text-gray-400">Real stories of Bitcoin adoption across Africa</p>
               </div>
             </div>
-            <div className="space-y-4 mt-0 sm:mt-8">
-              <div className="p-6 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-colors duration-300">
-                <Users className="text-yellow-500 mb-3" size={32} />
-                <h3 className="text-lg font-semibold mb-2">Community Development</h3>
-                <p className="text-sm text-gray-400">Building sustainable Bitcoin circular economies</p>
+            <div className="space-y-3 sm:space-y-4 mt-0 sm:mt-8">
+              <div className="group p-5 sm:p-6 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 hover:-translate-y-1 hover:shadow-[0_12px_30px_-12px_rgba(234,179,8,0.25)] transition-all duration-300">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center mb-3 group-hover:bg-yellow-500/20 group-hover:scale-110 transition-all duration-300">
+                  <Users className="text-yellow-500" size={20} />
+                </div>
+                <h3 className="text-base sm:text-lg font-semibold mb-1.5">Community Development</h3>
+                <p className="text-[13px] sm:text-sm text-gray-400">Building sustainable Bitcoin circular economies</p>
               </div>
-              <div className="p-6 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-colors duration-300">
-                <TrendingUp className="text-yellow-500 mb-3" size={32} />
-                <h3 className="text-lg font-semibold mb-2">Research and Insights</h3>
-                <p className="text-sm text-gray-400">Studying adoption patterns to guide our programs</p>
+              <div className="group p-5 sm:p-6 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 hover:-translate-y-1 hover:shadow-[0_12px_30px_-12px_rgba(234,179,8,0.25)] transition-all duration-300">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center mb-3 group-hover:bg-yellow-500/20 group-hover:scale-110 transition-all duration-300">
+                  <TrendingUp className="text-yellow-500" size={20} />
+                </div>
+                <h3 className="text-base sm:text-lg font-semibold mb-1.5">Research and Insights</h3>
+                <p className="text-[13px] sm:text-sm text-gray-400">Studying adoption patterns to guide our programs</p>
               </div>
             </div>
           </div>
