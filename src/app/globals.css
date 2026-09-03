@@ -33,7 +33,20 @@ body {
   font-size: 1.0625rem;
   line-height: 1.75;
   color: #d1d5db;
-  /* Long URLs and unbroken strings must never blow out the container. */
+  /* Deliberately NOT overflow-wrap: break-word here. That tells the browser
+     "split any word if it helps the line fit," which is far too aggressive
+     for ordinary prose — it was splitting short, perfectly normal words
+     (e.g. "had" -> "ha" / "d") whenever a line landed a few pixels short.
+     Normal word-wrapping alone is correct for prose; only genuinely
+     unbreakable strings (long URLs, inline code) need the harder rule,
+     applied narrowly below instead of blanket across the whole article. */
+}
+
+/* Only elements that can realistically contain one long, unbroken token
+   (a URL, a code snippet) get permission to break mid-word — never body
+   text itself. */
+.article-body a,
+.article-body code {
   overflow-wrap: break-word;
   word-wrap: break-word;
 }

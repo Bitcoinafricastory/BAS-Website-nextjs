@@ -55,14 +55,14 @@ export function extractHeadings(html) {
   return headings;
 }
 
-// Prevents browsers from splitting hyphenated compound words (e.g. "non-custodial",
-// "human-readable") across two lines. Browsers treat any hyphen sitting directly
-// between two letters as a valid line-break point by default — this is normal
-// typography, but our article column is narrow enough that it happens constantly
-// and looks broken. Swapping the ASCII hyphen for a non-breaking hyphen (U+2011)
-// keeps the whole compound word together, while leaving spaced dashes ("2024 - 2025")
-// untouched. Applied at render time so it covers content already saved, not just
-// new writing.
+// Prevents browsers from splitting hyphenated compounds (e.g. "non-custodial",
+// "human-readable", "mid-2026") across two lines. Browsers treat any hyphen
+// sitting directly between two alphanumeric characters as a valid line-break
+// point by default — this is normal typography, but our article column is
+// narrow enough that it happens constantly and looks broken. Swapping the
+// ASCII hyphen for a non-breaking hyphen (U+2011) keeps the whole compound
+// together, while leaving spaced dashes ("2024 - 2025") untouched. Applied
+// at render time so it covers content already saved, not just new writing.
 //
 // Only touches text between tags — never inside a tag itself — so hyphens in
 // URLs (href="...my-page"), CSS classes (ql-font-sans-serif), or any other
@@ -71,7 +71,7 @@ export function preventHyphenBreaks(html) {
   if (!html) return html;
   return html.replace(/(<[^>]*>)|([^<]+)/g, (full, tag, text) => {
     if (tag) return tag;
-    return text.replace(/([A-Za-z])-([A-Za-z])/g, '$1\u2011$2');
+    return text.replace(/([A-Za-z0-9])-([A-Za-z0-9])/g, '$1\u2011$2');
   });
 }
 
