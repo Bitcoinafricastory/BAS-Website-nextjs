@@ -16,7 +16,7 @@ function ScoreRing({ score, label }) {
           <circle cx="32" cy="32" r={radius} fill="none" stroke="#27272a" strokeWidth="5" />
           <circle cx="32" cy="32" r={radius} fill="none" stroke={color} strokeWidth="5" strokeDasharray={circ} strokeDashoffset={offset} strokeLinecap="round" />
         </svg>
-        <div className="absolute inset-0 flex items-center justify-center text-lg font-black" style={{ color }}>{score}</div>
+        <div className="absolute inset-0 flex items-center justify-center text-lg font-semibold" style={{ color }}>{score}</div>
       </div>
       <span className="text-[10px] text-gray-500 uppercase tracking-wide mt-1">{label}</span>
     </div>
@@ -54,7 +54,7 @@ export default function SeoPanel({ form, update }) {
             <ScoreRing score={seo.score} label="SEO" />
             <ScoreRing score={read.score} label="Read" />
             <div className="flex flex-col items-center">
-              <div className="w-16 h-16 flex items-center justify-center text-2xl font-black text-yellow-500">{read.grade}</div>
+              <div className="w-16 h-16 flex items-center justify-center text-2xl font-semibold text-yellow-500">{read.grade}</div>
               <span className="text-[10px] text-gray-500 uppercase tracking-wide mt-1">{read.label}</span>
             </div>
           </div>

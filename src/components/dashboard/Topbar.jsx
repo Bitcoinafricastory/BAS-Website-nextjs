@@ -17,7 +17,7 @@ export default function Topbar({ onMenuClick }) {
 
         <div className="flex items-center gap-3">
           {user?.email && <span className="text-sm text-gray-400 hidden sm:inline">{user.email}</span>}
-          <div className="w-9 h-9 rounded-full bg-yellow-500 flex items-center justify-center text-black font-bold text-sm">
+          <div className="w-9 h-9 rounded-full bg-yellow-500 flex items-center justify-center text-black font-medium text-sm">
             {user?.email ? user.email[0].toUpperCase() : 'A'}
           </div>
         </div>

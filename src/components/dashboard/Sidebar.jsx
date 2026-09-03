@@ -64,7 +64,7 @@ function NavContent({ pathname, isActive, onClose, logout }) {
       <div className="px-6 py-5 border-b border-gray-800">
         <Link href="/dashboard" className="flex items-center gap-3 group">
           <div className="w-8 h-8 bg-yellow-500 flex items-center justify-center rounded-lg group-hover:rotate-12 transition-transform duration-300">
-            <span className="font-black text-black">B</span>
+            <span className="font-semibold text-black">B</span>
           </div>
           <div>
             <div className="font-bold text-sm leading-tight">Bitcoin Africa Story</div>

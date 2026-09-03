@@ -62,7 +62,7 @@ export default function NewsletterPage() {
           <h1 className="text-2xl font-bold">Newsletter Subscribers</h1>
           <p className="text-gray-400 text-sm mt-1">{subs.length} subscribers</p>
         </div>
-        <button onClick={exportCsv} disabled={subs.length === 0} className="inline-flex items-center gap-2 px-5 py-3 bg-yellow-500 text-black font-bold rounded-xl hover:bg-yellow-400 transition-colors self-start disabled:opacity-50">
+        <button onClick={exportCsv} disabled={subs.length === 0} className="inline-flex items-center gap-2 px-5 py-3 bg-yellow-500 text-black font-medium rounded-xl hover:bg-yellow-400 transition-colors self-start disabled:opacity-50">
           <Download size={18} /> Export CSV
         </button>
       </div>
@@ -103,7 +103,7 @@ export default function NewsletterPage() {
             <h3 className="text-lg font-bold mb-2">Remove subscriber?</h3>
             <p className="text-gray-400 text-sm mb-6">{confirmDelete.email} will be removed from the list.</p>
             <div className="flex gap-3">
-              <button onClick={() => remove(confirmDelete)} className="flex-1 px-4 py-2.5 bg-red-500 text-white font-bold rounded-lg hover:bg-red-400 transition-colors">Remove</button>
+              <button onClick={() => remove(confirmDelete)} className="flex-1 px-4 py-2.5 bg-red-500 text-white font-medium rounded-lg hover:bg-red-400 transition-colors">Remove</button>
               <button onClick={() => setConfirmDelete(null)} className="flex-1 px-4 py-2.5 bg-white/5 border border-gray-800 rounded-lg hover:bg-white/10 transition-colors">Cancel</button>
             </div>
           </div>

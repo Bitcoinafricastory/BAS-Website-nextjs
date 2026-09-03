@@ -16,7 +16,7 @@ function StatCard({ icon: Icon, label, value, href }) {
         </div>
         <ArrowRight className="text-gray-600 group-hover:text-yellow-500 group-hover:translate-x-1 transition-all" size={18} />
       </div>
-      <div className="text-3xl font-black">{value === null ? '—' : value}</div>
+      <div className="text-3xl font-semibold">{value === null ? '—' : value}</div>
       <div className="text-sm text-gray-400 mt-1">{label}</div>
     </Link>
   );
@@ -57,10 +57,10 @@ export default function DashboardHome() {
     <div>
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-black">Welcome back, <span className="text-yellow-500 capitalize">{firstName}</span></h1>
+          <h1 className="text-3xl font-semibold">Welcome back, <span className="text-yellow-500 capitalize">{firstName}</span></h1>
           <p className="text-gray-400 mt-1">Here&rsquo;s what&rsquo;s happening across your publication.</p>
         </div>
-        <Link href="/dashboard/news" className="inline-flex items-center gap-2 px-5 py-3 bg-yellow-500 text-black font-bold rounded-xl hover:bg-yellow-400 transition-colors self-start">
+        <Link href="/dashboard/news" className="inline-flex items-center gap-2 px-4 py-2.5 bg-yellow-500 text-black font-medium rounded-xl hover:bg-yellow-400 transition-colors self-start">
           <PlusCircle size={18} />
           New Article
         </Link>

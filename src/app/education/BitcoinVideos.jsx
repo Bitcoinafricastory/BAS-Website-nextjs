@@ -2,7 +2,7 @@
 import Image from 'next/image';
 
 import { useState } from 'react';
-import { Clock, Layers, ChevronRight, Activity } from 'lucide-react';
+import { Clock, Layers, Play } from 'lucide-react';
 
 function getEmbedUrl(url) {
   if (!url) return null;
@@ -29,98 +29,85 @@ export default function BitcoinVideos({ videos = [] }) {
   const embedSrc = getEmbedUrl(currentVideo?.embedUrl);
 
   return (
-    <div className="bg-black min-h-screen text-white font-mono uppercase tracking-tighter">
-      <div className="border-b border-white/10 px-4 sm:px-8 py-3 flex flex-wrap gap-y-2 justify-between items-center text-[10px] text-gray-500">
-        <div className="flex gap-3 sm:gap-6">
-          <span className="flex items-center gap-2"><Activity className="w-3 h-3 text-yellow-500" /> NETWORK: MAINNET</span>
-          <span>EST. 2009</span>
-        </div>
-        <div className="flex gap-4">
-          <span className="hidden sm:inline">LATENCY: 24MS</span>
-          <span className="text-yellow-500">LIVE FEED</span>
-        </div>
-      </div>
+    <section className="bg-black text-white py-16 sm:py-20 px-6">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-10 lg:gap-12">
+        {/* Player + details */}
+        <div>
+          <div className="relative aspect-video bg-[#0A0A0A] border border-white/10 overflow-hidden">
+            {embedSrc ? (
+              <iframe className="w-full h-full" src={`${embedSrc}${embedSrc.includes('?') ? '&' : '?'}autoplay=0&controls=1&modestbranding=1`} title={currentVideo.title} allowFullScreen />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center">
+                <p className="text-gray-400 text-sm text-center px-6">Invalid video URL. Please check the embed URL in the dashboard.</p>
+              </div>
+            )}
+          </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[calc(100vh-45px)]">
-        <div className="lg:col-span-8 border-r border-white/10 flex flex-col">
-          <div className="p-4 sm:p-8 lg:p-12 flex-grow">
-            <div className="relative aspect-video bg-[#0A0A0A] border border-white/20">
-              {embedSrc ? (
-                <iframe className="w-full h-full" src={`${embedSrc}${embedSrc.includes('?') ? '&' : '?'}autoplay=0&controls=1&modestbranding=1`} title={currentVideo.title} allowFullScreen />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center">
-                  <p className="text-gray-400">Invalid video URL. Please check the embed URL in the dashboard.</p>
-                </div>
-              )}
-              <div className="absolute -top-[1px] -left-[1px] w-4 h-4 border-t border-l border-yellow-500" />
-              <div className="absolute -bottom-[1px] -right-[1px] w-4 h-4 border-b border-r border-yellow-500" />
+          <div className="mt-6 sm:mt-8">
+            <div className="flex items-center gap-2 mb-3 text-yellow-500 text-xs font-medium uppercase tracking-widest">
+              <Layers className="w-3.5 h-3.5" />
+              {currentVideo.category}
+            </div>
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold leading-tight mb-4">{currentVideo.title}</h2>
+
+            <div className="flex items-center gap-2 mb-5 text-gray-400 text-sm">
+              <Clock className="w-4 h-4 text-yellow-500" />
+              <span>{currentVideo.duration}</span>
             </div>
 
-            <div className="mt-12 space-y-8">
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                <div className="max-w-2xl">
-                  <div className="flex items-center gap-3 mb-4 text-yellow-500 text-xs font-bold tracking-[0.2em]">
-                    <Layers className="w-4 h-4" />
-                    MODULE: {currentVideo.category}
-                  </div>
-                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold leading-none">{currentVideo.title}</h1>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 py-6 border-y border-white/10">
-                <Clock className="w-4 h-4 text-yellow-500" />
-                <span className="text-gray-500 text-[10px]">DURATION</span>
-                <span className="text-xl font-bold">{currentVideo.duration}</span>
-              </div>
-
-              <p className="text-gray-400 font-sans normal-case text-lg leading-relaxed max-w-3xl">{currentVideo.description}</p>
-            </div>
+            {currentVideo.description && (
+              <p className="text-gray-400 leading-relaxed max-w-2xl">{currentVideo.description}</p>
+            )}
           </div>
         </div>
 
-        <div className="lg:col-span-4 bg-[#050505] flex flex-col">
-          <div className="p-6 border-b border-white/10 flex justify-between items-center">
-            <h2 className="text-sm font-semibold tracking-[0.3em]">CURRICULUM</h2>
-            <span className="text-[10px] text-yellow-500 font-bold">{videos.length} MODULES AVAILABLE</span>
+        {/* Curriculum */}
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-semibold uppercase tracking-widest text-gray-400">Curriculum</h3>
+            <span className="text-xs text-gray-500">{videos.length} {videos.length === 1 ? 'module' : 'modules'}</span>
           </div>
 
-          <div className="flex-grow overflow-y-auto">
-            {videos.map((video) => (
-              <button
-                key={video.id}
-                onClick={() => setActiveVideo(video)}
-                className={`w-full group relative flex flex-col border-b border-white/5 transition-all duration-300 ${currentVideo.id === video.id ? 'bg-white text-black' : 'bg-transparent text-white hover:bg-white/5'}`}
-              >
-                <div className="p-6 flex gap-6">
-                  <div className="relative w-24 aspect-square bg-zinc-900 flex-shrink-0 border border-white/10 overflow-hidden">
+          <div className="flex lg:flex-col gap-3 lg:gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 -mx-6 lg:mx-0 px-6 lg:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {videos.map((video) => {
+              const isActive = currentVideo.id === video.id;
+              return (
+                <button
+                  key={video.id}
+                  onClick={() => setActiveVideo(video)}
+                  className={`group flex-shrink-0 w-[240px] lg:w-full flex items-center gap-3 p-3 rounded-xl border text-left transition-colors duration-200 ${
+                    isActive ? 'bg-yellow-500/10 border-yellow-500/40' : 'bg-[#0A0A0A] border-white/5 hover:border-white/15'
+                  }`}
+                >
+                  <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-zinc-900">
                     {video.thumbnailUrl && (
                       <Image
                         src={video.thumbnailUrl}
                         alt=""
                         fill
-                        sizes="96px"
-                        className={`object-cover transition-opacity duration-500 ${currentVideo.id === video.id ? 'opacity-100' : 'opacity-75 group-hover:opacity-100'}`}
+                        sizes="64px"
+                        className={`object-cover transition-opacity duration-300 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'}`}
                       />
                     )}
+                    {!isActive && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/0 transition-colors">
+                        <Play size={16} className="text-white/80" fill="currentColor" />
+                      </div>
+                    )}
                   </div>
-                  <div className="flex flex-col justify-between py-1">
-                    <h3 className={`text-xs font-semibold leading-tight tracking-tight ${currentVideo.id === video.id ? 'text-black' : 'text-gray-300 group-hover:text-white'}`}>{video.title}</h3>
-                    <div className={`flex items-center gap-2 text-[10px] font-bold ${currentVideo.id === video.id ? 'text-black/60' : 'text-gray-500'}`}>
+                  <div className="min-w-0">
+                    <h4 className={`text-sm font-medium leading-snug line-clamp-2 ${isActive ? 'text-yellow-500' : 'text-gray-200'}`}>{video.title}</h4>
+                    <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-1">
                       <Clock className="w-3 h-3" />
                       {video.duration}
                     </div>
                   </div>
-                  {currentVideo.id === video.id && (
-                    <div className="absolute right-6 top-1/2 -translate-y-1/2">
-                      <ChevronRight className="w-5 h-5" />
-                    </div>
-                  )}
-                </div>
-              </button>
-            ))}
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

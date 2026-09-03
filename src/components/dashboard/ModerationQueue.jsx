@@ -139,10 +139,10 @@ export default function ModerationQueue({ config }) {
                 ))}
             </div>
             <div className="sticky bottom-0 bg-[#0A0A0A] border-t border-gray-800 px-6 py-4 flex gap-3">
-              <button onClick={() => approve(viewing)} disabled={busyId === viewing.id} className="flex-1 px-4 py-3 bg-green-500 text-white font-bold rounded-lg hover:bg-green-400 transition-colors disabled:opacity-50 flex items-center justify-center gap-2">
+              <button onClick={() => approve(viewing)} disabled={busyId === viewing.id} className="flex-1 px-4 py-3 bg-green-500 text-white font-medium rounded-lg hover:bg-green-400 transition-colors disabled:opacity-50 flex items-center justify-center gap-2">
                 {busyId === viewing.id ? <LoaderCircle className="animate-spin" size={16} /> : <Check size={16} />} Approve &amp; Publish
               </button>
-              <button onClick={() => setConfirmReject(viewing)} className="flex-1 px-4 py-3 bg-red-500/10 text-red-400 border border-red-500/30 font-bold rounded-lg hover:bg-red-500/20 transition-colors">Reject</button>
+              <button onClick={() => setConfirmReject(viewing)} className="flex-1 px-4 py-3 bg-red-500/10 text-red-400 border border-red-500/30 font-medium rounded-lg hover:bg-red-500/20 transition-colors">Reject</button>
             </div>
           </div>
         </div>
@@ -154,7 +154,7 @@ export default function ModerationQueue({ config }) {
             <h3 className="text-lg font-bold mb-2">Reject this submission?</h3>
             <p className="text-gray-400 text-sm mb-6">It will be permanently deleted and won&rsquo;t be published.</p>
             <div className="flex gap-3">
-              <button onClick={() => reject(confirmReject)} className="flex-1 px-4 py-2.5 bg-red-500 text-white font-bold rounded-lg hover:bg-red-400 transition-colors">Reject</button>
+              <button onClick={() => reject(confirmReject)} className="flex-1 px-4 py-2.5 bg-red-500 text-white font-medium rounded-lg hover:bg-red-400 transition-colors">Reject</button>
               <button onClick={() => setConfirmReject(null)} className="flex-1 px-4 py-2.5 bg-white/5 border border-gray-800 rounded-lg hover:bg-white/10 transition-colors">Cancel</button>
             </div>
           </div>

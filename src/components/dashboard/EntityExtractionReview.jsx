@@ -174,7 +174,7 @@ export default function EntityExtractionReview({ suggestions, degraded, reason, 
                   <button
                     onClick={() => createAndLink(i)}
                     disabled={it.creating}
-                    className="w-full px-3 py-1.5 bg-yellow-500 text-black text-xs font-bold rounded hover:bg-yellow-400 transition-colors disabled:opacity-50 flex items-center justify-center gap-1.5"
+                    className="w-full px-3 py-1.5 bg-yellow-500 text-black text-xs font-medium rounded hover:bg-yellow-400 transition-colors disabled:opacity-50 flex items-center justify-center gap-1.5"
                   >
                     {it.creating ? <LoaderCircle className="animate-spin" size={12} /> : null}
                     Create profile
@@ -191,7 +191,7 @@ export default function EntityExtractionReview({ suggestions, degraded, reason, 
         </div>
 
         <div className="flex gap-3">
-          <button onClick={handleConfirm} className="flex-1 px-4 py-2.5 bg-yellow-500 text-black font-bold rounded-lg hover:bg-yellow-400 transition-colors">
+          <button onClick={handleConfirm} className="flex-1 px-4 py-2.5 bg-yellow-500 text-black font-medium rounded-lg hover:bg-yellow-400 transition-colors">
             Confirm and update profiles
           </button>
           <button onClick={onSkip} className="px-4 py-2.5 bg-white/5 border border-gray-800 rounded-lg hover:bg-white/10 transition-colors text-sm">

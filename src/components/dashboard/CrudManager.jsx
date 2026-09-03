@@ -180,11 +180,11 @@ export default function CrudManager({ config }) {
             </div>
           ))}
           <div className="flex gap-3 pt-2">
-            <button onClick={handleSave} disabled={busy} className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-yellow-500 text-black font-bold rounded-lg hover:bg-yellow-400 transition-colors disabled:opacity-50">
+            <button onClick={handleSave} disabled={busy} className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-yellow-500 text-black font-medium rounded-lg hover:bg-yellow-400 transition-colors disabled:opacity-50">
               {busy ? <LoaderCircle className="animate-spin" size={18} /> : null}
               {editing ? 'Update' : 'Add'}
             </button>
-            <button onClick={backToList} className="px-6 py-3 bg-white/5 border border-gray-800 rounded-lg hover:bg-white/10 transition-colors">Cancel</button>
+            <button onClick={backToList} className="px-6 py-2.5 bg-white/5 border border-gray-800 rounded-lg hover:bg-white/10 transition-colors">Cancel</button>
           </div>
         </div>
         <Toast toast={toast} onClose={() => setToast(null)} />
@@ -199,7 +199,7 @@ export default function CrudManager({ config }) {
           <h1 className="text-2xl font-bold">{title}</h1>
           <p className="text-gray-400 text-sm mt-1">{items.length} {items.length === 1 ? 'item' : 'items'}</p>
         </div>
-        <button onClick={openNew} className="inline-flex items-center gap-2 px-5 py-3 bg-yellow-500 text-black font-bold rounded-xl hover:bg-yellow-400 transition-colors self-start">
+        <button onClick={openNew} className="inline-flex items-center gap-2 px-4 py-2.5 bg-yellow-500 text-black font-medium rounded-xl hover:bg-yellow-400 transition-colors self-start">
           <PlusCircle size={18} /> Add {title}
         </button>
       </div>
@@ -244,7 +244,7 @@ export default function CrudManager({ config }) {
             <h3 className="text-lg font-bold mb-2">Delete this item?</h3>
             <p className="text-gray-400 text-sm mb-6">This can&rsquo;t be undone.</p>
             <div className="flex gap-3">
-              <button onClick={() => doDelete(confirmDelete)} className="flex-1 px-4 py-2.5 bg-red-500 text-white font-bold rounded-lg hover:bg-red-400 transition-colors">Delete</button>
+              <button onClick={() => doDelete(confirmDelete)} className="flex-1 px-4 py-2.5 bg-red-500 text-white font-medium rounded-lg hover:bg-red-400 transition-colors">Delete</button>
               <button onClick={() => setConfirmDelete(null)} className="flex-1 px-4 py-2.5 bg-white/5 border border-gray-800 rounded-lg hover:bg-white/10 transition-colors">Cancel</button>
             </div>
           </div>

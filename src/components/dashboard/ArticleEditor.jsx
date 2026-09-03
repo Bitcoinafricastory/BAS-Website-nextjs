@@ -379,7 +379,7 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
             <button onClick={() => handleSubmit('draft')} disabled={busy} className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-gray-800 rounded-lg text-sm font-medium transition-colors disabled:opacity-50">
               {busy ? <LoaderCircle className="animate-spin" size={16} /> : <FileText size={16} />} Save Draft
             </button>
-            <button onClick={() => handleSubmit('published')} disabled={busy} className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-yellow-500 text-black hover:bg-yellow-400 rounded-lg font-bold transition-colors disabled:opacity-50">
+            <button onClick={() => handleSubmit('published')} disabled={busy} className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-yellow-500 text-black hover:bg-yellow-400 rounded-lg font-medium transition-colors disabled:opacity-50">
               {busy ? <LoaderCircle className="animate-spin" size={16} /> : <Send size={16} />} {isEditing ? 'Update & Publish' : 'Publish'}
             </button>
           </div>
@@ -579,7 +579,7 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
             </div>
             <article className="p-6 md:p-10">
               <span className="inline-block text-xs font-semibold text-black bg-yellow-500 px-3 py-1.5 rounded-full">{form.category}</span>
-              <h1 className="text-3xl md:text-4xl font-black mt-4 mb-3">{form.title || 'Untitled'}</h1>
+              <h1 className="text-3xl md:text-4xl font-semibold mt-4 mb-3">{form.title || 'Untitled'}</h1>
               <div className="flex items-center gap-3 text-sm text-gray-400 mb-6">
                 <span>{form.author}</span><span>·</span><span>{form.date}</span><span>·</span><span>{form.readTime}</span>
               </div>

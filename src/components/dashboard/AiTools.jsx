@@ -32,7 +32,7 @@ function ResultBlock({ result, onApply, applyLabel = 'Apply' }) {
       )}
       <div className="flex gap-2 mt-3">
         {onApply && (
-          <button onClick={onApply} className="px-3 py-1.5 bg-yellow-500 text-black text-xs font-bold rounded-md hover:bg-yellow-400 transition-colors">
+          <button onClick={onApply} className="px-3 py-1.5 bg-yellow-500 text-black text-xs font-medium rounded-md hover:bg-yellow-400 transition-colors">
             {applyLabel}
           </button>
         )}

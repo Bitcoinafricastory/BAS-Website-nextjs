@@ -89,7 +89,7 @@ export default function WhyBitcoinVideoPage() {
           </div>
         )}
 
-        <button onClick={save} disabled={busy} className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-yellow-500 text-black font-bold rounded-lg hover:bg-yellow-400 transition-colors disabled:opacity-50">
+        <button onClick={save} disabled={busy} className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-yellow-500 text-black font-medium rounded-lg hover:bg-yellow-400 transition-colors disabled:opacity-50">
           {busy ? <LoaderCircle className="animate-spin" size={18} /> : <Save size={18} />}
           Save Video
         </button>
