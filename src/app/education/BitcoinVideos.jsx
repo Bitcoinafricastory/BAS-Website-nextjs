@@ -92,7 +92,7 @@ export default function BitcoinVideos({ videos = [] }) {
                 className={`w-full group relative flex flex-col border-b border-white/5 transition-all duration-300 ${currentVideo.id === video.id ? 'bg-white text-black' : 'bg-transparent text-white hover:bg-white/5'}`}
               >
                 <div className="p-6 flex gap-6">
-                  <div className="w-24 aspect-square bg-zinc-900 flex-shrink-0 border border-white/10 overflow-hidden">
+                  <div className="relative w-24 aspect-square bg-zinc-900 flex-shrink-0 border border-white/10 overflow-hidden">
                     {video.thumbnailUrl && (
                       <Image
                         src={video.thumbnailUrl}
