@@ -42,10 +42,13 @@ body {
      applied narrowly below instead of blanket across the whole article. */
 }
 
-/* Only elements that can realistically contain one long, unbroken token
-   (a URL, a code snippet) get permission to break mid-word — never body
-   text itself. */
-.article-body a,
+/* Inline links carry normal readable text (e.g. "seed phrase guide"), not
+   raw URLs — they should wrap exactly like the surrounding prose. Giving a
+   nested inline element a different overflow-wrap value than its parent
+   paragraph reintroduced the same mid-word-split bug, specifically on link
+   text, and appears to have thrown off line-box sizing badly enough to
+   visually overlap the sidebar. Only code spans (which can legitimately
+   contain one long unbroken token, e.g. a hash or file path) keep it. */
 .article-body code {
   overflow-wrap: break-word;
   word-wrap: break-word;
