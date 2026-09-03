@@ -140,7 +140,7 @@ export default function PillarPage({ pillar, entities = [], articles = [] }) {
           <p className="text-gray-400 text-[14.5px]">{pillar.cta.text}</p>
           <Link
             href={pillar.cta.href}
-            className="inline-block w-fit px-5 py-2.5 bg-yellow-500 text-black font-semibold text-sm rounded-lg hover:bg-yellow-400 transition-colors whitespace-nowrap"
+            className="inline-block w-fit px-5 py-2.5 bg-yellow-500 text-black font-medium text-sm rounded-lg hover:bg-yellow-400 transition-colors whitespace-nowrap"
           >
             {pillar.cta.label}
           </Link>

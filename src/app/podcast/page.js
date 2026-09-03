@@ -59,7 +59,7 @@ export default async function PodcastPage() {
             <p className="text-gray-400 max-w-lg mx-auto mb-6">
               In-depth conversations with builders, educators, and everyday Africans using Bitcoin.
             </p>
-            <a href="https://youtube.com/@bitcoinafricastory" target="_blank" rel="noopener noreferrer" className="inline-block px-6 py-2.5 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-400 transition-colors">
+            <a href="https://youtube.com/@bitcoinafricastory" target="_blank" rel="noopener noreferrer" className="inline-block px-6 py-2.5 bg-yellow-500 text-black font-medium rounded-lg hover:bg-yellow-400 transition-colors">
               Watch on YouTube
             </a>
           </div>

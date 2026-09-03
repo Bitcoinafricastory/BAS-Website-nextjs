@@ -14,6 +14,7 @@ import { computeReadingTime, deriveKeyTakeaways, getFaqs, addHeadingIds, extract
 import { resolveArticleAuthor } from '@/lib/authors';
 import { getEntitiesBySlugs } from '@/lib/entities';
 import ArticleSidebar from '@/components/ArticleSidebar';
+import ArticleTOC from '@/components/ArticleTOC';
 import AuthorFooter from '@/components/AuthorFooter';
 import BlinkDonateButton from '@/components/BlinkDonateButton';
 import MentionedEntities from '@/components/MentionedEntities';
@@ -124,12 +125,12 @@ export default async function BlogPostPage({ params }) {
       <div className="max-w-3xl xl:max-w-6xl mx-auto px-6 pb-20 xl:grid xl:grid-cols-[minmax(0,1fr)_280px] xl:gap-16">
         <article className="min-w-0">
           <div className="mb-6">
-            <span className="inline-block text-sm font-semibold text-black bg-yellow-500 px-4 py-2 rounded-full">
+            <span className="inline-block text-sm font-medium text-black bg-yellow-500 px-4 py-2 rounded-full">
               {post.category}
             </span>
           </div>
 
-          <h1 className="text-[34px] sm:text-5xl lg:text-[56px] font-semibold mb-6 leading-tight">{post.title}</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-semibold mb-6 leading-tight">{post.title}</h1>
 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-400 mb-8">
             {author?.slug && !author.isLegacy ? (
@@ -176,18 +177,7 @@ export default async function BlogPostPage({ params }) {
 
           {/* Inline Table of Contents — shown only up to lg; on xl+ the sticky
               sidebar TOC replaces it so the reader doesn't see two. */}
-          {headings.length > 2 && (
-            <div className="xl:hidden mb-10 p-6 bg-[#0A0A0A] border border-white/5 rounded-xl">
-              <h2 className="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wide">In This Article</h2>
-              <ul className="space-y-2">
-                {headings.map((h, i) => (
-                  <li key={i} className={h.level === 'h3' ? 'ml-4' : ''}>
-                    <a href={`#${h.id}`} className="text-gray-300 hover:text-yellow-500 text-sm">{h.text}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          <ArticleTOC headings={headings} category={post.category} />
 
           <div
             className="article-body mx-auto"
@@ -278,7 +268,7 @@ export default async function BlogPostPage({ params }) {
                   </div>
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs font-semibold text-yellow-500 bg-yellow-500/10 px-3 py-1 rounded-full">
+                      <span className="text-xs font-medium text-yellow-500 bg-yellow-500/10 px-3 py-1 rounded-full">
                         {relatedPost.category}
                       </span>
                       <span className="text-xs text-gray-400">{computeReadingTime(relatedPost.content, relatedPost.readTime)}</span>

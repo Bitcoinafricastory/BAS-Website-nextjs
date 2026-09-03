@@ -32,7 +32,7 @@ function SectionHeading({ eyebrow, title, href }) {
         <h2 className="text-2xl md:text-3xl font-semibold mt-1">{title}</h2>
       </div>
       {href && (
-        <Link href={href} className="hidden md:inline-flex items-center text-sm text-yellow-500 font-semibold hover:text-yellow-400 transition-colors">
+        <Link href={href} className="hidden md:inline-flex items-center text-sm text-yellow-500 font-medium hover:text-yellow-400 transition-colors">
           View all →
         </Link>
       )}
@@ -66,7 +66,7 @@ export default async function NewsPage() {
       {/* ===== Featured Story ===== */}
       <section className="max-w-7xl mx-auto px-6 pt-12 pb-8">
         <div className="mb-8">
-          <h1 className="text-[34px] sm:text-5xl lg:text-[56px] font-semibold">
+          <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-semibold">
             The Pulse of <span className="text-yellow-500">Bitcoin in Africa</span>
           </h1>
           <p className="text-gray-400 mt-3 max-w-2xl">

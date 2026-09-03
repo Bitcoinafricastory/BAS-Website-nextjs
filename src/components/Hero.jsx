@@ -39,9 +39,9 @@ export default function Hero() {
           animate="show"
           custom={0}
           variants={fadeUp}
-          className="relative block font-semibold text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-5"
+          className="relative block font-medium text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-5"
         >
-          Est. 2024 &middot; Reporting from the ground
+          Reporting from the ground
         </motion.span>
 
         <motion.h1
@@ -108,14 +108,14 @@ export default function Hero() {
           <div className="flex flex-wrap items-center gap-8">
             <Link
               href="/news"
-              className="inline-flex items-center gap-2 bg-yellow-500 text-black font-semibold text-base px-7 py-4 hover:brightness-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              className="inline-flex items-center gap-2 bg-yellow-500 text-black font-medium text-base px-7 py-4 hover:brightness-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
               Read the Stories
               <ArrowRight size={18} />
             </Link>
             <Link
               href="/education"
-              className="text-base font-semibold text-gray-200 border-b border-gray-700 pb-1 hover:text-yellow-500 hover:border-yellow-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              className="text-base font-medium text-gray-200 border-b border-gray-700 pb-1 hover:text-yellow-500 hover:border-yellow-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
               Study Bitcoin
             </Link>

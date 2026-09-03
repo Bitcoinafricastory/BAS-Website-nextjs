@@ -165,10 +165,10 @@ export default function DonateContent({ verifiedCount = 0 }) {
             </motion.p>
             <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.24 }}
               className="flex flex-wrap gap-3 mt-8">
-              <a href="#give" className="inline-flex items-center gap-2 bg-yellow-500 text-black font-semibold px-5 py-3 sm:px-7 sm:py-4 hover:brightness-95 transition-all">
+              <a href="#give" className="inline-flex items-center gap-2 bg-yellow-500 text-black font-medium px-5 py-3 sm:px-7 sm:py-4 hover:brightness-95 transition-all">
                 Support the work <ArrowRight size={17} />
               </a>
-              <a href="#ledger" className="inline-flex items-center gap-2 border border-white/15 text-gray-200 font-semibold px-5 py-3 sm:px-6 sm:py-4 hover:border-yellow-500 hover:text-yellow-500 transition-colors">
+              <a href="#ledger" className="inline-flex items-center gap-2 border border-white/15 text-gray-200 font-medium px-5 py-3 sm:px-6 sm:py-4 hover:border-yellow-500 hover:text-yellow-500 transition-colors">
                 See the ledger
               </a>
             </motion.div>
@@ -419,10 +419,10 @@ export default function DonateContent({ verifiedCount = 0 }) {
           The reporting is free and always will be. Getting it in front of more people helps almost as much.
         </motion.p>
         <motion.div {...fadeUp} className="flex flex-wrap gap-3 justify-center">
-          <a href="#give" className="inline-flex items-center gap-2 bg-yellow-500 text-black font-semibold px-5 py-3 sm:px-7 sm:py-4 hover:brightness-95 transition-all">
+          <a href="#give" className="inline-flex items-center gap-2 bg-yellow-500 text-black font-medium px-5 py-3 sm:px-7 sm:py-4 hover:brightness-95 transition-all">
             Support the work <ArrowRight size={17} />
           </a>
-          <Link href="/subscribe" className="inline-flex items-center gap-2 border border-white/15 text-gray-200 font-semibold px-5 py-3 sm:px-6 sm:py-4 hover:border-yellow-500 hover:text-yellow-500 transition-colors">
+          <Link href="/subscribe" className="inline-flex items-center gap-2 border border-white/15 text-gray-200 font-medium px-5 py-3 sm:px-6 sm:py-4 hover:border-yellow-500 hover:text-yellow-500 transition-colors">
             Subscribe free
           </Link>
         </motion.div>

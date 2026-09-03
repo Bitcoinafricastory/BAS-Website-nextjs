@@ -9,7 +9,7 @@ export default function OtherBitcoinPrograms({ programs = [] }) {
     <section className="py-24 bg-black text-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg bg-yellow-500 text-black text-[10px] font-semibold uppercase tracking-widest mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg bg-yellow-500 text-black text-[10px] font-medium uppercase tracking-widest mb-6">
             OTHER BITCOIN EDUCATION PROGRAMS
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold mb-4">
@@ -38,7 +38,7 @@ export default function OtherBitcoinPrograms({ programs = [] }) {
                   />
                 )}
                 <div className="absolute bottom-0 left-0">
-                  <span className={`inline-block px-3 py-1 text-[10px] font-semibold ${program.level === 'EXPERT' ? 'bg-black text-white border-t border-r border-white/20' : 'bg-yellow-500 text-black'}`}>
+                  <span className={`inline-block px-3 py-1 text-[10px] font-medium ${program.level === 'EXPERT' ? 'bg-black text-white border-t border-r border-white/20' : 'bg-yellow-500 text-black'}`}>
                     {program.level} | {program.price}
                   </span>
                 </div>
@@ -47,9 +47,11 @@ export default function OtherBitcoinPrograms({ programs = [] }) {
                 <h3 className="text-lg font-semibold mb-3 line-clamp-2 leading-tight group-hover:text-yellow-500 transition-colors uppercase tracking-tight">{program.title}</h3>
                 <p className="text-gray-400 text-sm mb-6 line-clamp-3 leading-relaxed">{program.desc}</p>
                 <div className="mt-auto pt-4 border-t border-white/5">
-                  <span className="flex items-center gap-2 text-[10px] font-black text-yellow-500 group-hover:text-white transition-colors uppercase tracking-widest">
-                    VIEW DETAILS
-                    <ArrowUpRight className="w-3 h-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  <span className="group/btn flex items-center gap-2 text-[10px] font-medium text-yellow-500 group-hover:text-white transition-colors uppercase tracking-widest">
+                    View details
+                    <span className="w-4 h-4 rounded-full bg-yellow-500/10 flex items-center justify-center group-hover:bg-yellow-500 group-hover:text-black transition-colors duration-200">
+                      <ArrowUpRight className="w-2.5 h-2.5" />
+                    </span>
                   </span>
                 </div>
               </div>

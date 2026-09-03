@@ -15,12 +15,12 @@ export default function PostCard({ post }) {
           />
         )}
         <div className="absolute top-4 left-4">
-          <span className="text-xs font-semibold text-black bg-yellow-500 px-3 py-1 rounded-full">{post.category}</span>
+          <span className="text-xs font-medium text-black bg-yellow-500 px-3 py-1 rounded-full">{post.category}</span>
         </div>
       </div>
       <div className="p-6">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-xs font-semibold text-yellow-500 bg-yellow-500/10 px-3 py-1 rounded-full">{post.category}</span>
+          <span className="text-xs font-medium text-yellow-500 bg-yellow-500/10 px-3 py-1 rounded-full">{post.category}</span>
           <span className="text-xs text-gray-400">{post.readTime}</span>
         </div>
         <h3 className="text-xl font-semibold mb-3 group-hover:text-yellow-500 transition-colors duration-200">{post.title}</h3>

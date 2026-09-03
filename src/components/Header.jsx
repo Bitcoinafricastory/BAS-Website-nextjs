@@ -156,7 +156,7 @@ export default function Header() {
 
             <Link
               href="/subscribe"
-              className={`text-sm font-semibold px-4 py-2.5 shadow-lg transition-colors duration-200 ${
+              className={`text-sm font-medium px-4 py-2.5 shadow-lg transition-colors duration-200 ${
                 isActive('/subscribe')
                   ? 'bg-yellow-400 text-black'
                   : 'bg-yellow-500 text-black hover:bg-yellow-400'

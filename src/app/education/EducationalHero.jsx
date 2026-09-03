@@ -55,14 +55,14 @@ export default function EducationalHero() {
             <div className="flex gap-2.5">
               <button
                 onClick={() => scrollToSection('education-programs')}
-                className="flex-1 inline-flex items-center justify-center gap-1.5 bg-yellow-500 text-black font-semibold text-sm px-3 py-3 hover:brightness-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                className="flex-1 inline-flex items-center justify-center gap-1.5 bg-yellow-500 text-black font-medium text-sm px-3 py-3 hover:brightness-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 Programs
                 <ArrowRight size={16} />
               </button>
               <button
                 onClick={() => scrollToSection('bitcoin-resources')}
-                className="flex-1 inline-flex items-center justify-center border border-gray-500 text-white font-semibold text-sm px-3 py-3 hover:border-yellow-500 hover:text-yellow-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                className="flex-1 inline-flex items-center justify-center border border-gray-500 text-white font-medium text-sm px-3 py-3 hover:border-yellow-500 hover:text-yellow-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 Resources
               </button>
@@ -104,14 +104,14 @@ export default function EducationalHero() {
           <div className="flex flex-wrap items-center gap-8">
             <button
               onClick={() => scrollToSection('education-programs')}
-              className="inline-flex items-center gap-2 bg-yellow-500 text-black font-semibold text-sm sm:text-base px-5 py-3 sm:px-7 sm:py-4 hover:brightness-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              className="inline-flex items-center gap-2 bg-yellow-500 text-black font-medium text-sm sm:text-base px-5 py-3 sm:px-7 sm:py-4 hover:brightness-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
               Explore Bitcoin Programs
               <ArrowRight size={18} />
             </button>
             <button
               onClick={() => scrollToSection('bitcoin-resources')}
-              className="text-base font-semibold text-gray-200 border-b border-gray-700 pb-1 hover:text-yellow-500 hover:border-yellow-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              className="text-base font-medium text-gray-200 border-b border-gray-700 pb-1 hover:text-yellow-500 hover:border-yellow-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
               Explore Bitcoin Resources
             </button>

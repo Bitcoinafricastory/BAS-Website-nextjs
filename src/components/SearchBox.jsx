@@ -36,7 +36,7 @@ export default function SearchBox({ initialQuery = '', autoFocus = false }) {
       />
       <button
         type="submit"
-        className="absolute right-2 top-1/2 -translate-y-1/2 px-5 py-2.5 bg-yellow-500 text-black font-semibold text-sm rounded-lg hover:brightness-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+        className="absolute right-2 top-1/2 -translate-y-1/2 px-5 py-2.5 bg-yellow-500 text-black font-medium text-sm rounded-lg hover:brightness-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
       >
         Search
       </button>

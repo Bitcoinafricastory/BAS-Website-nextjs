@@ -276,9 +276,11 @@ export default function EventsContent({ initialEvents = [] }) {
                     <h3 className="text-base font-semibold mb-1.5 line-clamp-2 leading-tight group-hover:text-yellow-500 group-active:text-yellow-500 transition-colors uppercase tracking-tight min-h-[44px]">{e.eventName}</h3>
                     <p className="text-gray-400 text-sm mb-4 truncate">{e.venue || '\u00A0'}</p>
                     <div className="mt-auto pt-3.5 border-t border-white/5">
-                      <span className="flex items-center gap-2 text-[10px] font-black text-yellow-500 group-hover:text-white group-active:text-white transition-colors uppercase tracking-widest">
+                      <span className="flex items-center gap-2 text-[10px] font-medium text-yellow-500 group-hover:text-white group-active:text-white transition-colors uppercase tracking-widest">
                         View details &amp; register
-                        <ArrowUpRight className="w-3 h-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-active:-translate-y-0.5 group-active:translate-x-0.5" />
+                        <span className="w-4 h-4 rounded-full bg-yellow-500/10 flex items-center justify-center group-hover:bg-yellow-500 group-active:bg-yellow-500 group-hover:text-black group-active:text-black transition-colors duration-200">
+                          <ArrowUpRight className="w-2.5 h-2.5" />
+                        </span>
                       </span>
                     </div>
                   </div>
@@ -301,7 +303,7 @@ export default function EventsContent({ initialEvents = [] }) {
             </div>
             <button
               onClick={() => setShowSubmitModal(true)}
-              className="flex-shrink-0 px-6 py-3 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-400 transition-colors"
+              className="flex-shrink-0 px-6 py-3 bg-yellow-500 text-black font-medium rounded-lg hover:bg-yellow-400 transition-colors"
             >
               Submit Your Event
             </button>
@@ -389,7 +391,7 @@ export default function EventsContent({ initialEvents = [] }) {
               </div>
 
               <div className="flex gap-3 pt-4">
-                <button type="submit" disabled={submitting} className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-yellow-500 text-black font-semibold rounded-xl hover:bg-yellow-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
+                <button type="submit" disabled={submitting} className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-yellow-500 text-black font-medium rounded-xl hover:bg-yellow-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
                   <Save size={18} />
                   {submitting ? 'Submitting...' : 'Submit Event'}
                 </button>

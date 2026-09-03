@@ -145,13 +145,19 @@ function EntityCard({ entity }) {
           <p className="text-sm text-gray-400 leading-relaxed mb-4 line-clamp-3">{entity.description}</p>
         )}
 
-        <div className="mt-auto flex flex-wrap items-center gap-4 pt-3 border-t border-white/5">
-          <Link href={`/directory/${entity.slug}`} className="inline-flex items-center gap-1 text-sm font-semibold text-yellow-500 hover:text-yellow-400 transition-colors">
-            View profile <ArrowUpRight size={14} />
+        <div className="mt-auto flex flex-wrap items-center gap-5 pt-3 border-t border-white/5">
+          <Link href={`/directory/${entity.slug}`} className="group inline-flex items-center gap-2 text-sm font-medium text-yellow-500 hover:text-yellow-400 transition-colors">
+            View profile
+            <span className="w-5 h-5 rounded-full bg-yellow-500/10 flex items-center justify-center group-hover:bg-yellow-500 group-hover:text-black transition-colors duration-200">
+              <ArrowUpRight size={11} />
+            </span>
           </Link>
           {entity.website && (
-            <a href={entity.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-semibold text-white hover:text-yellow-500 transition-colors">
-              Visit <ArrowUpRight size={14} />
+            <a href={entity.website} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 text-sm font-medium text-white hover:text-yellow-500 transition-colors">
+              Visit
+              <span className="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-yellow-500 group-hover:text-black transition-colors duration-200">
+                <ArrowUpRight size={11} />
+              </span>
             </a>
           )}
         </div>
@@ -202,7 +208,7 @@ function SubmitEntitySection({ open, onToggle }) {
         <button
           type="button"
           onClick={onToggle}
-          className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-3 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-400 transition-colors"
+          className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-3 bg-yellow-500 text-black font-medium rounded-lg hover:bg-yellow-400 transition-colors"
         >
           {open ? (<>Close <X size={16} /></>) : 'Tell Us Your Story'}
         </button>
@@ -249,7 +255,7 @@ function SubmitEntitySection({ open, onToggle }) {
             <input type="email" value={form.contactEmail} onChange={handleChange('contactEmail')} placeholder="you@example.com" className="w-full px-4 py-2.5 bg-black border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500" />
           </div>
 
-          <button type="submit" disabled={busy} className="w-full sm:w-auto px-6 py-3 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-400 transition-colors disabled:opacity-50">
+          <button type="submit" disabled={busy} className="w-full sm:w-auto px-6 py-3 bg-yellow-500 text-black font-medium rounded-lg hover:bg-yellow-400 transition-colors disabled:opacity-50">
             {busy ? 'Submitting…' : 'Submit'}
           </button>
           {notice && <p className="text-sm text-yellow-400">{notice}</p>}

@@ -79,14 +79,14 @@ export default function AboutContent() {
             <div className="flex flex-wrap items-center gap-6 sm:gap-8">
               <Link
                 href="/donate"
-                className="inline-flex items-center gap-2 bg-yellow-500 text-black font-semibold text-sm sm:text-base px-5 py-3 sm:px-7 sm:py-4 hover:brightness-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                className="inline-flex items-center gap-2 bg-yellow-500 text-black font-medium text-sm sm:text-base px-5 py-3 sm:px-7 sm:py-4 hover:brightness-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 Donate
                 <ArrowRight size={18} />
               </Link>
               <Link
                 href="/contact"
-                className="text-sm sm:text-base font-semibold text-gray-200 border-b border-gray-700 pb-1 hover:text-yellow-500 hover:border-yellow-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                className="text-sm sm:text-base font-medium text-gray-200 border-b border-gray-700 pb-1 hover:text-yellow-500 hover:border-yellow-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 Contact Us
               </Link>

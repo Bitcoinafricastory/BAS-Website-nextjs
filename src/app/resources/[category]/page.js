@@ -101,10 +101,12 @@ export default async function ResourceCategoryPage({ params }) {
                 </h3>
                 <p className="text-gray-400 text-sm leading-relaxed max-w-xl">{item.description}</p>
               </div>
-              <ArrowUpRight
-                size={20}
-                className="text-gray-600 group-hover:text-yellow-500 flex-shrink-0 mt-0.5 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-              />
+              <span className="w-8 h-8 rounded-full bg-white/5 group-hover:bg-yellow-500 flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors duration-200">
+                <ArrowUpRight
+                  size={15}
+                  className="text-gray-500 group-hover:text-black transition-colors duration-200"
+                />
+              </span>
             </a>
           ))}
         </div>

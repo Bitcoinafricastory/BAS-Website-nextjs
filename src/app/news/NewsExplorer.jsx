@@ -209,7 +209,7 @@ export default function NewsExplorer({ initialPosts = [] }) {
               </p>
               <button
                 onClick={() => setShowForm(!showForm)}
-                className="relative w-fit inline-flex items-center gap-2 px-7 py-3.5 bg-yellow-500 text-black font-semibold hover:bg-yellow-400 transition-all duration-200 hover:scale-105 rounded-lg"
+                className="relative w-fit inline-flex items-center gap-2 px-7 py-3.5 bg-yellow-500 text-black font-medium hover:bg-yellow-400 transition-all duration-200 hover:scale-105 rounded-lg"
               >
                 {showForm ? 'Cancel' : 'Submit Your Story →'}
               </button>
@@ -346,7 +346,7 @@ export default function NewsExplorer({ initialPosts = [] }) {
                   </div>
                 </div>
 
-                <button type="submit" disabled={isSubmitting} className="w-full px-6 py-3.5 sm:px-8 sm:py-4 bg-yellow-500 text-black font-semibold text-base sm:text-lg hover:bg-yellow-400 transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                <button type="submit" disabled={isSubmitting} className="w-full px-6 py-3.5 sm:px-8 sm:py-4 bg-yellow-500 text-black font-medium text-base sm:text-lg hover:bg-yellow-400 transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
                   {isSubmitting ? 'Submitting...' : 'Submit Story'}
                 </button>
               </form>

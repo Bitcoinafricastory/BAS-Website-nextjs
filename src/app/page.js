@@ -63,7 +63,7 @@ export default async function HomePage() {
               </h2>
               <p className="text-xl text-gray-400">Latest insights on Bitcoin Movement and adoption in Africa</p>
             </div>
-            <Link href="/news" className="hidden md:inline-flex items-center text-yellow-500 font-semibold hover:text-yellow-400 transition-colors duration-200">
+            <Link href="/news" className="hidden md:inline-flex items-center text-yellow-500 font-medium hover:text-yellow-400 transition-colors duration-200">
               View All Posts →
             </Link>
           </div>
@@ -80,7 +80,7 @@ export default async function HomePage() {
           })}
 
           <div className="text-center mt-8 md:hidden">
-            <Link href="/news" className="inline-flex items-center text-yellow-500 font-semibold hover:text-yellow-400 transition-colors duration-200">
+            <Link href="/news" className="inline-flex items-center text-yellow-500 font-medium hover:text-yellow-400 transition-colors duration-200">
               View All Posts →
             </Link>
           </div>
@@ -112,7 +112,7 @@ export default async function HomePage() {
                 by our reporters, not scraped from a database.
               </p>
             </div>
-            <Link href="/directory" className="hidden md:inline-flex items-center text-sm text-yellow-500 font-semibold hover:text-yellow-400 transition-colors flex-shrink-0">
+            <Link href="/directory" className="hidden md:inline-flex items-center text-sm text-yellow-500 font-medium hover:text-yellow-400 transition-colors flex-shrink-0">
               View Full Directory →
             </Link>
           </div>

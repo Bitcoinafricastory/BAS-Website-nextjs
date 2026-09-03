@@ -129,10 +129,10 @@ export default async function SearchPage({ searchParams }) {
                   Try a different term, or browse our latest coverage.
                 </p>
                 <div className="flex flex-wrap justify-center gap-3">
-                  <Link href="/news" className="px-5 py-2.5 bg-yellow-500 text-black font-semibold rounded-lg hover:brightness-95 transition-all">
+                  <Link href="/news" className="px-5 py-2.5 bg-yellow-500 text-black font-medium rounded-lg hover:brightness-95 transition-all">
                     Browse News
                   </Link>
-                  <Link href="/events" className="px-5 py-2.5 border border-yellow-500 text-yellow-500 font-semibold rounded-lg hover:bg-yellow-500 hover:text-black transition-colors">
+                  <Link href="/events" className="px-5 py-2.5 border border-yellow-500 text-yellow-500 font-medium rounded-lg hover:bg-yellow-500 hover:text-black transition-colors">
                     Browse Events
                   </Link>
                 </div>

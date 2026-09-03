@@ -46,8 +46,10 @@ export default function BitcoinResources({ resources = [] }) {
                   <p className="text-gray-400 text-sm mb-4 line-clamp-3 leading-relaxed">{r.subtitle}</p>
                   <div className="mt-auto pt-3 border-t border-white/5">
                     <span className="flex items-center gap-2 text-[10px] font-medium text-yellow-500 group-hover:text-white transition-colors uppercase tracking-widest">
-                      ACCESS RESOURCE
-                      <ArrowUpRight className="w-3 h-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                      Access resource
+                      <span className="w-4 h-4 rounded-full bg-yellow-500/10 flex items-center justify-center group-hover:bg-yellow-500 group-hover:text-black transition-colors duration-200">
+                        <ArrowUpRight className="w-2.5 h-2.5" />
+                      </span>
                     </span>
                   </div>
                 </div>
@@ -83,8 +85,10 @@ export default function BitcoinResources({ resources = [] }) {
                   <p className="text-gray-400 text-sm mb-6 line-clamp-3 leading-relaxed">{r.subtitle}</p>
                   <div className="mt-auto pt-4 border-t border-white/5">
                     <span className="flex items-center gap-2 text-[10px] font-medium text-yellow-500 group-hover:text-white transition-colors uppercase tracking-widest">
-                      ACCESS RESOURCE
-                      <ArrowUpRight className="w-3 h-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                      Access resource
+                      <span className="w-4 h-4 rounded-full bg-yellow-500/10 flex items-center justify-center group-hover:bg-yellow-500 group-hover:text-black transition-colors duration-200">
+                        <ArrowUpRight className="w-2.5 h-2.5" />
+                      </span>
                     </span>
                   </div>
                 </div>
