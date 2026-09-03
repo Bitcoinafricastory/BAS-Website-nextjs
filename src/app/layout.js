@@ -84,7 +84,7 @@ export const metadata = {
         url: `${currentSiteUrl}/assets/og-image.jpg`,
         width: 1200,
         height: 630,
-        alt: 'Bitcoin Africa Story — Showing Africa\'s Bitcoin proof-of-work',
+        alt: 'Bitcoin Africa Story — Documenting Bitcoin adoption across Africa',
       },
     ],
   },
