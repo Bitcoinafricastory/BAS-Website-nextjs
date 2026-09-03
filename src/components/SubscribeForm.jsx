@@ -68,7 +68,7 @@ export default function SubscribeForm() {
       <div className="bg-[#0A0A0A] border border-white/5 rounded-xl p-7 max-w-lg">
         <div className="flex items-center gap-2 text-yellow-500 mb-3">
           <Check size={18} />
-          <span className="font-bold text-sm uppercase tracking-widest">One more step</span>
+          <span className="font-semibold text-sm uppercase tracking-widest">One more step</span>
         </div>
         <h3 className="text-xl font-semibold mb-2">Confirm on Substack</h3>
         <p className="text-gray-400 text-sm leading-relaxed mb-6">

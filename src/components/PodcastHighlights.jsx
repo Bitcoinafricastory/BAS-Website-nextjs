@@ -1,9 +1,13 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Mic, Play } from 'lucide-react';
-import { resolveImageUrl } from '@/lib/schema';
+import { resolveImageUrl, youtubeId } from '@/lib/schema';
 
 export default function PodcastHighlights({ episodes = [] }) {
+  const [playingId, setPlayingId] = useState(null);
   const hasEpisodes = episodes.length > 0;
 
   return (
@@ -22,7 +26,7 @@ export default function PodcastHighlights({ episodes = [] }) {
             </div>
           </div>
           {hasEpisodes && (
-            <Link href="/podcast" className="text-sm font-semibold text-yellow-500 hover:text-yellow-400 transition-colors flex-shrink-0">
+            <Link href="/podcast" className="text-sm font-medium text-yellow-500 hover:text-yellow-400 transition-colors flex-shrink-0">
               View all episodes →
             </Link>
           )}
@@ -31,10 +35,36 @@ export default function PodcastHighlights({ episodes = [] }) {
         {hasEpisodes ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {episodes.slice(0, 3).map((ep) => {
-              const Wrapper = ep.url ? 'a' : 'div';
-              const props = ep.url ? { href: ep.url, target: '_blank', rel: 'noopener noreferrer' } : {};
+              const videoId = youtubeId(ep.url);
+              const isPlaying = playingId === ep.id && videoId;
+
+              if (isPlaying) {
+                return (
+                  <div key={ep.id} className="bg-[#0A0A0A] border border-yellow-500/50 rounded-xl overflow-hidden">
+                    <div className="aspect-video relative bg-black">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+                        title={ep.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                        className="absolute inset-0 w-full h-full border-0"
+                      />
+                    </div>
+                    <div className="p-5">
+                      {ep.episodeNumber && <span className="text-[10px] font-medium text-yellow-500 uppercase tracking-wide">Episode {ep.episodeNumber}</span>}
+                      <h3 className="text-lg font-semibold mt-1 line-clamp-2">{ep.title}</h3>
+                    </div>
+                  </div>
+                );
+              }
+
               return (
-                <Wrapper key={ep.id} {...props} className="group bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden hover:border-yellow-500/50 transition-all duration-300">
+                <button
+                  key={ep.id}
+                  type="button"
+                  onClick={() => (videoId ? setPlayingId(ep.id) : window.open(ep.url, '_blank', 'noopener,noreferrer'))}
+                  className="group bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden hover:border-yellow-500/50 transition-all duration-300 text-left"
+                >
                   <div className="aspect-video overflow-hidden relative bg-black">
                     {ep.image ? (
                       <Image
@@ -56,11 +86,11 @@ export default function PodcastHighlights({ episodes = [] }) {
                     </div>
                   </div>
                   <div className="p-5">
-                    {ep.episodeNumber && <span className="text-[10px] font-bold text-yellow-500 uppercase tracking-wide">Episode {ep.episodeNumber}</span>}
+                    {ep.episodeNumber && <span className="text-[10px] font-medium text-yellow-500 uppercase tracking-wide">Episode {ep.episodeNumber}</span>}
                     <h3 className="text-lg font-semibold mt-1 group-hover:text-yellow-500 transition-colors line-clamp-2">{ep.title}</h3>
                     {ep.description && <p className="text-gray-400 text-sm mt-2 line-clamp-2">{ep.description}</p>}
                   </div>
-                </Wrapper>
+                </button>
               );
             })}
           </div>

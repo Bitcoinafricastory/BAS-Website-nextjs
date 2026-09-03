@@ -10,7 +10,7 @@ export default function Mission() {
             <div className="hidden sm:inline-block mb-4 px-3 py-1 bg-yellow-500/10 border border-yellow-500/30 rounded-full">
               <span className="text-yellow-500 text-sm font-semibold">Our Mission</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-[36px] font-semibold mb-6">
+            <h2 className="text-4xl md:text-5xl font-semibold mb-6">
               Spreading Bitcoin Adoption Across <span className="text-yellow-500">Africa</span>
             </h2>
             <p className="text-lg text-gray-300 mb-6 leading-relaxed">
@@ -36,7 +36,7 @@ export default function Mission() {
                 <p className="text-sm text-gray-400">Real stories of Bitcoin adoption across Africa</p>
               </div>
             </div>
-            <div className="space-y-4 mt-8">
+            <div className="space-y-4 mt-0 sm:mt-8">
               <div className="p-6 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-colors duration-300">
                 <Users className="text-yellow-500 mb-3" size={32} />
                 <h3 className="text-lg font-semibold mb-2">Community Development</h3>
