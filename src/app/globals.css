@@ -33,23 +33,14 @@ body {
   font-size: 1.0625rem;
   line-height: 1.75;
   color: #d1d5db;
-  /* Deliberately NOT overflow-wrap: break-word here. That tells the browser
-     "split any word if it helps the line fit," which is far too aggressive
-     for ordinary prose — it was splitting short, perfectly normal words
-     (e.g. "had" -> "ha" / "d") whenever a line landed a few pixels short.
-     Normal word-wrapping alone is correct for prose; only genuinely
-     unbreakable strings (long URLs, inline code) need the harder rule,
-     applied narrowly below instead of blanket across the whole article. */
-}
-
-/* Inline links carry normal readable text (e.g. "seed phrase guide"), not
-   raw URLs — they should wrap exactly like the surrounding prose. Giving a
-   nested inline element a different overflow-wrap value than its parent
-   paragraph reintroduced the same mid-word-split bug, specifically on link
-   text, and appears to have thrown off line-box sizing badly enough to
-   visually overlap the sidebar. Only code spans (which can legitimately
-   contain one long unbroken token, e.g. a hash or file path) keep it. */
-.article-body code {
+  /* Long URLs and unbroken strings must never blow out the container —
+     without this, a single long token in any paragraph overflows its
+     column and visually spills across the sidebar next to it, which is a
+     far worse failure than the rare short-word split this can cause. The
+     digit-aware hyphen fix in article-content.js (preventHyphenBreaks)
+     handles the specific "mid-2026"-style case that motivated removing
+     this in the first place, without needing to drop overflow protection
+     for the whole article. */
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
