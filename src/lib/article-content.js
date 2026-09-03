@@ -67,6 +67,25 @@ export function extractHeadings(html) {
 // Only touches text between tags — never inside a tag itself — so hyphens in
 // URLs (href="...my-page"), CSS classes (ql-font-sans-serif), or any other
 // attribute are left completely untouched and links keep working.
+// Rich-text paste (Word, Google Docs, etc.) frequently leaves behind stray
+// non-breaking spaces — as the literal &nbsp; entity, or as the raw U+00A0
+// character — scattered through otherwise ordinary prose. A non-breaking
+// space is invisible but tells the browser "never break a line here," so a
+// few of these silently glue several ordinary words into one giant unbreakable
+// token. When that fake token doesn't fit a line, overflow-wrap has no choice
+// but to cut it at an arbitrary character position — which is what produces
+// seemingly-random mid-word splits like "in" -> "i"/"n" or "guessed" ->
+// "guesse"/"d", unrelated to any hyphen or long word. Converting them back to
+// ordinary breakable spaces (only in text content, never inside tags) fixes
+// this at the source rather than fighting it with CSS.
+export function normalizeNonBreakingSpaces(html) {
+  if (!html) return html;
+  return html.replace(/(<[^>]*>)|([^<]+)/g, (full, tag, text) => {
+    if (tag) return tag;
+    return text.replace(/&nbsp;/g, ' ').replace(/\u00A0/g, ' ');
+  });
+}
+
 export function preventHyphenBreaks(html) {
   if (!html) return html;
   return html.replace(/(<[^>]*>)|([^<]+)/g, (full, tag, text) => {

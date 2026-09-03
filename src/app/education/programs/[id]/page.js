@@ -5,6 +5,7 @@ import { ArrowLeft } from 'lucide-react';
 import { getAllOtherPrograms, getOtherProgramById } from '@/lib/education';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { courseSchema, breadcrumbSchema, jsonLdScript, SITE_URL } from '@/lib/schema';
+import { normalizeNonBreakingSpaces } from '@/lib/article-content';
 
 export const revalidate = 300;
 
@@ -98,7 +99,7 @@ export default async function ProgramDetailsPage({ params }) {
           <h1 className="text-3xl md:text-5xl font-semibold text-white mb-6 leading-tight">{program.title}</h1>
 
           {program.content ? (
-            <div className="article-body mx-auto mb-8" dangerouslySetInnerHTML={{ __html: program.content }} />
+            <div className="article-body mx-auto mb-8" dangerouslySetInnerHTML={{ __html: normalizeNonBreakingSpaces(program.content) }} />
           ) : program.desc ? (
             <div className="prose prose-invert prose-lg max-w-none text-gray-400 mb-8">
               <p className="whitespace-pre-wrap leading-relaxed">{program.desc}</p>
