@@ -33,15 +33,16 @@ body {
   font-size: 1.0625rem;
   line-height: 1.75;
   color: #d1d5db;
-  /* Long URLs and unbroken strings must never blow out the container —
-     without this, a single long token in any paragraph overflows its
-     column and visually spills across the sidebar next to it, which is a
-     far worse failure than the rare short-word split this can cause. The
-     digit-aware hyphen fix in article-content.js (preventHyphenBreaks)
-     handles the specific "mid-2026"-style case that motivated removing
-     this in the first place, without needing to drop overflow protection
-     for the whole article. */
-  overflow-wrap: break-word;
+  /* Long URLs and unbroken strings must never blow out the container.
+     Using `anywhere` rather than the older `break-word`: both prevent
+     overflow, but `break-word` is explicitly excluded from how browsers
+     calculate a box's minimum content width, which is a known source of
+     inconsistent, seemingly-premature mid-word breaks (e.g. splitting
+     "spotlight" into "spotl"/"ight" with room to spare on the line).
+     `overflow-wrap: anywhere` was introduced specifically to give more
+     predictable, correct line-breaking while keeping the same overflow
+     protection. */
+  overflow-wrap: anywhere;
   word-wrap: break-word;
 }
 
