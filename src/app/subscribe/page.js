@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getLatestNews } from '@/lib/news';
 import SubscribeForm from '@/components/SubscribeForm';
+import BlinkSubscribeWidget from '@/components/BlinkSubscribeWidget';
 
 export const revalidate = 300;
 
@@ -87,6 +88,20 @@ export default async function SubscribePage() {
               ))
             )}
           </div>
+        </div>
+
+        {/* Paid tier — BlinkSub handles the actual subscribe/payment flow */}
+        <div className="mt-16 sm:mt-20 pt-14 sm:pt-16 border-t border-white/[0.07]">
+          <div className="max-w-xl mb-8">
+            <span className="text-yellow-500 text-xs font-medium uppercase tracking-widest">Go further</span>
+            <h2 className="text-2xl sm:text-3xl font-semibold mt-2 mb-3">
+              Become a <span className="text-yellow-500">paying member</span>
+            </h2>
+            <p className="text-gray-400 text-base leading-relaxed">
+              Support the work directly, sats-native, no card required.
+            </p>
+          </div>
+          <BlinkSubscribeWidget />
         </div>
 
         <p className="text-gray-600 text-sm mt-14">
