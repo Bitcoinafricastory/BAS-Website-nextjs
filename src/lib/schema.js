@@ -17,7 +17,16 @@ export const SOCIAL_PROFILES = [
 
 export function resolveImageUrl(image) {
   if (!image) return null;
-  return image.startsWith('http') ? image : `${SITE_URL}${image.startsWith('/') ? '' : '/'}${image}`;
+  // Already absolute — use as-is.
+  if (image.startsWith('http')) return image;
+  // A data: URI (or any other scheme) is NOT a relative path. Some records
+  // have base64 blobs stored where a URL was expected; prepending SITE_URL
+  // to those produced strings like
+  // "https://site.com/data:image/jpeg;base64,..." which Google rejects as an
+  // invalid URL and which invalidates the whole structured-data item.
+  // Returning null lets callers fall back to a valid image instead.
+  if (/^[a-z][a-z0-9+.-]*:/i.test(image)) return null;
+  return `${SITE_URL}${image.startsWith('/') ? '' : '/'}${image}`;
 }
 
 export function organizationSchema() {
@@ -516,9 +525,12 @@ function isoDuration(raw) {
 export function educationVideoSchema(video, pageUrl = `${SITE_URL}/education`) {
   if (!video) return null;
   const id = youtubeId(video.embedUrl);
-  const thumbnail = video.thumbnailUrl
-    ? resolveImageUrl(video.thumbnailUrl)
-    : (id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : undefined);
+  // resolveImageUrl returns null for unusable values (data: URIs and other
+  // non-http schemes), so fall through to YouTube's own thumbnail in that
+  // case too — not only when thumbnailUrl is absent entirely.
+  const thumbnail =
+    (video.thumbnailUrl ? resolveImageUrl(video.thumbnailUrl) : null) ||
+    (id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : undefined);
 
   // uploadDate is REQUIRED by Google for VideoObject — an item without it is
   // rejected outright rather than degraded. Older bitcoin_videos records
@@ -557,9 +569,9 @@ export function educationVideoSchema(video, pageUrl = `${SITE_URL}/education`) {
 export function podcastVideoSchema(episode) {
   if (!episode) return null;
   const id = youtubeId(episode.url);
-  const thumbnail = episode.image
-    ? resolveImageUrl(episode.image)
-    : (id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : undefined);
+  const thumbnail =
+    (episode.image ? resolveImageUrl(episode.image) : null) ||
+    (id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : undefined);
   return {
     '@context': 'https://schema.org',
     '@type': 'VideoObject',
