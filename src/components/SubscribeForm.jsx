@@ -65,70 +65,69 @@ export default function SubscribeForm() {
       : null;
 
     return (
-      <div className="bg-[#0A0A0A] border border-white/5 rounded-xl p-7 max-w-lg">
-        <div className="flex items-center gap-2 text-yellow-500 mb-3">
-          <Check size={18} />
-          <span className="font-semibold text-sm uppercase tracking-widest">One more step</span>
+      <div className="text-center">
+        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-yellow-500/10 mb-5">
+          <Check size={22} className="text-yellow-500" />
         </div>
-        <h3 className="text-xl font-semibold mb-2">Confirm on Substack</h3>
-        <p className="text-gray-400 text-sm leading-relaxed mb-6">
-          We send the weekly email through Substack. Confirm there and your first issue
-          lands this week.
-        </p>
+        <h3 className="text-xl sm:text-2xl font-semibold mb-3">You&rsquo;re on the list.</h3>
         {substackHref ? (
-          <a
-            href={substackHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-yellow-500 text-black font-medium px-5 py-3 sm:px-6 sm:py-3.5 hover:brightness-95 transition-all"
-          >
-            Finish on Substack <ArrowRight size={17} />
-          </a>
+          <>
+            <p className="text-gray-400 text-[15px] leading-relaxed mb-6 max-w-sm mx-auto">
+              One more step &mdash; confirm on Substack, where the email actually sends from.
+            </p>
+            <a
+              href={substackHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-yellow-500 text-black font-medium px-6 py-3 rounded-full hover:brightness-95 transition-all"
+            >
+              Confirm on Substack <ArrowRight size={16} />
+            </a>
+          </>
         ) : (
-          <p className="text-gray-500 text-sm">
-            You&rsquo;re on the list — we&rsquo;ll be in touch as soon as the newsletter goes live.
+          <p className="text-gray-400 text-[15px] leading-relaxed max-w-sm mx-auto">
+            We&rsquo;ll be in touch as soon as the next story goes out.
           </p>
         )}
-        {notice && <p className="text-gray-500 text-xs mt-4">{notice}</p>}
+        {notice && <p className="text-gray-600 text-xs mt-5">{notice}</p>}
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-lg">
-      <div className="flex flex-col sm:flex-row gap-0">
+    <form onSubmit={handleSubmit} className="w-full">
+      {/* Single unified pill — input and button share one rounded container
+          rather than reading as two separate rectangles butted together. */}
+      <div className="flex items-center gap-2 bg-white/[0.04] border border-white/10 rounded-full p-1.5 focus-within:border-yellow-500/60 transition-colors">
         <input
           type="email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="you@email.com"
-          className="flex-1 bg-transparent border border-[#2b2b2b] sm:border-r-0 text-white text-base px-4 py-4 focus:outline-none focus:border-yellow-500 transition-colors"
+          className="flex-1 min-w-0 bg-transparent text-white text-[15px] px-5 py-3 placeholder:text-gray-500 focus:outline-none"
         />
         <button
           type="submit"
           disabled={busy}
-          className="inline-flex items-center justify-center gap-2 bg-yellow-500 text-black font-medium text-sm sm:text-base px-5 py-3 sm:px-7 sm:py-4 hover:brightness-95 transition-all disabled:opacity-60 whitespace-nowrap"
+          className="inline-flex items-center gap-2 bg-yellow-500 text-black font-medium text-[15px] px-6 py-3 rounded-full hover:brightness-95 transition-all disabled:opacity-60 whitespace-nowrap flex-shrink-0"
         >
-          {busy ? <LoaderCircle size={17} className="animate-spin" /> : null}
+          {busy ? <LoaderCircle size={16} className="animate-spin" /> : null}
           Subscribe
+          {!busy && <ArrowRight size={16} />}
         </button>
       </div>
 
       <select
         value={country}
         onChange={(e) => setCountry(e.target.value)}
-        className="mt-3 w-full sm:w-auto bg-black border border-white/5 text-gray-300 text-base px-4 py-3 focus:outline-none focus:border-yellow-500 transition-colors"
+        className="mt-3 w-full bg-transparent border border-white/10 rounded-full text-gray-400 text-sm px-5 py-2.5 focus:outline-none focus:border-yellow-500/60 transition-colors"
       >
         <option value="">Where are you reading from? (optional)</option>
         {AFRICAN_COUNTRIES.map((c) => (
           <option key={c} value={c}>{c}</option>
         ))}
       </select>
-
-      <p className="font-mono-brand text-[10.5px] tracking-[0.04em] uppercase text-gray-600 mt-4">
-        Unsubscribe any time
-      </p>
     </form>
   );
 }
