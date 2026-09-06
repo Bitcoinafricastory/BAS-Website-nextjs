@@ -196,6 +196,18 @@ body {
   overflow-wrap: break-word;
 }
 
+/* BlinkSub's embed.js hardcodes `min-height: 420px` directly on its iframe,
+   regardless of what's actually inside it. Their own postMessage resize
+   logic sets a smaller `height` when the widget shows a shorter view (e.g.
+   the plain email-capture step instead of the full three-tier pricing
+   view), but CSS always renders the larger of height/min-height — so that
+   420px floor silently wins and leaves a dead gap below shorter content.
+   Overriding it here (this is our div, their iframe lives inside it) lets
+   the widget's own resize messages actually take effect. */
+#blink-sub iframe {
+  min-height: 0 !important;
+}
+
 .article-body code {
   background: #1f2937;
   padding: 0.15em 0.4em;

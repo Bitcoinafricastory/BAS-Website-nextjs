@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { Radio, Award, Zap } from 'lucide-react';
 import { getLatestNews } from '@/lib/news';
 import SubscribeForm from '@/components/SubscribeForm';
 import BlinkSubscribeWidget from '@/components/BlinkSubscribeWidget';
@@ -32,80 +33,104 @@ export default async function SubscribePage() {
 
   return (
     <div className="pt-16 bg-black text-white min-h-screen">
-      <section className="max-w-6xl mx-auto px-6 py-16 sm:py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <section className="relative max-w-7xl mx-auto px-6 py-20 sm:py-28 overflow-hidden">
+        <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[560px] h-[560px] bg-yellow-500/[0.07] rounded-full blur-3xl" />
 
-          {/* Pitch */}
-          <div>
-            <h1 className="text-3xl sm:text-4xl lg:text-[46px] font-semibold leading-[1.1] tracking-tight mb-5">
-              Our stories, <span className="text-yellow-500">in your inbox.</span>
-            </h1>
-            <p className="text-gray-400 text-base leading-relaxed max-w-md mb-7">
-              We report on Bitcoin across Africa &mdash; adoption, communities, merchants,
-              education. Subscribe and the stories come to you.
+        {/* Bold, centered hero — one confident statement, not a wall of text */}
+        <div className="relative max-w-2xl mx-auto text-center mb-16 sm:mb-20">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.08] tracking-tight mb-6">
+            Our stories, <span className="text-yellow-500">in your inbox.</span>
+          </h1>
+          <p className="text-gray-400 text-lg sm:text-xl leading-relaxed">
+            We report on Bitcoin across Africa &mdash; adoption, communities, merchants,
+            education. Follow for free, or back the work directly with a recurring,
+            sats-native membership.
+          </p>
+        </div>
+
+        {/* Two large, evenly-weighted cards rather than two thin columns of
+            small print — each one a destination in its own right. */}
+        <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
+
+          {/* Free path */}
+          <div className="bg-[#0A0A0A] border border-white/10 rounded-2xl p-8 sm:p-10">
+            <div className="flex items-center gap-2.5 mb-6">
+              <span className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center">
+                <Radio size={16} className="text-gray-400" />
+              </span>
+              <span className="text-xs font-medium uppercase tracking-widest text-gray-500">Free</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-semibold mb-3">Get every story by email</h2>
+            <p className="text-gray-400 text-base leading-relaxed mb-8">
+              No cost, no card. Unsubscribe whenever you want.
             </p>
             <SubscribeForm />
-          </div>
 
-          {/* Inbox preview */}
-          <div className="bg-[#0A0A0A] border border-white/[0.07]">
-            <div className="flex items-center justify-between px-4 sm:px-5 py-3.5 border-b border-white/[0.07] font-mono-brand text-[10px] tracking-[0.09em] uppercase text-gray-600">
-              <span>From Bitcoin Africa Story</span>
-              <span>{recent.length} recent</span>
-            </div>
+            {/* Inbox preview — a supporting detail, kept visually lighter
+                than the main offer above it */}
+            <div className="mt-10 pt-8 border-t border-white/[0.07]">
+              <div className="flex items-center justify-between mb-4 font-mono-brand text-[10px] tracking-[0.09em] uppercase text-gray-600">
+                <span>From Bitcoin Africa Story</span>
+                <span>{recent.length} recent</span>
+              </div>
 
-            {recent.length === 0 ? (
-              <p className="px-5 py-8 text-sm text-gray-600">Recent stories load here.</p>
-            ) : (
-              recent.map((post) => (
-                <div
-                  key={post.id}
-                  className="flex gap-3.5 px-4 sm:px-5 py-4 border-b border-white/[0.07] last:border-b-0 items-start"
-                >
-                  <span className="relative w-[46px] h-[46px] rounded overflow-hidden flex-shrink-0 bg-white/5">
-                    {post.image && (
-                      <Image
-                        src={post.image}
-                        alt=""
-                        fill
-                        sizes="46px"
-                        className="object-cover"
-                      />
-                    )}
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-sm font-semibold leading-snug mb-1">{post.title}</p>
-                    {post.excerpt && (
-                      <p className="text-[12.5px] text-gray-600 leading-relaxed line-clamp-2">
-                        {post.excerpt}
-                      </p>
-                    )}
-                  </div>
-                  <span className="ml-auto pl-2.5 font-mono-brand text-[10px] text-gray-600 whitespace-nowrap">
-                    {formatShortDate(post.date)}
-                  </span>
+              {recent.length === 0 ? (
+                <p className="text-sm text-gray-600">Recent stories load here.</p>
+              ) : (
+                <div className="space-y-4">
+                  {recent.map((post) => (
+                    <div key={post.id} className="flex gap-3.5 items-start">
+                      <span className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-white/5">
+                        {post.image && (
+                          <Image src={post.image} alt="" fill sizes="48px" className="object-cover" />
+                        )}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold leading-snug line-clamp-2">{post.title}</p>
+                        <span className="font-mono-brand text-[10px] text-gray-600 mt-1 block">
+                          {formatShortDate(post.date)}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))
-            )}
+              )}
+            </div>
           </div>
-        </div>
 
-        {/* Paid tier — BlinkSub handles the actual subscribe/payment flow */}
-        <div className="mt-16 sm:mt-20 pt-14 sm:pt-16 border-t border-white/[0.07]">
-          <div className="max-w-xl mb-8">
-            <span className="text-yellow-500 text-xs font-medium uppercase tracking-widest">Go further</span>
-            <h2 className="text-2xl sm:text-3xl font-semibold mt-2 mb-3">
+          {/* Paid path */}
+          <div className="bg-[#0A0A0A] border border-yellow-500/20 rounded-2xl p-8 sm:p-10">
+            <div className="flex items-center gap-2.5 mb-6">
+              <span className="w-9 h-9 rounded-full bg-yellow-500/10 flex items-center justify-center">
+                <Zap size={16} className="text-yellow-500" />
+              </span>
+              <span className="text-xs font-medium uppercase tracking-widest text-yellow-500">Go further</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-semibold mb-3">
               Become a <span className="text-yellow-500">paying member</span>
             </h2>
-            <p className="text-gray-400 text-base leading-relaxed">
-              Support the work directly, sats-native, no card required.
+            <p className="text-gray-400 text-base leading-relaxed mb-6">
+              Recurring support, paid in sats over Lightning &mdash; member-only updates and
+              your name in the credits.
             </p>
+
+            <ul className="space-y-3 mb-8">
+              <li className="flex items-start gap-3 text-[15px] text-gray-300">
+                <Award size={16} className="text-yellow-500 mt-0.5 flex-shrink-0" />
+                Member-only updates, beyond what&rsquo;s on the free list
+              </li>
+              <li className="flex items-start gap-3 text-[15px] text-gray-300">
+                <Zap size={16} className="text-yellow-500 mt-0.5 flex-shrink-0" />
+                Paid natively in Bitcoin over Lightning &mdash; no card required
+              </li>
+            </ul>
+
+            <BlinkSubscribeWidget />
           </div>
-          <BlinkSubscribeWidget />
         </div>
 
-        <p className="text-gray-600 text-sm mt-14">
-          Prefer to support the work directly?{' '}
+        <p className="relative text-center text-gray-600 text-sm mt-14">
+          Prefer a one-time gift instead?{' '}
           <Link href="/donate" className="text-yellow-500 hover:text-yellow-400 transition-colors">
             See where every sat goes
           </Link>
