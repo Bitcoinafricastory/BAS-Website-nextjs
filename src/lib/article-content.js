@@ -86,6 +86,59 @@ export function normalizeNonBreakingSpaces(html) {
   });
 }
 
+import sanitizeHtml from 'sanitize-html';
+
+// Defense-in-depth against stored XSS. Article HTML is written by staff
+// through the dashboard editor (Quill), not directly by the public — but
+// nothing before this enforced that boundary in code, and every article
+// page renders this HTML via dangerouslySetInnerHTML with no sanitization
+// at all. A single pasted <script> tag, or a compromised/over-permissioned
+// account, would execute in every reader's browser. This strips anything
+// that isn't plain formatting, while allowing everything Quill's editor
+// actually produces (headings, links, images, code blocks, embeds).
+const ALLOWED_TAGS = [
+  'p', 'br', 'strong', 'b', 'em', 'i', 'u', 's', 'span', 'a',
+  'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+  'ul', 'ol', 'li', 'blockquote', 'pre', 'code',
+  'img', 'figure', 'figcaption', 'hr', 'sub', 'sup',
+  'table', 'thead', 'tbody', 'tr', 'th', 'td', 'iframe',
+];
+
+const ALLOWED_ATTRIBUTES = {
+  a: ['href', 'target', 'rel', 'class'],
+  img: ['src', 'alt', 'width', 'height', 'class'],
+  span: ['class', 'style'],
+  p: ['class'],
+  h1: ['id', 'class'], h2: ['id', 'class'], h3: ['id', 'class'],
+  h4: ['id', 'class'], h5: ['id', 'class'], h6: ['id', 'class'],
+  iframe: ['src', 'title', 'allow', 'allowfullscreen', 'frameborder', 'class'],
+  code: ['class'],
+  pre: ['class'],
+  '*': [],
+};
+
+export function sanitizeArticleHtml(html) {
+  if (!html) return html;
+  return sanitizeHtml(html, {
+    allowedTags: ALLOWED_TAGS,
+    allowedAttributes: ALLOWED_ATTRIBUTES,
+    // Quill sets inline font-family via style="" for its font picker — the
+    // only inline style property actually needed. Anything else (e.g.
+    // expression()-style legacy CSS attacks) is stripped.
+    allowedStyles: {
+      span: { 'font-family': [/^[a-zA-Z0-9\s,'"-]+$/] },
+    },
+    // Only allow embeds from YouTube — the one iframe source the site
+    // actually uses (podcast/education videos). Blocks an iframe being
+    // used to embed arbitrary attacker-controlled pages.
+    allowedIframeHostnames: ['www.youtube.com', 'youtube.com', 'www.youtube-nocookie.com'],
+    // Belt-and-braces: strip javascript: / data: URIs even inside allowed
+    // attributes like href/src.
+    allowedSchemes: ['http', 'https', 'mailto'],
+    disallowedTagsMode: 'discard',
+  });
+}
+
 export function preventHyphenBreaks(html) {
   if (!html) return html;
   return html.replace(/(<[^>]*>)|([^<]+)/g, (full, tag, text) => {

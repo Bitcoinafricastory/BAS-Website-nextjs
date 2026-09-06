@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { sanitizeArticleHtml } from '@/lib/article-content';
 
 function slugifyQuestion(question, id) {
   const base = (question || '')
@@ -47,7 +48,7 @@ export default function FAQAccordion({ groups }) {
                     <div className="overflow-hidden">
                       <div
                         className="pb-6 text-gray-400 leading-relaxed prose prose-invert max-w-none prose-a:text-yellow-500"
-                        dangerouslySetInnerHTML={{ __html: faq.answer }}
+                        dangerouslySetInnerHTML={{ __html: sanitizeArticleHtml(faq.answer) }}
                       />
                     </div>
                   </div>

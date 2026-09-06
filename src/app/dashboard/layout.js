@@ -7,19 +7,38 @@ import Sidebar from '@/components/dashboard/Sidebar';
 import Topbar from '@/components/dashboard/Topbar';
 import { LoaderCircle } from 'lucide-react';
 
+// UX-level guard only. This can be bypassed by anyone calling the Firestore
+// client SDK directly from the browser console — the real enforcement has
+// to live in Firestore's own security rules, which this app doesn't
+// control from code. This just stops an unexpected-but-validly-signed-in
+// account from seeing the dashboard UI at all. Keep this list in sync with
+// ADMIN_EMAILS on the server and with Firestore rules.
+const ADMIN_EMAILS = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '')
+  .split(',')
+  .map((e) => e.trim().toLowerCase())
+  .filter(Boolean);
+
+function isAllowedAdmin(user) {
+  if (!user?.email) return false;
+  if (ADMIN_EMAILS.length === 0) return true; // not configured yet — see note above
+  return ADMIN_EMAILS.includes(user.email.toLowerCase());
+}
+
 export default function DashboardLayout({ children }) {
   const { user, loading } = useAuth();
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const allowed = !loading && user && isAllowedAdmin(user);
 
-  // Route guard: once auth state resolves, bounce unauthenticated users to login.
+  // Route guard: once auth state resolves, bounce unauthenticated or
+  // not-on-the-allowlist users to login.
   useEffect(() => {
-    if (!loading && !user) router.replace('/admin');
-  }, [user, loading, router]);
+    if (!loading && !allowed) router.replace('/admin');
+  }, [allowed, loading, router]);
 
   // While auth is resolving, or if we're about to redirect, show a spinner
   // rather than flashing protected content.
-  if (loading || !user) {
+  if (loading || !allowed) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#050505] text-white">
         <LoaderCircle className="animate-spin text-yellow-500" size={32} />

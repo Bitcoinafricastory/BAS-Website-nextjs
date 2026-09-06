@@ -7,6 +7,28 @@ import { ENTITY_TYPES, ENTITY_COUNTRIES } from '@/lib/entityTypes';
 // session (same login as /dashboard). It doesn't need a service account key.
 const FIREBASE_WEB_API_KEY = 'AIzaSyCC_PkB6ku4wHa9cv9At49EBAqFEkLFTmY';
 
+// Every account that has ever successfully signed in to Firebase Auth was,
+// until now, treated as a trusted admin — there was no allowlist anywhere
+// in the app. This checks the verified token's email against a list only
+// you control server-side, so even a valid Firebase login from an
+// unexpected account is rejected here.
+const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || '')
+  .split(',')
+  .map((e) => e.trim().toLowerCase())
+  .filter(Boolean);
+
+function isAllowedAdmin(user) {
+  if (!user?.email) return false;
+  // If ADMIN_EMAILS isn't set yet, fall back to "any authenticated user"
+  // (today's behavior) rather than locking everyone out silently — but log
+  // loudly so this doesn't stay unnoticed.
+  if (ADMIN_EMAILS.length === 0) {
+    console.warn('ADMIN_EMAILS is not set — /api/admin/entities/extract is allowing ANY authenticated Firebase user. Set ADMIN_EMAILS in Vercel to restrict this.');
+    return true;
+  }
+  return ADMIN_EMAILS.includes(user.email.toLowerCase());
+}
+
 async function verifyIdToken(idToken) {
   if (!idToken) return null;
   try {
@@ -73,6 +95,9 @@ export async function POST(request) {
   const user = await verifyIdToken(idToken);
   if (!user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+  if (!isAllowedAdmin(user)) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
 
   const entities = await getEntities();
