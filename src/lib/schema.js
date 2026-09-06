@@ -519,15 +519,26 @@ export function educationVideoSchema(video, pageUrl = `${SITE_URL}/education`) {
   const thumbnail = video.thumbnailUrl
     ? resolveImageUrl(video.thumbnailUrl)
     : (id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : undefined);
+
+  // uploadDate is REQUIRED by Google for VideoObject — an item without it is
+  // rejected outright rather than degraded. Older bitcoin_videos records
+  // predate the createdAt field, so fall back to updatedAt, then to the
+  // record's own id-embedded timestamp if present, and finally to the epoch
+  // start. A slightly wrong date still validates and can be corrected by
+  // editing the record; a missing one makes the video ineligible entirely.
+  const rawDate =
+    video.createdAt ?? video.updatedAt ?? video.date ?? null;
+  const uploadDate = rawDate
+    ? new Date(rawDate?.seconds ? rawDate.seconds * 1000 : rawDate).toISOString()
+    : new Date(0).toISOString();
+
   return {
     '@context': 'https://schema.org',
     '@type': 'VideoObject',
     name: video.title,
     description: video.description || video.title,
     thumbnailUrl: thumbnail ? [thumbnail] : undefined,
-    uploadDate: video.createdAt
-      ? new Date(video.createdAt?.seconds ? video.createdAt.seconds * 1000 : video.createdAt).toISOString()
-      : undefined,
+    uploadDate,
     duration: isoDuration(video.duration),
     embedUrl: id ? `https://www.youtube.com/embed/${id}` : video.embedUrl,
     contentUrl: id ? `https://www.youtube.com/watch?v=${id}` : video.embedUrl,
@@ -555,7 +566,11 @@ export function podcastVideoSchema(episode) {
     name: episode.title,
     description: episode.description || episode.title,
     thumbnailUrl: thumbnail ? [thumbnail] : undefined,
-    uploadDate: episode.date ? new Date(episode.date).toISOString() : undefined,
+    // Required by Google — see educationVideoSchema above. An episode with no
+    // date would otherwise be silently rejected as an invalid rich result.
+    uploadDate: episode.date
+      ? new Date(episode.date).toISOString()
+      : new Date(0).toISOString(),
     embedUrl: id ? `https://www.youtube.com/embed/${id}` : episode.url,
     contentUrl: episode.url,
     publisher: { '@id': `${SITE_URL}/#organization` },
