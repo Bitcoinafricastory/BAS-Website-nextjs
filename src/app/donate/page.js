@@ -7,7 +7,7 @@ export const metadata = {
   title: 'Support Bitcoin Africa | Donate to Our Mission',
   description:
     'Support Bitcoin education and adoption in Africa. Your donations fund grassroots training, events, and circular economy projects.',
-  alternates: { canonical: 'https://bitcoinafricastory.com/donate' },
+  alternates: { canonical: 'https://www.bitcoinafricastory.com/donate' },
 };
 
 export default async function DonatePage() {

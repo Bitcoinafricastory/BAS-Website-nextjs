@@ -9,7 +9,7 @@
 // Rule: never put anything here that isn't on the visible page. Same content,
 // different serialization.
 
-const SITE_URL = 'https://bitcoinafricastory.com';
+const SITE_URL = 'https://www.bitcoinafricastory.com';
 const SITE_NAME = 'Bitcoin Africa Story';
 
 // Minimal, dependency-free HTML → Markdown. Our article bodies come from the

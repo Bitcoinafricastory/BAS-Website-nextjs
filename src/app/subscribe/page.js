@@ -8,7 +8,7 @@ export const metadata = {
   title: 'Subscribe',
   description:
     'Get every Bitcoin Africa Story article by email. Reporting on Bitcoin adoption, communities, merchants, and education across Africa.',
-  alternates: { canonical: 'https://bitcoinafricastory.com/subscribe' },
+  alternates: { canonical: 'https://www.bitcoinafricastory.com/subscribe' },
 };
 
 export default function SubscribePage() {

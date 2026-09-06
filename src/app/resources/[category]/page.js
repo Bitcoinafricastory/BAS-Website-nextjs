@@ -6,7 +6,7 @@ import { breadcrumbSchema, jsonLdScript } from '@/lib/schema';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
 const ICONS = { GraduationCap, Wrench, Wallet };
-const SITE_URL = 'https://bitcoinafricastory.com';
+const SITE_URL = 'https://www.bitcoinafricastory.com';
 
 export function generateStaticParams() {
   return listableCategorySlugs().map((category) => ({ category }));

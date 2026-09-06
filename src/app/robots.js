@@ -38,9 +38,9 @@ export default function robots() {
       })),
     ],
     sitemap: [
-      'https://bitcoinafricastory.com/sitemap.xml',
-      'https://bitcoinafricastory.com/news-sitemap.xml',
-      'https://bitcoinafricastory.com/video-sitemap.xml',
+      'https://www.bitcoinafricastory.com/sitemap.xml',
+      'https://www.bitcoinafricastory.com/news-sitemap.xml',
+      'https://www.bitcoinafricastory.com/video-sitemap.xml',
     ],
   };
 }

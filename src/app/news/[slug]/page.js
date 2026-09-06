@@ -229,11 +229,10 @@ export default async function BlogPostPage({ params }) {
           category={post.category}
           title={post.title}
           // Share links must resolve against the site that's ACTUALLY serving
-          // this article, not metadataBase. During the domain migration,
-          // metadataBase (bitcoinafricastory.com) still points at the old React
-          // site with its own OG tags, so sharing that URL yields the old
-          // logo preview. VERCEL_PROJECT_PRODUCTION_URL is the current
-          // deployment's real URL; fall back to metadataBase after cutover.
+          // this article. VERCEL_PROJECT_PRODUCTION_URL is the current
+          // deployment's real URL, with SITE_URL as the fallback — this works
+          // correctly whether this project serves the .vercel.app URL or the
+          // real domain.
           url={`${
             process.env.VERCEL_PROJECT_PRODUCTION_URL
               ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`

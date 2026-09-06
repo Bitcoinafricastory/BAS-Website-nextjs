@@ -8,7 +8,7 @@ export const metadata = {
   title: 'Bitcoin Events in Africa',
   description:
     'Discover and participate in Bitcoin meetups, conferences, and workshops across Africa. Join the circular economy movement.',
-  alternates: { canonical: 'https://bitcoinafricastory.com/events' },
+  alternates: { canonical: 'https://www.bitcoinafricastory.com/events' },
 };
 
 export default async function EventsPage() {

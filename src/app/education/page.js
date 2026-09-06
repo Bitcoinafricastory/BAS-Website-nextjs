@@ -13,7 +13,7 @@ export const metadata = {
   title: 'Bitcoin Education Africa | Learn Bitcoin for Free',
   description:
     'Start your Bitcoin journey with our free educational programs, workshops, and resources tailored for the African context.',
-  alternates: { canonical: 'https://bitcoinafricastory.com/education' },
+  alternates: { canonical: 'https://www.bitcoinafricastory.com/education' },
 };
 
 export default async function EducationPage() {

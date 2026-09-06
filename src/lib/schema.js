@@ -3,7 +3,7 @@
 // that Google, Bing, and AI answer engines (ChatGPT, Claude, Perplexity,
 // Gemini) can parse reliably.
 
-const SITE_URL = 'https://bitcoinafricastory.com';
+const SITE_URL = 'https://www.bitcoinafricastory.com';
 const SITE_NAME = 'Bitcoin Africa Story';
 const LOGO_URL = `${SITE_URL}/assets/BitcoinAfricaStoryLogo.png`;
 

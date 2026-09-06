@@ -31,7 +31,7 @@ const staticRoutes = [
 const CATEGORIES = ['adoption', 'regulations', 'education', 'technology', 'economy', 'security', 'community'];
 
 export default async function sitemap() {
-  const base = 'https://bitcoinafricastory.com';
+  const base = 'https://www.bitcoinafricastory.com';
 
   let articleEntries = [];
   let eventEntries = [];

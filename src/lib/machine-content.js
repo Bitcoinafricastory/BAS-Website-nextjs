@@ -5,7 +5,7 @@
 
 import { stripHtml } from './article-content';
 
-export const SITE_URL = 'https://bitcoinafricastory.com';
+export const SITE_URL = 'https://www.bitcoinafricastory.com';
 export const SITE_NAME = 'Bitcoin Africa Story';
 
 /**

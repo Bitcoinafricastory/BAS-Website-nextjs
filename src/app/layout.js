@@ -56,16 +56,16 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 // Vercel sets this automatically to this project's real production URL, whatever it currently is.
-// During the migration, that's bas-website-nextjs.vercel.app — not bitcoinafricastory.com, which
-// is still serving the old React site until cutover. Link-preview images need to resolve against
-// wherever the site actually lives right now; canonical/sitemap/RSS below intentionally stay
-// pointed at the final domain so that SEO groundwork isn't undone before cutover.
+// Link-preview images need to resolve against wherever the site actually lives, which keeps
+// working correctly whether this project is serving the .vercel.app URL or the real domain.
+// Canonical/sitemap/RSS below always point at www.bitcoinafricastory.com — the www version is
+// canonical because that's what Google has indexed and what the non-www domain redirects to.
 const currentSiteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : 'https://bitcoinafricastory.com';
+  : 'https://www.bitcoinafricastory.com';
 
 export const metadata = {
-  metadataBase: new URL('https://bitcoinafricastory.com'),
+  metadataBase: new URL('https://www.bitcoinafricastory.com'),
   title: {
     default: 'Bitcoin Africa Story | Bitcoin Adoption, News & Stories from Africa',
     template: '%s | Bitcoin Africa Story',
@@ -100,10 +100,10 @@ export const metadata = {
     apple: '/favicon-192.png',
   },
   alternates: {
-    canonical: 'https://bitcoinafricastory.com',
+    canonical: 'https://www.bitcoinafricastory.com',
     languages: {
-      en: 'https://bitcoinafricastory.com',
-      'x-default': 'https://bitcoinafricastory.com',
+      en: 'https://www.bitcoinafricastory.com',
+      'x-default': 'https://www.bitcoinafricastory.com',
     },
     types: {
       'application/rss+xml': [{ url: '/rss.xml', title: 'Bitcoin Africa Story RSS Feed' }],
