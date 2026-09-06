@@ -5,9 +5,6 @@ import { db } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
 import { ArrowRight, LoaderCircle, Check } from 'lucide-react';
 
-// Set this once your Substack is live, e.g. 'https://bitcoinafricastory.substack.com'
-const SUBSTACK_URL = process.env.NEXT_PUBLIC_SUBSTACK_URL || '';
-
 const AFRICAN_COUNTRIES = [
   'Nigeria', 'Kenya', 'Ghana', 'South Africa', 'Tanzania', 'Uganda', 'Zambia',
   'Malawi', 'Zimbabwe', 'Ethiopia', 'Rwanda', 'Senegal', 'Cameroon', "Côte d'Ivoire",
@@ -22,12 +19,12 @@ export default function SubscribeForm() {
   const [done, setDone] = useState(false);
   const [notice, setNotice] = useState('');
 
-  // Two things happen on submit: the address is stored in our own Firestore
-  // (so the list is ours regardless of what happens to any third party), and
-  // the reader is handed to Substack, which sends the welcome email
-  // immediately. Doing only the first would mean new subscribers hear nothing
-  // until the next manual export; doing only the second would mean we never
-  // own the relationship.
+  // The address goes into our own Firestore collection, which is the list of
+  // record — it's exported to CSV from the dashboard and imported into
+  // Substack manually when an issue goes out. There is deliberately no
+  // second step for the reader: sending them to Substack to "confirm" would
+  // be a dead end, since the sending list isn't populated from here in real
+  // time.
   const handleSubmit = async (e) => {
     e.preventDefault();
     const clean = email.toLowerCase().trim();
@@ -49,47 +46,25 @@ export default function SubscribeForm() {
       }
       setDone(true);
     } catch (err) {
-      // A Firestore failure shouldn't block the reader from subscribing —
-      // Substack is the channel that actually reaches them.
+      // If the write fails the address is genuinely lost, so say so plainly
+      // rather than showing a success state that isn't true.
       console.error('Subscribe error:', err);
-      setNotice('We had trouble saving that, but you can still finish on Substack.');
-      setDone(true);
+      setNotice("That didn't save — please try again in a moment.");
     } finally {
       setBusy(false);
     }
   };
 
   if (done) {
-    const substackHref = SUBSTACK_URL
-      ? `${SUBSTACK_URL}/subscribe?email=${encodeURIComponent(email.toLowerCase().trim())}`
-      : null;
-
     return (
       <div className="text-center">
         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-yellow-500/10 mb-5">
           <Check size={22} className="text-yellow-500" />
         </div>
         <h3 className="text-xl sm:text-2xl font-semibold mb-3">You&rsquo;re on the list.</h3>
-        {substackHref ? (
-          <>
-            <p className="text-gray-400 text-[15px] leading-relaxed mb-6 max-w-sm mx-auto">
-              One more step &mdash; confirm on Substack, where the email actually sends from.
-            </p>
-            <a
-              href={substackHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-yellow-500 text-black font-medium px-6 py-3 rounded-full hover:brightness-95 transition-all"
-            >
-              Confirm on Substack <ArrowRight size={16} />
-            </a>
-          </>
-        ) : (
-          <p className="text-gray-400 text-[15px] leading-relaxed max-w-sm mx-auto">
-            We&rsquo;ll be in touch as soon as the next story goes out.
-          </p>
-        )}
-        {notice && <p className="text-gray-600 text-xs mt-5">{notice}</p>}
+        <p className="text-gray-400 text-[15px] leading-relaxed max-w-sm mx-auto">
+          The next story lands in your inbox. Nothing else to do.
+        </p>
       </div>
     );
   }
@@ -117,6 +92,10 @@ export default function SubscribeForm() {
           {!busy && <ArrowRight size={16} />}
         </button>
       </div>
+
+      {notice && (
+        <p className="text-red-400 text-sm mt-3 text-center">{notice}</p>
+      )}
 
       <select
         value={country}
