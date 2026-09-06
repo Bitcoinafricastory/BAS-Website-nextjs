@@ -55,14 +55,12 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 });
 
-// Vercel sets this automatically to this project's real production URL, whatever it currently is.
-// Link-preview images need to resolve against wherever the site actually lives, which keeps
-// working correctly whether this project is serving the .vercel.app URL or the real domain.
-// Canonical/sitemap/RSS below always point at www.bitcoinafricastory.com — the www version is
-// canonical because that's what Google has indexed and what the non-www domain redirects to.
-const currentSiteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : 'https://www.bitcoinafricastory.com';
+// The domain cutover is done: this project serves www.bitcoinafricastory.com directly, so
+// OG/Twitter images resolve against the real domain. This previously read
+// VERCEL_PROJECT_PRODUCTION_URL as a migration workaround (pointing previews at the
+// .vercel.app URL while the old site still held the domain) — that indirection is no longer
+// needed and produced an unreliable absolute URL, which is why og:image stopped being emitted.
+const currentSiteUrl = 'https://www.bitcoinafricastory.com';
 
 export const metadata = {
   metadataBase: new URL('https://www.bitcoinafricastory.com'),
