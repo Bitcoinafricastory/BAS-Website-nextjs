@@ -16,6 +16,16 @@ export const metadata = {
     description: 'Conversations with the people building Bitcoin across Africa.',
     url: `${SITE_URL}/podcast`,
     siteName: 'Bitcoin Africa Story',
+    // Required: a page-level openGraph object replaces the layout's entirely,
+    // so the site-wide image has to be repeated here or the page ships without one.
+    images: [
+      {
+        url: `${SITE_URL}/assets/og-image.jpg`,
+        width: 1200,
+        height: 630,
+        alt: 'Bitcoin Africa Story — Documenting Bitcoin adoption across Africa',
+      },
+    ],
   },
 };
 

@@ -25,6 +25,16 @@ export async function generateMetadata({ params }) {
       description: category.blurb,
       url: `${SITE_URL}/resources/${category.slug}`,
       type: 'website',
+      // Required: a page-level openGraph object replaces the layout's entirely,
+      // so the site-wide image has to be repeated here or the page ships without one.
+      images: [
+        {
+          url: `${SITE_URL}/assets/og-image.jpg`,
+          width: 1200,
+          height: 630,
+          alt: 'Bitcoin Africa Story — Documenting Bitcoin adoption across Africa',
+        },
+      ],
     },
   };
 }

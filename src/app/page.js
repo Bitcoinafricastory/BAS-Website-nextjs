@@ -13,6 +13,11 @@ export const metadata = {
   description:
     'Independent media and education platform documenting Bitcoin adoption, innovation, and impact across Africa — through journalism, podcasts, education, and community reporting.',
   alternates: { canonical: SITE_URL },
+  // NOTE: a page-level `openGraph` / `twitter` object REPLACES the one in
+  // layout.js — it does not merge with it. Omitting `images` here meant the
+  // homepage shipped with no og:image at all, while every sub-page (which
+  // doesn't override openGraph) correctly inherited the layout's. Any page
+  // that overrides these blocks must repeat the image explicitly.
   openGraph: {
     title: 'Bitcoin Africa Story | Bitcoin Adoption, News & Stories from Africa',
     description:
@@ -20,12 +25,21 @@ export const metadata = {
     url: SITE_URL,
     siteName: 'Bitcoin Africa Story',
     type: 'website',
+    images: [
+      {
+        url: `${SITE_URL}/assets/og-image.jpg`,
+        width: 1200,
+        height: 630,
+        alt: 'Bitcoin Africa Story — Documenting Bitcoin adoption across Africa',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Bitcoin Africa Story',
     description:
       'Documenting Bitcoin adoption, innovation, and impact across Africa.',
+    images: [`${SITE_URL}/assets/og-image.jpg`],
   },
 };
 
