@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
 import { Save, Eye, X, LoaderCircle, FileText, CheckCircle2, Archive, Clock, Send } from 'lucide-react';
 import { db, storage, auth } from '@/lib/firebase';
 import { collection, addDoc, updateDoc, doc, serverTimestamp } from 'firebase/firestore';
@@ -519,7 +520,7 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
             </select>
             <p className="text-xs text-gray-500 mt-2">
               Authors are managed in the{' '}
-              <a href="/dashboard/authors" className="text-yellow-500 hover:underline">Authors section</a>.
+              <Link href="/dashboard/authors" className="text-yellow-500 hover:underline">Authors section</Link>.
               The chosen author&rsquo;s name, photo, and socials appear on the article automatically.
             </p>
           </div>
