@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useMemo, useCallback } from 'react';
+import { useEffect, useRef, useMemo, useCallback, useState } from 'react';
 import dynamic from 'next/dynamic';
 import 'react-quill-new/dist/quill.snow.css';
 
@@ -156,34 +156,40 @@ export default function StoryEditor({ value, onChange, dark = false, onImageUplo
   // caller passes onImageUpload, we upload to Firebase Storage instead and
   // insert just the resulting URL, keeping the saved document tiny regardless
   // of how many images the article has.
+  // Upload progress lives in React state and renders OUTSIDE the editor.
+  //
+  // The previous approach inserted a "Uploading image…" placeholder into the
+  // document, waited for the upload, then deleted that text and inserted the
+  // image at the remembered index. That meant three edits spread across an
+  // async gap on a CONTROLLED ReactQuill: the placeholder insert fired
+  // onChange, the parent re-rendered, Quill reset its contents from the new
+  // value prop, and by the time the upload resolved the delete/insert no
+  // longer landed where expected — leaving the placeholder stranded in the
+  // saved article. Now the editor is touched exactly once, after the upload
+  // has already succeeded.
+  const [uploadingImage, setUploadingImage] = useState(false);
+
   const imageHandler = useCallback(() => {
     if (!onImageUpload) return; // fall back to Quill's default (base64) behavior
     const editor = quillRef.current?.getEditor?.();
+    if (!editor) return;
 
-    // Capture the cursor position BEFORE opening the file dialog. Once the OS
-    // picker takes focus the editor's selection is gone, and asking for it
-    // afterwards (getSelection(true)) forces a refocus against a stale DOM
-    // range — which throws "addRange(): The given range isn't in document"
-    // and aborts the handler before the image is ever inserted.
-    //
-    // getLength() counts Quill's implicit trailing newline, so the last valid
-    // insert position is getLength() - 1. Inserting AT getLength() is out of
-    // bounds and the embed silently fails to appear.
-    const endIndex = Math.max((editor?.getLength() ?? 1) - 1, 0);
-    const savedIndex = editor?.getSelection()?.index ?? endIndex;
+    // Capture the cursor BEFORE the file dialog steals focus. getLength()
+    // counts Quill's implicit trailing newline, so the last valid insert
+    // position is getLength() - 1.
+    const endIndex = Math.max(editor.getLength() - 1, 0);
+    const savedIndex = editor.getSelection()?.index ?? endIndex;
 
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
-    input.setAttribute('accept', 'image/*');
-    input.click();
+    input.setAttribute('accept', 'image/jpeg,image/png,image/webp,image/gif');
     input.onchange = async () => {
       const file = input.files?.[0];
       if (!file) return;
-      if (!editor) return;
 
       // iPhones hand over .heic by default. It uploads fine but no browser can
       // render it in an <img>, so the article would show a broken image with
-      // no clue why. Better to stop here and say so.
+      // no clue why.
       if (/heic|heif/i.test(file.type) || /\.hei[cf]$/i.test(file.name)) {
         alert(
           'This looks like an iPhone HEIC photo, which browsers can\u2019t display on a web page.\n\n' +
@@ -193,23 +199,7 @@ export default function StoryEditor({ value, onChange, dark = false, onImageUplo
         return;
       }
 
-      // Clamp to the last valid insert position (see endIndex note above) —
-      // the writer may have kept typing or deleted text while the picker was open.
-      const insertAt = Math.min(savedIndex, Math.max(editor.getLength() - 1, 0));
-      const PLACEHOLDER = 'Uploading image…';
-
-      // Placeholder text so the writer sees something is happening instead of
-      // a dead toolbar click while the upload is in flight.
-      editor.insertText(insertAt, PLACEHOLDER, 'italic', true);
-
-      const clearPlaceholder = () => {
-        try {
-          editor.deleteText(insertAt, PLACEHOLDER.length);
-        } catch (e) {
-          console.warn('Could not remove upload placeholder:', e);
-        }
-      };
-
+      setUploadingImage(true);
       try {
         const withTimeout = (promise, ms) =>
           Promise.race([
@@ -217,36 +207,33 @@ export default function StoryEditor({ value, onChange, dark = false, onImageUplo
             new Promise((_, reject) => setTimeout(() => reject(new Error('Upload timed out')), ms)),
           ]);
         const url = await withTimeout(onImageUpload(file), 20000);
+        if (!url) throw new Error('Upload returned no URL');
 
-        clearPlaceholder();
+        // Re-read the editor: the component may have re-rendered while the
+        // upload was in flight, and the index must be valid against the
+        // document as it exists NOW, not as it was when the picker opened.
+        const live = quillRef.current?.getEditor?.();
+        if (!live) throw new Error('Editor is no longer available');
+        const at = Math.min(savedIndex, Math.max(live.getLength() - 1, 0));
 
-        // The file is already in Storage at this point, so the image MUST end
-        // up in the article one way or another — losing it here would mean a
-        // successful upload the writer can never see or recover.
+        live.insertEmbed(at, 'image', url, 'user');
         try {
-          editor.insertEmbed(insertAt, 'image', url, 'user');
-        } catch (e) {
-          console.warn('Insert at cursor failed, appending at end instead:', e);
-          editor.insertEmbed(Math.max(editor.getLength() - 1, 0), 'image', url, 'user');
-        }
-
-        // Purely a cursor convenience — it can throw for the same stale-range
-        // reason as above, and must never undo a successful insert.
-        try {
-          editor.setSelection(insertAt + 1, 0);
+          live.setSelection(at + 1, 0);
         } catch (e) {
           console.warn('Could not restore cursor after image insert:', e);
         }
       } catch (err) {
-        clearPlaceholder();
         console.error('Inline image upload failed:', err);
         alert(
           err?.message === 'Upload timed out'
-            ? 'Image upload timed out after 20 seconds. This usually means a network or permissions issue with image storage — check your connection and try again, or contact your developer if it keeps happening.'
-            : 'Image upload failed. Please try again.'
+            ? 'Image upload timed out after 20 seconds. Check your connection and try again.'
+            : `Image upload failed: ${err?.message || 'unknown error'}`
         );
+      } finally {
+        setUploadingImage(false);
       }
     };
+    input.click();
   }, [onImageUpload]);
 
   const modules = useMemo(
@@ -264,6 +251,12 @@ export default function StoryEditor({ value, onChange, dark = false, onImageUplo
       <style dangerouslySetInnerHTML={{ __html: fontCss }} />
       <style dangerouslySetInnerHTML={{ __html: lightStyles }} />
       {dark && <style dangerouslySetInnerHTML={{ __html: darkStyles }} />}
+      {uploadingImage && (
+        <div className="flex items-center gap-2 px-3 py-2 mb-1 text-sm text-yellow-500 bg-yellow-500/10 border border-yellow-500/30 rounded">
+          <span className="inline-block w-3 h-3 border-2 border-yellow-500 border-t-transparent rounded-full animate-spin" />
+          Uploading image…
+        </div>
+      )}
       <ReactQuill ref={quillRef} theme="snow" value={value} onChange={onChange} modules={modules} formats={formats} />
     </div>
   );
