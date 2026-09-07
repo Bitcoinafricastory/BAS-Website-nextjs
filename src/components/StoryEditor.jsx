@@ -165,7 +165,12 @@ export default function StoryEditor({ value, onChange, dark = false, onImageUplo
     // afterwards (getSelection(true)) forces a refocus against a stale DOM
     // range — which throws "addRange(): The given range isn't in document"
     // and aborts the handler before the image is ever inserted.
-    const savedIndex = editor?.getSelection()?.index ?? editor?.getLength() ?? 0;
+    //
+    // getLength() counts Quill's implicit trailing newline, so the last valid
+    // insert position is getLength() - 1. Inserting AT getLength() is out of
+    // bounds and the embed silently fails to appear.
+    const endIndex = Math.max((editor?.getLength() ?? 1) - 1, 0);
+    const savedIndex = editor?.getSelection()?.index ?? endIndex;
 
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
@@ -176,9 +181,21 @@ export default function StoryEditor({ value, onChange, dark = false, onImageUplo
       if (!file) return;
       if (!editor) return;
 
-      // Clamp to the document's current length — the writer may have kept
-      // typing, or the saved index may now be past the end.
-      const insertAt = Math.min(savedIndex, editor.getLength());
+      // iPhones hand over .heic by default. It uploads fine but no browser can
+      // render it in an <img>, so the article would show a broken image with
+      // no clue why. Better to stop here and say so.
+      if (/heic|heif/i.test(file.type) || /\.hei[cf]$/i.test(file.name)) {
+        alert(
+          'This looks like an iPhone HEIC photo, which browsers can\u2019t display on a web page.\n\n' +
+          'On iPhone: Settings \u2192 Camera \u2192 Formats \u2192 "Most Compatible" to shoot JPEG, ' +
+          'or open the photo and export/share it as JPEG first.'
+        );
+        return;
+      }
+
+      // Clamp to the last valid insert position (see endIndex note above) —
+      // the writer may have kept typing or deleted text while the picker was open.
+      const insertAt = Math.min(savedIndex, Math.max(editor.getLength() - 1, 0));
       const PLACEHOLDER = 'Uploading image…';
 
       // Placeholder text so the writer sees something is happening instead of
@@ -202,11 +219,19 @@ export default function StoryEditor({ value, onChange, dark = false, onImageUplo
         const url = await withTimeout(onImageUpload(file), 20000);
 
         clearPlaceholder();
-        editor.insertEmbed(insertAt, 'image', url, 'user');
 
-        // setSelection can throw for the same stale-range reason above, and it
-        // is purely a cursor convenience — never let it undo a successful
-        // insert.
+        // The file is already in Storage at this point, so the image MUST end
+        // up in the article one way or another — losing it here would mean a
+        // successful upload the writer can never see or recover.
+        try {
+          editor.insertEmbed(insertAt, 'image', url, 'user');
+        } catch (e) {
+          console.warn('Insert at cursor failed, appending at end instead:', e);
+          editor.insertEmbed(Math.max(editor.getLength() - 1, 0), 'image', url, 'user');
+        }
+
+        // Purely a cursor convenience — it can throw for the same stale-range
+        // reason as above, and must never undo a successful insert.
         try {
           editor.setSelection(insertAt + 1, 0);
         } catch (e) {
