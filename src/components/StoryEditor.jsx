@@ -185,6 +185,7 @@ export default function StoryEditor({ value, onChange, dark = false, onImageUplo
     input.setAttribute('accept', 'image/jpeg,image/png,image/webp,image/gif');
     input.onchange = async () => {
       const file = input.files?.[0];
+      console.log('[BAS image] 1. file picked:', file?.name, file?.type, file?.size);
       if (!file) return;
 
       // iPhones hand over .heic by default. It uploads fine but no browser can
@@ -200,6 +201,7 @@ export default function StoryEditor({ value, onChange, dark = false, onImageUplo
       }
 
       setUploadingImage(true);
+      console.log('[BAS image] 2. starting upload…');
       try {
         const withTimeout = (promise, ms) =>
           Promise.race([
@@ -207,16 +209,21 @@ export default function StoryEditor({ value, onChange, dark = false, onImageUplo
             new Promise((_, reject) => setTimeout(() => reject(new Error('Upload timed out')), ms)),
           ]);
         const url = await withTimeout(onImageUpload(file), 20000);
+        console.log('[BAS image] 3. upload finished. URL =', url);
         if (!url) throw new Error('Upload returned no URL');
 
         // Re-read the editor: the component may have re-rendered while the
         // upload was in flight, and the index must be valid against the
         // document as it exists NOW, not as it was when the picker opened.
         const live = quillRef.current?.getEditor?.();
+        console.log('[BAS image] 4. editor available?', !!live);
         if (!live) throw new Error('Editor is no longer available');
         const at = Math.min(savedIndex, Math.max(live.getLength() - 1, 0));
+        console.log('[BAS image] 5. inserting at index', at, 'of length', live.getLength());
 
         live.insertEmbed(at, 'image', url, 'user');
+        console.log('[BAS image] 6. insertEmbed done. New length =', live.getLength());
+        console.log('[BAS image] 7. does HTML now contain an <img>?', /<img/i.test(live.root.innerHTML));
         try {
           live.setSelection(at + 1, 0);
         } catch (e) {
