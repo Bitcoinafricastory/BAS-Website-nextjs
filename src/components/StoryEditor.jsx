@@ -158,6 +158,15 @@ export default function StoryEditor({ value, onChange, dark = false, onImageUplo
   // of how many images the article has.
   const imageHandler = useCallback(() => {
     if (!onImageUpload) return; // fall back to Quill's default (base64) behavior
+    const editor = quillRef.current?.getEditor?.();
+
+    // Capture the cursor position BEFORE opening the file dialog. Once the OS
+    // picker takes focus the editor's selection is gone, and asking for it
+    // afterwards (getSelection(true)) forces a refocus against a stale DOM
+    // range — which throws "addRange(): The given range isn't in document"
+    // and aborts the handler before the image is ever inserted.
+    const savedIndex = editor?.getSelection()?.index ?? editor?.getLength() ?? 0;
+
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*');
@@ -165,12 +174,25 @@ export default function StoryEditor({ value, onChange, dark = false, onImageUplo
     input.onchange = async () => {
       const file = input.files?.[0];
       if (!file) return;
-      const editor = quillRef.current?.getEditor?.();
-      const range = editor?.getSelection(true);
-      const insertAt = range ? range.index : editor?.getLength() - 1 || 0;
+      if (!editor) return;
+
+      // Clamp to the document's current length — the writer may have kept
+      // typing, or the saved index may now be past the end.
+      const insertAt = Math.min(savedIndex, editor.getLength());
+      const PLACEHOLDER = 'Uploading image…';
+
       // Placeholder text so the writer sees something is happening instead of
       // a dead toolbar click while the upload is in flight.
-      editor?.insertText(insertAt, 'Uploading image…', 'italic', true);
+      editor.insertText(insertAt, PLACEHOLDER, 'italic', true);
+
+      const clearPlaceholder = () => {
+        try {
+          editor.deleteText(insertAt, PLACEHOLDER.length);
+        } catch (e) {
+          console.warn('Could not remove upload placeholder:', e);
+        }
+      };
+
       try {
         const withTimeout = (promise, ms) =>
           Promise.race([
@@ -178,11 +200,20 @@ export default function StoryEditor({ value, onChange, dark = false, onImageUplo
             new Promise((_, reject) => setTimeout(() => reject(new Error('Upload timed out')), ms)),
           ]);
         const url = await withTimeout(onImageUpload(file), 20000);
-        editor?.deleteText(insertAt, 'Uploading image…'.length);
-        editor?.insertEmbed(insertAt, 'image', url, 'user');
-        editor?.setSelection(insertAt + 1, 0);
+
+        clearPlaceholder();
+        editor.insertEmbed(insertAt, 'image', url, 'user');
+
+        // setSelection can throw for the same stale-range reason above, and it
+        // is purely a cursor convenience — never let it undo a successful
+        // insert.
+        try {
+          editor.setSelection(insertAt + 1, 0);
+        } catch (e) {
+          console.warn('Could not restore cursor after image insert:', e);
+        }
       } catch (err) {
-        editor?.deleteText(insertAt, 'Uploading image…'.length);
+        clearPlaceholder();
         console.error('Inline image upload failed:', err);
         alert(
           err?.message === 'Upload timed out'

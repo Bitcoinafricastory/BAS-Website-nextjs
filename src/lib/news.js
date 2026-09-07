@@ -45,15 +45,32 @@ export async function getPodcastEpisodes() {
   });
 }
 
+// An article is public unless it's explicitly been marked as something other
+// than published. Filtering in code rather than in the Firestore query is
+// deliberate: a `where('status','==','published')` query would silently drop
+// every older article written before the status field existed, since Firestore
+// cannot match documents that lack the field at all. Treating "no status" as
+// published keeps the existing archive visible while still hiding drafts.
+function isPublished(data) {
+  return !data?.status || data.status === 'published';
+}
+
 export async function getAllNews() {
   const snapshot = await getDocs(query(newsCollectionRef, orderBy('date', 'desc')));
-  return snapshot.docs.map((d) => ({ id: d.id, ...serializeDates(d.data()) }));
+  return snapshot.docs
+    .filter((d) => isPublished(d.data()))
+    .map((d) => ({ id: d.id, ...serializeDates(d.data()) }));
 }
 
 export async function getLatestNews(count = 6) {
-  const q = query(newsCollectionRef, orderBy('date', 'desc'), fsLimit(count));
+  // Over-fetch, then filter — drafts mixed into the ordered results would
+  // otherwise eat into the requested count and return too few articles.
+  const q = query(newsCollectionRef, orderBy('date', 'desc'), fsLimit(count * 3));
   const snapshot = await getDocs(q);
-  return snapshot.docs.map((d) => ({ id: d.id, ...serializeDates(d.data()) }));
+  return snapshot.docs
+    .filter((d) => isPublished(d.data()))
+    .slice(0, count)
+    .map((d) => ({ id: d.id, ...serializeDates(d.data()) }));
 }
 
 export async function getNewsBySlug(slug) {
@@ -61,12 +78,16 @@ export async function getNewsBySlug(slug) {
   const snapshot = await getDocs(q);
   if (snapshot.empty) return null;
   const d = snapshot.docs[0];
+  // A draft's URL should 404 rather than render, otherwise anyone with the
+  // link (or a crawler that guessed it) can read unpublished work.
+  if (!isPublished(d.data())) return null;
   return { id: d.id, ...serializeDates(d.data()) };
 }
 
 export async function getAllSlugs() {
   const snapshot = await getDocs(newsCollectionRef);
   return snapshot.docs
+    .filter((d) => isPublished(d.data()))
     .map((d) => d.data().slug)
     .filter(Boolean);
 }
