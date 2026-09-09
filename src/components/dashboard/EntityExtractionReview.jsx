@@ -48,10 +48,14 @@ export default function EntityExtractionReview({ suggestions, degraded, reason, 
         bitcoinFocus: '',
         founder: item.founder || '',
         logo: '',
-        // Best available default — the model can't fetch a logo/photo from
-        // nowhere, but the article's own featured image is a reasonable
-        // placeholder cover until someone uploads something better.
-        coverImage: articleImage || '',
+        // Deliberately left empty. This previously inherited the article's
+        // featured image as a "placeholder", but that image is a photo of
+        // whatever the article was about — so a directory profile ends up
+        // illustrated by an unrelated scene and looks like it belongs to a
+        // different organisation. The directory card already renders a clean
+        // fallback when there's no cover, which is more honest than a
+        // misleading one.
+        coverImage: '',
         tags: item.tags ? item.tags.split(',').map((t) => t.trim()).filter(Boolean) : [],
         featured: false, relatedEntityIds: [], externalCoverage: [],
         badges: [{
