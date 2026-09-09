@@ -148,7 +148,15 @@ If nothing qualifies, respond with an empty array: []`;
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 1024,
-        messages: [{ role: 'user', content: prompt }],
+        messages: [
+          { role: 'user', content: prompt },
+          // Prefilling the assistant turn with an opening bracket forces the
+          // reply to continue as a JSON array rather than starting with prose
+          // like "Here are the entities I found:". That preamble was breaking
+          // JSON.parse, so every call silently fell back to plain name
+          // matching — which is why obvious mentions were never suggested.
+          { role: 'assistant', content: '[' },
+        ],
       }),
     });
   } catch (err) {
@@ -172,14 +180,30 @@ If nothing qualifies, respond with an empty array: []`;
   }
 
   const data = await response.json();
-  const textBlock = data.content?.find((c) => c.type === 'text')?.text || '[]';
+  const rawText = data.content?.find((c) => c.type === 'text')?.text || '';
+
+  // The assistant turn was prefilled with '[', so the reply continues from
+  // there and the opening bracket is not echoed back — reattach it.
+  const textBlock = `[${rawText}`;
 
   let parsed;
   try {
-    parsed = JSON.parse(textBlock.replace(/```json|```/g, '').trim());
+    const cleaned = textBlock.replace(/```json|```/g, '').trim();
+    try {
+      parsed = JSON.parse(cleaned);
+    } catch {
+      // Salvage the array if anything still surrounds it. Discarding a good
+      // result because of a stray sentence is worse than a slightly loose parse.
+      const start = cleaned.indexOf('[');
+      const end = cleaned.lastIndexOf(']');
+      if (start === -1 || end === -1 || end <= start) throw new Error('no JSON array found');
+      parsed = JSON.parse(cleaned.slice(start, end + 1));
+    }
     if (!Array.isArray(parsed)) throw new Error('not an array');
   } catch (err) {
-    console.warn('Could not parse AI extraction response, falling back:', err.message);
+    // Log the actual text — without it this failure is undiagnosable from
+    // the outside, which is exactly why it went unnoticed.
+    console.warn('Could not parse AI extraction response, falling back:', err.message, '| raw:', rawText.slice(0, 500));
     return NextResponse.json({
       degraded: true,
       reason: 'AI extraction returned an unexpected response.',

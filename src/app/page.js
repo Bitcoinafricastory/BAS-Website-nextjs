@@ -53,7 +53,11 @@ export default async function HomePage() {
   ]);
   const featuredEntities = selectFeaturedEntities(entities, 6);
 
-  const groupedPosts = posts.slice(0).reverse().reduce((acc, post) => {
+  // getAllNews() already returns newest-first (orderBy date desc). Do NOT
+  // reverse here: each category below takes .slice(0, 3), so reversing would
+  // surface the three OLDEST articles per category and newly published pieces
+  // would never appear on the homepage at all.
+  const groupedPosts = posts.reduce((acc, post) => {
     const cat = post.category || 'Uncategorized';
     if (!acc[cat]) acc[cat] = [];
     acc[cat].push(post);
