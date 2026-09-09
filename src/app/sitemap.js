@@ -38,7 +38,9 @@ export default async function sitemap() {
   try {
     const posts = await getAllNews();
     articleEntries = posts.map((post) => ({
-      url: `${base}/news/${post.slug || post.id}`,
+      // Encode: a slug containing spaces or punctuation would otherwise
+      // produce a URL that isn't valid in a sitemap.
+      url: `${base}/news/${encodeURIComponent(post.slug || post.id)}`,
       lastModified: post.date ? new Date(post.date) : new Date(),
       changeFrequency: 'weekly',
       priority: 0.85,
@@ -65,7 +67,7 @@ export default async function sitemap() {
     authorEntries = authors
       .filter((a) => a.slug)
       .map((a) => ({
-        url: `${base}/authors/${a.slug}`,
+        url: `${base}/authors/${encodeURIComponent(a.slug)}`,
         lastModified: new Date(),
         changeFrequency: 'weekly',
         priority: 0.65,
@@ -80,7 +82,7 @@ export default async function sitemap() {
     entityEntries = entities
       .filter((e) => e.slug)
       .map((e) => ({
-        url: `${base}/directory/${e.slug}`,
+        url: `${base}/directory/${encodeURIComponent(e.slug)}`,
         lastModified: new Date(),
         changeFrequency: 'weekly',
         priority: 0.65,
