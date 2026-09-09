@@ -79,7 +79,11 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
     return typeof f.image === 'string' ? f.image : '';
   });
   const [authors, setAuthors] = useState([]);
-  const [slugTouched, setSlugTouched] = useState(!!editingPost);
+  // Only count the slug as "manually set" when the article actually HAS one.
+  // Keying this off editingPost alone meant any existing article with an empty
+  // slug was permanently locked out of auto-generation, so editing its title
+  // never produced a slug and the article stayed unreachable.
+  const [slugTouched, setSlugTouched] = useState(!!editingPost?.slug);
   const [busy, setBusy] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [lastSaved, setLastSaved] = useState(null);
@@ -310,6 +314,14 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
             <input
               value={form.slug}
               onChange={(e) => { setSlugTouched(true); update({ slug: toSlug(e.target.value) }); }}
+              onBlur={() => {
+                // Empty slug → derive from title. Without this the field can be
+                // left blank and the article ends up with no usable URL.
+                if (!form.slug && form.title) {
+                  setSlugTouched(false);
+                  update({ slug: toSlug(form.title) });
+                }
+              }}
               placeholder="url-slug"
               className="flex-1 bg-transparent text-gray-400 focus:outline-none border-b border-transparent focus:border-gray-700"
             />
