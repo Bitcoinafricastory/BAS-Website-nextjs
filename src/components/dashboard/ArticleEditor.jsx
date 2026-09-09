@@ -219,6 +219,23 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
         try { localStorage.removeItem(AUTOSAVE_KEY); } catch {}
       }
 
+      // Purge the ISR cache so the change is visible immediately. Public pages
+      // set revalidate = 300, so without this the homepage, /news and the
+      // footer keep serving a cached copy for up to five minutes after
+      // publishing — which reads as "my article didn't save".
+      try {
+        const idToken = await auth.currentUser?.getIdToken();
+        await fetch('/api/admin/revalidate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ idToken, slug: safeSlug }),
+        });
+      } catch (err) {
+        // Non-fatal: the article is already saved, it will just take the usual
+        // five minutes to appear.
+        console.warn('Could not purge cache after save:', err);
+      }
+
       // Only run entity extraction on an actual publish, not draft saves —
       // no point suggesting directory matches for something not live yet.
       if (finalStatus === 'published') {
@@ -258,15 +275,39 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
         }),
       });
       const data = await res.json();
-      if (data.error || !data.suggestions || data.suggestions.length === 0) {
+
+      // Distinguish the failure modes. Previously every one of these — auth
+      // rejection, server error, missing API key, genuinely zero matches —
+      // cleared the loading state with no message, so "broken" and "nothing
+      // found" were indistinguishable from the editor.
+      if (!res.ok) {
+        const detail =
+          res.status === 401 ? 'Your session expired. Reload the page and sign in again.'
+          : res.status === 403 ? 'This account is not on the admin allowlist (check ADMIN_EMAILS).'
+          : data?.error || `Server returned ${res.status}.`;
+        console.error('Entity extraction failed:', res.status, data);
         setExtractionState(null);
+        onNotify?.('error', `Could not find matches: ${detail}`);
+        if (persistDocId) onDone?.();
+        return;
+      }
+
+      if (!data.suggestions || data.suggestions.length === 0) {
+        setExtractionState(null);
+        onNotify?.(
+          'success',
+          data.degraded
+            ? `No directory matches found. Note: ${data.reason}`
+            : 'No directory profiles matched this article.'
+        );
         if (persistDocId) onDone?.();
         return;
       }
       setExtractionState({ suggestions: data.suggestions, degraded: data.degraded, reason: data.reason });
     } catch (err) {
-      console.warn('Entity extraction request failed:', err);
+      console.error('Entity extraction request failed:', err);
       setExtractionState(null);
+      onNotify?.('error', `Could not reach the matching service: ${err?.message || 'unknown error'}`);
       if (persistDocId) onDone?.();
     }
   };
