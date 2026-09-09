@@ -109,8 +109,23 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
 
   const update = (patch) => setForm((f) => ({ ...f, ...patch }));
 
+  // A slug becomes a URL path, so it must contain only characters that survive
+  // one unchanged. Anything else (spaces, colons, apostrophes, accents) gets
+  // percent-encoded by the browser, which no longer matches the string stored
+  // in Firestore — and the article 404s even though it published fine.
+  const toSlug = (raw) =>
+    (raw || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // strip accents: "café" → "cafe"
+      .replace(/['’]/g, '')            // drop apostrophes rather than leaving a gap
+      .replace(/[^a-z0-9\s-]/g, '')    // remove everything else non-URL-safe
+      .trim()
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');            // collapse runs of hyphens
+
   const handleTitle = (title) => {
-    update({ title, ...(slugTouched ? {} : { slug: title.toLowerCase().trim().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-') }) });
+    update({ title, ...(slugTouched ? {} : { slug: toSlug(title) }) });
   };
 
   const uploadIfFile = useCallback(async (fileOrUrl, path) => {
@@ -172,8 +187,12 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
 
       const { id, _doc, ...rest } = form;
       const finalStatus = statusOverride || form.status;
+      // Last line of defence: whatever route the value took to get here, the
+      // stored slug must be URL-safe or the published article will 404.
+      const safeSlug = toSlug(form.slug) || toSlug(form.title);
       const payload = {
         ...rest,
+        slug: safeSlug,
         image: imageUrl,
         authorImage: authorImageUrl,
         status: finalStatus,
@@ -290,7 +309,7 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
             <span className="text-gray-600">/news/</span>
             <input
               value={form.slug}
-              onChange={(e) => { setSlugTouched(true); update({ slug: e.target.value }); }}
+              onChange={(e) => { setSlugTouched(true); update({ slug: toSlug(e.target.value) }); }}
               placeholder="url-slug"
               className="flex-1 bg-transparent text-gray-400 focus:outline-none border-b border-transparent focus:border-gray-700"
             />
