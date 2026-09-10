@@ -81,7 +81,6 @@ export const metadata = {
     // so a home-screen save came out cropped and off-centre.
     apple: '/apple-touch-icon.png',
   },
-  manifest: '/manifest.json',
   alternates: {
     canonical: 'https://www.bitcoinafricastory.com',
     languages: {
