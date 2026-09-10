@@ -1,5 +1,5 @@
 import './globals.css';
-import { Montserrat, Poppins, Inter, Merriweather, Fraunces, JetBrains_Mono } from 'next/font/google';
+import { Montserrat, Fraunces, JetBrains_Mono } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import AppShell from '@/components/AppShell';
@@ -15,26 +15,7 @@ const montserrat = Montserrat({
 });
 
 // Additional fonts writers can pick from the article editor's font dropdown.
-// One weight each to keep the bundle lean — writers rarely need bold/italic in
 // their chosen body font since bold is applied via <strong>.
-const poppins = Poppins({
-  subsets: ['latin'],
-  weight: '400',
-  variable: '--font-poppins',
-  display: 'swap',
-});
-const inter = Inter({
-  subsets: ['latin'],
-  weight: '400',
-  variable: '--font-inter',
-  display: 'swap',
-});
-const merriweather = Merriweather({
-  subsets: ['latin'],
-  weight: '400',
-  variable: '--font-merriweather',
-  display: 'swap',
-});
 
 // Editorial serif display face — used on the About page (headline, pull-quotes,
 // pillar numerals) for a magazine feel distinct from the site-wide Montserrat.
@@ -129,7 +110,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${montserrat.variable} ${poppins.variable} ${inter.variable} ${merriweather.variable} ${fraunces.variable} ${jetbrainsMono.variable}`}>
+    // Poppins, Inter and Merriweather were previously loaded here too, but
+    // they are ONLY used by the dashboard's article-editor font picker — every
+    // public visitor was downloading three typefaces they would never see.
+    // They now load inside the dashboard layout instead.
+    <html lang="en" className={`${montserrat.variable} ${fraunces.variable} ${jetbrainsMono.variable}`}>
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(organizationSchema())} />
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(websiteSchema())} />

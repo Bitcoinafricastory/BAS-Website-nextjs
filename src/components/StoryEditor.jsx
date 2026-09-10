@@ -12,13 +12,18 @@ const fontSizeArr = ['10px', '12px', '14px', '16px', '18px', '20px', '24px', '30
 // Slugs must be lowercase, no spaces (Quill's Parchment requirement).
 // `family` uses next/font CSS variables where possible so browsers use the
 // fonts we've actually loaded rather than a random system fallback.
+// Montserrat only. The picker previously offered Poppins, Inter, Georgia,
+// Merriweather and Courier, which meant three extra Google font families were
+// downloaded by every visitor just so a writer could occasionally change a
+// paragraph — and articles ended up typographically inconsistent with each
+// other. The brand system specifies Montserrat as the site's only typeface.
+//
+// Georgia and Courier are kept out too: they're system fonts (no download
+// cost) but mixing serif or monospace body copy into a Montserrat publication
+// looks accidental rather than deliberate. Code blocks still render monospace
+// via the code-block format, which is the correct way to do that.
 const FONT_CHOICES = [
   { value: 'montserrat', label: 'Montserrat', family: 'var(--font-montserrat), system-ui, sans-serif' },
-  { value: 'poppins', label: 'Poppins', family: 'var(--font-poppins), system-ui, sans-serif' },
-  { value: 'inter', label: 'Inter', family: 'var(--font-inter), system-ui, sans-serif' },
-  { value: 'georgia', label: 'Georgia', family: 'Georgia, "Times New Roman", serif' },
-  { value: 'merriweather', label: 'Merriweather', family: 'var(--font-merriweather), Georgia, serif' },
-  { value: 'courier', label: 'Courier', family: '"Courier New", Courier, monospace' },
 ];
 
 const FONT_WHITELIST = FONT_CHOICES.map((f) => f.value);
