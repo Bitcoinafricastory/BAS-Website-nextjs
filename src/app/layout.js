@@ -94,9 +94,13 @@ export const metadata = {
     images: [`${currentSiteUrl}/assets/og-image.jpg`],
   },
   icons: {
-    icon: ['/favicon-32x32.png', '/favicon-192.png'],
-    apple: '/favicon-192.png',
+    icon: ['/favicon-32x32.png', '/icon-192.png'],
+    // Must be square: iOS applies its own rounded mask and does not letterbox.
+    // This previously pointed at favicon-192.png, which is actually 112x152,
+    // so a home-screen save came out cropped and off-centre.
+    apple: '/apple-touch-icon.png',
   },
+  manifest: '/manifest.json',
   alternates: {
     canonical: 'https://www.bitcoinafricastory.com',
     languages: {

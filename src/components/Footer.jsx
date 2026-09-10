@@ -187,7 +187,10 @@ export default async function Footer() {
               <Image
                 src="/assets/BitcoinAfricaStoryLogo.png"
                 alt="Bitcoin Africa Story"
-                width={160}
+                // Source file is 1552x747 (2.08:1). These must match that
+                // ratio or next/image distorts the logo — the previous
+                // 160x48 box was 3.33:1 and stretched it horizontally.
+                width={100}
                 height={48}
                 className="h-10 w-auto"
               />
