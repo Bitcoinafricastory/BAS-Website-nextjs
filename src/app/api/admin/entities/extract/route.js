@@ -1,4 +1,9 @@
 import { NextResponse } from 'next/server';
+
+// Web search adds several round trips (the model searches, reads results, then
+// answers), which comfortably exceeds Vercel's default 10s function limit.
+// Without this the request is killed mid-search and always falls back.
+export const maxDuration = 60;
 import { getEntities } from '@/lib/entities';
 import { ENTITY_TYPES, ENTITY_COUNTRIES } from '@/lib/entityTypes';
 
@@ -180,7 +185,11 @@ List every specific, named entity this article is actually about or substantivel
 
 IMPORTANT — prefer matching over creating. Check the existing list carefully before calling anything new. Treat these as the SAME entity: accent differences (Bénin / Benin), missing or extra words like "Community", "Project", "Fund", "Organisation", different word order, abbreviations and their full forms, and English vs French names for the same group. A duplicate directory entry is a real problem; a missed new entry is not, because an editor can always add it by hand.
 
-For anything that looks NEW (no existing match), also pull out country, city, website, founder, and 2-4 short lowercase tags — but ONLY values the article text actually states. Leave a field empty ("" or []) rather than guessing or inventing something the article doesn't say. Never invent a website URL — only include one if it's literally written in the article text.
+For anything that looks NEW (no existing match), also pull out country, city, website, founder, and 2-4 short lowercase tags.
+
+You have a web_search tool. Use it for new entities to find the official website and confirm country, city and founder — search the organisation's name plus a word like "Bitcoin" and its country. Prefer the organisation's own site over directories, news write-ups or social profiles.
+
+Accuracy matters more than completeness. Only fill a field from the article text or from something you actually found and verified by searching. If a search doesn't clearly identify the organisation, leave the field empty ("" or []) — never guess a URL, and never output a plausible-looking domain you haven't confirmed. A blank field is fine; a wrong link is not. Don't search for entities that already match an existing directory entry.
 
 Respond with ONLY a JSON array and no other text. Each item exactly like:
 {"name": "string", "type": "one of the valid entity types", "matchesExisting": "the exact existing entry name it matches, or null", "reason": "one short sentence on why this belongs in the directory", "country": "one of the valid countries, or empty string if not stated", "city": "string or empty", "website": "string or empty", "founder": "string or empty", "tags": ["short", "lowercase", "tags"]}
@@ -198,16 +207,18 @@ If nothing qualifies, respond with an empty array: []`;
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
-        max_tokens: 1024,
-        messages: [
-          { role: 'user', content: prompt },
-          // Prefilling the assistant turn with an opening bracket forces the
-          // reply to continue as a JSON array rather than starting with prose
-          // like "Here are the entities I found:". That preamble was breaking
-          // JSON.parse, so every call silently fell back to plain name
-          // matching — which is why obvious mentions were never suggested.
-          { role: 'assistant', content: '[' },
-        ],
+        // Higher than before: search results and tool-use blocks consume
+        // tokens before the model gets to the JSON, and a truncated reply
+        // parses as malformed.
+        max_tokens: 4096,
+        // Lets the model verify an organisation's real website instead of
+        // leaving the field blank or inventing a plausible domain.
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        messages: [{ role: 'user', content: prompt }],
+        // NOTE: no assistant prefill here. Prefilling with '[' forces the very
+        // next token to continue a JSON array, which prevents the model from
+        // issuing a tool call first. The parser below recovers the array from
+        // surrounding text instead.
       }),
     });
   } catch (err) {
@@ -231,20 +242,22 @@ If nothing qualifies, respond with an empty array: []`;
   }
 
   const data = await response.json();
-  const rawText = data.content?.find((c) => c.type === 'text')?.text || '';
 
-  // The assistant turn was prefilled with '[', so the reply continues from
-  // there and the opening bracket is not echoed back — reattach it.
-  const textBlock = `[${rawText}`;
+  // With the search tool enabled the reply is a sequence of blocks —
+  // reasoning text, tool_use, web_search_tool_result, then the answer. Taking
+  // the FIRST text block would grab the model thinking out loud before it
+  // searched; the JSON is in the LAST one.
+  const textBlocks = (data.content || []).filter((c) => c.type === 'text' && c.text);
+  const rawText = textBlocks.length ? textBlocks[textBlocks.length - 1].text : '';
 
   let parsed;
   try {
-    const cleaned = textBlock.replace(/```json|```/g, '').trim();
+    const cleaned = rawText.replace(/```json|```/g, '').trim();
     try {
       parsed = JSON.parse(cleaned);
     } catch {
-      // Salvage the array if anything still surrounds it. Discarding a good
-      // result because of a stray sentence is worse than a slightly loose parse.
+      // Salvage the array from any surrounding prose. Discarding a good
+      // result because of a stray sentence is worse than a loose parse.
       const start = cleaned.indexOf('[');
       const end = cleaned.lastIndexOf(']');
       if (start === -1 || end === -1 || end <= start) throw new Error('no JSON array found');
