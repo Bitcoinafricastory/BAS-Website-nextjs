@@ -78,7 +78,8 @@ House style:
 - Reporting, not promotion. Never write "revolutionary", "game-changing", "unlock", "empower".
 - Name real people, organisations and places specifically.
 - Sentence case. British or American spelling is fine, just be consistent with the article.
-- Never invent facts, numbers, names or quotes. Use only what the article states.`;
+- Never invent facts, numbers, names or quotes. Use only what the article states.
+- Output plain readable text. Use real characters — an apostrophe is ' and a quote is ", never "&#39;" or "&quot;". Never emit HTML tags or HTML entities of any kind.`;
 
 const TASKS = {
   takeaways: {

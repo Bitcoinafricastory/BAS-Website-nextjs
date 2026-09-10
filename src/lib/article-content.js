@@ -26,15 +26,49 @@ export function computeReadingTime(content, explicit) {
 
 // Pull the first N sentences as fallback "Key Takeaways" if the article
 // doesn't define them explicitly. Editors can override in the admin panel.
+// Stored editorial text (takeaways, FAQ questions/answers) is rendered as
+// plain React text, not HTML — so any entity that made it into the stored
+// string shows up literally as "&#39;" instead of an apostrophe. Older entries
+// were generated from raw article HTML and carry these. Decoding here fixes
+// every existing entry on render, with no need to regenerate anything.
+export function decodeEntities(value) {
+  if (typeof value !== 'string') return value;
+  const pass = (s) =>
+    s
+      .replace(/&nbsp;/gi, ' ')
+      .replace(/&quot;|&ldquo;|&rdquo;/gi, '"')
+      .replace(/&#39;|&apos;|&rsquo;|&lsquo;/gi, "'")
+      .replace(/&mdash;/gi, '—')
+      .replace(/&ndash;/gi, '–')
+      .replace(/&hellip;/gi, '…')
+      .replace(/&lt;/gi, '<')
+      .replace(/&gt;/gi, '>')
+      .replace(/&#(\d+);/g, (_, d) => String.fromCharCode(Number(d)))
+      .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCharCode(parseInt(h, 16)))
+      .replace(/&amp;/gi, '&');
+
+  // Two passes: content that was escaped twice arrives as "&amp;#39;", and a
+  // single pass only unwraps it to "&#39;". Capped at two so a literal
+  // ampersand a writer typed can't be endlessly re-interpreted.
+  const once = pass(value);
+  return (once.includes('&') ? pass(once) : once).trim();
+}
+
 export function deriveKeyTakeaways(post) {
   if (Array.isArray(post.keyTakeaways) && post.keyTakeaways.length) {
-    return post.keyTakeaways;
+    return post.keyTakeaways.map(decodeEntities).filter(Boolean);
   }
   return [];
 }
 
 export function getFaqs(post) {
-  if (Array.isArray(post.faqs) && post.faqs.length) return post.faqs;
+  if (Array.isArray(post.faqs) && post.faqs.length) {
+    return post.faqs.map((f) =>
+      typeof f === 'object' && f
+        ? { ...f, question: decodeEntities(f.question), answer: decodeEntities(f.answer) }
+        : decodeEntities(f)
+    );
+  }
   return [];
 }
 
