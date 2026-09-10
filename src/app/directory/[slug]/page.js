@@ -51,7 +51,7 @@ export default async function DirectoryProfilePage({ params }) {
     .map((s) => allEntities.find((e) => e.slug === s))
     .filter(Boolean);
 
-  const autoCoverage = await getEntityCoverage(entity.slug);
+  const autoCoverage = await getEntityCoverage(entity.slug, entity.name);
   const manualCoverage = (entity.externalCoverage || []).map((c) => ({ ...c, external: true }));
   const coverage = [...autoCoverage, ...manualCoverage].sort(
     (a, b) => new Date(b.date || 0) - new Date(a.date || 0)
