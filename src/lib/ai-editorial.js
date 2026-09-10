@@ -1,24 +1,46 @@
 // AI editorial assistance service.
 //
-// Currently STUBBED: each function returns a fast heuristic result so the UI
-// is fully functional without an API key. When you're ready to wire a real
-// LLM, replace the body of `callAI()` with a fetch to your API route
-// (e.g. /api/ai) that calls Anthropic/OpenAI — every tool below already routes
-// through it, so that's the only place you'll need to change.
+// Each tool calls /api/admin/ai (authenticated, server-side Anthropic call).
+// If that fails for any reason — not configured, network error, article too
+// short — the function falls back to a crude heuristic so the UI still does
+// something rather than erroring. The heuristics are deliberately basic; they
+// are a safety net, not the intended output.
 
 import { stripHtml } from './article-content';
+import { auth } from './firebase';
 
 async function callAI(task, payload) {
-  // task/payload are used once a real API is wired; unused in the stub.
-  void task;
-  void payload;
-  // TODO: replace with real API call, e.g.:
-  //   const res = await fetch('/api/ai', { method: 'POST', body: JSON.stringify({ task, payload }) });
-  //   return (await res.json()).result;
-  //
-  // For now, simulate latency then fall through to the heuristic in each tool.
-  await new Promise((r) => setTimeout(r, 600));
-  return null; // null → caller uses its heuristic fallback
+  try {
+    const idToken = await auth.currentUser?.getIdToken();
+    if (!idToken) return null;
+
+    const res = await fetch('/api/admin/ai', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        idToken,
+        task,
+        payload: {
+          title: payload?.title,
+          excerpt: payload?.excerpt,
+          category: payload?.category,
+          content: payload?.content,
+        },
+      }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      // Surface the reason in the console — a silent null here is why the
+      // stubbed version went unnoticed for so long.
+      console.warn(`AI task "${task}" failed:`, data?.error || res.status);
+      return null;
+    }
+    return data.result ?? null;
+  } catch (err) {
+    console.warn(`AI task "${task}" request failed:`, err);
+    return null;
+  }
 }
 
 function firstSentences(text, n = 2) {
