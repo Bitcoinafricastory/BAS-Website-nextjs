@@ -49,15 +49,62 @@ async function verifyIdToken(idToken) {
 }
 
 function normalize(name) {
-  return String(name || '').toLowerCase().replace(/[^a-z0-9\s]/g, '').trim();
+  return String(name || '')
+    .toLowerCase()
+    // Fold accents rather than deleting them. The previous version stripped
+    // any non-ASCII character outright, so "Bitcoin Bénin" became
+    // "bitcoin bnin" and could never match an existing "Bitcoin Benin" entry —
+    // every Francophone name looked brand new and prompted a duplicate.
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// Words that carry no distinguishing weight — matching on these alone would
+// pair up unrelated entries like "Bitcoin Benin" and "Bitcoin Togo".
+const STOPWORDS = new Set(['bitcoin', 'the', 'of', 'and', 'a', 'le', 'la', 'les', 'de', 'du', 'des', 'community', 'communaute', 'project', 'org', 'organization', 'fund', 'inc', 'ltd']);
+
+function significantTokens(name) {
+  return normalize(name)
+    .split(' ')
+    .filter((t) => t.length > 2 && !STOPWORDS.has(t));
 }
 
 function findExistingMatch(name, entities) {
   const n = normalize(name);
   if (!n) return null;
+
+  // 1. Exact match after normalisation.
+  const exact = entities.find((e) => normalize(e.name) === n);
+  if (exact) return exact;
+
+  // 2. One name fully contains the other ("Geyser" ↔ "Geyser Fund"). Require
+  //    the shorter side to be reasonably long, or short words like "BAS"
+  //    would match almost anything.
+  const contained = entities.find((e) => {
+    const en = normalize(e.name);
+    if (!en) return false;
+    const shorter = n.length < en.length ? n : en;
+    if (shorter.length < 4) return false;
+    return en.includes(n) || n.includes(en);
+  });
+  if (contained) return contained;
+
+  // 3. All distinguishing words of one appear in the other — catches
+  //    "AfriBit Kibera" vs "Afribit Kibera Community" and word-order
+  //    differences, without pairing entries that merely share "Bitcoin".
+  const tokens = significantTokens(name);
+  if (tokens.length === 0) return null;
   return (
-    entities.find((e) => normalize(e.name) === n) ||
-    entities.find((e) => normalize(e.name).includes(n) || n.includes(normalize(e.name)))
+    entities.find((e) => {
+      const eTokens = significantTokens(e.name);
+      if (eTokens.length === 0) return false;
+      const smaller = tokens.length <= eTokens.length ? tokens : eTokens;
+      const larger = new Set(tokens.length <= eTokens.length ? eTokens : tokens);
+      return smaller.every((t) => larger.has(t));
+    }) || null
   );
 }
 
@@ -66,9 +113,11 @@ function findExistingMatch(name, entities) {
 // genuinely requires the model's judgment, not string matching — so this
 // only ever returns matches against what's already in the directory.
 function deterministicMatch(plainText, entities) {
-  const lower = plainText.toLowerCase();
+  // Normalise the article text the same way as the names, so an accented
+  // mention in the body still matches an unaccented directory entry.
+  const haystack = normalize(plainText);
   return entities
-    .filter((e) => e.name && lower.includes(e.name.toLowerCase()))
+    .filter((e) => e.name && normalize(e.name).length > 2 && haystack.includes(normalize(e.name)))
     .map((e) => ({
       name: e.name,
       guessedType: e.type,
@@ -128,6 +177,8 @@ Article category: ${category}
 Article body (HTML tags already stripped, may be truncated): ${plainText.slice(0, 8000)}
 
 List every specific, named entity this article is actually about or substantively discusses. For each, state whether its name matches one of the existing directory entries above (case-insensitive, allow for minor name variation) or whether it looks like something new to the directory.
+
+IMPORTANT — prefer matching over creating. Check the existing list carefully before calling anything new. Treat these as the SAME entity: accent differences (Bénin / Benin), missing or extra words like "Community", "Project", "Fund", "Organisation", different word order, abbreviations and their full forms, and English vs French names for the same group. A duplicate directory entry is a real problem; a missed new entry is not, because an editor can always add it by hand.
 
 For anything that looks NEW (no existing match), also pull out country, city, website, founder, and 2-4 short lowercase tags — but ONLY values the article text actually states. Leave a field empty ("" or []) rather than guessing or inventing something the article doesn't say. Never invent a website URL — only include one if it's literally written in the article text.
 
