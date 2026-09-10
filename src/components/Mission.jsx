@@ -23,7 +23,10 @@ export default function Mission() {
               <ArrowRight className="ml-2" size={20} />
             </Link>
           </div>
-          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+          {/* Hidden below lg: on a phone these four cards push the section's
+              actual message and CTA far down the page. The same content is
+              covered on the About page. */}
+          <div className="hidden lg:grid grid-cols-2 gap-3 sm:gap-4">
             <div className="space-y-3 sm:space-y-4">
               <div className="group p-5 sm:p-6 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 hover:-translate-y-1 hover:shadow-[0_12px_30px_-12px_rgba(234,179,8,0.25)] transition-all duration-300">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center mb-3 group-hover:bg-yellow-500/20 group-hover:scale-110 transition-all duration-300">
