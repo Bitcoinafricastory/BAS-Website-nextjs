@@ -155,7 +155,7 @@ export function personSchema(author) {
   return schema;
 }
 
-export function newsArticleSchema(post, author) {
+export function newsArticleSchema(post, author, entities = []) {
   const pageUrl = `${SITE_URL}/news/${post.slug || post.id}`;
   const imageUrl = resolveImageUrl(post.image);
   const published = post.date ? new Date(post.date).toISOString() : new Date().toISOString();
@@ -175,6 +175,24 @@ export function newsArticleSchema(post, author) {
   const keywords = Array.isArray(post.tags) && post.tags.length > 0
     ? post.tags.join(', ')
     : (typeof post.tags === 'string' && post.tags ? post.tags : undefined);
+
+  // Map linked directory entities to schema objects. sameAs pointing at the
+  // organisation's own website is what lets Google and answer engines connect
+  // this mention to the real-world entity.
+  const entitySubjects = (entities || [])
+    .filter((e) => e && e.name)
+    .map((e) => {
+      const isPerson = e.type === 'person';
+      const node = {
+        '@type': isPerson ? 'Person' : 'Organization',
+        name: e.name,
+        '@id': `${SITE_URL}/directory/${e.slug}`,
+        url: `${SITE_URL}/directory/${e.slug}`,
+      };
+      if (e.website) node.sameAs = [e.website];
+      if (e.description) node.description = e.description;
+      return node;
+    });
 
   return {
     '@context': 'https://schema.org',
@@ -203,6 +221,14 @@ export function newsArticleSchema(post, author) {
       '@type': 'SpeakableSpecification',
       cssSelector: ['h1', '.article-body'],
     },
+    // The organisations, projects and people this article covers, as resolved
+    // directory entities rather than plain text. This is the strongest AEO
+    // signal available here: it tells an answer engine that "Tando" in this
+    // article is a specific named organisation with its own profile page and
+    // website, not an ambiguous word. `about` is the primary subject; the rest
+    // are `mentions`.
+    about: entitySubjects.length > 0 ? entitySubjects[0] : undefined,
+    mentions: entitySubjects.length > 1 ? entitySubjects.slice(1) : undefined,
     mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
   };
 }

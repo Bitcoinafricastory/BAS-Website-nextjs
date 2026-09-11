@@ -96,7 +96,7 @@ export default async function BlogPostPage({ params }) {
   ];
 
   const schemas = [
-    newsArticleSchema(post, author),
+    newsArticleSchema(post, author, mentionedEntities),
     breadcrumbSchema(breadcrumbs),
     faqSchema(faqs),
   ].filter(Boolean);
