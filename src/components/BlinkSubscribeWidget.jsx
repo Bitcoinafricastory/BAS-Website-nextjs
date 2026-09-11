@@ -13,9 +13,6 @@ export default function BlinkSubscribeWidget() {
   return (
     <div>
       <div id="blink-sub" data-username="bitcoin_africa_story" />
-      <p className="text-center text-[13px] text-gray-600 mt-4">
-        Paid over Lightning. Cancel anytime from the same page you subscribe on.
-      </p>
       <Script src="https://blink-subscriptions.vercel.app/embed.js" strategy="afterInteractive" />
     </div>
   );
