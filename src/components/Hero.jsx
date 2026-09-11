@@ -6,12 +6,37 @@ import { ArrowRight } from 'lucide-react';
 import CountUp from 'react-countup';
 import { motion } from 'framer-motion';
 
-const stats = [
-  { value: 41, suffix: '+', label: 'Stories Published' },
-  { value: 500, suffix: '+', label: 'People Taught' },
-  { value: 50, suffix: '+', label: 'Communities' },
-  { value: 2, suffix: '+', label: 'Years On The Ground' },
-];
+// Stories Published comes from the real article count (passed in from the
+// homepage) so it can't go stale — it was hardcoded at 41 while the site had
+// well over that. The rest are figures only you can know, so they stay manual.
+const FALLBACK_STORY_COUNT = 45;
+
+function buildStats(storyCount) {
+  return [
+    { value: storyCount || FALLBACK_STORY_COUNT, suffix: '+', label: 'Stories Published' },
+    { value: 500, suffix: '+', label: 'People Taught' },
+    { value: 50, suffix: '+', label: 'Communities' },
+    { value: 2, suffix: '+', label: 'Years On The Ground' },
+  ];
+}
+
+// CountUp renders nothing until its animation starts, so the server-rendered
+// HTML contained a bare "+" with no number — which is what crawlers and anyone
+// on a slow connection saw. Passing `start` makes CountUp render the final
+// value immediately as its initial text, then animate from 0 in the browser.
+function Stat({ value }) {
+  return (
+    <CountUp
+      end={value}
+      start={0}
+      duration={2}
+      enableScrollSpy
+      scrollSpyOnce
+      // Rendered on the server and before hydration, so the figure is always
+      // present in the HTML.
+      >{({ countUpRef }) => <span ref={countUpRef}>{value}</span>}</CountUp>
+  );
+}
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -22,7 +47,8 @@ const fadeUp = {
   }),
 };
 
-export default function Hero() {
+export default function Hero({ storyCount }) {
+  const stats = buildStats(storyCount);
   return (
     <section id="hero" className="relative bg-black">
       {/* ===== MOBILE / TABLET (< lg): lean, text-first hero. No full-bleed
@@ -139,7 +165,7 @@ export default function Hero() {
             {stats.map((stat) => (
               <div key={stat.label}>
                 <div className="font-semibold text-white text-[26px] leading-none flex items-baseline gap-0.5">
-                  <CountUp end={stat.value} duration={2} enableScrollSpy scrollSpyOnce />
+                  <Stat value={stat.value} />
                   <span className="text-yellow-500 text-base">{stat.suffix}</span>
                 </div>
                 <div className="font-medium text-[10px] tracking-[0.14em] uppercase text-gray-300 mt-1.5">

@@ -68,7 +68,8 @@ export default async function HomePage() {
   return (
     <div className="pt-16">
 
-      <Hero />
+      {/* Real article count so the stat can't go stale. */}
+      <Hero storyCount={posts.length} />
 
       <Mission />
 
