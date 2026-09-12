@@ -189,6 +189,8 @@ For anything that looks NEW (no existing match), also pull out country, city, we
 
 You have a web_search tool. Use it for new entities to find the official website and confirm country, city and founder — search the organisation's name plus a word like "Bitcoin" and its country. Prefer the organisation's own site over directories, news write-ups or social profiles.
 
+Write the website as a full absolute URL including https:// — a bare domain like "example.com" is stored as-is and renders as a broken relative link.
+
 Accuracy matters more than completeness. Only fill a field from the article text or from something you actually found and verified by searching. If a search doesn't clearly identify the organisation, leave the field empty ("" or []) — never guess a URL, and never output a plausible-looking domain you haven't confirmed. A blank field is fine; a wrong link is not. Don't search for entities that already match an existing directory entry.
 
 Respond with ONLY a JSON array and no other text. Each item exactly like:

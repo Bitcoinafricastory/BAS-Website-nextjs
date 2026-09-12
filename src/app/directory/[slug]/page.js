@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getEntities, getEntityBySlug, getEntityCoverage } from '@/lib/entities';
+import { getEntities, getEntityBySlug, getEntityCoverage, normalizeWebsiteUrl } from '@/lib/entities';
 import { directoryEntitySchema, breadcrumbSchema, jsonLdScript, SITE_URL, resolveImageUrl } from '@/lib/schema';
 import { entityTypeLabel, summarizeBadges, badgeLabel } from '@/lib/entityTypes';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -97,8 +97,8 @@ export default async function DirectoryProfilePage({ params }) {
         )}
 
         <div className="flex flex-wrap gap-4 text-sm mb-8">
-          {entity.website && (
-            <a href={entity.website} target="_blank" rel="noopener noreferrer" className="font-semibold hover:text-yellow-500 transition-colors">{entity.website.replace(/^https?:\/\//, '')}</a>
+          {normalizeWebsiteUrl(entity.website) && (
+            <a href={normalizeWebsiteUrl(entity.website)} target="_blank" rel="noopener noreferrer" className="font-semibold hover:text-yellow-500 transition-colors">{entity.website.replace(/^https?:\/\//, '')}</a>
           )}
           {entity.socialLinks?.twitter && (
             <a href={entity.socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-yellow-500 transition-colors">X / Twitter</a>

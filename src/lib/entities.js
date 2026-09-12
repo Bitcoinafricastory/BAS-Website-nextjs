@@ -22,6 +22,32 @@ function serializeDates(data) {
  * "Bitcoin Ikorodu" -> "bitcoin-ikorodu". Exported so the admin form and any
  * future migration script can preview/generate slugs consistently.
  */
+/**
+ * Make a stored website value safe to use in href.
+ *
+ * Entity websites are often saved as a bare domain ("gorilla-sats.com") —
+ * either typed that way or returned that way by the AI extractor. A bare
+ * domain in an href is treated as a RELATIVE path, so the link resolved to
+ * bitcoinafricastory.com/gorilla-sats.com and 404'd. Around 16 directory
+ * entries were pointing at dead internal URLs because of this.
+ *
+ * Returns null for values that can't be made into a sensible external link,
+ * so callers can hide the link rather than render a broken one.
+ */
+export function normalizeWebsiteUrl(value) {
+  const raw = String(value || '').trim();
+  if (!raw) return null;
+  // Already absolute, or a protocol we shouldn't rewrite.
+  if (/^https?:\/\//i.test(raw)) return raw;
+  if (/^(mailto|tel):/i.test(raw)) return raw;
+  // Protocol-relative.
+  if (raw.startsWith('//')) return `https:${raw}`;
+  // Reject anything that isn't plausibly a domain — a stray note or a path
+  // fragment shouldn't become a link at all.
+  if (!/^[a-z0-9][a-z0-9.-]*\.[a-z]{2,}(\/|$|\?)/i.test(raw.replace(/^\//, ''))) return null;
+  return `https://${raw.replace(/^\//, '')}`;
+}
+
 export function slugifyEntity(name) {
   return String(name || '')
     .toLowerCase()
