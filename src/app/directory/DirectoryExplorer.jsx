@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { Search, CheckCircle2, ArrowUpRight, X } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { normalizeWebsiteUrl } from '@/lib/entities';
 import {
   ENTITY_TYPES, ENTITY_COUNTRIES, BADGE_LEVELS, entityTypeLabel, badgeLabel, summarizeBadges,
 } from '@/lib/entityTypes';
@@ -147,20 +146,16 @@ function EntityCard({ entity }) {
         )}
 
         <div className="mt-auto flex flex-wrap items-center gap-5 pt-3 border-t border-white/5">
+          {/* Only "View profile" here. The outbound site link lives on the
+              profile page instead — sending readers straight off-site from a
+              listing card skips the coverage and context the profile exists to
+              show. */}
           <Link href={`/directory/${entity.slug}`} className="group inline-flex items-center gap-2 text-sm font-medium text-yellow-500 hover:text-yellow-400 transition-colors">
             View profile
             <span className="w-5 h-5 rounded-full bg-yellow-500/10 flex items-center justify-center group-hover:bg-yellow-500 group-hover:text-black transition-colors duration-200">
               <ArrowUpRight size={11} />
             </span>
           </Link>
-          {normalizeWebsiteUrl(entity.website) && (
-            <a href={normalizeWebsiteUrl(entity.website)} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 text-sm font-medium text-white hover:text-yellow-500 transition-colors">
-              Visit
-              <span className="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-yellow-500 group-hover:text-black transition-colors duration-200">
-                <ArrowUpRight size={11} />
-              </span>
-            </a>
-          )}
         </div>
       </div>
     </div>
