@@ -4,6 +4,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import AppShell from '@/components/AppShell';
 import { organizationSchema, websiteSchema, jsonLdScript } from '@/lib/schema';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 // Brand font, applied site-wide (nav, body copy, cards, heroes, dashboard).
 const montserrat = Montserrat({
@@ -42,6 +43,10 @@ const jetbrainsMono = JetBrains_Mono({
 // .vercel.app URL while the old site still held the domain) — that indirection is no longer
 // needed and produced an unreliable absolute URL, which is why og:image stopped being emitted.
 const currentSiteUrl = 'https://www.bitcoinafricastory.com';
+
+// Set NEXT_PUBLIC_GA_ID in Vercel. Falls back to the measurement ID already
+// present in the Firebase config so analytics works immediately.
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-GHQSRJ6MQH';
 
 export const metadata = {
   metadataBase: new URL('https://www.bitcoinafricastory.com'),
@@ -122,6 +127,15 @@ export default function RootLayout({ children }) {
         <AppShell header={<Header />} footer={<Footer />}>
           {children}
         </AppShell>
+        {/* Analytics was never actually installed — the measurementId sat unused
+            in the Firebase config and no gtag script was ever loaded, so the GA
+            dashboard showed zeros regardless of real traffic. This mounts it
+            properly and handles App Router client-side navigations, which a
+            plain gtag snippet does not.
+
+            Rendered only when the ID is configured, so local development and
+            preview deployments don't pollute production stats. */}
+        {GA_ID ? <GoogleAnalytics gaId={GA_ID} /> : null}
       </body>
     </html>
   );
