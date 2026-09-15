@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { Save, Eye, X, LoaderCircle, FileText, CheckCircle2, Archive, Clock, Send } from 'lucide-react';
 import { db, storage, auth } from '@/lib/firebase';
+import { compressImage } from '@/lib/compress-image';
 import { collection, addDoc, updateDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { preventHyphenBreaks } from '@/lib/article-content';
@@ -134,8 +135,12 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
 
   const uploadIfFile = useCallback(async (fileOrUrl, path) => {
     if (fileOrUrl instanceof Blob) {
+      // Downscale before upload. Originals were going in at 1.7-3MB, which is
+      // too large for WhatsApp to fetch as a link preview (it silently shows
+      // no image) and makes the hero the slowest element on the page.
+      const optimized = await compressImage(fileOrUrl);
       const storageRef = ref(storage, path);
-      await uploadBytes(storageRef, fileOrUrl);
+      await uploadBytes(storageRef, optimized);
       return await getDownloadURL(storageRef);
     }
     return fileOrUrl;

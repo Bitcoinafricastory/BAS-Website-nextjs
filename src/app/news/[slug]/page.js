@@ -50,7 +50,13 @@ export async function generateMetadata({ params }) {
       url: pageUrl,
       title: post.seoTitle || post.title,
       description: post.metaDescription || post.excerpt,
-      images: imageUrl ? [imageUrl] : undefined,
+      // Declaring dimensions matters for WhatsApp in particular: without them
+      // it often falls back to a small thumbnail or skips the image entirely.
+      // Featured images are compressed to 1600px wide on upload, so this
+      // 1.91:1 crop is what the scraper will actually render.
+      images: imageUrl
+        ? [{ url: imageUrl, width: 1200, height: 630, alt: post.imageAlt || post.title }]
+        : undefined,
       siteName: 'Bitcoin Africa Story',
       publishedTime: post.date ? new Date(post.date).toISOString() : undefined,
       authors: [post.author || post.authorName || 'Bitcoin Africa Story'],
