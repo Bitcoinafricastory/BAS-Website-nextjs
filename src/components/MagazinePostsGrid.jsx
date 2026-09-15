@@ -21,7 +21,7 @@ export default function MagazinePostsGrid({ posts = [] }) {
       >
         <div className="relative aspect-[16/10] sm:aspect-[16/9] overflow-hidden bg-gray-800">
           {featured.image && (
-            <Image
+            <Image unoptimized
               src={featured.image}
               alt={featured.title}
               fill
@@ -61,7 +61,7 @@ export default function MagazinePostsGrid({ posts = [] }) {
           >
             <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 overflow-hidden bg-gray-800">
               {post.image && (
-                <Image
+                <Image unoptimized
                   src={post.image}
                   alt={post.title}
                   fill

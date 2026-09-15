@@ -6,7 +6,7 @@ export default function PostCard({ post }) {
     <Link href={`/news/${post.slug || post.id}`} className="group bg-[#0A0A0A] border border-white/5 overflow-hidden hover:border-yellow-500 transition-all duration-300 hover:scale-105">
       <div className="aspect-video overflow-hidden relative bg-gray-800">
         {post.image && (
-          <Image
+          <Image unoptimized
             src={post.image}
             alt={post.title}
             fill

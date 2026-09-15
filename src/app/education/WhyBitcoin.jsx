@@ -78,7 +78,7 @@ export default function WhyBitcoin({ testimonials = [], videoData = null }) {
                     <Quote className="absolute top-6 right-6 w-8 h-8 text-yellow-500/10" strokeWidth={3} />
                     <div className="flex items-center gap-3.5 mb-5">
                       {t.image && (
-                        <Image
+                        <Image unoptimized
                           src={t.image}
                           alt={t.name}
                           width={44}

@@ -89,7 +89,7 @@ const fadeUp = {
 function TrackCard({ track, className = '' }) {
   return (
     <article className={`group relative overflow-hidden bg-[#111] flex flex-col justify-end ${className}`}>
-      <Image
+      <Image unoptimized
         src={track.image}
         alt=""
         fill
@@ -174,7 +174,7 @@ export default function DonateContent({ verifiedCount = 0 }) {
             </motion.div>
           </div>
           <div className="relative min-h-[260px] lg:min-h-[440px] order-1 lg:order-2 -mx-6 lg:mx-0">
-            <Image src="/assets/dontebg.jpg" alt="Bitcoin Africa Story community" fill priority
+            <Image unoptimized src="/assets/dontebg.jpg" alt="Bitcoin Africa Story community" fill priority
               sizes="(min-width: 1024px) 48vw, 100vw" className="object-cover" />
           </div>
         </div>
@@ -342,7 +342,7 @@ export default function DonateContent({ verifiedCount = 0 }) {
                     Scan the QR code below to donate directly.
                   </p>
                   <div className="w-full flex justify-center">
-                    <Image
+                    <Image unoptimized
                       src="/assets/qrcode.jpg"
                       alt="Static QR Code for donations"
                       width={1600}

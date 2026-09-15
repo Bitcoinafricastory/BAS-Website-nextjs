@@ -19,7 +19,7 @@ export function FeaturedCard({ post }) {
     >
       <div className="aspect-[16/10] md:aspect-[21/9] overflow-hidden relative bg-[#0A0A0A]">
         {resolveImageUrl(post.image) && (
-          <Image
+          <Image unoptimized
             src={resolveImageUrl(post.image)}
             alt={post.imageAlt || post.title}
             fill
@@ -62,7 +62,7 @@ export function StoryCard({ post }) {
     <Link href={href} className="group flex flex-col bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden hover:border-yellow-500 transition-all duration-300">
       <div className="aspect-video overflow-hidden relative bg-gray-800">
         {resolveImageUrl(post.image) && (
-          <Image
+          <Image unoptimized
             src={resolveImageUrl(post.image)}
             alt={post.imageAlt || post.title}
             fill
@@ -110,7 +110,7 @@ export function HorizontalCard({ post }) {
     <Link href={href} className="group flex gap-4 items-center bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden hover:border-yellow-500 transition-all duration-300 p-3">
       <div className="w-24 h-24 flex-shrink-0 overflow-hidden rounded-lg relative bg-gray-800">
         {resolveImageUrl(post.image) && (
-          <Image
+          <Image unoptimized
             src={resolveImageUrl(post.image)}
             alt={post.imageAlt || post.title}
             fill

@@ -38,7 +38,7 @@ export default function ProgramsSection({ programs = [] }) {
               <Link key={course.id} href={`/education/our-programs/${course.id}`} className="min-w-[320px] md:min-w-[320px] snap-start group/card">
                   <div className="relative h-[450px] overflow-hidden border border-white/10 hover:border-yellow-500/50 transition-all duration-500 bg-[#111]">
                     {course.image && (
-                      <Image
+                      <Image unoptimized
                         src={course.image}
                         alt={course.title}
                         fill

@@ -162,7 +162,7 @@ export default async function BlogPostPage({ params }) {
 
           {imageUrl && (
             <div className="mb-10 rounded-xl overflow-hidden">
-              <Image
+              <Image unoptimized
                 src={imageUrl}
                 alt={post.imageAlt || post.title}
                 width={1200}
@@ -270,7 +270,7 @@ export default async function BlogPostPage({ params }) {
                 >
                   <div className="aspect-video overflow-hidden relative bg-gray-800">
                     {resolveImageUrl(relatedPost.image) && (
-                      <Image
+                      <Image unoptimized
                         src={resolveImageUrl(relatedPost.image)}
                         alt={relatedPost.imageAlt || relatedPost.title}
                         fill

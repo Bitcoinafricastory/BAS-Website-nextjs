@@ -29,7 +29,7 @@ export default function OtherBitcoinPrograms({ programs = [] }) {
             >
               <div className="relative h-[240px] overflow-hidden">
                 {program.image && (
-                  <Image
+                  <Image unoptimized
                     src={program.image}
                     alt={program.title}
                     fill

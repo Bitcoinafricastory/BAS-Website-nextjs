@@ -81,7 +81,7 @@ export default async function DirectoryProfilePage({ params }) {
         <div className="flex gap-5 items-center mb-2">
           <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 bg-[#0A0A0A] border border-white/5 rounded-2xl overflow-hidden">
             {entity.logo && (
-              <Image src={entity.logo} alt={entity.name} fill sizes="96px" className="object-contain p-3" />
+              <Image unoptimized src={entity.logo} alt={entity.name} fill sizes="96px" className="object-contain p-3" />
             )}
           </div>
           <div className="min-w-0">
@@ -161,7 +161,7 @@ export default async function DirectoryProfilePage({ params }) {
                   <>
                     <div className="relative aspect-video bg-gray-800">
                       {c.image ? (
-                        <Image src={c.image} alt="" fill sizes="(min-width: 640px) 50vw, 100vw" className="object-cover" />
+                        <Image unoptimized src={c.image} alt="" fill sizes="(min-width: 640px) 50vw, 100vw" className="object-cover" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-gray-500 text-xs font-bold uppercase">{c.type[0]}</div>
                       )}

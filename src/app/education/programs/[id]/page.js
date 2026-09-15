@@ -56,7 +56,7 @@ export default async function ProgramDetailsPage({ params }) {
       <div className="relative h-[300px] md:h-[400px] w-full overflow-hidden">
         {program.image ? (
           <>
-            <Image src={program.image} alt={program.title} fill priority sizes="100vw" className="object-cover" />
+            <Image unoptimized src={program.image} alt={program.title} fill priority sizes="100vw" className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
           </>
         ) : (

@@ -48,7 +48,7 @@ export default function TestimonialCarousel({ testimonials = [] }) {
                 <div className="flex items-center gap-3.5 mb-5">
                   <div className="w-11 h-11 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex-shrink-0 flex items-center justify-center text-black font-semibold text-base shadow-lg overflow-hidden">
                     {testimonial.image ? (
-                      <Image
+                      <Image unoptimized
                         src={testimonial.image}
                         alt={testimonial.name}
                         width={44}
