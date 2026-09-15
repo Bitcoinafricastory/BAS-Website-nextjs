@@ -37,7 +37,13 @@ export async function generateMetadata({ params }) {
   if (!post) return {};
 
   const pageUrl = `${SITE_URL}/news/${post.slug || post.id}`;
-  const imageUrl = resolveImageUrl(post.image);
+  // Social preview served from our own domain via /og.jpg — a clean path with
+  // a real file extension and a small JPEG. Pointing og:image straight at the
+  // Firebase URL worked for Telegram but not WhatsApp, which dislikes query
+  // strings, missing extensions and large files.
+  const imageUrl = post.image
+    ? `${pageUrl}/og.jpg`
+    : `${SITE_URL}/assets/og-image.jpg`;
 
   return {
     title: post.seoTitle || post.title,
@@ -77,6 +83,8 @@ export default async function BlogPostPage({ params }) {
   if (!post) notFound();
 
   const pageUrl = `${SITE_URL}/news/${post.slug || post.id}`;
+  // The full-size original for the on-page hero. NOT the /og.jpg version —
+  // that one is cropped to 1.91:1 for social cards and would look wrong here.
   const imageUrl = resolveImageUrl(post.image);
   const readingTime = computeReadingTime(post.content, post.readTime);
   const keyTakeaways = deriveKeyTakeaways(post);
