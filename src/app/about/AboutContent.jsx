@@ -95,7 +95,7 @@ export default function AboutContent() {
 
           <div className="order-1 lg:order-2 relative min-h-[380px] sm:min-h-[440px] lg:min-h-0 overflow-hidden">
             <motion.div style={{ y: heroImageY }} className="absolute inset-0 -top-[10%] h-[120%]">
-              <Image
+              <Image unoptimized
                 src="/assets/aboutus.png"
                 alt="Bitcoin Africa Story classroom"
                 fill
@@ -188,7 +188,7 @@ export default function AboutContent() {
               transition={{ duration: 0.7 }}
               viewport={{ once: true, margin: '-80px' }}
             >
-              <Image
+              <Image unoptimized
                 src="/assets/communities.jpg"
                 alt="Community"
                 width={2100}
@@ -212,7 +212,7 @@ export default function AboutContent() {
               viewport={{ once: true, margin: '-80px' }}
               className="order-2 lg:order-1"
             >
-              <Image
+              <Image unoptimized
                 src="/assets/education.jpg"
                 alt="Community workshop"
                 width={2100}
@@ -400,7 +400,7 @@ export default function AboutContent() {
           className="max-w-6xl mx-auto bg-[#0A0A0A] border border-white/5 grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] overflow-hidden"
         >
           <div className="relative min-h-[280px] lg:min-h-[440px]">
-            <Image
+            <Image unoptimized
               src="/assets/story.jpg"
               alt="Bitcoin Africa Story community"
               fill

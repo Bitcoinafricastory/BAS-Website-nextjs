@@ -150,7 +150,7 @@ export default function Hero({ storyCount }) {
 
         {/* Photo column — stats overlaid on a dark scrim at the bottom of the image */}
         <div className="order-2 relative overflow-hidden">
-          <Image
+          <Image unoptimized
             src="/assets/dontebg.jpg"
             alt="Bitcoin Africa Story community meetup"
             fill

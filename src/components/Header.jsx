@@ -71,7 +71,7 @@ export default function Header() {
       <nav className="max-w-7xl mx-auto px-6 pb-4 pt-[10px]">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center group">
-            <Image
+            <Image unoptimized
               src="/assets/BitcoinAfricaStoryLogo.png"
               alt="Bitcoin Africa Story"
               width={100}

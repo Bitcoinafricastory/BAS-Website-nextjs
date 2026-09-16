@@ -33,7 +33,7 @@ export default function EducationalHero() {
            content fast. Hidden on desktop. ===== */}
       <div className="lg:hidden">
         <div className="relative min-h-[460px] flex">
-          <Image
+          <Image unoptimized
             src="/assets/education.jpg"
             alt="Bitcoin education session"
             fill
@@ -137,7 +137,7 @@ export default function EducationalHero() {
 
         {/* Photo column */}
         <div className="order-2 relative self-stretch overflow-hidden">
-          <Image
+          <Image unoptimized
             src="/assets/education.jpg"
             alt="Bitcoin education session"
             fill
