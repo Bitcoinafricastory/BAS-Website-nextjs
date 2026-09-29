@@ -64,7 +64,7 @@ export async function POST(request) {
 
   // Pages that list articles, plus the article's own page. The layout purge
   // covers the footer's popular-posts list, which renders on every route.
-  const paths = ['/', '/news', '/search'];
+  const paths = ['/', '/news', '/search', '/sitemap.xml'];
   if (slug) paths.push(`/news/${slug}`);
 
   const revalidated = [];

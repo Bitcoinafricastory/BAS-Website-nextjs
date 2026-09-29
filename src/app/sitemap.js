@@ -37,6 +37,7 @@ export default async function sitemap() {
   let eventEntries = [];
   try {
     const posts = await getAllNews();
+        console.log('SITEMAP DEBUG', posts.length, posts[0]?.slug, posts[0]?.date);
     articleEntries = posts.map((post) => ({
       // Encode: a slug containing spaces or punctuation would otherwise
       // produce a URL that isn't valid in a sitemap.
