@@ -499,6 +499,40 @@ export function contactPageSchema() {
   };
 }
 
+/**
+ * Main navigation as SiteNavigationElement nodes.
+ *
+ * Mirrors the links in Header.jsx. This tells search and answer engines which
+ * pages are the site's primary sections. NOTE: Google chooses the "sitelinks"
+ * shown under a brand search result on its own; no markup can force them. This
+ * is a supporting signal alongside clear internal links, unique page titles and
+ * descriptions, and breadcrumbs. Keep it in sync with the Header nav.
+ */
+export const MAIN_NAV = [
+  { name: 'News', path: '/news' },
+  { name: 'Education', path: '/education' },
+  { name: 'Events', path: '/events' },
+  { name: 'Writers', path: '/authors' },
+  { name: 'Directory', path: '/directory' },
+  { name: 'Podcast', path: '/podcast' },
+  { name: 'Resources', path: '/resources' },
+  { name: 'FAQ', path: '/faq' },
+  { name: 'About', path: '/about' },
+  { name: 'Contact', path: '/contact' },
+];
+
+export function siteNavigationSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': MAIN_NAV.map((item) => ({
+      '@type': 'SiteNavigationElement',
+      '@id': `${SITE_URL}/#nav-${item.path.replace('/', '')}`,
+      name: item.name,
+      url: `${SITE_URL}${item.path}`,
+    })),
+  };
+}
+
 export function jsonLdScript(schema) {
   return { __html: JSON.stringify(schema) };
 }

@@ -3,7 +3,7 @@ import { Montserrat, Fraunces, JetBrains_Mono } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import AppShell from '@/components/AppShell';
-import { organizationSchema, websiteSchema, jsonLdScript } from '@/lib/schema';
+import { organizationSchema, websiteSchema, siteNavigationSchema, jsonLdScript } from '@/lib/schema';
 import { GoogleAnalytics } from '@next/third-parties/google';
 
 // Brand font, applied site-wide (nav, body copy, cards, heroes, dashboard).
@@ -122,6 +122,7 @@ export default function RootLayout({ children }) {
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(organizationSchema())} />
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(websiteSchema())} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(siteNavigationSchema())} />
       </head>
       <body className={montserrat.className}>
         <AppShell header={<Header />} footer={<Footer />}>
