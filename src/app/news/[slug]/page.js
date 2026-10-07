@@ -14,6 +14,7 @@ import { computeReadingTime, deriveKeyTakeaways, getFaqs, addHeadingIds, extract
 import { resolveArticleAuthor } from '@/lib/authors';
 import { getEntitiesBySlugs } from '@/lib/entities';
 import ArticleSidebar from '@/components/ArticleSidebar';
+import MobileShareBar from '@/components/MobileShareBar';
 import ArticleTOC from '@/components/ArticleTOC';
 import AuthorFooter from '@/components/AuthorFooter';
 import BlinkDonateButton from '@/components/BlinkDonateButton';
@@ -115,6 +116,14 @@ export default async function BlogPostPage({ params }) {
     faqSchema(faqs),
   ].filter(Boolean);
 
+  // Absolute URL used by BOTH the desktop sidebar share buttons and the
+  // mobile/tablet share bar.
+  const articleShareUrl = `${
+    process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : SITE_URL
+  }/news/${post.slug || slug}`;
+
   return (
     <div className="pt-16 bg-black text-white min-h-screen">
       {schemas.map((schema, i) => (
@@ -198,6 +207,9 @@ export default async function BlogPostPage({ params }) {
             dangerouslySetInnerHTML={{ __html: contentWithIds }}
           />
 
+          {/* Share row for phones/tablets — the sidebar share buttons are hidden below xl. */}
+          <MobileShareBar title={post.title} url={articleShareUrl} />
+
           {/* Reader tipping. Uses the writer's own Blink username when they've
               set one in the dashboard, so tips reach the person who did the
               work; otherwise it falls back to the publication account. */}
@@ -247,11 +259,7 @@ export default async function BlogPostPage({ params }) {
           // deployment's real URL, with SITE_URL as the fallback — this works
           // correctly whether this project serves the .vercel.app URL or the
           // real domain.
-          url={`${
-            process.env.VERCEL_PROJECT_PRODUCTION_URL
-              ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-              : SITE_URL
-          }/news/${post.slug || slug}`}
+          url={articleShareUrl}
         />
       </div>
 
