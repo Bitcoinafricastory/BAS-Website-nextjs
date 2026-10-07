@@ -44,15 +44,20 @@ export default function MobileShareBar({ title = '', url = '' }) {
     }
   };
 
-  const pill =
-    'inline-flex items-center justify-center gap-2 min-h-[44px] px-4 rounded-full border border-white/10 text-sm font-medium text-gray-200 hover:text-yellow-500 hover:border-yellow-500 transition-colors';
+  // Shared shape. min-w keeps short labels (like "X") the same pill width.
+  const base =
+    'inline-flex items-center justify-center gap-2 min-h-[44px] min-w-[72px] px-4 rounded-full border text-sm font-medium transition-colors';
+  const pill = `${base} border-white/10 text-gray-200 hover:text-yellow-500 hover:border-yellow-500`;
+  // Primary action: solid yellow with dark text (kept separate from `pill` so
+  // the two text colours don't conflict).
+  const primary = `${base} bg-yellow-500 border-yellow-500 text-black hover:bg-yellow-400`;
 
   return (
     <div className="xl:hidden mt-10 pt-8 border-t border-white/[0.08] max-w-[68ch] mx-auto">
       <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-3">Share this article</p>
       <div className="flex flex-wrap gap-2">
         {canNativeShare && (
-          <button type="button" onClick={nativeShare} className={`${pill} bg-yellow-500 text-black border-yellow-500 hover:text-black hover:bg-yellow-400`}>
+          <button type="button" onClick={nativeShare} className={primary}>
             <Share2 size={16} aria-hidden="true" />
             Share
           </button>
