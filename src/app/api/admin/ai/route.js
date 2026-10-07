@@ -40,9 +40,11 @@ async function verifyIdToken(idToken) {
 
 function isAllowedAdmin(user) {
   if (!user?.email) return false;
+  // Fail closed: if ADMIN_EMAILS is missing or empty, nobody is an admin.
+  // (Previously this let ANY signed-in Firebase user through.)
   if (ADMIN_EMAILS.length === 0) {
-    console.warn('ADMIN_EMAILS is not set — /api/admin/ai is allowing ANY authenticated Firebase user.');
-    return true;
+    console.error('ADMIN_EMAILS is not set — denying all access to /api/admin/ai. Set ADMIN_EMAILS in Vercel.');
+    return false;
   }
   return ADMIN_EMAILS.includes(user.email.toLowerCase());
 }

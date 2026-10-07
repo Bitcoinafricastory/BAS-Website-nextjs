@@ -15,6 +15,24 @@ const nextConfig = {
       { protocol: 'https', hostname: '**' },
     ],
   },
+  // Baseline security headers on every response. A strict Content-Security-Policy
+  // is deliberately NOT set here: the site loads Firebase, Google Analytics,
+  // YouTube embeds and images from arbitrary HTTPS hosts, so a CSP needs to be
+  // trialled in report-only mode first to avoid breaking pages.
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), payment=()' },
+        ],
+      },
+    ];
+  },
   // Markdown twins: agents fetch /news/{slug}.md, which Next can't express as a
   // route folder (a dynamic segment can't carry a literal .md suffix), so the
   // public URL is rewritten onto the handler that generates it.

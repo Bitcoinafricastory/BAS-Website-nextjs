@@ -24,12 +24,11 @@ const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || '')
 
 function isAllowedAdmin(user) {
   if (!user?.email) return false;
-  // If ADMIN_EMAILS isn't set yet, fall back to "any authenticated user"
-  // (today's behavior) rather than locking everyone out silently — but log
-  // loudly so this doesn't stay unnoticed.
+  // Fail closed: if ADMIN_EMAILS is missing or empty, nobody is an admin.
+  // (Previously this let ANY signed-in Firebase user through.)
   if (ADMIN_EMAILS.length === 0) {
-    console.warn('ADMIN_EMAILS is not set — /api/admin/entities/extract is allowing ANY authenticated Firebase user. Set ADMIN_EMAILS in Vercel to restrict this.');
-    return true;
+    console.error('ADMIN_EMAILS is not set — denying all access to /api/admin/entities/extract. Set ADMIN_EMAILS in Vercel.');
+    return false;
   }
   return ADMIN_EMAILS.includes(user.email.toLowerCase());
 }
