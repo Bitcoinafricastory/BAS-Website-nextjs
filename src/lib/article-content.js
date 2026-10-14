@@ -191,3 +191,28 @@ export function addHeadingIds(html) {
     return `<${tag}${attrs} id="${id}">${inner}</${tag}>`;
   });
 }
+
+/**
+ * Give every <img> in article HTML an alt attribute. Images inserted through
+ * the editor historically had none, so search engines and screen readers got
+ * no description. Existing non-empty alt text is never changed; missing or
+ * empty alt becomes `fallback` (e.g. the article title).
+ */
+export function addMissingImageAlts(html, fallback) {
+  if (!html || !fallback) return html;
+  const safe = String(fallback)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+  return String(html).replace(/<img\b([^>]*?)(\s*\/?)>/gi, (tag, attrs, close) => {
+    // Match a real alt ATTRIBUTE only: it must start after whitespace. This
+    // matters because Firebase image URLs contain "?alt=media", which a looser
+    // pattern would mistake for an existing alt attribute.
+    const altAttr = /(^|\s)alt\s*=\s*("([^"]*)"|'([^']*)'|([^\s"'>]+))/i.exec(attrs);
+    const altValue = altAttr ? (altAttr[3] ?? altAttr[4] ?? altAttr[5] ?? '') : '';
+    if (altAttr && altValue.trim()) return tag; // keep real alt text as written
+    const cleaned = altAttr ? attrs.replace(altAttr[0], altAttr[1]) : attrs;
+    return `<img${cleaned.replace(/\s+$/, '')} alt="${safe}"${close}>`;
+  });
+}

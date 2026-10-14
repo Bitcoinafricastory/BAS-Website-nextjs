@@ -10,7 +10,7 @@ import {
   jsonLdScript,
   SITE_URL,
 } from '@/lib/schema';
-import { computeReadingTime, deriveKeyTakeaways, getFaqs, addHeadingIds, extractHeadings, preventHyphenBreaks, normalizeNonBreakingSpaces, sanitizeArticleHtml } from '@/lib/article-content';
+import { computeReadingTime, deriveKeyTakeaways, getFaqs, addHeadingIds, extractHeadings, preventHyphenBreaks, normalizeNonBreakingSpaces, sanitizeArticleHtml, addMissingImageAlts } from '@/lib/article-content';
 import { resolveArticleAuthor } from '@/lib/authors';
 import { getEntitiesBySlugs } from '@/lib/entities';
 import ArticleSidebar from '@/components/ArticleSidebar';
@@ -90,7 +90,11 @@ export default async function BlogPostPage({ params }) {
   const readingTime = computeReadingTime(post.content, post.readTime);
   const keyTakeaways = deriveKeyTakeaways(post);
   const faqs = post.showFaqs ? getFaqs(post) : [];
-  const contentWithIds = sanitizeArticleHtml(preventHyphenBreaks(addHeadingIds(normalizeNonBreakingSpaces(post.content))));
+  const contentWithIds = addMissingImageAlts(
+    sanitizeArticleHtml(preventHyphenBreaks(addHeadingIds(normalizeNonBreakingSpaces(post.content)))),
+    // Fallback description for body images inserted without alt text.
+    `${post.title} — photo`
+  );
   const headings = extractHeadings(post.content);
 
   const allNews = await getAllNews();

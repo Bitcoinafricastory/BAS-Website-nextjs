@@ -5,6 +5,18 @@ import { getEntities } from '@/lib/entities';
 import { getAllEducationPrograms, getAllOtherPrograms } from '@/lib/education';
 import { PILLARS } from '@/lib/pillars';
 import { listableCategorySlugs } from '@/lib/resources-data';
+import { resolveImageUrl } from '@/lib/schema';
+
+// Next writes <image:loc> verbatim, without XML-escaping. Firebase Storage URLs
+// contain '&' (…?alt=media&token=…), and a raw '&' makes the whole sitemap
+// invalid XML — so escape here.
+const xmlEscape = (str) =>
+  String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
 
 export const revalidate = 300;
 
@@ -44,6 +56,11 @@ export default async function sitemap() {
       lastModified: post.date ? new Date(post.date) : new Date(),
       changeFrequency: 'weekly',
       priority: 0.85,
+      // Image sitemap entry: tells Google which image belongs to this article,
+      // so the featured photo is the one associated with it in Google Images.
+      ...(post.image && resolveImageUrl(post.image)
+        ? { images: [xmlEscape(resolveImageUrl(post.image))] }
+        : {}),
     }));
   } catch (err) {
     console.warn('sitemap: could not fetch articles', err);

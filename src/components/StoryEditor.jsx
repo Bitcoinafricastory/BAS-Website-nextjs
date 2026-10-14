@@ -204,6 +204,15 @@ export default function StoryEditor({ value, onChange, dark = false, onImageUplo
         return;
       }
 
+      // Ask for a short description. It becomes the image's alt text, which is
+      // what search engines and screen readers use to understand the image.
+      // Leaving it blank is allowed; the article page then falls back to the
+      // article title.
+      const altText = (window.prompt(
+        'Describe this image in a few words (used by Google and screen readers):',
+        ''
+      ) || '').trim();
+
       setUploadingImage(true);
       try {
         const withTimeout = (promise, ms) =>
@@ -222,6 +231,22 @@ export default function StoryEditor({ value, onChange, dark = false, onImageUplo
         const at = Math.min(savedIndex, Math.max(live.getLength() - 1, 0));
 
         live.insertEmbed(at, 'image', url, 'user');
+        if (altText) {
+          try {
+            // Quill's image blot keeps alt as an attribute; set it on the blot
+            // just inserted, falling back to the DOM node with this src.
+            const [leaf] = live.getLeaf(at + 1);
+            if (leaf?.domNode?.tagName === 'IMG' && typeof leaf.format === 'function') {
+              leaf.format('alt', altText);
+            } else {
+              const img = [...live.root.querySelectorAll('img')].find((el) => el.getAttribute('src') === url);
+              img?.setAttribute('alt', altText);
+            }
+            live.update('user');
+          } catch (e) {
+            console.warn('Could not set image alt text:', e);
+          }
+        }
         try {
           live.setSelection(at + 1, 0);
         } catch (e) {

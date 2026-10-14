@@ -198,12 +198,16 @@ export function newsArticleSchema(post, author, entities = []) {
     '@context': 'https://schema.org',
     '@type': 'NewsArticle',
     headline: post.title,
-    // ImageObject with declared dimensions rather than a bare URL — helps Google
-    // pick the image for rich results and large-image treatment. 1200x630 is the
-    // OG/social standard used as a sensible default (article images aren't stored
-    // with real pixel dimensions).
+    // Two images of the featured photo: the 1200x630 crop served by
+    // /news/<slug>/og.jpg (dimensions are exact — the route resizes to them),
+    // and the full-size original (no dimensions declared, because the stored
+    // file's real size isn't known here). Google picks the best fit for each
+    // surface. Previously the original was declared as 1200x630, which was wrong.
     image: imageUrl
-      ? [{ '@type': 'ImageObject', url: imageUrl, width: 1200, height: 630 }]
+      ? [
+          { '@type': 'ImageObject', url: `${pageUrl}/og.jpg`, width: 1200, height: 630 },
+          imageUrl,
+        ]
       : undefined,
     datePublished: published,
     dateModified: modified,
