@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { verifyIdToken, isAllowedAdmin } from '@/lib/admin-auth';
 
 export const maxDuration = 30;
 
@@ -11,43 +12,6 @@ export const maxDuration = 30;
 // Auth mirrors /api/admin/entities/extract: a verified Firebase ID token whose
 // email is on the server-side allowlist. Without it, anyone could burn the
 // Anthropic budget.
-
-const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || '')
-  .split(',')
-  .map((e) => e.trim().toLowerCase())
-  .filter(Boolean);
-
-async function verifyIdToken(idToken) {
-  if (!idToken) return null;
-  const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
-  if (!apiKey) return null;
-  try {
-    const res = await fetch(
-      `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ idToken }),
-      }
-    );
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data?.users?.[0] || null;
-  } catch {
-    return null;
-  }
-}
-
-function isAllowedAdmin(user) {
-  if (!user?.email) return false;
-  // Fail closed: if ADMIN_EMAILS is missing or empty, nobody is an admin.
-  // (Previously this let ANY signed-in Firebase user through.)
-  if (ADMIN_EMAILS.length === 0) {
-    console.error('ADMIN_EMAILS is not set — denying all access to /api/admin/ai. Set ADMIN_EMAILS in Vercel.');
-    return false;
-  }
-  return ADMIN_EMAILS.includes(user.email.toLowerCase());
-}
 
 // Strip tags AND decode entities. The old heuristic skipped decoding, which is
 // why takeaways came out containing &#39; and &quot;. Block-level tags become

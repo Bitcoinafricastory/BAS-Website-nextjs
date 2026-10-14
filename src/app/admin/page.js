@@ -27,10 +27,15 @@ export default function AdminLoginPage() {
       router.replace('/dashboard');
     } catch (err) {
       // Friendly message rather than raw Firebase error codes.
+      // Never show raw Firebase messages: they can leak configuration details.
+      const code = err?.code || '';
       const msg =
-        err?.code === 'auth/invalid-credential' || err?.code === 'auth/wrong-password' || err?.code === 'auth/user-not-found'
+        code === 'auth/invalid-credential' || code === 'auth/wrong-password' || code === 'auth/user-not-found' || code === 'auth/invalid-email'
           ? 'Incorrect email or password.'
-          : err?.message || 'Sign in failed. Please try again.';
+          : code === 'auth/too-many-requests'
+            ? 'Too many attempts. Please wait a few minutes and try again.'
+            : 'Sign in failed. Please try again.';
+      if (code) console.warn('Sign-in failed:', code);
       setError(msg);
     } finally {
       setBusy(false);

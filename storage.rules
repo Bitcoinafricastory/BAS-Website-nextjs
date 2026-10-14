@@ -1,0 +1,48 @@
+rules_version = '2';
+
+// Bitcoin Africa Story — Cloud Storage security rules.
+// Deploy by pasting into Firebase Console → Storage → Rules → Publish,
+// or `firebase deploy --only storage`.
+//
+// Note: images shown on the site are loaded with download-token URLs, which
+// work regardless of these rules. These rules control the Firebase SDK:
+// who can upload, overwrite, delete, list or fetch download URLs.
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in ['smartdestinyonyekachi@gmail.com'];
+    }
+
+    function isImageUnder(mb) {
+      return request.resource != null
+        && request.resource.contentType.matches('image/.*')
+        && request.resource.size < mb * 1024 * 1024;
+    }
+
+    function isPublicSubmissionFolder(folder) {
+      return folder in ['submissions', 'submittedEvents'];
+    }
+
+    // Public forms (story pitches, event banners): anyone may upload a NEW
+    // image. The uploader can fetch its URL for 10 minutes (the form needs
+    // that); after that only the admin can.
+    match /{folder}/{file} {
+      allow create: if isPublicSubmissionFolder(folder)
+        && resource == null
+        && isImageUnder(10);
+      allow get: if isPublicSubmissionFolder(folder)
+        && request.time < resource.timeCreated + duration.value(10, 'm');
+    }
+
+    // All site media. Public can fetch; only the admin can upload, replace
+    // or delete. Listing folders is never allowed.
+    match /{folder}/{allPaths=**} {
+      allow get: if !isPublicSubmissionFolder(folder) || isAdmin();
+      allow create, update: if isAdmin() && isImageUnder(15);
+      allow delete: if isAdmin();
+    }
+  }
+}

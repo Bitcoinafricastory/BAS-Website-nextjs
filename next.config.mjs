@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Don't advertise the framework in an x-powered-by header.
+  poweredByHeader: false,
   // Remote images.
   //
   // next/image THROWS a runtime error on any host not matched here, which would

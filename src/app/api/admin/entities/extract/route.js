@@ -6,51 +6,17 @@ import { NextResponse } from 'next/server';
 export const maxDuration = 60;
 import { getEntities } from '@/lib/entities';
 import { ENTITY_TYPES, ENTITY_COUNTRIES } from '@/lib/entityTypes';
+import { verifyIdToken, isAllowedAdmin } from '@/lib/admin-auth';
 
 // Same public web API key already used by src/lib/firebase.js — this call
 // only verifies that the caller has a valid, currently signed-in Firebase
 // session (same login as /dashboard). It doesn't need a service account key.
-const FIREBASE_WEB_API_KEY = 'AIzaSyCC_PkB6ku4wHa9cv9At49EBAqFEkLFTmY';
 
 // Every account that has ever successfully signed in to Firebase Auth was,
 // until now, treated as a trusted admin — there was no allowlist anywhere
 // in the app. This checks the verified token's email against a list only
 // you control server-side, so even a valid Firebase login from an
 // unexpected account is rejected here.
-const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || '')
-  .split(',')
-  .map((e) => e.trim().toLowerCase())
-  .filter(Boolean);
-
-function isAllowedAdmin(user) {
-  if (!user?.email) return false;
-  // Fail closed: if ADMIN_EMAILS is missing or empty, nobody is an admin.
-  // (Previously this let ANY signed-in Firebase user through.)
-  if (ADMIN_EMAILS.length === 0) {
-    console.error('ADMIN_EMAILS is not set — denying all access to /api/admin/entities/extract. Set ADMIN_EMAILS in Vercel.');
-    return false;
-  }
-  return ADMIN_EMAILS.includes(user.email.toLowerCase());
-}
-
-async function verifyIdToken(idToken) {
-  if (!idToken) return null;
-  try {
-    const res = await fetch(
-      `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${FIREBASE_WEB_API_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ idToken }),
-      }
-    );
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data.users?.[0] || null;
-  } catch {
-    return null;
-  }
-}
 
 function normalize(name) {
   return String(name || '')

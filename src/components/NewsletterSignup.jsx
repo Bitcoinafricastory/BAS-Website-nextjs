@@ -2,7 +2,27 @@
 
 import { useState } from 'react';
 import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+
+// Subscribers are stored with the lower-cased email as the document ID, so
+// the browser never has to read the list to avoid duplicates. Security rules
+// allow creating a new document only; re-subscribing an existing address is
+// rejected as an update (permission-denied), which we treat as success so the
+// form never reveals whether an address was already on the list.
+const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+async function saveSubscriber(email, extra = {}) {
+  try {
+    await setDoc(doc(db, 'newsletterSubscribers', email), {
+      email,
+      ...extra,
+      subscribedAt: serverTimestamp(),
+    });
+  } catch (err) {
+    if (err?.code === 'permission-denied') return; // already subscribed
+    throw err;
+  }
+}
+
 
 export default function NewsletterSignup({ variant = 'full' }) {
   const [email, setEmail] = useState('');
@@ -14,18 +34,14 @@ export default function NewsletterSignup({ variant = 'full' }) {
     if (!email.trim()) return;
     setBusy(true);
     setNotice('');
+    const clean = email.toLowerCase().trim();
+    if (!EMAIL_RE.test(clean)) {
+      setNotice('Please enter a valid email address.');
+      setBusy(false);
+      return;
+    }
     try {
-      const q = query(collection(db, 'newsletterSubscribers'), where('email', '==', email.toLowerCase().trim()));
-      const snap = await getDocs(q);
-      if (!snap.empty) {
-        setNotice("You're already subscribed!");
-        setBusy(false);
-        return;
-      }
-      await addDoc(collection(db, 'newsletterSubscribers'), {
-        email: email.toLowerCase().trim(),
-        subscribedAt: serverTimestamp(),
-      });
+      await saveSubscriber(clean, { source: 'newsletter-widget' });
       setNotice('Subscribed! Welcome to the movement.');
       setEmail('');
     } catch (err) {

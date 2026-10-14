@@ -7,37 +7,53 @@ import Sidebar from '@/components/dashboard/Sidebar';
 import Topbar from '@/components/dashboard/Topbar';
 import { LoaderCircle } from 'lucide-react';
 
-// UX-level guard only. This can be bypassed by anyone calling the Firestore
-// client SDK directly from the browser console — the real enforcement has
-// to live in Firestore's own security rules, which this app doesn't
-// control from code. This just stops an unexpected-but-validly-signed-in
-// account from seeing the dashboard UI at all. Keep this list in sync with
-// ADMIN_EMAILS on the server and with Firestore rules.
-const ADMIN_EMAILS = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '')
-  .split(',')
-  .map((e) => e.trim().toLowerCase())
-  .filter(Boolean);
-
-function isAllowedAdmin(user) {
-  if (!user?.email) return false;
-  if (ADMIN_EMAILS.length === 0) return true; // not configured yet — see note above
-  return ADMIN_EMAILS.includes(user.email.toLowerCase());
-}
+// UX-level guard. The real enforcement is in Firestore/Storage security rules
+// and the server API routes. Admin status is checked on the server via
+// /api/admin/check, so the admin allowlist is never shipped to the browser.
+// Fails closed: any error means no dashboard.
 
 export default function DashboardLayout({ children }) {
   const { user, loading } = useAuth();
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const allowed = !loading && user && isAllowedAdmin(user);
+  // 'checking' until the server answers; then 'allowed' or 'denied'.
+  const [adminState, setAdminState] = useState('checking');
 
-  // Route guard: once auth state resolves, bounce unauthenticated or
-  // not-on-the-allowlist users to login.
   useEffect(() => {
-    if (!loading && !allowed) router.replace('/admin');
-  }, [allowed, loading, router]);
+    if (loading) return;
+    if (!user) {
+      setAdminState('denied');
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      try {
+        const idToken = await user.getIdToken();
+        const res = await fetch('/api/admin/check', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ idToken }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!cancelled) setAdminState(res.ok && data.admin === true ? 'allowed' : 'denied');
+      } catch {
+        if (!cancelled) setAdminState('denied');
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [user, loading]);
 
-  // While auth is resolving, or if we're about to redirect, show a spinner
-  // rather than flashing protected content.
+  const allowed = !loading && !!user && adminState === 'allowed';
+
+  // Route guard: bounce signed-out or non-admin users to login once known.
+  useEffect(() => {
+    if (!loading && adminState === 'denied') router.replace('/admin');
+  }, [adminState, loading, router]);
+
+  // While auth or the admin check is pending, or we're about to redirect,
+  // show a spinner rather than flashing protected content.
   if (loading || !allowed) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#050505] text-white">

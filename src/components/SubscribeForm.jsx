@@ -2,8 +2,28 @@
 
 import { useState } from 'react';
 import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { ArrowRight, LoaderCircle, Check } from 'lucide-react';
+
+// Subscribers are stored with the lower-cased email as the document ID, so
+// the browser never has to read the list to avoid duplicates. Security rules
+// allow creating a new document only; re-subscribing an existing address is
+// rejected as an update (permission-denied), which we treat as success so the
+// form never reveals whether an address was already on the list.
+const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+async function saveSubscriber(email, extra = {}) {
+  try {
+    await setDoc(doc(db, 'newsletterSubscribers', email), {
+      email,
+      ...extra,
+      subscribedAt: serverTimestamp(),
+    });
+  } catch (err) {
+    if (err?.code === 'permission-denied') return; // already subscribed
+    throw err;
+  }
+}
+
 
 const AFRICAN_COUNTRIES = [
   'Nigeria', 'Kenya', 'Ghana', 'South Africa', 'Tanzania', 'Uganda', 'Zambia',
@@ -29,21 +49,19 @@ export default function SubscribeForm() {
     e.preventDefault();
     const clean = email.toLowerCase().trim();
     if (!clean) return;
+    if (!EMAIL_RE.test(clean)) {
+      setNotice('Please enter a valid email address.');
+      return;
+    }
 
     setBusy(true);
     setNotice('');
 
     try {
-      const q = query(collection(db, 'newsletterSubscribers'), where('email', '==', clean));
-      const snap = await getDocs(q);
-      if (snap.empty) {
-        await addDoc(collection(db, 'newsletterSubscribers'), {
-          email: clean,
-          country: country || null,
-          source: 'subscribe-page',
-          subscribedAt: serverTimestamp(),
-        });
-      }
+      await saveSubscriber(clean, {
+        country: country || null,
+        source: 'subscribe-page',
+      });
       setDone(true);
     } catch (err) {
       // If the write fails the address is genuinely lost, so say so plainly

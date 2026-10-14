@@ -1,0 +1,62 @@
+rules_version = '2';
+
+// Bitcoin Africa Story — Firestore security rules.
+// Deploy by pasting into Firebase Console → Firestore → Rules → Publish,
+// or `firebase deploy --only firestore:rules`.
+//
+// Rules are OR'd: if ANY matching statement allows a request, it's allowed.
+// The previous catch-all `match /{document=**} { allow read: if true; }` also
+// matched the private collections, which made subscriber emails and story
+// submissions readable by anyone. The catch-all below excludes them.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in ['smartdestinyonyekachi@gmail.com'];
+    }
+
+    function isPrivate(collection) {
+      return collection in [
+        'newsletterSubscribers',
+        'submitted_stories',
+        'submittedEvents',
+        'submittedEntities'
+      ];
+    }
+
+    // Newsletter: document ID = lower-cased email. Anyone may add a new
+    // address (create only, strict shape). Nobody but the admin can read,
+    // list, count, change or delete. Re-subscribing is an update → denied,
+    // which the site treats as "already subscribed".
+    match /newsletterSubscribers/{email} {
+      allow create: if request.resource.data.email == email
+        && email.size() <= 254
+        && email.matches('^[^@ ]+@[^@ ]+[.][^@ ]+$')
+        && request.resource.data.keys().hasOnly(['email', 'country', 'source', 'subscribedAt'])
+        && request.resource.data.subscribedAt == request.time;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Public submission forms: anyone may submit; only the admin can read.
+    match /submittedEvents/{doc} {
+      allow create: if request.resource.data.size() <= 50;
+      allow read, update, delete: if isAdmin();
+    }
+    match /submitted_stories/{doc} {
+      allow create: if request.resource.data.size() <= 50;
+      allow read, update, delete: if isAdmin();
+    }
+    match /submittedEntities/{doc} {
+      allow create: if request.resource.data.size() <= 50;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Everything else is published site content: public read, admin write.
+    match /{collection}/{document=**} {
+      allow read: if !isPrivate(collection);
+      allow write: if isAdmin();
+    }
+  }
+}

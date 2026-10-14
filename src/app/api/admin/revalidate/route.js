@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { submitToIndexNow } from '@/lib/indexnow';
 import { SITE_URL } from '@/lib/schema';
+import { verifyIdToken, isAllowedAdmin } from '@/lib/admin-auth';
 
 // Every public page sets `revalidate = 300`, so a newly published or edited
 // article can take up to five minutes to show up on the homepage, /news, the
@@ -14,43 +15,6 @@ import { SITE_URL } from '@/lib/schema';
 // email is on the server-side allowlist. Without that check, anyone could
 // force repeated cache purges and hammer Firestore reads on a pay-as-you-go
 // plan.
-
-const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || '')
-  .split(',')
-  .map((e) => e.trim().toLowerCase())
-  .filter(Boolean);
-
-async function verifyIdToken(idToken) {
-  if (!idToken) return null;
-  const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
-  if (!apiKey) return null;
-  try {
-    const res = await fetch(
-      `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ idToken }),
-      }
-    );
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data?.users?.[0] || null;
-  } catch {
-    return null;
-  }
-}
-
-function isAllowedAdmin(user) {
-  if (!user?.email) return false;
-  // Fail closed: if ADMIN_EMAILS is missing or empty, nobody is an admin.
-  // (Previously this let ANY signed-in Firebase user through.)
-  if (ADMIN_EMAILS.length === 0) {
-    console.error('ADMIN_EMAILS is not set — denying all access to /api/admin/revalidate. Set ADMIN_EMAILS in Vercel.');
-    return false;
-  }
-  return ADMIN_EMAILS.includes(user.email.toLowerCase());
-}
 
 export async function POST(request) {
   let body;
