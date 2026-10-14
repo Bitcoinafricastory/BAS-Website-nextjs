@@ -1,4 +1,0 @@
-Contact: mailto:bitcoinafricastory@proton.me
-Expires: 2027-10-14T00:00:00.000Z
-Preferred-Languages: en
-Canonical: https://www.bitcoinafricastory.com/.well-known/security.txt
