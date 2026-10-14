@@ -233,7 +233,7 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
         await fetch('/api/admin/revalidate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ idToken, slug: safeSlug }),
+          body: JSON.stringify({ idToken, slug: safeSlug, published: finalStatus === 'published' }),
         });
       } catch (err) {
         // Non-fatal: the article is already saved, it will just take the usual

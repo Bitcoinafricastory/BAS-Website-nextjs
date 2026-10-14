@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
+import { submitToIndexNow } from '@/lib/indexnow';
+import { SITE_URL } from '@/lib/schema';
 
 // Every public page sets `revalidate = 300`, so a newly published or edited
 // article can take up to five minutes to show up on the homepage, /news, the
@@ -58,7 +60,7 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
   }
 
-  const { idToken, slug } = body;
+  const { idToken, slug, published } = body;
 
   const user = await verifyIdToken(idToken);
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -88,5 +90,16 @@ export async function POST(request) {
     console.warn('Could not revalidate root layout:', err);
   }
 
-  return NextResponse.json({ revalidated });
+  // Announce published articles to IndexNow (Bing and others) right away.
+  // Never blocks the save: submitToIndexNow times out after 5s and never throws.
+  let indexNow = null;
+  if (published && slug) {
+    indexNow = await submitToIndexNow([
+      `${SITE_URL}/news/${encodeURIComponent(slug)}`,
+      `${SITE_URL}/news`,
+    ]);
+    if (indexNow.error || indexNow.status >= 400) console.warn('IndexNow submission failed:', indexNow);
+  }
+
+  return NextResponse.json({ revalidated, indexNow });
 }
