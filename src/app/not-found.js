@@ -68,7 +68,7 @@ export default function NotFound() {
       <div className="w-full max-w-md mx-auto px-6 pt-14 sm:pt-20 pb-20 text-center">
         <MissingBlock />
 
-        <h1 className="mt-6 text-2xl sm:text-[28px] font-semibold tracking-tight">Page not found</h1>
+        <h1 className="mt-6 text-2xl sm:text-[28px] font-medium tracking-tight">Page not found</h1>
         <p className="mt-2 text-gray-400 text-sm sm:text-base leading-relaxed text-balance">
           The link may be broken, or the page has moved.
         </p>
