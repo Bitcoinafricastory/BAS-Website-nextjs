@@ -12,7 +12,7 @@ function MissingBlock() {
   return (
     <svg
       viewBox="0 0 240 160"
-      className="w-[240px] sm:w-[280px] h-auto mx-auto"
+      className="w-[170px] sm:w-[190px] h-auto mx-auto"
       aria-hidden="true"
       focusable="false"
     >
@@ -64,25 +64,25 @@ function MissingBlock() {
 
 export default function NotFound() {
   return (
-    <div className="pt-16 bg-black text-white min-h-screen flex items-center">
-      <div className="w-full max-w-md mx-auto px-6 py-24 text-center">
+    <div className="pt-16 bg-black text-white min-h-[75vh]">
+      <div className="w-full max-w-md mx-auto px-6 pt-14 sm:pt-20 pb-20 text-center">
         <MissingBlock />
 
-        <h1 className="mt-8 text-3xl sm:text-4xl font-semibold tracking-tight">Page not found</h1>
-        <p className="mt-3 text-gray-400 text-base sm:text-lg leading-relaxed">
+        <h1 className="mt-6 text-2xl sm:text-[28px] font-semibold tracking-tight">Page not found</h1>
+        <p className="mt-2 text-gray-400 text-sm sm:text-base leading-relaxed text-balance">
           The link may be broken, or the page has moved.
         </p>
 
-        <div className="mt-8 flex flex-col items-center gap-5">
+        <div className="mt-6 flex flex-col items-center gap-4">
           <Link
             href="/"
-            className="inline-flex items-center justify-center rounded-full border border-yellow-500 px-7 py-3 font-semibold text-yellow-500 transition-colors hover:bg-yellow-500 hover:text-black"
+            className="inline-flex items-center justify-center rounded-full border border-yellow-500 px-5 py-2 text-sm font-semibold text-yellow-500 transition-colors hover:bg-yellow-500 hover:text-black"
           >
             Back to home
           </Link>
           <Link
             href="/news"
-            className="font-medium text-gray-300 underline-offset-4 transition-colors hover:text-white hover:underline"
+            className="text-sm font-medium text-gray-300 underline-offset-4 transition-colors hover:text-white hover:underline"
           >
             Read the latest stories
           </Link>
