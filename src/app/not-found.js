@@ -1,58 +1,91 @@
 import Link from 'next/link';
-import { ArrowRight, Search } from 'lucide-react';
 
 export const metadata = {
   title: 'Page Not Found',
   robots: { index: false, follow: true },
 };
 
+// "The missing block": a Bitcoin coin on a chain whose last link has broken,
+// next to a block showing 404 with one block missing from the row. The empty
+// block pulses gently (disabled for people who prefer reduced motion).
+function MissingBlock() {
+  return (
+    <svg
+      viewBox="0 0 240 160"
+      className="w-[240px] sm:w-[280px] h-auto mx-auto"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {/* Coin */}
+      <circle cx="58" cy="70" r="30" fill="#EAB308" />
+      <rect x="51" y="50" width="3" height="7" rx="1" fill="#000" />
+      <rect x="58" y="50" width="3" height="7" rx="1" fill="#000" />
+      <rect x="51" y="83" width="3" height="7" rx="1" fill="#000" />
+      <rect x="58" y="83" width="3" height="7" rx="1" fill="#000" />
+      <text x="57" y="82" textAnchor="middle" fontSize="31" fontWeight="800" fill="#000">
+        B
+      </text>
+
+      {/* Chain: one whole link, then a broken one */}
+      <rect x="80" y="82" width="22" height="12" rx="6" fill="none" stroke="#EAB308" strokeWidth="3" />
+      <path d="M120 82 h6 a6 6 0 0 1 0 12 h-6" fill="none" stroke="#EAB308" strokeWidth="3" strokeLinecap="round" />
+      <path
+        d="M106 78 l3 -4 M110 80 l4 -2 M106 98 l3 4 M110 96 l4 2"
+        stroke="#6B7280"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+
+      {/* Block */}
+      <rect x="132" y="22" width="96" height="116" rx="10" fill="#141414" stroke="rgba(255,255,255,0.12)" />
+      <text x="180" y="70" textAnchor="middle" fontSize="30" fontWeight="700" fill="#FFFFFF">
+        404
+      </text>
+      <rect x="142" y="90" width="12" height="12" rx="2" fill="#EAB308" />
+      <rect x="158" y="90" width="12" height="12" rx="2" fill="#EAB308" />
+      <rect x="174" y="90" width="12" height="12" rx="2" fill="#EAB308" />
+      <rect
+        x="190.75"
+        y="90.75"
+        width="10.5"
+        height="10.5"
+        rx="2"
+        fill="none"
+        stroke="#EAB308"
+        strokeWidth="1.5"
+        strokeDasharray="3 2"
+        className="motion-safe:animate-pulse"
+      />
+      <rect x="206" y="90" width="12" height="12" rx="2" fill="rgba(255,255,255,0.14)" />
+      <rect x="146" y="116" width="68" height="4" rx="2" fill="rgba(255,255,255,0.08)" />
+    </svg>
+  );
+}
+
 export default function NotFound() {
   return (
     <div className="pt-16 bg-black text-white min-h-screen flex items-center">
-      <div className="max-w-2xl mx-auto px-6 py-24 w-full">
-        <span className="font-bold text-[11px] tracking-[0.18em] uppercase text-yellow-500">
-          Error 404
-        </span>
-        <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-semibold leading-[1.05] tracking-tight mt-4 mb-6">
-          This page took a <span className="text-yellow-500">wrong turn.</span>
-        </h1>
-        <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-md mb-10">
-          The page you&rsquo;re looking for doesn&rsquo;t exist, moved, or the link was mistyped.
-          Here are a few good places to pick back up.
+      <div className="w-full max-w-md mx-auto px-6 py-24 text-center">
+        <MissingBlock />
+
+        <h1 className="mt-8 text-3xl sm:text-4xl font-semibold tracking-tight">Page not found</h1>
+        <p className="mt-3 text-gray-400 text-base sm:text-lg leading-relaxed">
+          The link may be broken, or the page has moved.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-3 mb-12">
+        <div className="mt-8 flex flex-col items-center gap-5">
           <Link
             href="/"
-            className="inline-flex items-center justify-center gap-2 bg-yellow-500 text-black font-medium text-sm sm:text-base px-5 py-3 sm:px-6 sm:py-4 hover:brightness-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            className="inline-flex items-center justify-center rounded-full border border-yellow-500 px-7 py-3 font-semibold text-yellow-500 transition-colors hover:bg-yellow-500 hover:text-black"
           >
-            Back to Home
-            <ArrowRight size={18} />
+            Back to home
           </Link>
           <Link
-            href="/search"
-            className="inline-flex items-center justify-center gap-2 border border-gray-700 text-gray-200 font-medium text-sm sm:text-base px-5 py-3 sm:px-6 sm:py-4 hover:border-yellow-500 hover:text-yellow-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            href="/news"
+            className="font-medium text-gray-300 underline-offset-4 transition-colors hover:text-white hover:underline"
           >
-            <Search size={16} />
-            Search the site
+            Read the latest stories
           </Link>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {[
-            { label: 'News', href: '/news' },
-            { label: 'Education', href: '/education' },
-            { label: 'Directory', href: '/directory' },
-            { label: 'Podcast', href: '/podcast' },
-          ].map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="px-4 py-3 bg-[#0A0A0A] border border-white/5 rounded-lg text-sm text-gray-300 text-center hover:border-yellow-500/50 hover:text-yellow-500 transition-colors"
-            >
-              {item.label}
-            </Link>
-          ))}
         </div>
       </div>
     </div>
