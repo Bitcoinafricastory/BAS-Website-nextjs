@@ -27,42 +27,44 @@ export async function GET() {
   const dated = posts
     .map((post) => ({ post, published: articlePublishedAt(post) }))
     .filter((x) => x.published);
-  let recent = dated.filter((x) => x.published.getTime() >= cutoff);
+  const recent = dated.filter((x) => x.published.getTime() >= cutoff);
 
-  // A <urlset> with no <url> children is invalid — Search Console reports it
-  // as "Missing XML tag" and the whole sitemap fails. Publishing gaps longer
-  // than two days are completely normal, so fall back to the most recent
-  // articles instead of emitting an empty document. Google ignores entries
-  // outside its news window anyway; an over-inclusive sitemap is harmless,
-  // an invalid one is not.
-  if (recent.length === 0) {
-    recent = dated
-      .slice()
-      .sort((a, b) => b.published - a.published)
-      .slice(0, 10);
-  }
+  // Google: list only articles from the last two days; for older ones,
+  // "remove the URL or strip the <news:news> block". A <urlset> with no <url>
+  // children fails sitemap validation in Search Console, so when nothing is
+  // fresh we list the latest few articles as plain URLs WITHOUT news tags —
+  // accurate (nothing is claimed as fresh news) and never an empty file.
+  const fallback =
+    recent.length === 0
+      ? dated
+          .slice()
+          .sort((a, b) => b.published - a.published)
+          .slice(0, 10)
+      : [];
 
-  const urls = recent
-    .map(({ post, published }) => {
-      // The slug becomes a URL path segment and then XML text. Encoding it
-      // handles slugs containing spaces or punctuation, and escaping handles
-      // characters like & that would otherwise produce invalid XML.
-      const slugPart = encodeURIComponent(post.slug || post.id);
-      const url = `${SITE_URL}/news/${slugPart}`;
-      const pubDate = published.toISOString();
-      return `  <url>
-    <loc>${escapeXml(url)}</loc>
+  const articleUrl = (post) =>
+    // The slug becomes a URL path segment and then XML text. Encoding it
+    // handles slugs containing spaces or punctuation, and escaping handles
+    // characters like & that would otherwise produce invalid XML.
+    `${SITE_URL}/news/${encodeURIComponent(post.slug || post.id)}`;
+
+  const newsEntries = recent.map(({ post, published }) => `  <url>
+    <loc>${escapeXml(articleUrl(post))}</loc>
     <news:news>
       <news:publication>
         <news:name>${escapeXml(SITE_NAME)}</news:name>
         <news:language>en</news:language>
       </news:publication>
-      <news:publication_date>${pubDate}</news:publication_date>
+      <news:publication_date>${published.toISOString()}</news:publication_date>
       <news:title>${escapeXml(post.title)}</news:title>
     </news:news>
-  </url>`;
-    })
-    .join('\n');
+  </url>`);
+
+  const plainEntries = fallback.map(({ post }) => `  <url>
+    <loc>${escapeXml(articleUrl(post))}</loc>
+  </url>`);
+
+  const urls = [...newsEntries, ...plainEntries].join('\n');
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
