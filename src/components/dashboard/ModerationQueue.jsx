@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, onSnapshot, addDoc, deleteDoc, doc, serverTimestamp } from 'firebase/firestore';
+import { announceChange } from '@/lib/announce-change';
+import { publicPathsFor } from '@/lib/public-paths';
 import { Check, X, LoaderCircle, Eye, CheckCircle2, AlertCircle, Inbox } from 'lucide-react';
 
 /**
@@ -41,8 +43,11 @@ export default function ModerationQueue({ config }) {
     try {
       const { id, submittedAt, status, ...rest } = item;
       const payload = transform ? transform(rest) : rest;
-      await addDoc(collection(db, targetCollection), { ...payload, createdAt: serverTimestamp() });
+      const created = await addDoc(collection(db, targetCollection), { ...payload, createdAt: serverTimestamp() });
       await deleteDoc(doc(db, sourceCollection, item.id));
+      if (!payload.status || payload.status === 'published') {
+        announceChange(publicPathsFor(targetCollection, { ...payload, id: created.id }));
+      }
       setToast({ type: 'success', message: 'Approved and published.' });
       setViewing(null);
     } catch (err) {

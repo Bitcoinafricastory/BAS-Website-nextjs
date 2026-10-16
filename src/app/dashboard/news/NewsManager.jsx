@@ -3,6 +3,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import { db, storage } from '@/lib/firebase';
 import { collection, onSnapshot, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
+import { announceChange } from '@/lib/announce-change';
+import { publicPathsFor } from '@/lib/public-paths';
 import { ref, deleteObject } from 'firebase/storage';
 import { PlusCircle, Search, Pencil, Trash2, ArrowLeft, LoaderCircle, CheckCircle2, AlertCircle } from 'lucide-react';
 import ArticleEditor from '@/components/dashboard/ArticleEditor';
@@ -84,6 +86,8 @@ export default function NewsManager() {
       await deleteStorageFile(post.authorImage);
       await deleteDoc(doc(db, 'news', post.id));
       notify('success', 'Article deleted.');
+      // Only a published article had a public page to remove from search.
+      if (!post.status || post.status === 'published') announceChange(publicPathsFor('news', post));
     } catch (err) {
       notify('error', 'Delete failed: ' + (err.message || 'unknown'));
     }

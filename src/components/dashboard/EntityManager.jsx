@@ -4,6 +4,8 @@ import { useState, useEffect, useMemo } from 'react';
 import { db, storage } from '@/lib/firebase';
 import { collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
+import { announceChange } from '@/lib/announce-change';
+import { publicPathsFor } from '@/lib/public-paths';
 import {
   PlusCircle, Search, Pencil, Trash2, ArrowLeft, LoaderCircle,
   CheckCircle2, AlertCircle, X, Plus,
@@ -172,6 +174,7 @@ export default function EntityManager() {
         await addDoc(collection(db, ENTITIES_COLLECTION), { ...payload, createdAt: serverTimestamp() });
         notify('success', 'Entity added.');
       }
+      announceChange(publicPathsFor('entities', payload));
       backToList();
     } catch (err) {
       console.error('save error', err);
@@ -191,6 +194,7 @@ export default function EntityManager() {
       }
       await deleteDoc(doc(db, ENTITIES_COLLECTION, item.id));
       notify('success', 'Entity deleted.');
+      announceChange(publicPathsFor('entities', item));
     } catch (err) {
       notify('error', 'Delete failed.');
     }

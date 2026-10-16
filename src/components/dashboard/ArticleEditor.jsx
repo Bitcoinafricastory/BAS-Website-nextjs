@@ -233,7 +233,13 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
         await fetch('/api/admin/revalidate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ idToken, slug: safeSlug, published: finalStatus === 'published' }),
+          body: JSON.stringify({
+            idToken,
+            slug: safeSlug,
+            published: finalStatus === 'published',
+            // Unpublishing a live article removes a public page; announce that too.
+            wasPublished: !!editingPost && (!editingPost.status || editingPost.status === 'published'),
+          }),
         });
       } catch (err) {
         // Non-fatal: the article is already saved, it will just take the usual

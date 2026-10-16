@@ -24,7 +24,7 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
   }
 
-  const { idToken, slug, published } = body;
+  const { idToken, slug, published, wasPublished } = body;
 
   const user = await verifyIdToken(idToken);
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -57,7 +57,7 @@ export async function POST(request) {
   // Announce published articles to IndexNow (Bing and others) right away.
   // Never blocks the save: submitToIndexNow times out after 5s and never throws.
   let indexNow = null;
-  if (published && slug) {
+  if (slug && (published || wasPublished)) {
     indexNow = await submitToIndexNow([
       `${SITE_URL}/news/${encodeURIComponent(slug)}`,
       `${SITE_URL}/news`,

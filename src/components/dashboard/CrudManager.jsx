@@ -4,6 +4,8 @@ import { useState, useEffect, useMemo } from 'react';
 import { db, storage } from '@/lib/firebase';
 import { collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, serverTimestamp, query, orderBy } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
+import { announceChange } from '@/lib/announce-change';
+import { publicPathsFor } from '@/lib/public-paths';
 import { PlusCircle, Search, Pencil, Trash2, ArrowLeft, LoaderCircle, CheckCircle2, AlertCircle, X } from 'lucide-react';
 import ImageUploader from '@/components/dashboard/ImageUploader';
 import EntityLinker from '@/components/dashboard/EntityLinker';
@@ -110,9 +112,15 @@ export default function CrudManager({ config }) {
       if (editing) {
         await updateDoc(doc(db, collectionName, editing.id), { ...clean, updatedAt: serverTimestamp() });
         notify('success', `${title} updated.`);
+        announceChange([
+          ...publicPathsFor(collectionName, { ...editing, ...clean, id: editing.id }),
+          // If a slug changed, the old URL is gone too.
+          ...(editing.slug && editing.slug !== clean.slug ? publicPathsFor(collectionName, editing) : []),
+        ]);
       } else {
-        await addDoc(collection(db, collectionName), { ...clean, createdAt: serverTimestamp() });
+        const created = await addDoc(collection(db, collectionName), { ...clean, createdAt: serverTimestamp() });
         notify('success', `${title} added.`);
+        announceChange(publicPathsFor(collectionName, { ...clean, id: created.id }));
       }
       backToList();
     } catch (err) {
@@ -141,6 +149,7 @@ export default function CrudManager({ config }) {
       }
       await deleteDoc(doc(db, collectionName, item.id));
       notify('success', `${title} deleted.`);
+      announceChange(publicPathsFor(collectionName, item));
     } catch (err) {
       notify('error', 'Delete failed.');
     }

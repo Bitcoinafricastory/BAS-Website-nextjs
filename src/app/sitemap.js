@@ -18,6 +18,21 @@ const xmlEscape = (str) =>
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
 
+// Accurate <lastmod> values. Google and Bing only trust lastmod when it is
+// consistently accurate, so: use a document's real last-edited date, and
+// leave lastmod out entirely when we don't know it. (Previously most entries
+// said "changed right now" on every request, which teaches crawlers to ignore
+// the signal.)
+function toDate(value) {
+  if (!value) return undefined;
+  if (value instanceof Date) return Number.isNaN(value.getTime()) ? undefined : value;
+  if (typeof value.toDate === 'function') return value.toDate();
+  if (typeof value === 'object' && typeof value.seconds === 'number') return new Date(value.seconds * 1000);
+  const d = new Date(value);
+  return Number.isNaN(d.getTime()) ? undefined : d;
+}
+const lastEdited = (item) => toDate(item?.updatedAt) || toDate(item?.createdAt);
+
 export const revalidate = 300;
 
 const staticRoutes = [
@@ -53,7 +68,7 @@ export default async function sitemap() {
       // Encode: a slug containing spaces or punctuation would otherwise
       // produce a URL that isn't valid in a sitemap.
       url: `${base}/news/${encodeURIComponent(post.slug || post.id)}`,
-      lastModified: post.date ? new Date(post.date) : new Date(),
+      lastModified: toDate(post.updatedAt) || toDate(post.date),
       changeFrequency: 'weekly',
       priority: 0.85,
       // Image sitemap entry: tells Google which image belongs to this article,
@@ -70,7 +85,7 @@ export default async function sitemap() {
     const events = await getAllEvents();
     eventEntries = events.map((event) => ({
       url: `${base}/events/${event.id}`,
-      lastModified: new Date(),
+      lastModified: lastEdited(event),
       changeFrequency: 'weekly',
       priority: 0.6,
     }));
@@ -85,7 +100,7 @@ export default async function sitemap() {
       .filter((a) => a.slug)
       .map((a) => ({
         url: `${base}/authors/${encodeURIComponent(a.slug)}`,
-        lastModified: new Date(),
+        lastModified: lastEdited(a),
         changeFrequency: 'weekly',
         priority: 0.65,
       }));
@@ -100,7 +115,7 @@ export default async function sitemap() {
       .filter((e) => e.slug)
       .map((e) => ({
         url: `${base}/directory/${encodeURIComponent(e.slug)}`,
-        lastModified: new Date(),
+        lastModified: lastEdited(e),
         changeFrequency: 'weekly',
         priority: 0.65,
       }));
@@ -114,13 +129,13 @@ export default async function sitemap() {
     programEntries = [
       ...ownPrograms.map((p) => ({
         url: `${base}/education/our-programs/${p.id}`,
-        lastModified: new Date(),
+        lastModified: lastEdited(p),
         changeFrequency: 'monthly',
         priority: 0.6,
       })),
       ...otherPrograms.map((p) => ({
         url: `${base}/education/programs/${p.id}`,
-        lastModified: new Date(),
+        lastModified: lastEdited(p),
         changeFrequency: 'monthly',
         priority: 0.55,
       })),
@@ -129,16 +144,23 @@ export default async function sitemap() {
     console.warn('sitemap: could not fetch education programs', err);
   }
 
+  // Pages that list articles change when the newest article changes.
+  const newestArticle = articleEntries
+    .map((e) => e.lastModified)
+    .filter(Boolean)
+    .sort((a, b) => b - a)[0];
+  const ARTICLE_LISTING_PATHS = new Set(['/', '/news']);
+
   const staticEntries = staticRoutes.map((r) => ({
     url: `${base}${r.path}`,
-    lastModified: new Date(),
+    lastModified: ARTICLE_LISTING_PATHS.has(r.path) ? newestArticle : undefined,
     changeFrequency: r.changeFrequency,
     priority: r.priority,
   }));
 
   const categoryEntries = CATEGORIES.map((c) => ({
     url: `${base}/news/category/${c}`,
-    lastModified: new Date(),
+    lastModified: newestArticle,
     changeFrequency: 'weekly',
     priority: 0.7,
   }));
@@ -149,7 +171,6 @@ export default async function sitemap() {
   // undiscovered.
   const resourceCategoryEntries = listableCategorySlugs().map((slug) => ({
     url: `${base}/resources/${slug}`,
-    lastModified: new Date(),
     changeFrequency: 'monthly',
     priority: 0.65,
   }));
