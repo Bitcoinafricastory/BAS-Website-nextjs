@@ -88,7 +88,7 @@ export default async function HomePage() {
           </div>
 
           {categoriesToShow.map((cat) => {
-            const catPosts = (groupedPosts[cat] || []).slice(0, 6); // 1 lead + up to 5 side stories
+            const catPosts = (groupedPosts[cat] || []).slice(0, 5); // 1 lead + up to 4 side stories
             if (catPosts.length === 0) return null;
             return (
               <div key={cat} className="mb-16">
