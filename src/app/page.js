@@ -54,8 +54,8 @@ export default async function HomePage() {
   const featuredEntities = selectFeaturedEntities(entities, 6);
 
   // getAllNews() already returns newest-first (orderBy date desc). Do NOT
-  // reverse here: each category below takes .slice(0, 3), so reversing would
-  // surface the three OLDEST articles per category and newly published pieces
+  // reverse here: each category below takes .slice(0, 6), so reversing would
+  // surface the OLDEST articles per category and newly published pieces
   // would never appear on the homepage at all.
   const groupedPosts = posts.reduce((acc, post) => {
     const cat = post.category || 'Uncategorized';
@@ -88,7 +88,7 @@ export default async function HomePage() {
           </div>
 
           {categoriesToShow.map((cat) => {
-            const catPosts = (groupedPosts[cat] || []).slice(0, 3);
+            const catPosts = (groupedPosts[cat] || []).slice(0, 6); // 1 lead + up to 5 side stories
             if (catPosts.length === 0) return null;
             return (
               <div key={cat} className="mb-16">
