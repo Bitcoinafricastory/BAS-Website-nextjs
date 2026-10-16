@@ -31,13 +31,13 @@ export default function MagazinePostsGrid({ posts = [] }) {
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent" />
         </div>
-        <div className="p-5">
+        <div className="p-6 sm:p-7 lg:p-5">
           <span className="text-[11px] font-medium text-yellow-500 uppercase tracking-widest">{featured.category}</span>
-          <h3 className="text-xl sm:text-[22px] font-semibold leading-snug mt-2 mb-2 group-hover:text-yellow-500 transition-colors">
+          <h3 className="text-2xl sm:text-3xl lg:text-[22px] font-semibold leading-snug mt-2.5 mb-3 lg:mt-2 lg:mb-2 group-hover:text-yellow-500 transition-colors">
             {featured.title}
           </h3>
           {featured.excerpt && (
-            <p className="text-gray-400 text-sm leading-relaxed mb-3 line-clamp-2">{featured.excerpt}</p>
+            <p className="text-gray-400 text-sm sm:text-[15px] lg:text-sm leading-relaxed mb-4 lg:mb-3 line-clamp-2">{featured.excerpt}</p>
           )}
           <div className="flex items-center gap-3 text-xs text-gray-500">
             <span>{formatDate(featured.date)}</span>
@@ -51,31 +51,33 @@ export default function MagazinePostsGrid({ posts = [] }) {
         </div>
       </Link>
 
-      {/* Secondary headlines — thumbnail + text rows, stacked from the top. */}
+      {/* Secondary headlines — thumbnail + text rows, stacked from the top.
+          Phones and tablets keep the original two rows at the original size;
+          the bigger thumbnails and the 3rd/4th stories are desktop (lg) only. */}
       <div className="lg:col-span-2 flex flex-col divide-y divide-white/5 lg:border-l lg:border-white/5 lg:pl-8">
-        {rest.map((post) => (
+        {rest.map((post, i) => (
           <Link
             key={post.id}
             href={`/news/${post.slug || post.id}`}
-            className="group flex gap-4 items-start py-4 first:pt-0 last:pb-0"
+            className={`group gap-4 items-start py-4 first:pt-0 last:pb-0 ${i >= 2 ? 'hidden lg:flex' : 'flex'} ${i === 1 ? 'max-lg:pb-0 max-lg:border-b-0' : ''}`}
           >
-            <div className="relative w-28 h-20 sm:w-36 sm:h-24 lg:w-40 lg:h-28 flex-shrink-0 overflow-hidden bg-gray-800">
+            <div className="relative w-20 h-20 sm:w-24 sm:h-24 lg:w-40 lg:h-28 flex-shrink-0 overflow-hidden bg-gray-800">
               {post.image && (
                 <Image unoptimized
                   src={post.image}
                   alt={post.title}
                   fill
-                  sizes="160px"
+                  sizes="(min-width: 1024px) 160px, 96px"
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               )}
             </div>
             <div className="min-w-0">
               <span className="text-[10px] font-medium text-yellow-500 uppercase tracking-widest">{post.category}</span>
-              <h4 className="font-medium text-base leading-snug mt-1 line-clamp-3 group-hover:text-yellow-500 transition-colors">
+              <h4 className="font-medium text-[15px] lg:text-base leading-snug mt-1.5 lg:mt-1 line-clamp-3 group-hover:text-yellow-500 transition-colors">
                 {post.title}
               </h4>
-              <span className="text-xs text-gray-500 mt-1 block">{formatDate(post.date)}</span>
+              <span className="text-xs text-gray-500 mt-1.5 lg:mt-1 block">{formatDate(post.date)}</span>
             </div>
           </Link>
         ))}
