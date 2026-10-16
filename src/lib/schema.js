@@ -155,11 +155,44 @@ export function personSchema(author) {
   return schema;
 }
 
+
+/** Path of an article's featured photo served from our own domain. */
+export function articlePhotoPath(post) {
+  if (!post?.image) return null;
+  const s = encodeURIComponent(String(post.slug || post.id));
+  return `/news/${s}/${s}.jpg`;
+}
+
+export function articlePhotoUrl(post) {
+  const path = articlePhotoPath(post);
+  return path ? `${SITE_URL}${path}` : null;
+}
+
+/**
+ * When an article was published, as precisely as we know it. `date` is a
+ * day ("2026-10-12") chosen in the editor; `createdAt` is the real moment it
+ * was saved. Use createdAt when it falls on (about) the same day, so search
+ * engines see the real publish time instead of midnight; otherwise trust the
+ * editor's date (e.g. a backdated story).
+ */
+export function articlePublishedAt(post) {
+  const valid = (d) => d && !Number.isNaN(d.getTime());
+  const created = post?.createdAt ? new Date(post.createdAt) : null;
+  const day = post?.date ? new Date(post.date) : null;
+  if (valid(created) && valid(day)) {
+    return Math.abs(created - day) <= 36 * 60 * 60 * 1000 ? created : day;
+  }
+  if (valid(day)) return day;
+  if (valid(created)) return created;
+  return null;
+}
+
 export function newsArticleSchema(post, author, entities = []) {
   const pageUrl = `${SITE_URL}/news/${post.slug || post.id}`;
   const imageUrl = resolveImageUrl(post.image);
-  const published = post.date ? new Date(post.date).toISOString() : new Date().toISOString();
-  const modified = post.updatedAt ? new Date(post.updatedAt).toISOString() : published;
+  const published = (articlePublishedAt(post) || new Date()).toISOString();
+  const modifiedRaw = post.updatedAt ? new Date(post.updatedAt).toISOString() : published;
+  const modified = modifiedRaw < published ? published : modifiedRaw;
 
   // Prefer a resolved author object; fall back to the legacy string byline.
   const authorSchema = author
@@ -203,10 +236,12 @@ export function newsArticleSchema(post, author, entities = []) {
     // and the full-size original (no dimensions declared, because the stored
     // file's real size isn't known here). Google picks the best fit for each
     // surface. Previously the original was declared as 1200x630, which was wrong.
+    // Both images are on our own domain: the 1200x630 social crop and the
+    // full-width photo with a descriptive filename (no Firebase token links).
     image: imageUrl
       ? [
           { '@type': 'ImageObject', url: `${pageUrl}/og.jpg`, width: 1200, height: 630 },
-          imageUrl,
+          articlePhotoUrl(post),
         ]
       : undefined,
     datePublished: published,

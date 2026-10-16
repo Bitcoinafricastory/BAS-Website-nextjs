@@ -1,5 +1,5 @@
 import { getAllNews } from '@/lib/news';
-import { SITE_URL, SITE_NAME } from '@/lib/schema';
+import { SITE_URL, SITE_NAME, articlePublishedAt } from '@/lib/schema';
 
 export const revalidate = 300;
 
@@ -23,8 +23,11 @@ export async function GET() {
 
   // Google News sitemap should only include articles from the last 2 days.
   const cutoff = Date.now() - 1000 * 60 * 60 * 48;
-  const dated = posts.filter((post) => post.date);
-  let recent = dated.filter((post) => new Date(post.date).getTime() >= cutoff);
+  // Real publish time (not midnight) — see articlePublishedAt.
+  const dated = posts
+    .map((post) => ({ post, published: articlePublishedAt(post) }))
+    .filter((x) => x.published);
+  let recent = dated.filter((x) => x.published.getTime() >= cutoff);
 
   // A <urlset> with no <url> children is invalid — Search Console reports it
   // as "Missing XML tag" and the whole sitemap fails. Publishing gaps longer
@@ -35,18 +38,18 @@ export async function GET() {
   if (recent.length === 0) {
     recent = dated
       .slice()
-      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .sort((a, b) => b.published - a.published)
       .slice(0, 10);
   }
 
   const urls = recent
-    .map((post) => {
+    .map(({ post, published }) => {
       // The slug becomes a URL path segment and then XML text. Encoding it
       // handles slugs containing spaces or punctuation, and escaping handles
       // characters like & that would otherwise produce invalid XML.
       const slugPart = encodeURIComponent(post.slug || post.id);
       const url = `${SITE_URL}/news/${slugPart}`;
-      const pubDate = new Date(post.date).toISOString();
+      const pubDate = published.toISOString();
       return `  <url>
     <loc>${escapeXml(url)}</loc>
     <news:news>

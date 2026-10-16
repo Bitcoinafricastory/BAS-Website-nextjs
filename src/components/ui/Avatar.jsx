@@ -26,7 +26,7 @@ export default function Avatar({ src, name = '', size = 80, className = '', prio
       className={`relative overflow-hidden flex items-center justify-center bg-gradient-to-br from-yellow-500/25 to-yellow-700/15 ${className}`}
     >
       {showImage ? (
-        <Image
+        <Image unoptimized
           src={src}
           alt={name || 'Profile photo'}
           fill

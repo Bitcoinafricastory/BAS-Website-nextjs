@@ -28,7 +28,7 @@ export default function BitcoinResources({ resources = [] }) {
               <CardWrapper key={r.id} {...extraProps} className="snap-start shrink-0 w-[82%] sm:w-[46%] group relative flex flex-col bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-all duration-500 cursor-pointer">
                 <div className="relative h-[160px] overflow-hidden bg-yellow-100/5">
                   {r.imageSrc ? (
-                    <Image
+                    <Image unoptimized
                       src={r.imageSrc}
                       alt={r.imageAlt || r.title}
                       fill
@@ -67,7 +67,7 @@ export default function BitcoinResources({ resources = [] }) {
               <CardWrapper key={r.id} {...extraProps} className="group relative flex flex-col bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-all duration-500 min-h-[400px] cursor-pointer">
                 <div className="relative h-[200px] overflow-hidden bg-yellow-100/5">
                   {r.imageSrc ? (
-                    <Image
+                    <Image unoptimized
                       src={r.imageSrc}
                       alt={r.imageAlt || r.title}
                       fill

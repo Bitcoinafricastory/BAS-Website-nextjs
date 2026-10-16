@@ -68,11 +68,11 @@ export default function PillarPage({ pillar, entities = [], articles = [] }) {
                   >
                     <div className="relative h-[110px] bg-[#101408]">
                       {coverUrl && (
-                        <Image src={coverUrl} alt="" fill sizes="400px" className="object-cover opacity-80" />
+                        <Image unoptimized src={coverUrl} alt="" fill sizes="400px" className="object-cover opacity-80" />
                       )}
                       <div className="absolute -bottom-4 left-4 w-12 h-12 rounded-xl bg-[#161616] border-[3px] border-[#0A0A0A] overflow-hidden flex items-center justify-center">
                         {logoUrl ? (
-                          <Image src={logoUrl} alt={entity.name} fill sizes="48px" className="object-cover" />
+                          <Image unoptimized src={logoUrl} alt={entity.name} fill sizes="48px" className="object-cover" />
                         ) : (
                           <span className="font-black text-white/30">{entity.name?.[0] || '?'}</span>
                         )}
@@ -116,7 +116,7 @@ export default function PillarPage({ pillar, entities = [], articles = [] }) {
                     }`}
                   >
                     <div className="relative w-[88px] h-[60px] rounded-lg overflow-hidden bg-[#0A0A0A] flex-shrink-0">
-                      {thumb && <Image src={thumb} alt="" fill sizes="88px" className="object-cover" />}
+                      {thumb && <Image unoptimized src={thumb} alt="" fill sizes="88px" className="object-cover" />}
                     </div>
                     <div className="min-w-0">
                       <div className="font-semibold text-[15.5px] leading-snug group-hover:text-yellow-500 transition-colors">

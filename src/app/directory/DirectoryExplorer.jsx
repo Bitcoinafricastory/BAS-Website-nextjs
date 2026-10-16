@@ -92,7 +92,7 @@ function EntityCard({ entity }) {
         <div className="relative h-[190px] overflow-hidden bg-gradient-to-br from-gray-900 to-black">
           {hasCover ? (
             <>
-              <Image
+              <Image unoptimized
                 src={entity.coverImage}
                 alt={entity.name}
                 fill
@@ -104,7 +104,7 @@ function EntityCard({ entity }) {
           ) : hasLogo ? (
             <div className="absolute inset-0 flex items-center justify-center p-10">
               <div className="relative w-full h-full">
-                <Image src={entity.logo} alt={entity.name} fill sizes="240px" className="object-contain opacity-90" />
+                <Image unoptimized src={entity.logo} alt={entity.name} fill sizes="240px" className="object-contain opacity-90" />
               </div>
             </div>
           ) : (
@@ -120,7 +120,7 @@ function EntityCard({ entity }) {
           {hasCover && hasLogo && (
             <div className="absolute -bottom-8 left-5 w-20 h-20 rounded-xl bg-[#161616] border-4 border-[#0A0A0A] overflow-hidden flex items-center justify-center">
               <div className="relative w-full h-full">
-                <Image src={entity.logo} alt="" fill sizes="80px" className="object-contain p-2" />
+                <Image unoptimized src={entity.logo} alt="" fill sizes="80px" className="object-contain p-2" />
               </div>
             </div>
           )}

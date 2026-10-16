@@ -5,7 +5,7 @@ import { getEntities } from '@/lib/entities';
 import { getAllEducationPrograms, getAllOtherPrograms } from '@/lib/education';
 import { PILLARS } from '@/lib/pillars';
 import { listableCategorySlugs } from '@/lib/resources-data';
-import { resolveImageUrl } from '@/lib/schema';
+import { articlePhotoUrl } from '@/lib/schema';
 
 // Next writes <image:loc> verbatim, without XML-escaping. Firebase Storage URLs
 // contain '&' (…?alt=media&token=…), and a raw '&' makes the whole sitemap
@@ -73,9 +73,7 @@ export default async function sitemap() {
       priority: 0.85,
       // Image sitemap entry: tells Google which image belongs to this article,
       // so the featured photo is the one associated with it in Google Images.
-      ...(post.image && resolveImageUrl(post.image)
-        ? { images: [xmlEscape(resolveImageUrl(post.image))] }
-        : {}),
+      ...(articlePhotoUrl(post) ? { images: [xmlEscape(articlePhotoUrl(post))] } : {}),
     }));
   } catch (err) {
     console.warn('sitemap: could not fetch articles', err);

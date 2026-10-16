@@ -424,6 +424,20 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
             preview={imagePreview}
             onChange={(val, prev) => { update({ image: val }); setImagePreview(prev); }}
           />
+          <label className="block mt-4">
+            <span className="block text-sm font-medium text-gray-300 mb-1.5">Image description (alt text)</span>
+            <input
+              type="text"
+              value={form.imageAlt || ''}
+              onChange={(e) => update({ imageAlt: e.target.value })}
+              maxLength={160}
+              placeholder="e.g. Three Bitcoin educators holding a certificate in Lusaka"
+              className="w-full bg-black border border-gray-800 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600 focus:border-yellow-500 focus:outline-none"
+            />
+            <span className="block text-xs text-gray-500 mt-1.5">
+              Describe what is in the photo, not the headline. Google Images and screen readers use this.
+            </span>
+          </label>
         </div>
       </div>
 

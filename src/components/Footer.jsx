@@ -76,7 +76,7 @@ function PostCard({ title, author, image, link }) {
     <Link href={link} className="flex items-start space-x-3 group">
       <div className="relative flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 overflow-hidden rounded-md border border-gray-700 bg-gray-800">
         {image && (
-          <Image
+          <Image unoptimized
             src={image}
             alt={title}
             fill

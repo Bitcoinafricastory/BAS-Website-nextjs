@@ -9,6 +9,8 @@ import {
   resolveImageUrl,
   jsonLdScript,
   SITE_URL,
+  articlePhotoPath,
+  articlePublishedAt,
 } from '@/lib/schema';
 import { computeReadingTime, deriveKeyTakeaways, getFaqs, addHeadingIds, extractHeadings, preventHyphenBreaks, normalizeNonBreakingSpaces, sanitizeArticleHtml, addMissingImageAlts } from '@/lib/article-content';
 import { resolveArticleAuthor } from '@/lib/authors';
@@ -65,7 +67,8 @@ export async function generateMetadata({ params }) {
         ? [{ url: imageUrl, width: 1200, height: 630, alt: post.imageAlt || post.title }]
         : undefined,
       siteName: 'Bitcoin Africa Story',
-      publishedTime: post.date ? new Date(post.date).toISOString() : undefined,
+      publishedTime: articlePublishedAt(post)?.toISOString(),
+      modifiedTime: post.updatedAt ? new Date(post.updatedAt).toISOString() : undefined,
       authors: [post.author || post.authorName || 'Bitcoin Africa Story'],
       section: post.category,
     },
@@ -84,9 +87,10 @@ export default async function BlogPostPage({ params }) {
   if (!post) notFound();
 
   const pageUrl = `${SITE_URL}/news/${post.slug || post.id}`;
-  // The full-size original for the on-page hero. NOT the /og.jpg version —
-  // that one is cropped to 1.91:1 for social cards and would look wrong here.
-  const imageUrl = resolveImageUrl(post.image);
+  // Full-width hero photo, served from our own domain with a descriptive
+  // filename (/news/<slug>/<slug>.jpg) so it is the same image Google Images
+  // sees in the sitemap and structured data. NOT the cropped /og.jpg card.
+  const imageUrl = articlePhotoPath(post) || resolveImageUrl(post.image);
   const readingTime = computeReadingTime(post.content, post.readTime);
   const keyTakeaways = deriveKeyTakeaways(post);
   const faqs = post.showFaqs ? getFaqs(post) : [];

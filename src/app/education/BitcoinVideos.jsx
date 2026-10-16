@@ -81,7 +81,7 @@ export default function BitcoinVideos({ videos = [] }) {
                 >
                   <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-zinc-900">
                     {video.thumbnailUrl && (
-                      <Image
+                      <Image unoptimized
                         src={video.thumbnailUrl}
                         alt=""
                         fill
