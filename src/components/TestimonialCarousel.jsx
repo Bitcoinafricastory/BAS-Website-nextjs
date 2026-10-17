@@ -60,7 +60,7 @@ export default function TestimonialCarousel({ testimonials = [] }) {
                     )}
                   </div>
                   <div>
-                    <h4 className="font-medium text-[15px] leading-none text-white">{testimonial.name || 'Anonymous'}</h4>
+                    <p className="font-medium text-[15px] leading-none text-white">{testimonial.name || 'Anonymous'}</p>
                     <p className="text-[10px] text-yellow-500 font-medium mt-1.5 tracking-widest">{testimonial.role || testimonial.location || 'Movement Member'}</p>
                   </div>
                 </div>
