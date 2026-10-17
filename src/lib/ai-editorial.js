@@ -9,10 +9,24 @@
 import { stripHtml } from './article-content';
 import { auth } from './firebase';
 
+// Why the last AI call fell back to the basic version (e.g. "The Claude API
+// account is out of credit…"), so the tools panel can tell the editor instead
+// of silently showing the weaker draft.
+let lastAiError = null;
+export function takeLastAiError() {
+  const e = lastAiError;
+  lastAiError = null;
+  return e;
+}
+
 async function callAI(task, payload) {
+  lastAiError = null;
   try {
     const idToken = await auth.currentUser?.getIdToken();
-    if (!idToken) return null;
+    if (!idToken) {
+      lastAiError = 'You are signed out. Reload the page and sign in again.';
+      return null;
+    }
 
     const res = await fetch('/api/admin/ai', {
       method: 'POST',
@@ -34,11 +48,13 @@ async function callAI(task, payload) {
       // Surface the reason in the console — a silent null here is why the
       // stubbed version went unnoticed for so long.
       console.warn(`AI task "${task}" failed:`, data?.error || res.status);
+      lastAiError = data?.error || `The AI request failed (${res.status}).`;
       return null;
     }
     return data.result ?? null;
   } catch (err) {
     console.warn(`AI task "${task}" request failed:`, err);
+    lastAiError = 'Could not reach the server. Check your connection.';
     return null;
   }
 }

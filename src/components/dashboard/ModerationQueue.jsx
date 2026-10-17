@@ -15,7 +15,7 @@ import { Check, X, LoaderCircle, Eye, CheckCircle2, AlertCircle, Inbox } from 'l
  * }
  */
 export default function ModerationQueue({ config }) {
-  const { title, sourceCollection, targetCollection, primaryField, secondaryField, imageField, transform } = config;
+  const { title, sourceCollection, targetCollection, primaryField, secondaryField, imageField, transform, beforeApprove } = config;
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [busyId, setBusyId] = useState(null);
@@ -43,6 +43,13 @@ export default function ModerationQueue({ config }) {
     try {
       const { id, submittedAt, status, ...rest } = item;
       const payload = transform ? transform(rest) : rest;
+      // Optional check (e.g. "already in the directory"); a returned message
+      // stops the approval and is shown to the editor.
+      const problem = beforeApprove ? await beforeApprove(payload) : null;
+      if (problem) {
+        setToast({ type: 'error', message: problem });
+        return;
+      }
       const created = await addDoc(collection(db, targetCollection), { ...payload, createdAt: serverTimestamp() });
       await deleteDoc(doc(db, sourceCollection, item.id));
       if (!payload.status || payload.status === 'published') {

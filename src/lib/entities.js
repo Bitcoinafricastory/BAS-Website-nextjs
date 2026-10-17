@@ -1,6 +1,7 @@
 import { collection, getDocs, query, where, getDoc, doc } from 'firebase/firestore';
 import { db } from './firebase';
 import { summarizeBadges, badgeWeight } from './entityTypes';
+import { dedupeBySlug, pickPrimary } from './entity-duplicates.js';
 
 const ENTITIES_COLLECTION = 'entities';
 const entitiesCollectionRef = collection(db, ENTITIES_COLLECTION);
@@ -18,10 +19,6 @@ function serializeDates(data) {
   return out;
 }
 
-/**
- * "Bitcoin Ikorodu" -> "bitcoin-ikorodu". Exported so the admin form and any
- * future migration script can preview/generate slugs consistently.
- */
 /**
  * Make a stored website value safe to use in href.
  *
@@ -48,21 +45,15 @@ export function normalizeWebsiteUrl(value) {
   return `https://${raw.replace(/^\//, '')}`;
 }
 
-export function slugifyEntity(name) {
-  return String(name || '')
-    .toLowerCase()
-    .normalize('NFKD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9\s-]/g, '')
-    .trim()
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-');
-}
+export { slugifyEntity } from './entities-slug.js';
 
 export async function getEntities() {
   try {
     const snap = await getDocs(entitiesCollectionRef);
-    return snap.docs.map((d) => ({ id: d.id, ...serializeDates(d.data()) }));
+    // Duplicate profiles (same slug) would show twice in the directory and
+    // the sitemap. Show the most complete copy until the extra is deleted in
+    // the dashboard (Directory -> Possible duplicates).
+    return dedupeBySlug(snap.docs.map((d) => ({ id: d.id, ...serializeDates(d.data()) })));
   } catch (err) {
     console.warn('getEntities: could not fetch', err);
     return [];
@@ -215,12 +206,19 @@ export async function getEntityBySlug(slug) {
   try {
     const snap = await getDocs(query(entitiesCollectionRef, where('slug', '==', slug)));
     if (snap.empty) return null;
-    const d = snap.docs[0];
-    return { id: d.id, ...serializeDates(d.data()) };
+    // If duplicates share this slug, show the most complete one.
+    return pickPrimary(snap.docs.map((d) => ({ id: d.id, ...serializeDates(d.data()) })));
   } catch (err) {
     console.warn(`getEntityBySlug(${slug}): could not fetch`, err);
     return null;
   }
+}
+
+/** All directory documents that use this slug (for duplicate checks). */
+export async function findEntitiesBySlug(slug) {
+  if (!slug) return [];
+  const snap = await getDocs(query(entitiesCollectionRef, where('slug', '==', slug)));
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
 
 export async function getEntityById(id) {

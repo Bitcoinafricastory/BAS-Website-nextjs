@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import sharp from 'sharp';
+import { RESIZABLE_HOSTS } from '@/lib/image-sizes.mjs';
 import { verifyIdToken, isAllowedAdmin } from '@/lib/admin-auth';
 import { callClaude, WRITING_MODELS } from '@/lib/claude-api';
 
@@ -88,6 +90,79 @@ Respond with ONLY a JSON array of strings. Example:
   },
 };
 
+// Image description (alt text) for an article photo. Claude looks at the
+// photo itself; the title only helps it name the event or place.
+const IMAGE_ALT_INSTRUCTION = `Write alt text for this news photo.
+
+- Describe what is actually visible: who (by role, e.g. "students", "a speaker"), doing what, where if it's clear.
+- Use the article title only to name the event, place or organisation when the photo clearly shows it. Never guess names of people.
+- 8-20 words, under 125 characters. No "image of" or "photo of". No full stop at the end.
+- If the image is a graphic, poster or logo, say so and give the main text on it.
+
+Respond with ONLY a JSON object: {"result": "the alt text"}`;
+
+async function loadImageForClaude(src, origin) {
+  let url;
+  try {
+    url = src.startsWith('/') && !src.startsWith('//') ? new URL(src, origin) : new URL(src);
+  } catch {
+    return null;
+  }
+  const allowed = url.origin === origin || (url.protocol === 'https:' && (
+    RESIZABLE_HOSTS.includes(url.hostname) || /(^|\.)bitcoinafricastory\.com$/.test(url.hostname)
+  ));
+  if (!allowed) return null;
+  const res = await fetch(url, { signal: AbortSignal.timeout(20000) });
+  if (!res.ok) return null;
+  // Smaller and always JPEG: keeps the request fast and well under the API's
+  // image size limit, whatever was uploaded.
+  const jpeg = await sharp(Buffer.from(await res.arrayBuffer()), { failOn: 'none' })
+    .rotate()
+    .resize({ width: 1024, height: 1024, fit: 'inside', withoutEnlargement: true })
+    .jpeg({ quality: 80 })
+    .toBuffer();
+  return jpeg.toString('base64');
+}
+
+async function describeImage({ apiKey, payload, origin }) {
+  const src = String(payload?.image || '');
+  if (!src) return NextResponse.json({ error: 'This article has no featured image.' }, { status: 400 });
+  let data;
+  try {
+    data = await loadImageForClaude(src, origin);
+  } catch (err) {
+    console.warn('imageAlt: could not load image', err?.message);
+  }
+  if (!data) return NextResponse.json({ error: 'Could not load this image.' }, { status: 400 });
+
+  const claude = await callClaude({
+    apiKey,
+    models: WRITING_MODELS,
+    body: {
+      max_tokens: 200,
+      messages: [{
+        role: 'user',
+        content: [
+          { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data } },
+          { type: 'text', text: `${IMAGE_ALT_INSTRUCTION}\n\nArticle title: ${payload?.title || '(untitled)'}` },
+        ],
+      }],
+    },
+  });
+  if (!claude.ok) return NextResponse.json({ error: claude.message }, { status: 502 });
+
+  const raw = (claude.data.content || []).filter((c) => c.type === 'text').map((c) => c.text).join('\n');
+  const match = raw.match(/\{[\s\S]*\}/);
+  try {
+    const result = String(JSON.parse(match ? match[0] : raw).result || '').trim().replace(/\.$/, '');
+    if (!result) throw new Error('empty');
+    return NextResponse.json({ result: result.slice(0, 160) });
+  } catch {
+    console.error('imageAlt: unexpected response', raw.slice(0, 300));
+    return NextResponse.json({ error: 'AI returned an unexpected response.' }, { status: 502 });
+  }
+}
+
 export async function POST(request) {
   let body;
   try {
@@ -103,7 +178,7 @@ export async function POST(request) {
   if (!isAllowedAdmin(user)) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   const spec = TASKS[task];
-  if (!spec) return NextResponse.json({ error: `Unknown task: ${task}` }, { status: 400 });
+  if (!spec && task !== 'imageAlt') return NextResponse.json({ error: `Unknown task: ${task}` }, { status: 400 });
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
@@ -111,6 +186,10 @@ export async function POST(request) {
       { error: 'AI is not configured on this deployment (missing ANTHROPIC_API_KEY).' },
       { status: 503 }
     );
+  }
+
+  if (task === 'imageAlt') {
+    return describeImage({ apiKey, payload, origin: new URL(request.url).origin });
   }
 
   const text = htmlToText(payload?.content);

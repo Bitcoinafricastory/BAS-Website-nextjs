@@ -11,6 +11,7 @@ import {
   CheckCircle2, AlertCircle, X, Plus,
 } from 'lucide-react';
 import ImageUploader from '@/components/dashboard/ImageUploader';
+import DuplicatesPanel from '@/components/dashboard/DuplicatesPanel';
 import {
   ENTITY_TYPES, ENTITY_COUNTRIES, BADGE_LEVELS, COVERAGE_TYPES, entityTypeLabel, badgeLabel,
 } from '@/lib/entityTypes';
@@ -146,6 +147,16 @@ export default function EntityManager() {
       const logoUrl = await uploadIfFile(form.logo, `${ENTITIES_COLLECTION}/logo_${Date.now()}`);
       const coverUrl = await uploadIfFile(form.coverImage, `${ENTITIES_COLLECTION}/cover_${Date.now()}`);
       const slug = editing?.slug || slugifyEntity(form.name);
+      // A new profile must not reuse an existing name: /directory/<slug> can
+      // only show one of them, and the listing would show both.
+      if (!editing) {
+        const existing = items.find((it) => it.slug === slug);
+        if (existing) {
+          notify('error', `“${existing.name}” already exists in the directory. Edit that profile instead.`);
+          setBusy(false);
+          return;
+        }
+      }
       const payload = {
         name: form.name,
         slug,
@@ -188,7 +199,10 @@ export default function EntityManager() {
     setConfirmDelete(null);
     try {
       for (const url of [item.logo, item.coverImage]) {
-        if (url && typeof url === 'string' && url.includes('firebasestorage.googleapis.com')) {
+        // Duplicates often share the same logo file. Only delete the image
+        // when no other profile still uses it.
+        const sharedWith = items.some((other) => other.id !== item.id && (other.logo === url || other.coverImage === url));
+        if (url && typeof url === 'string' && url.includes('firebasestorage.googleapis.com') && !sharedWith) {
           try { await deleteObject(ref(storage, url)); } catch (e) { console.warn('img delete skipped', e); }
         }
       }
@@ -363,6 +377,8 @@ export default function EntityManager() {
           <PlusCircle size={18} /> Add Entity
         </button>
       </div>
+
+      {!loading && <DuplicatesPanel items={items} onEdit={openEdit} onDelete={setConfirmDelete} />}
 
       <div className="relative mb-6">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />

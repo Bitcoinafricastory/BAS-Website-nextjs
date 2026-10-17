@@ -5,7 +5,7 @@ import { db } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { LoaderCircle, CheckCircle2, Sparkles, AlertTriangle, X } from 'lucide-react';
 import { ENTITY_TYPES, ENTITY_COUNTRIES, entityTypeLabel } from '@/lib/entityTypes';
-import { slugifyEntity } from '@/lib/entities';
+import { slugifyEntity, findEntitiesBySlug } from '@/lib/entities';
 import EntityLinker from '@/components/dashboard/EntityLinker';
 
 export default function EntityExtractionReview({ suggestions, degraded, reason, articleTitle, articleImage, onConfirm, onSkip }) {
@@ -34,6 +34,13 @@ export default function EntityExtractionReview({ suggestions, degraded, reason, 
     const item = items[i];
     try {
       const slug = slugifyEntity(item.name);
+      // If a profile with this name already exists, link to it instead of
+      // creating a second copy.
+      const existing = await findEntitiesBySlug(slug);
+      if (existing.length) {
+        updateItem(i, { status: 'linked', slug, creating: false });
+        return;
+      }
       await addDoc(collection(db, 'entities'), {
         name: item.name,
         slug,

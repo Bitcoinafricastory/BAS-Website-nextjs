@@ -5,6 +5,7 @@ import { Sparkles, LoaderCircle, Check, Copy, ChevronDown } from 'lucide-react';
 import {
   generateSummary, generateMetaDescription, suggestHeadlines,
   generateFaqs, generateKeyTakeaways, generateSocialCaptions, recommendTags,
+  takeLastAiError,
 } from '@/lib/ai-editorial';
 
 function ResultBlock({ result, onApply, applyLabel = 'Apply' }) {
@@ -48,11 +49,13 @@ export default function AiTools({ form, update }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(null);
   const [results, setResults] = useState({});
+  const [aiError, setAiError] = useState(null);
 
   const run = async (key, fn) => {
     setLoading(key);
     try {
       const result = await fn(form);
+      setAiError(takeLastAiError());
       setResults((r) => ({ ...r, [key]: result }));
     } finally {
       setLoading(null);
@@ -82,8 +85,13 @@ export default function AiTools({ form, update }) {
       {open && (
         <div className="px-6 pb-6">
           <p className="text-xs text-gray-500 mb-4">
-            Assistance to speed up publishing — always review before applying. (Connect an API key to enable full AI generation.)
+            Assistance to speed up publishing. Always review before applying.
           </p>
+          {aiError && (
+            <p className="text-xs text-amber-300 bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-2 mb-4">
+              AI wasn&rsquo;t used: {aiError} The result below is a basic draft.
+            </p>
+          )}
           <div className="space-y-3">
             {tools.map((tool) => (
               <div key={tool.key}>

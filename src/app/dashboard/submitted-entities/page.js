@@ -1,7 +1,7 @@
 'use client';
 
 import ModerationQueue from '@/components/dashboard/ModerationQueue';
-import { slugifyEntity } from '@/lib/entities';
+import { slugifyEntity, findEntitiesBySlug } from '@/lib/entities';
 
 const config = {
   title: 'Submitted Directory Entries',
@@ -14,6 +14,13 @@ const config = {
   // badge — it never claims editorial review happened. Additional badges
   // (Editorial Reviewed, Interview Conducted, etc.) get added later in
   // Directory once someone on the team actually does that work.
+  // Approving a business that's already listed used to create a second copy.
+  beforeApprove: async (payload) => {
+    const existing = await findEntitiesBySlug(payload.slug);
+    return existing.length
+      ? `“${existing[0].name}” is already in the directory. Reject this submission, or add its details to the existing profile.`
+      : null;
+  },
   transform: (item) => ({
     name: item.name || '',
     slug: slugifyEntity(item.name || ''),
