@@ -152,7 +152,7 @@ export default async function AuthorProfilePage({ params }) {
                 >
                   <div className="aspect-video overflow-hidden relative bg-gray-800">
                     {resolveImageUrl(post.image) && (
-                      <Image unoptimized
+                      <Image
                         src={resolveImageUrl(post.image)}
                         alt={post.imageAlt || post.title}
                         fill

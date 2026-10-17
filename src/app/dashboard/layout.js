@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/context/AuthContext';
+import { AuthProvider, useAuth } from '@/context/AuthContext';
 import Sidebar from '@/components/dashboard/Sidebar';
 import Topbar from '@/components/dashboard/Topbar';
 import { LoaderCircle } from 'lucide-react';
@@ -13,6 +13,14 @@ import { LoaderCircle } from 'lucide-react';
 // Fails closed: any error means no dashboard.
 
 export default function DashboardLayout({ children }) {
+  return (
+    <AuthProvider>
+      <DashboardShell>{children}</DashboardShell>
+    </AuthProvider>
+  );
+}
+
+function DashboardShell({ children }) {
   const { user, loading } = useAuth();
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);

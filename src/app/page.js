@@ -154,7 +154,7 @@ export default async function HomePage() {
                   >
                     <div className="relative w-full aspect-square bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden group-hover:border-yellow-500/50 transition-colors">
                       {entity.logo && (
-                        <Image unoptimized src={entity.logo} alt={entity.name} fill sizes="112px" className="object-contain p-4" />
+                        <Image src={entity.logo} alt={entity.name} fill sizes="112px" className="object-contain p-4" />
                       )}
                     </div>
                     <p className="text-xs text-gray-400 text-center truncate w-full group-hover:text-gray-300 transition-colors">{entity.name}</p>
@@ -173,7 +173,7 @@ export default async function HomePage() {
                   >
                     <div className="relative w-full aspect-square bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden group-hover:border-yellow-500/50 transition-colors">
                       {entity.logo && (
-                        <Image unoptimized src={entity.logo} alt={entity.name} fill sizes="(min-width: 1024px) 200px, 25vw" className="object-contain p-5" />
+                        <Image src={entity.logo} alt={entity.name} fill sizes="(min-width: 1024px) 200px, 25vw" className="object-contain p-5" />
                       )}
                     </div>
                     <p className="text-sm text-gray-400 text-center truncate w-full group-hover:text-gray-300 transition-colors">{entity.name}</p>

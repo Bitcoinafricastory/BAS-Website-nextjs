@@ -1,4 +1,5 @@
 import sharp from 'sharp';
+import { ALLOWED_WIDTHS } from '@/lib/image-sizes.mjs';
 import { getNewsBySlug } from '@/lib/news';
 import { resolveImageUrl } from '@/lib/schema';
 
@@ -13,12 +14,17 @@ import { resolveImageUrl } from '@/lib/schema';
  * (The cropped 1200x630 social card stays at /news/<slug>/og.jpg.)
  *
  * Any other filename under an article returns 404.
+ *
+ * An optional ?w= (one of the widths next/image asks for) returns a smaller
+ * copy for phones and thumbnails, under the same descriptive URL.
  */
 const MAX_WIDTH = 1600; // Discover and large previews want >= 1200px wide.
 
 export async function GET(request, { params }) {
   const { slug, file } = await params;
   if (file !== `${slug}.jpg`) return new Response('Not found', { status: 404 });
+  const requested = Number(new URL(request.url).searchParams.get('w'));
+  const width = ALLOWED_WIDTHS.includes(requested) ? Math.min(requested, MAX_WIDTH) : MAX_WIDTH;
 
   let source = null;
   try {
@@ -32,8 +38,8 @@ export async function GET(request, { params }) {
 
     const output = await sharp(input)
       .rotate() // respect camera orientation
-      .resize({ width: MAX_WIDTH, withoutEnlargement: true })
-      .jpeg({ quality: 82, progressive: true, mozjpeg: true })
+      .resize({ width, withoutEnlargement: true })
+      .jpeg({ quality: width === MAX_WIDTH ? 82 : 76, progressive: true, mozjpeg: true })
       .toBuffer();
 
     return new Response(output, {

@@ -26,6 +26,10 @@ const fraunces = Fraunces({
   style: ['normal', 'italic'],
   variable: '--font-fraunces',
   display: 'swap',
+  // Only the About and Donate pages use this face. Preloading made every
+  // page download it (about 80 KB) on first load; without preload the
+  // browser fetches it only where it's actually rendered.
+  preload: false,
 });
 
 // Monospace face — used on the Donate page's Bitcoin-native styling
@@ -35,6 +39,8 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ['400', '500', '600', '700'],
   variable: '--font-jetbrains-mono',
   display: 'swap',
+  // Used on the Donate page and the article "Courier" font option only.
+  preload: false,
 });
 
 // The domain cutover is done: this project serves www.bitcoinafricastory.com directly, so

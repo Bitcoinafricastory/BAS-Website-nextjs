@@ -40,6 +40,14 @@ function SectionHeading({ eyebrow, title, href }) {
   );
 }
 
+// NewsExplorer runs in the browser, so everything passed to it is embedded in
+// the page. Passing whole articles (full body HTML, FAQs, ...) made /news
+// about 225 KB heavier than it needs to be. Only the card fields go across.
+function toCard(post) {
+  const { id, slug, title, excerpt, image, category, date, readTime } = post;
+  return { id, slug, title, excerpt, image, category, date, readTime };
+}
+
 export default async function NewsPage() {
   const [posts, podcastEpisodes] = await Promise.all([getAllNews(), getPodcastEpisodes()]);
 
@@ -170,7 +178,7 @@ export default async function NewsPage() {
       {/* ===== Full archive: category filter + submit story (client) ===== */}
       <section className="max-w-7xl mx-auto px-6 py-12 border-t border-white/[0.08]">
         <SectionHeading eyebrow="The full archive" title="All Stories" />
-        <NewsExplorer initialPosts={posts} />
+        <NewsExplorer initialPosts={posts.map(toCard)} />
       </section>
     </div>
   );

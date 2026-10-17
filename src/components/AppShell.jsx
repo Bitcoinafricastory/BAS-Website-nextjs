@@ -1,16 +1,19 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { AuthProvider } from '@/context/AuthContext';
 
 // Receives the server-rendered header/footer as props and decides whether to
 // show them. Admin routes (/admin, /dashboard/*) render without site chrome.
+//
+// The sign-in context (AuthProvider) used to wrap the whole site here, which
+// shipped the Firebase SDK (~190 KB compressed) to every reader. It now lives
+// in the /admin and /dashboard layouts only.
 export default function AppShell({ header, footer, children }) {
   const pathname = usePathname();
   const isAdmin = pathname === '/admin' || (pathname && pathname.startsWith('/dashboard'));
 
   return (
-    <AuthProvider>
+    <>
       {/* Skip link: visually hidden until keyboard-focused, so the page looks
           unchanged but keyboard and screen-reader users can jump past the nav. */}
       {!isAdmin && (
@@ -24,6 +27,6 @@ export default function AppShell({ header, footer, children }) {
       {!isAdmin && header}
       {isAdmin ? children : <main id="main">{children}</main>}
       {!isAdmin && footer}
-    </AuthProvider>
+    </>
   );
 }

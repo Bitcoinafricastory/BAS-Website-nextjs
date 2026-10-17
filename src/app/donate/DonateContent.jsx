@@ -21,7 +21,7 @@ const buildTracks = (verifiedCount) => [
     tag: 'Education',
     title: 'Teaching people who go on to build',
     body: 'Seven Bitcoin Diploma cohorts, free to every student, run with My First Bitcoin. Alumni have started careers and launched their own projects across the continent.',
-    image: '/assets/education.jpg',
+    image: '/assets/education.webp',
     figs: [
       { v: 100, suffix: '+', k: 'Alumni' },
       { v: 10, suffix: '+', k: 'Careers' },
@@ -33,7 +33,7 @@ const buildTracks = (verifiedCount) => [
     tag: 'Community',
     title: 'Building places where sats actually move',
     body: 'Bitcoin Ikorodu is a working circular economy — merchants onboarded, sats earned and spent locally. We run the meetups, school sessions, and church events that keep it growing.',
-    image: '/assets/bitcoin-ikorodu-kids.png',
+    image: '/assets/bitcoin-ikorodu-kids.webp',
     figs: [
       { v: 13, suffix: '', k: 'Events' },
       { v: 4, suffix: '', k: 'Merchants' },
@@ -45,7 +45,7 @@ const buildTracks = (verifiedCount) => [
     tag: 'Reporting',
     title: 'Bringing Bitcoin in Africa to you',
     body: 'We document the builders, communities, and merchants making Bitcoin work here — reported by people running a circular economy, not observing one.',
-    image: '/assets/story.jpg',
+    image: '/assets/story.webp',
     figs: [
       { v: 50, suffix: '+', k: 'Stories' },
       { v: 30, suffix: '+', k: 'Spaces' },
@@ -57,7 +57,7 @@ const buildTracks = (verifiedCount) => [
     tag: 'Research',
     title: 'Mapping who is actually building',
     body: 'We verify and document the people, projects, and communities driving Bitcoin adoption across Africa — checked by our reporters, not scraped from a database.',
-    image: '/assets/research.jpg',
+    image: '/assets/research.webp',
     figs: [
       { v: verifiedCount, suffix: '', k: 'Verified entries' },
       { label: 'Public', k: 'Directory' },
@@ -89,7 +89,7 @@ const fadeUp = {
 function TrackCard({ track, className = '' }) {
   return (
     <article className={`group relative overflow-hidden bg-[#111] flex flex-col justify-end ${className}`}>
-      <Image unoptimized
+      <Image
         src={track.image}
         alt=""
         fill
@@ -174,8 +174,8 @@ export default function DonateContent({ verifiedCount = 0 }) {
             </motion.div>
           </div>
           <div className="relative min-h-[260px] lg:min-h-[440px] order-1 lg:order-2 -mx-6 lg:mx-0">
-            <Image unoptimized src="/assets/dontebg.jpg" alt="Bitcoin Africa Story community" fill priority
-              sizes="(min-width: 1024px) 48vw, 100vw" className="object-cover" />
+            <Image src="/assets/dontebg.webp" alt="Bitcoin Africa Story community" fill priority
+              sizes="(min-width: 1024px) 90vw, 100vw" className="object-cover" />
           </div>
         </div>
       </section>
@@ -342,7 +342,9 @@ export default function DonateContent({ verifiedCount = 0 }) {
                     Scan the QR code below to donate directly.
                   </p>
                   <div className="w-full flex justify-center">
-                    <Image unoptimized
+                    <Image
+                      // Payment QR codes: served byte-for-byte, never re-encoded.
+                      unoptimized
                       src="/assets/qrcode.jpg"
                       alt="Static QR Code for donations"
                       width={1600}

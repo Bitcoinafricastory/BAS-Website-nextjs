@@ -4,9 +4,7 @@ import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search, Box, Ticket, MapPin, ArrowUpRight, X as CloseIcon, Save } from 'lucide-react';
-import { db, storage } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { loadFirestore, loadStorage } from '@/lib/firebase-browser';
 
 // "2026-06-17" -> { day: 17, month: 'JUN', weekday: 'Wednesday' }. Falls back
 // gracefully since this field is free text in the admin form, not guaranteed
@@ -129,10 +127,11 @@ export default function EventsContent({ initialEvents = [] }) {
     setSubmitting(true);
     setNotice('');
     try {
+      const { db, collection, addDoc, serverTimestamp } = await loadFirestore();
+      const { storage, ref, uploadBytes, getDownloadURL } = await loadStorage();
       let bannerUrl = submitFormData.banner;
       if (bannerUrl instanceof Blob) {
-        const storageInstance = storage || getStorage();
-        const storageRef = ref(storageInstance, `submittedEvents/banner_${Date.now()}`);
+        const storageRef = ref(storage, `submittedEvents/banner_${Date.now()}`);
         await uploadBytes(storageRef, bannerUrl);
         bannerUrl = await getDownloadURL(storageRef);
       }
@@ -249,7 +248,7 @@ export default function EventsContent({ initialEvents = [] }) {
                 <Link href={`/events/${e.id}`} key={e.id} className="group relative flex flex-col bg-[#0A0A0A] rounded-2xl overflow-hidden border border-white/5 hover:border-yellow-500/50 active:border-yellow-500/50 transition-all duration-500">
                   <div className="relative h-[190px] overflow-hidden">
                     {e.banner ? (
-                      <Image unoptimized
+                      <Image
                         src={e.banner}
                         alt={e.eventName}
                         fill

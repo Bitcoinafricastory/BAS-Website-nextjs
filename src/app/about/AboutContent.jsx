@@ -95,12 +95,12 @@ export default function AboutContent() {
 
           <div className="order-1 lg:order-2 relative min-h-[380px] sm:min-h-[440px] lg:min-h-0 overflow-hidden">
             <motion.div style={{ y: heroImageY }} className="absolute inset-0 -top-[10%] h-[120%]">
-              <Image unoptimized
-                src="/assets/aboutus.png"
+              <Image
+                src="/assets/aboutus.webp"
                 alt="Bitcoin Africa Story classroom"
                 fill
                 priority
-                sizes="(min-width: 1024px) 45vw, 100vw"
+                sizes="(min-width: 1024px) 90vw, 100vw"
                 className="object-cover"
               />
             </motion.div>
@@ -188,8 +188,8 @@ export default function AboutContent() {
               transition={{ duration: 0.7 }}
               viewport={{ once: true, margin: '-80px' }}
             >
-              <Image unoptimized
-                src="/assets/communities.jpg"
+              <Image
+                src="/assets/communities.webp"
                 alt="Community"
                 width={2100}
                 height={1500}
@@ -212,8 +212,8 @@ export default function AboutContent() {
               viewport={{ once: true, margin: '-80px' }}
               className="order-2 lg:order-1"
             >
-              <Image unoptimized
-                src="/assets/education.jpg"
+              <Image
+                src="/assets/education.webp"
                 alt="Community workshop"
                 width={2100}
                 height={1500}
@@ -400,8 +400,8 @@ export default function AboutContent() {
           className="max-w-6xl mx-auto bg-[#0A0A0A] border border-white/5 grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] overflow-hidden"
         >
           <div className="relative min-h-[280px] lg:min-h-[440px]">
-            <Image unoptimized
-              src="/assets/story.jpg"
+            <Image
+              src="/assets/story.webp"
               alt="Bitcoin Africa Story community"
               fill
               sizes="(min-width: 1024px) 40vw, 100vw"

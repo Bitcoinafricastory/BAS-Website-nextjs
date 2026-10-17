@@ -12,6 +12,13 @@ export const metadata = {
   alternates: { canonical: `${SITE_URL}/directory` },
 };
 
+// DirectoryExplorer runs in the browser, so everything passed to it is
+// embedded in the page. Only the fields the listing and its search use.
+function toListing(entity) {
+  const { id, slug, name, type, country, description, logo, coverImage, badges } = entity;
+  return { id, slug, name, type, country, description, logo, coverImage, badges };
+}
+
 export default async function DirectoryPage() {
   const entities = await getEntities();
 
@@ -40,7 +47,7 @@ export default async function DirectoryPage() {
           not that someone filled out a form.
         </p>
 
-        <DirectoryExplorer entities={entities} />
+        <DirectoryExplorer entities={entities.map(toListing)} />
       </div>
     </div>
   );

@@ -4,8 +4,7 @@ import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search, CheckCircle2, ArrowUpRight, X } from 'lucide-react';
-import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { loadFirestore } from '@/lib/firebase-browser';
 import {
   ENTITY_TYPES, ENTITY_COUNTRIES, BADGE_LEVELS, entityTypeLabel, badgeLabel, summarizeBadges,
 } from '@/lib/entityTypes';
@@ -92,7 +91,7 @@ function EntityCard({ entity }) {
         <div className="relative h-[190px] overflow-hidden bg-gradient-to-br from-gray-900 to-black">
           {hasCover ? (
             <>
-              <Image unoptimized
+              <Image
                 src={entity.coverImage}
                 alt={entity.name}
                 fill
@@ -104,7 +103,7 @@ function EntityCard({ entity }) {
           ) : hasLogo ? (
             <div className="absolute inset-0 flex items-center justify-center p-10">
               <div className="relative w-full h-full">
-                <Image unoptimized src={entity.logo} alt={entity.name} fill sizes="240px" className="object-contain opacity-90" />
+                <Image src={entity.logo} alt={entity.name} fill sizes="240px" className="object-contain opacity-90" />
               </div>
             </div>
           ) : (
@@ -120,7 +119,7 @@ function EntityCard({ entity }) {
           {hasCover && hasLogo && (
             <div className="absolute -bottom-8 left-5 w-20 h-20 rounded-xl bg-[#161616] border-4 border-[#0A0A0A] overflow-hidden flex items-center justify-center">
               <div className="relative w-full h-full">
-                <Image unoptimized src={entity.logo} alt="" fill sizes="80px" className="object-contain p-2" />
+                <Image src={entity.logo} alt="" fill sizes="80px" className="object-contain p-2" />
               </div>
             </div>
           )}
@@ -177,6 +176,7 @@ function SubmitEntitySection({ open, onToggle }) {
     setBusy(true);
     setNotice('');
     try {
+      const { db, collection, addDoc, serverTimestamp } = await loadFirestore();
       await addDoc(collection(db, 'submittedEntities'), {
         ...form,
         submittedAt: serverTimestamp(),

@@ -4,9 +4,7 @@ import { useState, useMemo } from 'react';
 import { AlertCircle, CheckCircle, PlusCircle } from 'lucide-react';
 import PostsGrid from '@/components/PostsGrid';
 import StoryEditor from '@/components/StoryEditor';
-import { db, storage } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { loadFirestore, loadStorage } from '@/lib/firebase-browser';
 
 const categories = ['All', 'Adoption', 'Regulations', 'Education', 'Technology', 'Economy', 'Security', 'Community'];
 
@@ -101,6 +99,8 @@ export default function NewsExplorer({ initialPosts = [] }) {
         return;
       }
 
+      const { db, collection, addDoc, serverTimestamp } = await loadFirestore();
+      const { storage, ref, uploadBytes, getDownloadURL } = await loadStorage();
       let imageUrl = formData.image;
       if (imageUrl instanceof Blob) {
         const storageRef = ref(storage, `submissions/sub_${Date.now()}`);

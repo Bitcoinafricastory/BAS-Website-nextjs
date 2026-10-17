@@ -1,10 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import CountUp from 'react-countup';
-import { motion } from 'framer-motion';
 
 // Stories Published comes from the real article count (passed in from the
 // homepage) so it can't go stale — it was hardcoded at 41 while the site had
@@ -38,14 +36,12 @@ function Stat({ value }) {
   );
 }
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 16 },
-  show: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, delay: 0.08 * i, ease: [0.22, 1, 0.36, 1] },
-  }),
-};
+// Entrance animation is plain CSS (.hero-rise in globals.css). It used to be
+// framer-motion starting at opacity 0, which kept the headline invisible
+// until all the page's JavaScript had downloaded and run: about 25 seconds on
+// a 2G connection. CSS runs as soon as the HTML paints, needs no JavaScript,
+// and is skipped for visitors who ask for reduced motion.
+const rise = (i) => ({ animationDelay: `${i * 80}ms` });
 
 export default function Hero({ storyCount }) {
   const stats = buildStats(storyCount);
@@ -60,43 +56,31 @@ export default function Hero({ storyCount }) {
         <div className="pointer-events-none absolute -top-24 -right-24 w-64 h-64 bg-yellow-500/10 rounded-full blur-3xl" />
         <div className="pointer-events-none absolute -bottom-16 -left-16 w-56 h-56 bg-yellow-500/5 rounded-full blur-3xl" />
 
-        <motion.span
-          initial="hidden"
-          animate="show"
-          custom={0}
-          variants={fadeUp}
-          className="relative block font-medium text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-5"
+        <span
+          style={rise(0)}
+          className="hero-rise relative block font-medium text-[11px] tracking-[0.18em] uppercase text-yellow-500 mb-5"
         >
           Reporting from the ground
-        </motion.span>
+        </span>
 
-        <motion.h1
-          initial="hidden"
-          animate="show"
-          custom={1}
-          variants={fadeUp}
-          className="relative font-semibold text-white text-[32px] leading-[1.12] tracking-tight mb-4"
+        <h1
+          style={rise(1)}
+          className="hero-rise relative font-semibold text-white text-[32px] leading-[1.12] tracking-tight mb-4"
         >
           Showing Africa&rsquo;s Bitcoin{' '}
           <em className="italic text-yellow-500">proof&#8209;of&#8209;work.</em>
-        </motion.h1>
+        </h1>
 
-        <motion.p
-          initial="hidden"
-          animate="show"
-          custom={2}
-          variants={fadeUp}
-          className="relative text-gray-400 text-[15px] leading-relaxed mb-8 max-w-sm"
+        <p
+          style={rise(2)}
+          className="hero-rise relative text-gray-400 text-[15px] leading-relaxed mb-8 max-w-sm"
         >
           An independent media and education platform driving Bitcoin adoption across Africa.
-        </motion.p>
+        </p>
 
-        <motion.div
-          initial="hidden"
-          animate="show"
-          custom={3}
-          variants={fadeUp}
-          className="relative flex items-center gap-5"
+        <div
+          style={rise(3)}
+          className="hero-rise relative flex items-center gap-5"
         >
           <Link
             href="/news"
@@ -111,7 +95,7 @@ export default function Hero({ storyCount }) {
           >
             Study Bitcoin
           </Link>
-        </motion.div>
+        </div>
       </div>
 
       {/* ===== DESKTOP (lg+): original two-column photo + stats layout, unchanged ===== */}
@@ -150,14 +134,20 @@ export default function Hero({ storyCount }) {
 
         {/* Photo column — stats overlaid on a dark scrim at the bottom of the image */}
         <div className="order-2 relative overflow-hidden">
-          <Image unoptimized
-            src="/assets/dontebg.jpg"
-            alt="Bitcoin Africa Story community meetup"
-            fill
-            priority
-            sizes="45vw"
-            className="object-cover"
-          />
+          {/* Desktop-only photo. next/image with priority preloaded it on
+              phones too, even though this column is hidden there. The
+              <source> only matches at desktop widths; the fallback is a
+              1x1 inline GIF, so phones download nothing. */}
+          <picture>
+            <source media="(min-width: 1024px)" srcSet="/assets/dontebg.webp" />
+            <img
+              src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+              alt="Bitcoin Africa Story community meetup"
+              fetchPriority="high"
+              decoding="async"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          </picture>
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.85)_0%,rgba(0,0,0,0.25)_30%,rgba(0,0,0,0)_60%)]" />
           <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black via-black/70 to-transparent" />
 

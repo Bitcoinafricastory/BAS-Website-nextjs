@@ -21,7 +21,7 @@ export default function MagazinePostsGrid({ posts = [] }) {
       >
         <div className="relative aspect-[16/10] sm:aspect-[16/9] lg:aspect-[2/1] overflow-hidden bg-gray-800">
           {featured.image && (
-            <Image unoptimized
+            <Image
               src={featured.image}
               alt={featured.title}
               fill
@@ -39,7 +39,7 @@ export default function MagazinePostsGrid({ posts = [] }) {
           {featured.excerpt && (
             <p className="text-gray-400 text-sm sm:text-[15px] lg:text-sm leading-relaxed mb-4 lg:mb-3 line-clamp-2">{featured.excerpt}</p>
           )}
-          <div className="flex items-center gap-3 text-xs text-gray-500">
+          <div className="flex items-center gap-3 text-xs text-gray-400">
             <span>{formatDate(featured.date)}</span>
             {featured.readTime && (
               <>
@@ -63,7 +63,7 @@ export default function MagazinePostsGrid({ posts = [] }) {
           >
             <div className="relative w-20 h-20 sm:w-24 sm:h-24 lg:w-40 lg:h-28 flex-shrink-0 overflow-hidden bg-gray-800">
               {post.image && (
-                <Image unoptimized
+                <Image
                   src={post.image}
                   alt={post.title}
                   fill
@@ -77,7 +77,7 @@ export default function MagazinePostsGrid({ posts = [] }) {
               <h4 className="font-medium text-[15px] lg:text-base leading-snug mt-1.5 lg:mt-1 line-clamp-3 group-hover:text-yellow-500 transition-colors">
                 {post.title}
               </h4>
-              <span className="text-xs text-gray-500 mt-1.5 lg:mt-1 block">{formatDate(post.date)}</span>
+              <span className="text-xs text-gray-400 mt-1.5 lg:mt-1 block">{formatDate(post.date)}</span>
             </div>
           </Link>
         ))}

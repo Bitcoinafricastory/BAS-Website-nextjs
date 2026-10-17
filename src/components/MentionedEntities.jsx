@@ -30,7 +30,7 @@ export default function MentionedEntities({ entities = [] }) {
             >
               <div className="relative w-11 h-11 rounded-lg bg-[#161616] border border-white/5 overflow-hidden flex items-center justify-center flex-shrink-0">
                 {logoUrl ? (
-                  <Image unoptimized src={logoUrl} alt={entity.name} fill sizes="44px" className="object-cover" />
+                  <Image src={logoUrl} alt={entity.name} fill sizes="44px" className="object-cover" />
                 ) : (
                   <span className="font-black text-white/25 text-lg">{entity.name?.[0] || '?'}</span>
                 )}

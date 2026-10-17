@@ -76,7 +76,7 @@ function PostCard({ title, author, image, link }) {
     <Link href={link} className="flex items-start space-x-3 group">
       <div className="relative flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 overflow-hidden rounded-md border border-gray-700 bg-gray-800">
         {image && (
-          <Image unoptimized
+          <Image
             src={image}
             alt={title}
             fill
@@ -89,7 +89,7 @@ function PostCard({ title, author, image, link }) {
         <p className="text-gray-200 text-sm leading-snug group-hover:text-yellow-500 transition-colors duration-200">
           {title}
         </p>
-        <p className="text-gray-500 text-xs mt-1">
+        <p className="text-gray-400 text-xs mt-1">
           BY <span className="font-medium">{author}</span>
         </p>
       </div>
@@ -125,7 +125,7 @@ export default async function Footer() {
             <h2 className="text-lg font-semibold text-yellow-500 uppercase tracking-wider">Popular Posts</h2>
             <div className="space-y-4">
               {popularList.length === 0 ? (
-                <p className="text-gray-500 italic text-sm">Popular posts will be uploaded soon.</p>
+                <p className="text-gray-400 italic text-sm">Popular posts will be uploaded soon.</p>
               ) : (
                 popularList.map((post) => (
                   <PostCard
@@ -144,7 +144,7 @@ export default async function Footer() {
             <h2 className="text-lg font-semibold text-yellow-500 uppercase tracking-wider">Top Stories</h2>
             <div className="space-y-4">
               {topList.length === 0 ? (
-                <p className="text-gray-500 italic text-sm">Top stories will be uploaded soon.</p>
+                <p className="text-gray-400 italic text-sm">Top stories will be uploaded soon.</p>
               ) : (
                 topList.map((post) => (
                   <PostCard
@@ -163,7 +163,7 @@ export default async function Footer() {
             <h2 className="text-lg font-semibold text-yellow-500 uppercase tracking-wider">Categories</h2>
             <ul className="space-y-2">
               {categories.length === 0 ? (
-                <p className="text-gray-500 italic text-sm">No categories found.</p>
+                <p className="text-gray-400 italic text-sm">No categories found.</p>
               ) : (
                 categories.map((category) => (
                   <li key={category.name} className="flex items-center justify-between py-1">
@@ -184,8 +184,8 @@ export default async function Footer() {
         <div className="mt-14 pt-12 border-t border-white/[0.08] grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10">
           <div className="col-span-2 md:col-span-1 space-y-4">
             <Link href="/" className="inline-block">
-              <Image unoptimized
-                src="/assets/BitcoinAfricaStoryLogo.png"
+              <Image
+                src="/assets/bas-logo.webp"
                 alt="Bitcoin Africa Story"
                 // Source file is 1552x747 (2.08:1). These must match that
                 // ratio or next/image distorts the logo — the previous
@@ -244,13 +244,13 @@ export default async function Footer() {
 
         <div className="mt-10 pt-6 border-t border-white/[0.08] flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
           <div className="text-center sm:text-left">
-            <p className="text-gray-500 text-xs">
+            <p className="text-gray-400 text-xs">
               © {new Date().getFullYear()} Bitcoin Africa Story. All rights reserved.
             </p>
             {/* Signals to developers, researchers, and AI agents that our
                 reporting is machine-readable and citable. Same muted style as the
                 copyright line so it reads as metadata, not a second nav. */}
-            <p className="text-gray-500 text-xs mt-1.5">
+            <p className="text-gray-400 text-xs mt-1.5">
               Also as{' '}
               <a href="/llms.txt" className="hover:text-yellow-500 transition-colors duration-200 underline underline-offset-2">
                 Markdown

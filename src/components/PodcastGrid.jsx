@@ -48,7 +48,7 @@ export function FeaturedEpisode({ episode }) {
     >
       <div className="relative aspect-square md:aspect-auto bg-black">
         {episode.image ? (
-          <Image unoptimized
+          <Image
             src={episode.image}
             alt={episode.title}
             fill
@@ -109,7 +109,7 @@ export function EpisodeGrid({ episodes }) {
           >
             <div className="relative aspect-video bg-black">
               {ep.image ? (
-                <Image unoptimized
+                <Image
                   src={ep.image}
                   alt={ep.title}
                   fill

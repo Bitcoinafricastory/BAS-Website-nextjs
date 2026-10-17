@@ -44,7 +44,7 @@ export default async function EventDetailsPage({ params }) {
       <div className="relative h-[300px] md:h-[400px] w-full overflow-hidden">
         {event.banner ? (
           <>
-            <Image unoptimized
+            <Image
               src={event.banner}
               alt={event.eventName}
               fill

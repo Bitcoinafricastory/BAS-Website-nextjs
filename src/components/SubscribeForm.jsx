@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { db } from '@/lib/firebase';
-import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { loadFirestore } from '@/lib/firebase-browser';
 import { ArrowRight, LoaderCircle, Check } from 'lucide-react';
 
 // Subscribers are stored with the lower-cased email as the document ID, so
@@ -12,6 +11,7 @@ import { ArrowRight, LoaderCircle, Check } from 'lucide-react';
 // form never reveals whether an address was already on the list.
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 async function saveSubscriber(email, extra = {}) {
+  const { db, doc, setDoc, serverTimestamp } = await loadFirestore();
   try {
     await setDoc(doc(db, 'newsletterSubscribers', email), {
       email,

@@ -67,7 +67,7 @@ export default function PodcastHighlights({ episodes = [] }) {
                 >
                   <div className="aspect-video overflow-hidden relative bg-black">
                     {ep.image ? (
-                      <Image unoptimized
+                      <Image
                         src={resolveImageUrl(ep.image)}
                         alt={ep.title}
                         fill
