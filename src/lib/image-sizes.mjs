@@ -12,4 +12,5 @@ export const RESIZABLE_HOSTS = [
   'storage.googleapis.com',
   'i.ytimg.com',
   'img.youtube.com',
+  'pbs.twimg.com', // X/Twitter avatars in the testimonials carousel
 ];

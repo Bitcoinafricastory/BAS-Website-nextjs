@@ -12,11 +12,15 @@ import { RESIZABLE_HOSTS } from './image-sizes.mjs';
 //   Google Images; only a ?w= width is added.
 // - Firebase/YouTube images and large files in /public go through /img.
 // - SVG, GIF, data: and blob: URLs, and other sites' images, are left alone.
+//   For those we add a #w= fragment: browsers never send fragments, so the
+//   file is fetched once as-is, but Next.js stops warning that the loader
+//   "does not implement width".
 const ARTICLE_PHOTO = /^\/news\/[^/?#]+\/[^/?#]+\.jpg$/;
 
 export default function imageLoader({ src, width }) {
   if (!src || typeof src !== 'string') return src;
-  if (/\.(svg|gif)(\?|$)/i.test(src)) return src;
+  if (/^(data|blob):/i.test(src)) return src;
+  if (/\.(svg|gif)(\?|#|$)/i.test(src)) return asIs(src, width);
 
   if (ARTICLE_PHOTO.test(src)) return `${src}?w=${width}`;
 
@@ -31,7 +35,11 @@ export default function imageLoader({ src, width }) {
       return `/img?url=${encodeURIComponent(src)}&w=${width}`;
     }
   } catch {
-    // data:, blob: or malformed: fall through
+    // malformed: fall through
   }
-  return src;
+  return asIs(src, width);
+}
+
+function asIs(src, width) {
+  return src.includes('#') ? src : `${src}#w=${width}`;
 }
