@@ -7,6 +7,7 @@ export const maxDuration = 60;
 import { getEntities } from '@/lib/entities';
 import { ENTITY_TYPES, ENTITY_COUNTRIES } from '@/lib/entityTypes';
 import { verifyIdToken, isAllowedAdmin } from '@/lib/admin-auth';
+import { callClaude, EXTRACTION_MODELS } from '@/lib/claude-api';
 
 // Same public web API key already used by src/lib/firebase.js — this call
 // only verifies that the caller has a valid, currently signed-in Firebase
@@ -163,52 +164,35 @@ Respond with ONLY a JSON array and no other text. Each item exactly like:
 
 If nothing qualifies, respond with an empty array: []`;
 
-  let response;
-  try {
-    response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        // Higher than before: search results and tool-use blocks consume
-        // tokens before the model gets to the JSON, and a truncated reply
-        // parses as malformed.
-        max_tokens: 4096,
-        // Lets the model verify an organisation's real website instead of
-        // leaving the field blank or inventing a plausible domain.
-        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-        messages: [{ role: 'user', content: prompt }],
-        // NOTE: no assistant prefill here. Prefilling with '[' forces the very
-        // next token to continue a JSON array, which prevents the model from
-        // issuing a tool call first. The parser below recovers the array from
-        // surrounding text instead.
-      }),
-    });
-  } catch (err) {
-    console.warn('Anthropic API unreachable, falling back to name matching:', err.message);
+  const claude = await callClaude({
+    apiKey,
+    models: EXTRACTION_MODELS,
+    body: {
+      // Higher than before: search results and tool-use blocks consume
+      // tokens before the model gets to the JSON, and a truncated reply
+      // parses as malformed.
+      max_tokens: 4096,
+      // Lets the model verify an organisation's real website instead of
+      // leaving the field blank or inventing a plausible domain.
+      tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+      messages: [{ role: 'user', content: prompt }],
+      // NOTE: no assistant prefill here. Prefilling with '[' forces the very
+      // next token to continue a JSON array, which prevents the model from
+      // issuing a tool call first. The parser below recovers the array from
+      // surrounding text instead.
+    },
+  });
+
+  if (!claude.ok) {
+    // Fall back to plain name matching, and say why AI wasn't used.
     return NextResponse.json({
       degraded: true,
-      reason: 'AI extraction is temporarily unreachable.',
+      reason: claude.message,
       suggestions: deterministicMatch(plainText, entities),
     });
   }
 
-  if (!response.ok) {
-    console.warn('Anthropic API error, falling back to name matching:', response.status);
-    return NextResponse.json({
-      degraded: true,
-      reason: response.status === 429
-        ? 'AI extraction is rate-limited right now.'
-        : 'AI extraction is temporarily unavailable.',
-      suggestions: deterministicMatch(plainText, entities),
-    });
-  }
-
-  const data = await response.json();
+  const data = claude.data;
 
   // With the search tool enabled the reply is a sequence of blocks —
   // reasoning text, tool_use, web_search_tool_result, then the answer. Taking

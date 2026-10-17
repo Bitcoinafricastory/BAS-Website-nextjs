@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { verifyIdToken, isAllowedAdmin } from '@/lib/admin-auth';
+import { callClaude, WRITING_MODELS } from '@/lib/claude-api';
 
 export const maxDuration = 30;
 
@@ -133,36 +134,19 @@ Article body:
 ${text.slice(0, 12000)}
 ---`;
 
-  let response;
-  try {
-    response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 2048,
-        messages: [{ role: 'user', content: prompt }],
-      }),
-    });
-  } catch (err) {
-    console.error('AI request failed:', err);
-    return NextResponse.json({ error: 'Could not reach the AI service.' }, { status: 502 });
+  const claude = await callClaude({
+    apiKey,
+    models: WRITING_MODELS,
+    body: {
+      max_tokens: 2048,
+      messages: [{ role: 'user', content: prompt }],
+    },
+  });
+  if (!claude.ok) {
+    return NextResponse.json({ error: claude.message }, { status: 502 });
   }
 
-  if (!response.ok) {
-    const detail = await response.text().catch(() => '');
-    console.error('Anthropic API error:', response.status, detail.slice(0, 500));
-    return NextResponse.json(
-      { error: `AI service returned ${response.status}.` },
-      { status: 502 }
-    );
-  }
-
-  const data = await response.json();
+  const data = claude.data;
   const raw = (data.content || []).filter((c) => c.type === 'text' && c.text).map((c) => c.text).join('\n');
 
   try {
