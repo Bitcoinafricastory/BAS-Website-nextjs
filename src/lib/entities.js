@@ -102,6 +102,33 @@ function mentionsName(haystack, name) {
   return new RegExp(`(^| )${n.replace(/ /g, ' ')}( |$)`).test(haystack);
 }
 
+// A profile with almost nothing on it (no real description, no coverage)
+// is kept out of Google until someone fills it in. Google only crawls a few
+// pages a day on this site, and about half the site is directory profiles,
+// many of them a name and a line; those visits are better spent on articles.
+// As soon as a profile has a proper description, or any coverage, it goes
+// back into the sitemap and becomes indexable again automatically.
+export const MIN_PROFILE_DESCRIPTION = 160;
+
+export function isThinProfile(entity, coverageCount = 0) {
+  if (coverageCount > 0) return false;
+  if ((entity?.externalCoverage || []).length > 0) return false;
+  const text = foldText(entity?.description || '').replace(/\s+/g, ' ').trim();
+  return text.length < MIN_PROFILE_DESCRIPTION;
+}
+
+/** How many published articles link to or mention this profile (same rules
+ * as the profile page's coverage list, minus podcasts). */
+export function countArticleCoverage(entity, posts = []) {
+  let n = 0;
+  for (const p of posts) {
+    if (p.status && p.status !== 'published') continue;
+    if ((p.linkedEntityIds || []).includes(entity.slug)) { n += 1; continue; }
+    if (entity.name && mentionsName(foldText(`${p.title || ''} ${p.excerpt || ''} ${p.content || ''}`), entity.name)) n += 1;
+  }
+  return n;
+}
+
 /**
  * Coverage shown on a directory profile.
  *

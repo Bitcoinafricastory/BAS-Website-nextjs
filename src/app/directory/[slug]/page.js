@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getEntities, getEntityBySlug, getEntityCoverage, normalizeWebsiteUrl } from '@/lib/entities';
+import { getEntities, getEntityBySlug, getEntityCoverage, normalizeWebsiteUrl, isThinProfile } from '@/lib/entities';
 import { directoryEntitySchema, breadcrumbSchema, jsonLdScript, SITE_URL, resolveImageUrl } from '@/lib/schema';
 import { entityTypeLabel, summarizeBadges, badgeLabel } from '@/lib/entityTypes';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -25,8 +25,13 @@ export async function generateMetadata({ params }) {
 
   const pageUrl = `${SITE_URL}/directory/${entity.slug}`;
   const imageUrl = resolveImageUrl(entity.coverImage || entity.logo);
+  const coverage = await getEntityCoverage(entity.slug, entity.name);
+  // Almost-empty profiles stay visible to readers but out of Google until
+  // they're filled in; links on them are still followed.
+  const thin = isThinProfile(entity, coverage.length);
 
   return {
+    ...(thin ? { robots: { index: false, follow: true } } : {}),
     title: `${entity.name} — ${entityTypeLabel(entity.type)}`,
     description: entity.description || `${entity.name} in the African Bitcoin Directory.`,
     alternates: { canonical: pageUrl },

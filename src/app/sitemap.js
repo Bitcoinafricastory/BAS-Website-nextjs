@@ -1,7 +1,7 @@
 import { getAllNews } from '@/lib/news';
 import { getAllEvents } from '@/lib/events';
 import { getActiveAuthors } from '@/lib/authors';
-import { getEntities } from '@/lib/entities';
+import { getEntities, isThinProfile, countArticleCoverage } from '@/lib/entities';
 import { getAllEducationPrograms, getAllOtherPrograms } from '@/lib/education';
 import { PILLARS } from '@/lib/pillars';
 import { listableCategorySlugs } from '@/lib/resources-data';
@@ -62,8 +62,9 @@ export default async function sitemap() {
 
   let articleEntries = [];
   let eventEntries = [];
+  let posts = [];
   try {
-    const posts = await getAllNews();
+    posts = await getAllNews();
     articleEntries = posts.map((post) => ({
       // Encode: a slug containing spaces or punctuation would otherwise
       // produce a URL that isn't valid in a sitemap.
@@ -111,6 +112,8 @@ export default async function sitemap() {
     const entities = await getEntities();
     entityEntries = entities
       .filter((e) => e.slug)
+      // Thin profiles are noindex until filled in (see isThinProfile).
+      .filter((e) => !isThinProfile(e, countArticleCoverage(e, posts)))
       .map((e) => ({
         url: `${base}/directory/${encodeURIComponent(e.slug)}`,
         lastModified: lastEdited(e),
