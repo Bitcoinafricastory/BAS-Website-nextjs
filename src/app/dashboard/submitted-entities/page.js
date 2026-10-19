@@ -2,6 +2,9 @@
 
 import ModerationQueue from '@/components/dashboard/ModerationQueue';
 import { slugifyEntity, findEntitiesBySlug } from '@/lib/entities';
+import { normalizeBlinkUsername, isValidBlinkUsername } from '@/lib/blink';
+
+const cleanBlink = (v) => { const u = normalizeBlinkUsername(v); return isValidBlinkUsername(u) ? u : ''; };
 
 const config = {
   title: 'Submitted Directory Entries',
@@ -32,6 +35,7 @@ const config = {
     city: item.city || '',
     socialLinks: {},
     contactEmail: '',
+    blinkUsername: cleanBlink(item.blinkUsername),
     yearFounded: '',
     bitcoinFocus: '',
     founder: '',

@@ -5,6 +5,8 @@ import { getEntities, getEntityBySlug, getEntityCoverage, normalizeWebsiteUrl, i
 import { directoryEntitySchema, breadcrumbSchema, jsonLdScript, SITE_URL, resolveImageUrl } from '@/lib/schema';
 import { entityTypeLabel, summarizeBadges, badgeLabel } from '@/lib/entityTypes';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import BlinkDonateButton from '@/components/BlinkDonateButton';
+import { normalizeBlinkUsername, isValidBlinkUsername } from '@/lib/blink';
 
 export const revalidate = 300;
 
@@ -73,6 +75,9 @@ export default async function DirectoryProfilePage({ params }) {
   ];
 
   const schemas = [directoryEntitySchema(entity), breadcrumbSchema(breadcrumbs)];
+
+  const blink = normalizeBlinkUsername(entity.blinkUsername);
+  const tipUsername = isValidBlinkUsername(blink) ? blink : '';
 
   return (
     <div className="pt-24 pb-24 bg-black text-white min-h-screen">
@@ -151,6 +156,20 @@ export default async function DirectoryProfilePage({ params }) {
             </div>
           );
         })()}
+
+        {/* Reader tips go straight to the organisation's own Blink wallet. Only
+            shown when they've given us a Blink username. */}
+        {tipUsername && (
+          <div className="bg-[#0A0A0A] border border-white/5 rounded-2xl p-6 sm:p-8 mb-8">
+            <h2 className="text-lg font-semibold mb-2">
+              Support {entity.name}. <span className="text-yellow-500">Send sats.</span>
+            </h2>
+            <p className="text-gray-400 text-sm leading-relaxed mb-6 max-w-xl">
+              Tips go straight to {entity.name}&rsquo;s Blink wallet over Lightning. Bitcoin Africa Story doesn&rsquo;t take a cut.
+            </p>
+            <BlinkDonateButton username={tipUsername} defaultAmount={1000} />
+          </div>
+        )}
 
         {/* Automatic coverage from linked articles/podcasts, merged with manually-added
             external items (third-party interviews, reports, videos) — shown as a photo-card

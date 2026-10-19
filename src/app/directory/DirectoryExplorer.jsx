@@ -163,7 +163,7 @@ function EntityCard({ entity }) {
 
 function SubmitEntitySection({ open, onToggle }) {
   const [form, setForm] = useState({
-    name: '', type: ENTITY_TYPES[0].value, country: '', city: '', website: '', logo: '', description: '', contactEmail: '',
+    name: '', type: ENTITY_TYPES[0].value, country: '', city: '', website: '', logo: '', description: '', contactEmail: '', blinkUsername: '',
   });
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState('');
@@ -182,7 +182,7 @@ function SubmitEntitySection({ open, onToggle }) {
         submittedAt: serverTimestamp(),
       });
       setNotice("Thanks! Our team will review this and reach out if we'd like to feature it.");
-      setForm({ name: '', type: ENTITY_TYPES[0].value, country: '', city: '', website: '', logo: '', description: '', contactEmail: '' });
+      setForm({ name: '', type: ENTITY_TYPES[0].value, country: '', city: '', website: '', logo: '', description: '', contactEmail: '', blinkUsername: '' });
     } catch (err) {
       console.error('Entity submission error:', err);
       setNotice('Something went wrong. Please try again.');
@@ -246,9 +246,15 @@ function SubmitEntitySection({ open, onToggle }) {
             <textarea required rows={4} value={form.description} onChange={handleChange('description')} placeholder="What is it, and what makes it worth our reporters' time?" className="w-full px-4 py-2.5 bg-black border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500 resize-none" />
           </div>
 
-          <div>
-            <label className="block text-xs font-semibold text-gray-400 mb-1.5">Contact Email (so we can reach out)</label>
-            <input type="email" value={form.contactEmail} onChange={handleChange('contactEmail')} placeholder="you@example.com" className="w-full px-4 py-2.5 bg-black border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-semibold text-gray-400 mb-1.5">Contact Email (so we can reach out)</label>
+              <input type="email" value={form.contactEmail} onChange={handleChange('contactEmail')} placeholder="you@example.com" className="w-full px-4 py-2.5 bg-black border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500" />
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-gray-400 mb-1.5">Blink username (optional, so readers can tip you)</label>
+              <input value={form.blinkUsername} onChange={handleChange('blinkUsername')} placeholder="e.g. bitcoin_boma" maxLength={60} className="w-full px-4 py-2.5 bg-black border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500" />
+            </div>
           </div>
 
           <button type="submit" disabled={busy} className="w-full sm:w-auto px-6 py-3 bg-yellow-500 text-black font-medium rounded-lg hover:bg-yellow-400 transition-colors disabled:opacity-50">

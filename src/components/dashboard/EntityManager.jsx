@@ -16,13 +16,14 @@ import {
   ENTITY_TYPES, ENTITY_COUNTRIES, BADGE_LEVELS, COVERAGE_TYPES, entityTypeLabel, badgeLabel,
 } from '@/lib/entityTypes';
 import { slugifyEntity } from '@/lib/entities';
+import { normalizeBlinkUsername, isValidBlinkUsername } from '@/lib/blink';
 
 const ENTITIES_COLLECTION = 'entities';
 
 const EMPTY_FORM = {
   name: '', slug: '', type: ENTITY_TYPES[0].value, description: '',
   country: '', city: '', website: '', twitter: '', linkedin: '', telegram: '',
-  contactEmail: '', yearFounded: '', bitcoinFocus: '', founder: '',
+  contactEmail: '', blinkUsername: '', yearFounded: '', bitcoinFocus: '', founder: '',
   logo: '', coverImage: '', tags: '', featured: false,
   relatedSlugs: '', badges: [], externalCoverage: [],
 };
@@ -157,6 +158,12 @@ export default function EntityManager() {
           return;
         }
       }
+      const blinkUsername = normalizeBlinkUsername(form.blinkUsername);
+      if (blinkUsername && !isValidBlinkUsername(blinkUsername)) {
+        notify('error', 'That Blink username doesn’t look right. Use letters, numbers and underscores only, e.g. bitcoin_boma.');
+        setBusy(false);
+        return;
+      }
       const payload = {
         name: form.name,
         slug,
@@ -167,6 +174,7 @@ export default function EntityManager() {
         website: form.website,
         socialLinks: { twitter: form.twitter, linkedin: form.linkedin, telegram: form.telegram },
         contactEmail: form.contactEmail,
+        blinkUsername,
         yearFounded: form.yearFounded,
         bitcoinFocus: form.bitcoinFocus,
         founder: form.founder,
@@ -265,6 +273,9 @@ export default function EntityManager() {
             </Field>
             <Field label="Public contact email (optional)">
               <input type="email" className={inputClass} value={form.contactEmail} onChange={(e) => setForm({ ...form, contactEmail: e.target.value })} placeholder="hello@org.com" />
+            </Field>
+            <Field label="Blink username (for tips, optional)">
+              <input className={inputClass} value={form.blinkUsername} onChange={(e) => setForm({ ...form, blinkUsername: e.target.value })} placeholder="e.g. bitcoin_boma" />
             </Field>
             <Field label="Bitcoin focus">
               <input className={inputClass} value={form.bitcoinFocus} onChange={(e) => setForm({ ...form, bitcoinFocus: e.target.value })} placeholder="e.g. Merchant adoption" />
