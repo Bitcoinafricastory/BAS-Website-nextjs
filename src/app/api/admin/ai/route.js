@@ -139,7 +139,9 @@ async function describeImage({ apiKey, payload, origin }) {
     apiKey,
     models: WRITING_MODELS,
     body: {
-      max_tokens: 200,
+      // Newer models think before answering by default, and that thinking
+      // counts towards max_tokens. 200 left no room for the answer itself.
+      max_tokens: 2048,
       messages: [{
         role: 'user',
         content: [
@@ -152,6 +154,10 @@ async function describeImage({ apiKey, payload, origin }) {
   if (!claude.ok) return NextResponse.json({ error: claude.message }, { status: 502 });
 
   const raw = (claude.data.content || []).filter((c) => c.type === 'text').map((c) => c.text).join('\n');
+  if (!raw.trim() && claude.data.stop_reason === 'max_tokens') {
+    console.error('imageAlt: ran out of tokens before answering');
+    return NextResponse.json({ error: 'AI ran out of room before answering. Try again.' }, { status: 502 });
+  }
   const match = raw.match(/\{[\s\S]*\}/);
   try {
     const result = String(JSON.parse(match ? match[0] : raw).result || '').trim().replace(/\.$/, '');
@@ -217,7 +223,7 @@ ${text.slice(0, 12000)}
     apiKey,
     models: WRITING_MODELS,
     body: {
-      max_tokens: 2048,
+      max_tokens: 8192,
       messages: [{ role: 'user', content: prompt }],
     },
   });
