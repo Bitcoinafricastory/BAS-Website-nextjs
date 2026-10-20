@@ -216,7 +216,7 @@ export default function EventsContent({ initialEvents = [] }) {
                   className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide transition-colors ${
                     active
                       ? 'bg-yellow-500 text-black'
-                      : 'bg-[#0A0A0A] border border-white/5 text-gray-400 hover:border-yellow-500/40 hover:text-gray-200 active:border-yellow-500/40'
+                      : 'bg-surface border border-line text-gray-400 hover:border-yellow-500/40 hover:text-gray-200 active:border-yellow-500/40'
                   }`}
                 >
                   {chip.label}
@@ -227,7 +227,7 @@ export default function EventsContent({ initialEvents = [] }) {
         </div>
 
         {filtered.length === 0 ? (
-          <div className="py-24 text-center bg-[#0A0A0A] border border-white/5 rounded-2xl">
+          <div className="py-24 text-center bg-surface border border-line rounded-2xl">
             <Box className="mx-auto text-gray-700 mb-4" size={48} />
             <p className="text-xl text-gray-400 font-medium">No events match these filters</p>
             <p className="text-gray-600 text-sm mt-1">Try widening your search or switching to past events.</p>
@@ -245,7 +245,7 @@ export default function EventsContent({ initialEvents = [] }) {
             {filtered.map((e) => {
               const { day, month, weekday } = parseEventDate(e.date);
               return (
-                <Link href={`/events/${e.id}`} key={e.id} className="group relative flex flex-col bg-[#0A0A0A] rounded-2xl overflow-hidden border border-white/5 hover:border-yellow-500/50 active:border-yellow-500/50 transition-all duration-500">
+                <Link href={`/events/${e.id}`} key={e.id} className="group relative flex flex-col bg-surface rounded-2xl overflow-hidden border border-line hover:border-yellow-500/50 active:border-yellow-500/50 transition-all duration-500">
                   <div className="relative h-[190px] overflow-hidden">
                     {e.banner ? (
                       <Image
@@ -256,7 +256,7 @@ export default function EventsContent({ initialEvents = [] }) {
                         className="object-cover opacity-70 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-90 group-active:scale-105 group-active:opacity-90"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-[#0A0A0A]"><Ticket size={32} className="text-gray-700" /></div>
+                      <div className="w-full h-full flex items-center justify-center bg-surface"><Ticket size={32} className="text-gray-700" /></div>
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" aria-hidden="true" />
                     <div className="absolute bottom-3 left-3">
@@ -274,7 +274,7 @@ export default function EventsContent({ initialEvents = [] }) {
                   <div className="p-5 flex flex-col flex-grow">
                     <h3 className="text-base font-semibold mb-1.5 line-clamp-2 leading-tight group-hover:text-yellow-500 group-active:text-yellow-500 transition-colors uppercase tracking-tight min-h-[44px]">{e.eventName}</h3>
                     <p className="text-gray-400 text-sm mb-4 truncate">{e.venue || '\u00A0'}</p>
-                    <div className="mt-auto pt-3.5 border-t border-white/5">
+                    <div className="mt-auto pt-3.5 border-t border-line">
                       <span className="flex items-center gap-2 text-[10px] font-medium text-yellow-500 group-hover:text-white group-active:text-white transition-colors uppercase tracking-widest">
                         View details &amp; register
                         <span className="w-4 h-4 rounded-full bg-yellow-500/10 flex items-center justify-center group-hover:bg-yellow-500 group-active:bg-yellow-500 group-hover:text-black group-active:text-black transition-colors duration-200">
@@ -319,8 +319,8 @@ export default function EventsContent({ initialEvents = [] }) {
 
       {showSubmitModal && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl">
-          <div className="relative bg-[#0A0A0A] border border-white/10 rounded-3xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-[#0A0A0A] border-b border-white/10 p-6 flex items-center justify-between z-10">
+          <div className="relative bg-surface border border-white/10 rounded-3xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-surface border-b border-white/10 p-6 flex items-center justify-between z-10">
               <div>
                 <h2 className="text-2xl font-semibold text-white">Submit Your Event</h2>
                 <p className="text-sm text-gray-400 mt-1">Share your Bitcoin event with the community</p>

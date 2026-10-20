@@ -103,7 +103,7 @@ export default async function ResourceCategoryPage({ params }) {
               href={item.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-start justify-between gap-5 p-5 bg-[#0A0A0A] border border-white/5 rounded-xl hover:border-yellow-500/50 transition-colors"
+              className="group flex items-start justify-between gap-5 p-5 bg-surface border border-line rounded-xl hover:border-yellow-500/50 transition-colors"
             >
               <div>
                 <h3 className="text-base font-semibold mb-1.5 group-hover:text-yellow-500 transition-colors">

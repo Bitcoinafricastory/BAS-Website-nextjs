@@ -40,7 +40,7 @@ export default function DirectoryExplorer({ entities }) {
         <span><span className="text-white font-bold">{entities.length}</span> entities listed</span>
       </div>
 
-      <div className="flex flex-col sm:flex-row flex-wrap gap-3 mb-8 p-3.5 bg-[#0A0A0A] border border-white/5 rounded-xl">
+      <div className="flex flex-col sm:flex-row flex-wrap gap-3 mb-8 p-3.5 bg-surface border border-line rounded-xl">
         <div className="relative flex-1 min-w-[180px]">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
@@ -64,7 +64,7 @@ export default function DirectoryExplorer({ entities }) {
       </div>
 
       {filtered.length === 0 ? (
-        <div className="py-16 text-center bg-[#0A0A0A] border border-white/5 rounded-xl mb-12">
+        <div className="py-16 text-center bg-surface border border-line rounded-xl mb-12">
           <p className="text-gray-400">No entities match your filters.</p>
         </div>
       ) : (
@@ -86,7 +86,7 @@ function EntityCard({ entity }) {
   const hasLogo = Boolean(entity.logo);
 
   return (
-    <div className="group flex flex-col bg-[#0A0A0A] border border-white/5 overflow-hidden hover:border-yellow-500/50 transition-colors duration-300">
+    <div className="group flex flex-col bg-surface border border-line overflow-hidden hover:border-yellow-500/50 transition-colors duration-300">
       <Link href={`/directory/${entity.slug}`} className="block">
         <div className="relative h-[190px] overflow-hidden bg-gradient-to-br from-gray-900 to-black">
           {hasCover ? (
@@ -117,7 +117,7 @@ function EntityCard({ entity }) {
           </span>
 
           {hasCover && hasLogo && (
-            <div className="absolute -bottom-8 left-5 w-20 h-20 rounded-xl bg-[#161616] border-4 border-[#0A0A0A] overflow-hidden flex items-center justify-center">
+            <div className="absolute -bottom-8 left-5 w-20 h-20 rounded-xl bg-surface-2 border-4 border-surface overflow-hidden flex items-center justify-center">
               <div className="relative w-full h-full">
                 <Image src={entity.logo} alt="" fill sizes="80px" className="object-contain p-2" />
               </div>
@@ -144,7 +144,7 @@ function EntityCard({ entity }) {
           <p className="text-sm text-gray-400 leading-relaxed mb-4 line-clamp-3">{entity.description}</p>
         )}
 
-        <div className="mt-auto flex flex-wrap items-center gap-5 pt-3 border-t border-white/5">
+        <div className="mt-auto flex flex-wrap items-center gap-5 pt-3 border-t border-line">
           {/* Only "View profile" here. The outbound site link lives on the
               profile page instead — sending readers straight off-site from a
               listing card skips the coverage and context the profile exists to
@@ -192,7 +192,7 @@ function SubmitEntitySection({ open, onToggle }) {
   };
 
   return (
-    <div className="border-t border-white/5 pt-10">
+    <div className="border-t border-line pt-10">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div>
           <h2 className="text-xl font-semibold text-white mb-1">Don&rsquo;t see it in the directory?</h2>
@@ -211,7 +211,7 @@ function SubmitEntitySection({ open, onToggle }) {
       </div>
 
       {open && (
-        <form onSubmit={handleSubmit} className="bg-[#0A0A0A] border border-white/5 rounded-xl p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="bg-surface border border-line rounded-xl p-6 space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-gray-400 mb-1.5">Name *</label>

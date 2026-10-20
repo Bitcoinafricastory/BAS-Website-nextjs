@@ -74,7 +74,7 @@ export default function WhyBitcoin({ testimonials = [], videoData = null }) {
             >
               {testimonials.map((t) => (
                 <div key={t.id} data-card className="snap-start shrink-0 w-[86%] sm:w-[60%] lg:w-[calc(50%-10px)]">
-                  <div className="relative h-full p-6 sm:p-7 rounded-2xl border border-white/10 bg-[#111111] hover:border-yellow-500/40 transition-colors duration-300">
+                  <div className="relative h-full p-6 sm:p-7 rounded-2xl border border-line bg-surface hover:border-yellow-500/40 transition-colors duration-300">
                     <Quote className="absolute top-6 right-6 w-8 h-8 text-yellow-500/10" strokeWidth={3} />
                     <div className="flex items-center gap-3.5 mb-5">
                       {t.image && (

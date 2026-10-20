@@ -39,7 +39,7 @@ export default async function FAQPage() {
         </div>
 
         {groups.length === 0 ? (
-          <div className="bg-[#0A0A0A] border border-white/5 rounded-2xl p-10 text-center">
+          <div className="bg-surface border border-line rounded-2xl p-10 text-center">
             <p className="text-gray-400">Questions are being added — check back soon.</p>
           </div>
         ) : (

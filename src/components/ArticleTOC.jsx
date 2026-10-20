@@ -37,7 +37,7 @@ export default function ArticleTOC({ headings = [], category }) {
   if (headings.length <= 2) return null;
 
   return (
-    <div className="xl:hidden mb-10 bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden">
+    <div className="xl:hidden mb-10 bg-surface border border-line rounded-xl overflow-hidden">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
@@ -54,7 +54,7 @@ export default function ArticleTOC({ headings = [], category }) {
       </button>
 
       {open && (
-        <ul className="px-5 pb-5 pt-1 space-y-1 border-t border-white/5">
+        <ul className="px-5 pb-5 pt-1 space-y-1 border-t border-line">
           {headings.map((h) => (
             <li key={h.id} className={h.level === 'h3' ? 'pl-4' : ''}>
               <a

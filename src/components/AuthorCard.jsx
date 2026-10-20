@@ -11,7 +11,7 @@ export default function AuthorCard({ author }) {
   return (
     <Link
       href={`/authors/${author.slug}`}
-      className="group flex gap-4 p-5 bg-[#0A0A0A] border border-white/5 rounded-xl hover:border-yellow-500/40 hover:bg-[#0A0A0A] transition-all"
+      className="group flex gap-4 p-5 bg-surface border border-line rounded-xl hover:border-yellow-500/40 hover:bg-surface transition-all"
     >
       <Avatar
         src={author.avatar}

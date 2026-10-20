@@ -64,7 +64,7 @@ export default function NewsletterSignup({ variant = 'full' }) {
             required
             disabled={busy}
             aria-label="Email address"
-            className="min-w-0 flex-1 px-4 py-2.5 bg-[#0A0A0A] border border-white/5 rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:border-yellow-500"
+            className="min-w-0 flex-1 px-4 py-2.5 bg-surface border border-line rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:border-yellow-500"
           />
           <button
             type="submit"
@@ -96,7 +96,7 @@ export default function NewsletterSignup({ variant = 'full' }) {
           placeholder="Enter your email"
           required
           disabled={busy}
-          className="flex-1 px-5 py-3 bg-[#0A0A0A] border border-white/5 rounded-lg text-white focus:outline-none focus:border-yellow-500"
+          className="flex-1 px-5 py-3 bg-surface border border-line rounded-lg text-white focus:outline-none focus:border-yellow-500"
         />
         <button
           type="submit"

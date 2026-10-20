@@ -157,7 +157,7 @@ export default function NewsExplorer({ initialPosts = [] }) {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-2 font-medium transition-all duration-200 rounded-full ${selectedCategory === category ? 'bg-yellow-500 text-black' : 'bg-[#0A0A0A] text-gray-300 hover:bg-gray-800 border border-white/5'}`}
+                className={`px-6 py-2 font-medium transition-all duration-200 rounded-full ${selectedCategory === category ? 'bg-yellow-500 text-black' : 'bg-surface text-gray-300 hover:bg-gray-800 border border-line'}`}
               >
                 {category}
               </button>
@@ -191,7 +191,7 @@ export default function NewsExplorer({ initialPosts = [] }) {
 
       <section className="py-20 mt-8 border-t border-white/[0.08]">
         <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 bg-[#0A0A0A] border border-white/10 rounded-2xl overflow-hidden mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 bg-surface border border-white/10 rounded-2xl overflow-hidden mb-8">
             <div className="relative p-8 sm:p-11 flex flex-col justify-center">
               <span
                 className="absolute top-1 left-6 font-black text-yellow-500/10 leading-none pointer-events-none"
@@ -228,7 +228,7 @@ export default function NewsExplorer({ initialPosts = [] }) {
           </div>
 
           {showForm && (
-            <div className="bg-gradient-to-br from-gray-900 to-black border border-white/5 rounded-2xl p-6 mb-8 shadow-2xl">
+            <div className="bg-gradient-to-br from-gray-900 to-black border border-line rounded-2xl p-6 mb-8 shadow-2xl">
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-2.5 bg-yellow-500/10 rounded-xl border border-yellow-500/20">
                   <PlusCircle className="text-yellow-500" size={20} />

@@ -33,7 +33,7 @@ export default function BitcoinVideos({ videos = [] }) {
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-10 lg:gap-12">
         {/* Player + details */}
         <div>
-          <div className="relative aspect-video bg-[#0A0A0A] border border-white/10 overflow-hidden">
+          <div className="relative aspect-video bg-surface border border-white/10 overflow-hidden">
             {embedSrc ? (
               <iframe className="w-full h-full" src={`${embedSrc}${embedSrc.includes('?') ? '&' : '?'}autoplay=0&controls=1&modestbranding=1`} title={currentVideo.title} allowFullScreen />
             ) : (
@@ -76,7 +76,7 @@ export default function BitcoinVideos({ videos = [] }) {
                   key={video.id}
                   onClick={() => setActiveVideo(video)}
                   className={`group flex-shrink-0 w-[240px] lg:w-full flex items-center gap-3 p-3 rounded-xl border text-left transition-colors duration-200 ${
-                    isActive ? 'bg-yellow-500/10 border-yellow-500/40' : 'bg-[#0A0A0A] border-white/5 hover:border-white/15'
+                    isActive ? 'bg-yellow-500/10 border-yellow-500/40' : 'bg-surface border-line hover:border-white/15'
                   }`}
                 >
                   <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-zinc-900">

@@ -33,7 +33,7 @@ function CategoryTile({ category }) {
   );
 
   const base =
-    'group flex flex-col p-6 sm:p-7 bg-[#0A0A0A] border border-white/5 rounded-2xl min-h-[170px] sm:min-h-[180px] transition-all duration-300';
+    'group flex flex-col p-6 sm:p-7 bg-surface border border-line rounded-2xl min-h-[170px] sm:min-h-[180px] transition-all duration-300';
 
   if (category.soon) {
     return <div className={`${base} opacity-50`}>{inner}</div>;

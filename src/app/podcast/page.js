@@ -61,7 +61,7 @@ export default async function PodcastPage() {
         </div>
 
         {episodes.length === 0 ? (
-          <div className="bg-[#0A0A0A] border border-white/5 p-10 text-center">
+          <div className="bg-surface border border-line p-10 text-center">
             <div className="w-16 h-16 rounded-full bg-yellow-500/10 flex items-center justify-center mx-auto mb-4">
               <Mic className="text-yellow-500" size={28} />
             </div>

@@ -60,7 +60,7 @@ export default async function EducationProgramDetailsPage({ params }) {
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
           </>
         ) : (
-          <div className="w-full h-full bg-[#0A0A0A] border-b border-white/5 flex items-center justify-center">
+          <div className="w-full h-full bg-surface border-b border-line flex items-center justify-center">
             <span className="text-gray-600 italic">No cover image</span>
           </div>
         )}
@@ -82,7 +82,7 @@ export default async function EducationProgramDetailsPage({ params }) {
           ]}
           className="mb-4"
         />
-        <div className="bg-[#0A0A0A] border border-white/5 rounded-2xl p-6 md:p-10 shadow-2xl">
+        <div className="bg-surface border border-line rounded-2xl p-6 md:p-10 shadow-2xl">
           <div className="flex flex-wrap gap-2 mb-4">
             {program.level && (
               <span className="px-3 py-1 bg-yellow-500/10 text-yellow-500 text-xs font-bold uppercase tracking-wider rounded-full">

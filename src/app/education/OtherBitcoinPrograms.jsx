@@ -25,7 +25,7 @@ export default function OtherBitcoinPrograms({ programs = [] }) {
             <Link
               key={program.id}
               href={`/education/programs/${program.id}`}
-              className="group relative flex flex-col bg-[#0A0A0A] overflow-hidden border border-white/5 hover:border-yellow-500/50 transition-all duration-500 min-h-[420px]"
+              className="group relative flex flex-col bg-surface overflow-hidden border border-line hover:border-yellow-500/50 transition-all duration-500 min-h-[420px]"
             >
               <div className="relative h-[240px] overflow-hidden">
                 {program.image && (
@@ -46,7 +46,7 @@ export default function OtherBitcoinPrograms({ programs = [] }) {
               <div className="p-6 flex flex-col flex-grow">
                 <h3 className="text-lg font-semibold mb-3 line-clamp-2 leading-tight group-hover:text-yellow-500 transition-colors uppercase tracking-tight">{program.title}</h3>
                 <p className="text-gray-400 text-sm mb-6 line-clamp-3 leading-relaxed">{program.desc}</p>
-                <div className="mt-auto pt-4 border-t border-white/5">
+                <div className="mt-auto pt-4 border-t border-line">
                   <span className="group/btn flex items-center gap-2 text-[10px] font-medium text-yellow-500 group-hover:text-white transition-colors uppercase tracking-widest">
                     View details
                     <span className="w-4 h-4 rounded-full bg-yellow-500/10 flex items-center justify-center group-hover:bg-yellow-500 group-hover:text-black transition-colors duration-200">

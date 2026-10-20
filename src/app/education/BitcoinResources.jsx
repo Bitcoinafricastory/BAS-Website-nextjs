@@ -25,7 +25,7 @@ export default function BitcoinResources({ resources = [] }) {
             const CardWrapper = r.link ? 'a' : 'article';
             const extraProps = r.link ? { href: r.link, target: '_blank', rel: 'noopener noreferrer' } : {};
             return (
-              <CardWrapper key={r.id} {...extraProps} className="snap-start shrink-0 w-[82%] sm:w-[46%] group relative flex flex-col bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-all duration-500 cursor-pointer">
+              <CardWrapper key={r.id} {...extraProps} className="snap-start shrink-0 w-[82%] sm:w-[46%] group relative flex flex-col bg-surface border border-line hover:border-yellow-500/50 transition-all duration-500 cursor-pointer">
                 <div className="relative h-[160px] overflow-hidden bg-yellow-100/5">
                   {r.imageSrc ? (
                     <Image
@@ -44,7 +44,7 @@ export default function BitcoinResources({ resources = [] }) {
                 <div className="p-5 flex flex-col flex-grow">
                   <h4 className="text-base font-semibold mb-2 line-clamp-2 leading-tight group-hover:text-yellow-500 transition-colors uppercase text-white tracking-tight">{r.title}</h4>
                   <p className="text-gray-400 text-sm mb-4 line-clamp-3 leading-relaxed">{r.subtitle}</p>
-                  <div className="mt-auto pt-3 border-t border-white/5">
+                  <div className="mt-auto pt-3 border-t border-line">
                     <span className="flex items-center gap-2 text-[10px] font-medium text-yellow-500 group-hover:text-white transition-colors uppercase tracking-widest">
                       Access resource
                       <span className="w-4 h-4 rounded-full bg-yellow-500/10 flex items-center justify-center group-hover:bg-yellow-500 group-hover:text-black transition-colors duration-200">
@@ -64,7 +64,7 @@ export default function BitcoinResources({ resources = [] }) {
             const CardWrapper = r.link ? 'a' : 'article';
             const extraProps = r.link ? { href: r.link, target: '_blank', rel: 'noopener noreferrer' } : {};
             return (
-              <CardWrapper key={r.id} {...extraProps} className="group relative flex flex-col bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 transition-all duration-500 min-h-[400px] cursor-pointer">
+              <CardWrapper key={r.id} {...extraProps} className="group relative flex flex-col bg-surface border border-line hover:border-yellow-500/50 transition-all duration-500 min-h-[400px] cursor-pointer">
                 <div className="relative h-[200px] overflow-hidden bg-yellow-100/5">
                   {r.imageSrc ? (
                     <Image
@@ -83,7 +83,7 @@ export default function BitcoinResources({ resources = [] }) {
                 <div className="p-6 flex flex-col flex-grow">
                   <h4 className="text-lg font-semibold mb-2 line-clamp-2 leading-tight group-hover:text-yellow-500 transition-colors uppercase text-white tracking-tight">{r.title}</h4>
                   <p className="text-gray-400 text-sm mb-6 line-clamp-3 leading-relaxed">{r.subtitle}</p>
-                  <div className="mt-auto pt-4 border-t border-white/5">
+                  <div className="mt-auto pt-4 border-t border-line">
                     <span className="flex items-center gap-2 text-[10px] font-medium text-yellow-500 group-hover:text-white transition-colors uppercase tracking-widest">
                       Access resource
                       <span className="w-4 h-4 rounded-full bg-yellow-500/10 flex items-center justify-center group-hover:bg-yellow-500 group-hover:text-black transition-colors duration-200">

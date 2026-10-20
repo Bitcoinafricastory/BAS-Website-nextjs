@@ -9,6 +9,13 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  /* Card surfaces. Cards used to be #0A0A0A on a #000 page with a 5% white
+     border, which made them almost invisible. One place to tune the whole
+     site: bg-surface (cards), bg-surface-2 (raised areas inside cards),
+     border-line (card borders and dividers). */
+  --color-surface: #18181b;
+  --color-surface-2: #222226;
+  --color-line: rgb(255 255 255 / 0.1);
   --font-sans: var(--font-montserrat);
   --font-mono: var(--font-geist-mono);
 }

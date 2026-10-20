@@ -123,7 +123,7 @@ export default function Header() {
                   className="absolute right-0 top-full pt-3 w-48"
                   role="menu"
                 >
-                  <div className="bg-[#111113] border border-white/5 rounded-lg shadow-xl overflow-hidden py-2">
+                  <div className="bg-surface border border-line rounded-lg shadow-xl overflow-hidden py-2">
                     {moreLinks.map((link) => (
                       <Link
                         key={link.path}

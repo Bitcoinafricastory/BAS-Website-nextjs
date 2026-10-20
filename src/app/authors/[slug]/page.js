@@ -120,7 +120,7 @@ export default async function AuthorProfilePage({ params }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`${author.name} on ${s.label}`}
-                    className="flex items-center justify-center w-10 h-10 rounded-full border border-white/5 text-gray-400 hover:text-yellow-500 hover:border-yellow-500 transition-colors"
+                    className="flex items-center justify-center w-10 h-10 rounded-full border border-line text-gray-400 hover:text-yellow-500 hover:border-yellow-500 transition-colors"
                   >
                     {s.icon}
                   </a>
@@ -148,7 +148,7 @@ export default async function AuthorProfilePage({ params }) {
                 <Link
                   key={post.id}
                   href={`/news/${post.slug || post.id}`}
-                  className="group bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden hover:border-yellow-500/50 transition-colors"
+                  className="group bg-surface border border-line rounded-xl overflow-hidden hover:border-yellow-500/50 transition-colors"
                 >
                   <div className="aspect-video overflow-hidden relative bg-gray-800">
                     {resolveImageUrl(post.image) && (

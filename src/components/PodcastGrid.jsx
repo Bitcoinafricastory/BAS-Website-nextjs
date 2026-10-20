@@ -28,7 +28,7 @@ export function FeaturedEpisode({ episode }) {
 
   if (playing && videoId) {
     return (
-      <div className="bg-[#0A0A0A] border border-white/5 overflow-hidden mb-14">
+      <div className="bg-surface border border-line overflow-hidden mb-14">
         <InlinePlayer videoId={videoId} title={episode.title} />
         <div className="p-6 md:p-8">
           <span className="inline-block w-fit bg-yellow-500 text-black text-[10px] font-medium px-3 py-1 uppercase tracking-widest mb-3">
@@ -44,7 +44,7 @@ export function FeaturedEpisode({ episode }) {
     <button
       type="button"
       onClick={() => (videoId ? setPlaying(true) : window.open(episode.url, '_blank', 'noopener,noreferrer'))}
-      className="group grid grid-cols-1 md:grid-cols-2 bg-[#0A0A0A] border border-white/5 overflow-hidden mb-14 hover:border-yellow-500/50 transition-all duration-500 text-left w-full"
+      className="group grid grid-cols-1 md:grid-cols-2 bg-surface border border-line overflow-hidden mb-14 hover:border-yellow-500/50 transition-all duration-500 text-left w-full"
     >
       <div className="relative aspect-square md:aspect-auto bg-black">
         {episode.image ? (
@@ -91,7 +91,7 @@ export function EpisodeGrid({ episodes }) {
 
         if (isPlaying) {
           return (
-            <div key={ep.id} className="bg-[#0A0A0A] border border-yellow-500/50 overflow-hidden">
+            <div key={ep.id} className="bg-surface border border-yellow-500/50 overflow-hidden">
               <InlinePlayer videoId={videoId} title={ep.title} />
               <div className="p-5">
                 <h3 className="font-medium mt-1 line-clamp-2 leading-snug">{ep.title}</h3>
@@ -105,7 +105,7 @@ export function EpisodeGrid({ episodes }) {
             key={ep.id}
             type="button"
             onClick={() => (videoId ? setPlayingId(ep.id) : window.open(ep.url, '_blank', 'noopener,noreferrer'))}
-            className="group bg-[#0A0A0A] border border-white/5 overflow-hidden hover:border-yellow-500/50 transition-all duration-500 text-left"
+            className="group bg-surface border border-line overflow-hidden hover:border-yellow-500/50 transition-all duration-500 text-left"
           >
             <div className="relative aspect-video bg-black">
               {ep.image ? (

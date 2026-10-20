@@ -89,7 +89,7 @@ export default async function DirectoryProfilePage({ params }) {
         <Breadcrumbs items={breadcrumbs.map((b) => ({ name: b.name, url: b.url === SITE_URL ? '/' : b.url.replace(SITE_URL, '') }))} className="mb-6" />
 
         <div className="flex gap-5 items-center mb-2">
-          <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 bg-[#0A0A0A] border border-white/5 rounded-2xl overflow-hidden">
+          <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 bg-surface border border-line rounded-2xl overflow-hidden">
             {entity.logo && (
               <Image src={entity.logo} alt={entity.name} fill sizes="96px" className="object-contain p-3" />
             )}
@@ -127,7 +127,7 @@ export default async function DirectoryProfilePage({ params }) {
         {sortedBadges.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-8">
             {sortedBadges.map((b, i) => (
-              <span key={i} className="inline-flex items-center gap-2 bg-[#0A0A0A] border border-white/5 rounded-full px-4 py-2 text-xs font-semibold">
+              <span key={i} className="inline-flex items-center gap-2 bg-surface border border-line rounded-full px-4 py-2 text-xs font-semibold">
                 <span className="w-1.5 h-1.5 rounded-full bg-yellow-500 flex-shrink-0" />
                 {badgeLabel(b.level)}
                 <span className="text-gray-500 font-normal">
@@ -146,9 +146,9 @@ export default async function DirectoryProfilePage({ params }) {
           ].filter(Boolean);
           if (stats.length === 0) return null;
           return (
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-px bg-white/5 border border-white/5 rounded-xl overflow-hidden mb-8">
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-px bg-white/5 border border-line rounded-xl overflow-hidden mb-8">
               {stats.map((s) => (
-                <div key={s.label} className="bg-[#0A0A0A] p-4">
+                <div key={s.label} className="bg-surface p-4">
                   <p className="text-[11px] text-gray-500 uppercase tracking-wide mb-1">{s.label}</p>
                   <p className="text-sm font-semibold">{s.value}</p>
                 </div>
@@ -160,7 +160,7 @@ export default async function DirectoryProfilePage({ params }) {
         {/* Reader tips go straight to the organisation's own Blink wallet. Only
             shown when they've given us a Blink username. */}
         {tipUsername && (
-          <div className="bg-[#0A0A0A] border border-white/5 rounded-2xl p-6 sm:p-8 mb-8">
+          <div className="bg-surface border border-line rounded-2xl p-6 sm:p-8 mb-8">
             <h2 className="text-lg font-semibold mb-2">
               Support {entity.name}. <span className="text-yellow-500">Send sats.</span>
             </h2>
@@ -197,7 +197,7 @@ export default async function DirectoryProfilePage({ params }) {
                     </div>
                   </>
                 );
-                const className = 'block bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden hover:border-yellow-500/40 transition-colors';
+                const className = 'block bg-surface border border-line rounded-xl overflow-hidden hover:border-yellow-500/40 transition-colors';
                 return c.external ? (
                   <a key={i} href={c.url} target="_blank" rel="noopener noreferrer" className={className}>{content}</a>
                 ) : (
@@ -213,7 +213,7 @@ export default async function DirectoryProfilePage({ params }) {
             <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Related</p>
             <div className="flex gap-2 overflow-x-auto pb-1">
               {relatedEntities.map((r) => (
-                <Link key={r.slug} href={`/directory/${r.slug}`} className="flex-shrink-0 text-sm px-4 py-2 bg-[#0A0A0A] border border-white/5 rounded-full hover:border-yellow-500/50 hover:text-yellow-500 transition-colors whitespace-nowrap">
+                <Link key={r.slug} href={`/directory/${r.slug}`} className="flex-shrink-0 text-sm px-4 py-2 bg-surface border border-line rounded-full hover:border-yellow-500/50 hover:text-yellow-500 transition-colors whitespace-nowrap">
                   {r.name} <span className="text-gray-500">({entityTypeLabel(r.type)})</span>
                 </Link>
               ))}

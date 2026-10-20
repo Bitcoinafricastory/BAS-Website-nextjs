@@ -137,7 +137,7 @@ export default async function HomePage() {
           </div>
 
           {featuredEntities.length === 0 ? (
-            <div className="text-center py-12 bg-[#0A0A0A] border border-white/5 rounded-xl">
+            <div className="text-center py-12 bg-surface border border-line rounded-xl">
               <p className="text-gray-400">No entities available yet.</p>
             </div>
           ) : (
@@ -152,7 +152,7 @@ export default async function HomePage() {
                     title={entity.name}
                     className="snap-start shrink-0 w-28 flex flex-col items-center gap-2.5 group"
                   >
-                    <div className="relative w-full aspect-square bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden group-hover:border-yellow-500/50 transition-colors">
+                    <div className="relative w-full aspect-square bg-surface border border-line rounded-xl overflow-hidden group-hover:border-yellow-500/50 transition-colors">
                       {entity.logo && (
                         <Image src={entity.logo} alt={entity.name} fill sizes="112px" className="object-contain p-4" />
                       )}
@@ -171,7 +171,7 @@ export default async function HomePage() {
                     title={entity.name}
                     className="flex flex-col items-center gap-3 group"
                   >
-                    <div className="relative w-full aspect-square bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden group-hover:border-yellow-500/50 transition-colors">
+                    <div className="relative w-full aspect-square bg-surface border border-line rounded-xl overflow-hidden group-hover:border-yellow-500/50 transition-colors">
                       {entity.logo && (
                         <Image src={entity.logo} alt={entity.name} fill sizes="(min-width: 1024px) 200px, 25vw" className="object-contain p-5" />
                       )}

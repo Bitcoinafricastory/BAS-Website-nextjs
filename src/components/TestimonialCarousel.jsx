@@ -42,7 +42,7 @@ export default function TestimonialCarousel({ testimonials = [] }) {
             data-card
             className="snap-start shrink-0 w-[86%] sm:w-[60%] lg:w-[calc(33.333%-14px)]"
           >
-            <div className="relative h-full p-6 sm:p-7 rounded-2xl border border-white/10 bg-[#111111] hover:border-yellow-500/40 transition-colors duration-300">
+            <div className="relative h-full p-6 sm:p-7 rounded-2xl border border-line bg-surface hover:border-yellow-500/40 transition-colors duration-300">
               <Quote className="absolute top-6 right-6 w-8 h-8 text-yellow-500/10" strokeWidth={3} />
               <a href={testimonial.twitterLink || '#'} target={testimonial.twitterLink ? '_blank' : '_self'} rel="noopener noreferrer" className={`block ${testimonial.twitterLink ? 'cursor-pointer' : 'cursor-default'}`}>
                 <div className="flex items-center gap-3.5 mb-5">
@@ -66,7 +66,7 @@ export default function TestimonialCarousel({ testimonials = [] }) {
                 </div>
                 <p className="text-gray-400 text-[15px] leading-relaxed italic mb-5 line-clamp-5">&ldquo;{testimonial.text || 'Success Story on X'}&rdquo;</p>
                 {testimonial.twitterLink && (
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 rounded-full border border-white/5 text-yellow-500 text-[11px] font-medium uppercase tracking-widest hover:bg-yellow-500 hover:text-black transition-all duration-300">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 rounded-full border border-line text-yellow-500 text-[11px] font-medium uppercase tracking-widest hover:bg-yellow-500 hover:text-black transition-all duration-300">
                     <AtSign size={12} />
                     Verify on X
                   </div>

@@ -28,14 +28,14 @@ export default function Mission() {
               covered on the About page. */}
           <div className="hidden lg:grid grid-cols-2 gap-3 sm:gap-4">
             <div className="space-y-3 sm:space-y-4">
-              <div className="group p-5 sm:p-6 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 hover:-translate-y-1 hover:shadow-[0_12px_30px_-12px_rgba(234,179,8,0.25)] transition-all duration-300">
+              <div className="group p-5 sm:p-6 bg-surface border border-line hover:border-yellow-500/50 hover:-translate-y-1 hover:shadow-[0_12px_30px_-12px_rgba(234,179,8,0.25)] transition-all duration-300">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center mb-3 group-hover:bg-yellow-500/20 group-hover:scale-110 transition-all duration-300">
                   <BookOpen className="text-yellow-500" size={20} />
                 </div>
                 <h3 className="text-base sm:text-lg font-semibold mb-1.5">Education</h3>
                 <p className="text-[13px] sm:text-sm text-gray-400">Practical Bitcoin training for schools, youth, and merchants</p>
               </div>
-              <div className="group p-5 sm:p-6 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 hover:-translate-y-1 hover:shadow-[0_12px_30px_-12px_rgba(234,179,8,0.25)] transition-all duration-300">
+              <div className="group p-5 sm:p-6 bg-surface border border-line hover:border-yellow-500/50 hover:-translate-y-1 hover:shadow-[0_12px_30px_-12px_rgba(234,179,8,0.25)] transition-all duration-300">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center mb-3 group-hover:bg-yellow-500/20 group-hover:scale-110 transition-all duration-300">
                   <Mic className="text-yellow-500" size={20} />
                 </div>
@@ -44,14 +44,14 @@ export default function Mission() {
               </div>
             </div>
             <div className="space-y-3 sm:space-y-4 mt-0 sm:mt-8">
-              <div className="group p-5 sm:p-6 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 hover:-translate-y-1 hover:shadow-[0_12px_30px_-12px_rgba(234,179,8,0.25)] transition-all duration-300">
+              <div className="group p-5 sm:p-6 bg-surface border border-line hover:border-yellow-500/50 hover:-translate-y-1 hover:shadow-[0_12px_30px_-12px_rgba(234,179,8,0.25)] transition-all duration-300">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center mb-3 group-hover:bg-yellow-500/20 group-hover:scale-110 transition-all duration-300">
                   <Users className="text-yellow-500" size={20} />
                 </div>
                 <h3 className="text-base sm:text-lg font-semibold mb-1.5">Community Development</h3>
                 <p className="text-[13px] sm:text-sm text-gray-400">Building sustainable Bitcoin circular economies</p>
               </div>
-              <div className="group p-5 sm:p-6 bg-[#0A0A0A] border border-white/5 hover:border-yellow-500/50 hover:-translate-y-1 hover:shadow-[0_12px_30px_-12px_rgba(234,179,8,0.25)] transition-all duration-300">
+              <div className="group p-5 sm:p-6 bg-surface border border-line hover:border-yellow-500/50 hover:-translate-y-1 hover:shadow-[0_12px_30px_-12px_rgba(234,179,8,0.25)] transition-all duration-300">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center mb-3 group-hover:bg-yellow-500/20 group-hover:scale-110 transition-all duration-300">
                   <TrendingUp className="text-yellow-500" size={20} />
                 </div>

@@ -40,7 +40,7 @@ export default function PodcastHighlights({ episodes = [] }) {
 
               if (isPlaying) {
                 return (
-                  <div key={ep.id} className="bg-[#0A0A0A] border border-yellow-500/50 rounded-xl overflow-hidden">
+                  <div key={ep.id} className="bg-surface border border-yellow-500/50 rounded-xl overflow-hidden">
                     <div className="aspect-video relative bg-black">
                       <iframe
                         src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
@@ -63,7 +63,7 @@ export default function PodcastHighlights({ episodes = [] }) {
                   key={ep.id}
                   type="button"
                   onClick={() => (videoId ? setPlayingId(ep.id) : window.open(ep.url, '_blank', 'noopener,noreferrer'))}
-                  className="group bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden hover:border-yellow-500/50 transition-all duration-300 text-left"
+                  className="group bg-surface border border-line rounded-xl overflow-hidden hover:border-yellow-500/50 transition-all duration-300 text-left"
                 >
                   <div className="aspect-video overflow-hidden relative bg-black">
                     {ep.image ? (
@@ -96,7 +96,7 @@ export default function PodcastHighlights({ episodes = [] }) {
           </div>
         ) : (
           // Clean placeholder until podcast episodes are wired into Firestore.
-          <div className="bg-[#0A0A0A] border border-white/5 rounded-2xl p-10 text-center">
+          <div className="bg-surface border border-line rounded-2xl p-10 text-center">
             <div className="w-16 h-16 rounded-full bg-yellow-500/10 flex items-center justify-center mx-auto mb-4">
               <Mic className="text-yellow-500" size={28} />
             </div>

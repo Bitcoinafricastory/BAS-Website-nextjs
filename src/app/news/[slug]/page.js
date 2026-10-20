@@ -223,7 +223,7 @@ export default async function BlogPostPage({ params }) {
               set one in the dashboard, so tips reach the person who did the
               work; otherwise it falls back to the publication account. */}
           <div className="mt-12 pt-10 border-t border-white/[0.08] max-w-[68ch] mx-auto">
-            <div id="tip-writer" tabIndex={-1} className="bg-[#0A0A0A] border border-white/5 rounded-2xl p-6 sm:p-8 scroll-mt-28 outline-none">
+            <div id="tip-writer" tabIndex={-1} className="bg-surface border border-line rounded-2xl p-6 sm:p-8 scroll-mt-28 outline-none">
               <h3 className="text-lg font-semibold mb-2">
                 Found this useful? <span className="text-yellow-500">Tip the writer.</span>
               </h3>
@@ -251,7 +251,7 @@ export default async function BlogPostPage({ params }) {
               <h2 className="text-3xl font-semibold mb-8">Frequently Asked <span className="text-yellow-500">Questions</span></h2>
               <div className="space-y-6">
                 {faqs.map((f, i) => (
-                  <div key={i} className="p-6 bg-[#0A0A0A] border border-white/5 rounded-xl">
+                  <div key={i} className="p-6 bg-surface border border-line rounded-xl">
                     <h3 className="text-lg font-semibold mb-2">{f.question}</h3>
                     <p className="text-gray-400 leading-relaxed">{f.answer}</p>
                   </div>
@@ -285,7 +285,7 @@ export default async function BlogPostPage({ params }) {
                 <Link
                   key={relatedPost.id}
                   href={`/news/${relatedPost.slug || relatedPost.id}`}
-                  className="group bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden hover:border-yellow-500 transition-all duration-300"
+                  className="group bg-surface border border-line rounded-xl overflow-hidden hover:border-yellow-500 transition-all duration-300"
                 >
                   <div className="aspect-video overflow-hidden relative bg-gray-800">
                     {resolveImageUrl(relatedPost.image) && (

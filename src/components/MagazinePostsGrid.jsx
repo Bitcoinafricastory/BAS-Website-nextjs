@@ -17,7 +17,7 @@ export default function MagazinePostsGrid({ posts = [] }) {
       {/* Lead story */}
       <Link
         href={`/news/${featured.slug || featured.id}`}
-        className="lg:col-span-3 group block bg-[#0A0A0A] border border-white/5 overflow-hidden hover:border-yellow-500/50 transition-colors duration-300"
+        className="lg:col-span-3 group block bg-surface border border-line overflow-hidden hover:border-yellow-500/50 transition-colors duration-300"
       >
         <div className="relative aspect-[16/10] sm:aspect-[16/9] lg:aspect-[2/1] overflow-hidden bg-gray-800">
           {featured.image && (
@@ -54,7 +54,7 @@ export default function MagazinePostsGrid({ posts = [] }) {
       {/* Secondary headlines — thumbnail + text rows, stacked from the top.
           Phones and tablets keep the original two rows at the original size;
           the bigger thumbnails and the 3rd/4th stories are desktop (lg) only. */}
-      <div className="lg:col-span-2 flex flex-col divide-y divide-white/5 lg:border-l lg:border-white/5 lg:pl-8">
+      <div className="lg:col-span-2 flex flex-col divide-y divide-line lg:border-l lg:border-line lg:pl-8">
         {rest.map((post, i) => (
           <Link
             key={post.id}

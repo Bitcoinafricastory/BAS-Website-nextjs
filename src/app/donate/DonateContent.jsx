@@ -243,7 +243,7 @@ export default function DonateContent({ verifiedCount = 0 }) {
           </p>
         </motion.div>
 
-        <motion.div {...fadeUp} className="bg-[#0A0A0A] border border-white/[0.08] max-w-4xl mx-auto">
+        <motion.div {...fadeUp} className="bg-surface border border-white/[0.08] max-w-4xl mx-auto">
           <div className="p-2 border-b border-white/[0.08]">
             <nav role="tablist" className="flex gap-1 bg-black p-1 relative">
               {tabs.map((tab) => (

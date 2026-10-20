@@ -202,7 +202,7 @@ export default function NewsContent({ initialPosts = [] }) {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-2 font-medium transition-all duration-200 ${selectedCategory === category ? 'bg-yellow-500 text-black' : 'bg-[#0A0A0A] text-gray-300 hover:bg-gray-800 border border-white/5'}`}
+                className={`px-6 py-2 font-medium transition-all duration-200 ${selectedCategory === category ? 'bg-yellow-500 text-black' : 'bg-surface text-gray-300 hover:bg-gray-800 border border-line'}`}
               >
                 {category}
               </button>
@@ -253,7 +253,7 @@ export default function NewsContent({ initialPosts = [] }) {
           </button>
 
           {showForm && (
-            <div className="bg-gradient-to-br from-gray-900 to-black border border-white/5 rounded-2xl p-6 mb-8 shadow-2xl">
+            <div className="bg-gradient-to-br from-gray-900 to-black border border-line rounded-2xl p-6 mb-8 shadow-2xl">
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-2.5 bg-yellow-500/10 rounded-xl border border-yellow-500/20">
                   <PlusCircle className="text-yellow-500" size={20} />

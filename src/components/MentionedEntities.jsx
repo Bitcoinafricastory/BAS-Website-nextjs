@@ -26,9 +26,9 @@ export default function MentionedEntities({ entities = [] }) {
             <Link
               key={entity.slug}
               href={`/directory/${entity.slug}`}
-              className="group flex items-center gap-3 p-3.5 bg-[#0A0A0A] border border-white/5 rounded-xl hover:border-yellow-500 transition-colors duration-200"
+              className="group flex items-center gap-3 p-3.5 bg-surface border border-line rounded-xl hover:border-yellow-500 transition-colors duration-200"
             >
-              <div className="relative w-11 h-11 rounded-lg bg-[#161616] border border-white/5 overflow-hidden flex items-center justify-center flex-shrink-0">
+              <div className="relative w-11 h-11 rounded-lg bg-surface-2 border border-line overflow-hidden flex items-center justify-center flex-shrink-0">
                 {logoUrl ? (
                   <Image src={logoUrl} alt={entity.name} fill sizes="44px" className="object-cover" />
                 ) : (

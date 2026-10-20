@@ -119,7 +119,7 @@ export default function ArticleSidebar({ headings = [], category, title, url }) 
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Share on X"
-              className="flex items-center justify-center w-9 h-9 rounded-full border border-white/5 text-gray-400 hover:text-yellow-500 hover:border-yellow-500 transition-colors"
+              className="flex items-center justify-center w-9 h-9 rounded-full border border-line text-gray-400 hover:text-yellow-500 hover:border-yellow-500 transition-colors"
             >
               <XIcon />
             </a>
@@ -128,7 +128,7 @@ export default function ArticleSidebar({ headings = [], category, title, url }) 
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Share on LinkedIn"
-              className="flex items-center justify-center w-9 h-9 rounded-full border border-white/5 text-gray-400 hover:text-yellow-500 hover:border-yellow-500 transition-colors"
+              className="flex items-center justify-center w-9 h-9 rounded-full border border-line text-gray-400 hover:text-yellow-500 hover:border-yellow-500 transition-colors"
             >
               <LinkedinIcon />
             </a>
@@ -136,7 +136,7 @@ export default function ArticleSidebar({ headings = [], category, title, url }) 
               type="button"
               onClick={copyLink}
               aria-label={copied ? 'Link copied' : 'Copy link'}
-              className="flex items-center justify-center w-9 h-9 rounded-full border border-white/5 text-gray-400 hover:text-yellow-500 hover:border-yellow-500 transition-colors"
+              className="flex items-center justify-center w-9 h-9 rounded-full border border-line text-gray-400 hover:text-yellow-500 hover:border-yellow-500 transition-colors"
             >
               {copied ? <Check size={15} className="text-yellow-500" /> : <Link2 size={15} />}
             </button>

@@ -18,7 +18,7 @@ export default function SubscribePage() {
 
         {/* Free signup — one defined panel, centered: headline, short copy,
             unified pill form. */}
-        <div className="bg-[#0A0A0A] border border-white/[0.07] rounded-[28px] px-6 sm:px-12 py-14 sm:py-20 text-center">
+        <div className="bg-surface border border-line rounded-[28px] px-6 sm:px-12 py-14 sm:py-20 text-center">
           <h1 className="text-3xl sm:text-5xl font-semibold leading-[1.1] tracking-tight mb-5 max-w-2xl mx-auto">
             Our stories, <span className="text-yellow-500">in your inbox.</span>
           </h1>
