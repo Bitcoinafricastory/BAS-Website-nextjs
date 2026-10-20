@@ -20,6 +20,7 @@ import MobileShareBar from '@/components/MobileShareBar';
 import ArticleTOC from '@/components/ArticleTOC';
 import AuthorFooter from '@/components/AuthorFooter';
 import BlinkDonateButton from '@/components/BlinkDonateButton';
+import ZapWriterButton from '@/components/ZapWriterButton';
 import MentionedEntities from '@/components/MentionedEntities';
 
 export const revalidate = 300;
@@ -222,7 +223,7 @@ export default async function BlogPostPage({ params }) {
               set one in the dashboard, so tips reach the person who did the
               work; otherwise it falls back to the publication account. */}
           <div className="mt-12 pt-10 border-t border-white/[0.08] max-w-[68ch] mx-auto">
-            <div className="bg-[#0A0A0A] border border-white/5 rounded-2xl p-6 sm:p-8">
+            <div id="tip-writer" tabIndex={-1} className="bg-[#0A0A0A] border border-white/5 rounded-2xl p-6 sm:p-8 scroll-mt-28 outline-none">
               <h3 className="text-lg font-semibold mb-2">
                 Found this useful? <span className="text-yellow-500">Tip the writer.</span>
               </h3>
@@ -237,6 +238,8 @@ export default async function BlogPostPage({ params }) {
               />
             </div>
           </div>
+
+          <ZapWriterButton writerName={author?.blinkUsername ? author.name || '' : ''} />
 
           <MentionedEntities entities={mentionedEntities} />
 
