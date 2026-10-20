@@ -164,14 +164,12 @@ Respond with ONLY a JSON array and no other text. Each item exactly like:
 
 If nothing qualifies, respond with an empty array: []`;
 
-  const claude = await callClaude({
-    apiKey,
-    models: EXTRACTION_MODELS,
-    body: {
-      // Higher than before: search results and tool-use blocks consume
-      // tokens before the model gets to the JSON, and a truncated reply
-      // parses as malformed.
-      max_tokens: 4096,
+  const aiRequest = {
+      // Search results, tool-use blocks and (on newer models) the model's own
+      // thinking all count towards max_tokens before it gets to the JSON. At
+      // 4096 the reply ran out before the answer and every extraction failed.
+      // You only pay for tokens actually used.
+      max_tokens: 16000,
       // Lets the model verify an organisation's real website instead of
       // leaving the field blank or inventing a plausible domain.
       tools: [{ type: 'web_search_20250305', name: 'web_search' }],
@@ -180,8 +178,16 @@ If nothing qualifies, respond with an empty array: []`;
       // next token to continue a JSON array, which prevents the model from
       // issuing a tool call first. The parser below recovers the array from
       // surrounding text instead.
-    },
-  });
+  };
+  let claude = await callClaude({ apiKey, models: EXTRACTION_MODELS, body: aiRequest });
+
+  // A long run of web searches can pause the turn part-way ("pause_turn").
+  // Sending the reply back lets the model carry on from where it stopped.
+  const turn = [...aiRequest.messages];
+  for (let i = 0; i < 3 && claude.ok && claude.data.stop_reason === 'pause_turn'; i++) {
+    turn.push({ role: 'assistant', content: claude.data.content });
+    claude = await callClaude({ apiKey, models: [claude.model], body: { ...aiRequest, messages: turn } });
+  }
 
   if (!claude.ok) {
     // Fall back to plain name matching, and say why AI wasn't used.
@@ -218,10 +224,12 @@ If nothing qualifies, respond with an empty array: []`;
   } catch (err) {
     // Log the actual text — without it this failure is undiagnosable from
     // the outside, which is exactly why it went unnoticed.
-    console.warn('Could not parse AI extraction response, falling back:', err.message, '| raw:', rawText.slice(0, 500));
+    console.warn('Could not parse AI extraction response, falling back:', err.message, '| stop:', data.stop_reason, '| raw:', rawText.slice(0, 500));
     return NextResponse.json({
       degraded: true,
-      reason: 'AI extraction returned an unexpected response.',
+      reason: data.stop_reason === 'max_tokens'
+        ? 'AI ran out of room before finishing. Try again.'
+        : 'AI extraction returned an unexpected response.',
       suggestions: deterministicMatch(plainText, entities),
     });
   }
