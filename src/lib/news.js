@@ -1,4 +1,5 @@
 import { collection, getDocs, getDoc, doc, query, where, orderBy, limit as fsLimit } from 'firebase/firestore';
+import { nameMatchesAuthor } from './author-match';
 import { db } from './firebase';
 
 const NEWS_COLLECTION = 'news';
@@ -101,8 +102,9 @@ export async function getArticlesByAuthor(author) {
   if (!author) return [];
   const all = await getAllNews();
   return all.filter((post) => {
-    if (post.authorId && author.id) return post.authorId === author.id;
-    if (author.name) return (post.author || post.authorName) === author.name;
-    return false;
+    if (post.authorId && author.id && post.authorId === author.id) return true;
+    // Byline match tolerates spacing and case differences, so older articles
+    // whose name was typed slightly differently still show on the profile.
+    return nameMatchesAuthor(post.author || post.authorName, author);
   });
 }

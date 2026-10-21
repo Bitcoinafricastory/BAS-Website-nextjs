@@ -1,5 +1,6 @@
 import { collection, getDocs, query, where, limit as fsLimit } from 'firebase/firestore';
 import { db } from './firebase';
+import { matchArticleAuthor } from './author-match';
 
 const AUTHORS_COLLECTION = 'authors';
 
@@ -79,21 +80,13 @@ export async function getAuthorBySlug(slug) {
 export async function resolveArticleAuthor(post) {
   if (!post) return null;
 
-  // Prefer the new authorId linkage.
-  if (post.authorId) {
-    const all = await getAllAuthors();
-    const found = all.find((a) => a.id === post.authorId);
+  // authorId first, then the byline name matched loosely (spacing, case).
+  const legacyName = post.author || post.authorName;
+  if (post.authorId || legacyName) {
+    const found = matchArticleAuthor(post, await getAllAuthors());
     if (found) return found;
   }
-
-  // Fall back to matching the legacy string against author names/slugs.
-  const legacyName = post.author || post.authorName;
   if (legacyName) {
-    const all = await getAllAuthors();
-    const found = all.find(
-      (a) => a.name === legacyName || a.slug === slugify(legacyName),
-    );
-    if (found) return found;
     // No matching author record — return a minimal shape so the byline still renders.
     return { name: legacyName, isLegacy: true };
   }
