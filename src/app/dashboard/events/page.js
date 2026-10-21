@@ -9,6 +9,12 @@ const config = {
   listPrimary: 'eventName',
   listSecondary: 'date',
   listImage: 'banner',
+  autofill: {
+    endpoint: '/api/admin/event-autofill',
+    label: 'Fill from a link',
+    hint: 'Paste the event page (Luma, Eventbrite, Meetup or the organiser’s site). AI fills the empty fields and grabs the banner. X and Instagram posts need a login, so they can’t be read.',
+    imageField: 'banner',
+  },
   fields: [
     { name: 'eventName', label: 'Event Name', type: 'text', placeholder: 'e.g. Lagos Bitcoin Meetup' },
     { name: 'banner', label: 'Event Banner', type: 'image' },

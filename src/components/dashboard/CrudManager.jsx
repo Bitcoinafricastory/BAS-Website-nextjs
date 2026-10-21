@@ -1,12 +1,12 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { db, storage } from '@/lib/firebase';
+import { db, storage, auth } from '@/lib/firebase';
 import { collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, serverTimestamp, query, orderBy } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { announceChange } from '@/lib/announce-change';
 import { publicPathsFor } from '@/lib/public-paths';
-import { PlusCircle, Search, Pencil, Trash2, ArrowLeft, LoaderCircle, CheckCircle2, AlertCircle, X } from 'lucide-react';
+import { PlusCircle, Search, Pencil, Trash2, ArrowLeft, LoaderCircle, CheckCircle2, AlertCircle, X, Sparkles } from 'lucide-react';
 import ImageUploader from '@/components/dashboard/ImageUploader';
 import EntityLinker from '@/components/dashboard/EntityLinker';
 import StoryEditor from '@/components/StoryEditor';
@@ -23,6 +23,61 @@ function Toast({ toast, onClose }) {
     <div className={`fixed bottom-6 right-6 z-[60] flex items-center gap-3 px-5 py-3 rounded-xl border shadow-2xl ${isError ? 'bg-red-950 border-red-800 text-red-200' : 'bg-green-950 border-green-800 text-green-200'}`}>
       {isError ? <AlertCircle size={18} /> : <CheckCircle2 size={18} />}
       <span className="text-sm font-medium">{toast.message}</span>
+    </div>
+  );
+}
+
+/**
+ * "Fill from a link": paste a page, the server reads it with AI and returns
+ * field values (and optionally an image as a data: URL). Only empty fields
+ * are filled, so nothing typed by hand is overwritten.
+ */
+function AutofillBar({ endpoint, label, hint, onFill }) {
+  const [url, setUrl] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState(null);
+
+  const run = async () => {
+    if (!url.trim()) return;
+    setBusy(true);
+    setMsg(null);
+    try {
+      const idToken = await auth.currentUser?.getIdToken();
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idToken, url: url.trim() }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
+      const filled = await onFill(data);
+      setMsg({ ok: true, text: filled ? `Filled ${filled} field${filled === 1 ? '' : 's'}. Check them before saving.` : 'Nothing new to fill: the form already has these details.' });
+    } catch (err) {
+      setMsg({ ok: false, text: err.message || 'Could not read that link.' });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="mb-5 p-4 rounded-2xl border border-yellow-500/30 bg-yellow-500/[0.06]">
+      <label className="flex items-center gap-2 text-sm font-semibold text-white mb-1"><Sparkles size={16} className="text-yellow-500" />{label}</label>
+      {hint && <p className="text-xs text-gray-400 mb-3">{hint}</p>}
+      <div className="flex flex-col sm:flex-row gap-2">
+        <input
+          type="url"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); run(); } }}
+          placeholder="https://lu.ma/… or https://www.eventbrite.com/…"
+          className="flex-1 min-w-0 px-4 py-3 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500"
+        />
+        <button type="button" onClick={run} disabled={busy || !url.trim()} className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-400 disabled:opacity-50">
+          {busy ? <LoaderCircle size={16} className="animate-spin" /> : <Sparkles size={16} />}
+          {busy ? 'Reading the page…' : 'Fill with AI'}
+        </button>
+      </div>
+      {msg && <p className={`mt-2 text-sm ${msg.ok ? 'text-green-400' : 'text-red-400'}`}>{msg.text}</p>}
     </div>
   );
 }
@@ -48,6 +103,7 @@ export default function CrudManager({ config }) {
   const [busy, setBusy] = useState(false);
   const [toast, setToast] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(null);
+  const [imageKey, setImageKey] = useState(0);
 
   useEffect(() => {
     const ref2 = collection(db, collectionName);
@@ -82,6 +138,35 @@ export default function CrudManager({ config }) {
     setView('form');
   };
   const backToList = () => { setView('list'); setEditing(null); };
+
+  // Fill only the fields that are still empty; returns how many were filled.
+  const applyAutofill = async ({ fields: values = {}, banner } = {}) => {
+    const next = { ...form };
+    let filled = 0;
+    fields.forEach((fld) => {
+      const v = values[fld.name];
+      if (fld.type === 'image' || v === undefined || v === null || v === '') return;
+      const current = next[fld.name];
+      const isEmpty = current === undefined || current === null || current === ''
+        || (fld.type === 'select' && !editing && current === (fld.options?.[0] || ''));
+      if (!isEmpty || current === v) return;
+      if (fld.type === 'select' && !fld.options?.includes(v)) return;
+      next[fld.name] = v;
+      filled += 1;
+    });
+    const imageField = config.autofill?.imageField;
+    const nextPreviews = { ...previews };
+    if (imageField && banner && !next[imageField]) {
+      const blob = await (await fetch(banner)).blob();
+      next[imageField] = new File([blob], 'banner.webp', { type: blob.type || 'image/webp' });
+      nextPreviews[imageField] = banner;
+      filled += 1;
+      setImageKey((k) => k + 1);
+    }
+    setForm(next);
+    setPreviews(nextPreviews);
+    return filled;
+  };
 
   const filtered = useMemo(() => {
     if (!search) return items;
@@ -162,6 +247,7 @@ export default function CrudManager({ config }) {
           <ArrowLeft size={16} /> Back
         </button>
         <h1 className="text-2xl font-bold mb-6">{editing ? `Edit ${title}` : `Add ${title}`}</h1>
+        {config.autofill && <AutofillBar {...config.autofill} onFill={applyAutofill} />}
         <div className="bg-[#0A0A0A] border border-gray-800 rounded-2xl p-6 space-y-5">
           {fields.map((fld) => (
             <div key={fld.name}>
@@ -173,7 +259,7 @@ export default function CrudManager({ config }) {
                   {fld.options.map((o) => <option key={o} value={o}>{o}</option>)}
                 </select>
               ) : fld.type === 'image' ? (
-                <ImageUploader label={fld.label} value={form[fld.name]} preview={previews[fld.name]} aspect={fld.aspect || 'aspect-video'} onChange={(val, prev) => { setForm({ ...form, [fld.name]: val }); setPreviews({ ...previews, [fld.name]: prev }); }} />
+                <ImageUploader key={`${fld.name}-${imageKey}`} label={fld.label} value={form[fld.name]} preview={previews[fld.name]} aspect={fld.aspect || 'aspect-video'} onChange={(val, prev) => { setForm({ ...form, [fld.name]: val }); setPreviews({ ...previews, [fld.name]: prev }); }} />
               ) : fld.type === 'entities' ? (
                 <EntityLinker value={form[fld.name] || []} onChange={(vals) => setForm({ ...form, [fld.name]: vals })} />
               ) : fld.type === 'richtext' ? (
