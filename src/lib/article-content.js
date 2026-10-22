@@ -8,12 +8,17 @@ export function stripHtml(html) {
     .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')
     .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ')
     .replace(/<[^>]+>/g, ' ')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
+    // Decode every entity, not just a few: headings like "Geyser's" are
+    // stored as "Geyser&#39;s" and showed up that way in the contents box.
+    .replace(/&[a-z0-9#]+;/gi, (e) => decodeEntities(e) || ' ')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+// Anchor id for a heading: "How Geyser's Grants Work" -> "how-geysers-grants-work".
+// Shared by the contents box and the ids added to the article, so links match.
+function headingId(text) {
+  return text.toLowerCase().replace(/['\u2019]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
 export function computeReadingTime(content, explicit) {
@@ -82,8 +87,7 @@ export function extractHeadings(html) {
     const level = match[1].toLowerCase();
     const text = stripHtml(match[2]);
     if (text) {
-      const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-      headings.push({ level, text, id });
+      headings.push({ level, text, id: headingId(text) });
     }
   }
   return headings;
@@ -186,8 +190,7 @@ export function addHeadingIds(html) {
   if (!html) return html;
   return html.replace(/<(h2|h3)([^>]*)>([\s\S]*?)<\/\1>/gi, (full, tag, attrs, inner) => {
     if (/\bid=/.test(attrs)) return full;
-    const text = stripHtml(inner);
-    const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const id = headingId(stripHtml(inner));
     return `<${tag}${attrs} id="${id}">${inner}</${tag}>`;
   });
 }
