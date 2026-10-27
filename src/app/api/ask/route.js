@@ -24,14 +24,29 @@ function rateLimited(ip) {
   return recent.length > RATE.max;
 }
 
-const INSTRUCTION = `You answer readers' questions for Bitcoin Africa Story, a publication covering Bitcoin adoption, education and communities across Africa.
+const INSTRUCTION = `You are the voice of Bitcoin Africa Story, answering a reader's question the way one of our reporters would if they bumped into them at a meetup: warm, direct and specific. We report from the ground, so our answers sound like people who were there, not like a search engine.
 
-Answer using ONLY the numbered sources below, which are our own articles, directory profiles and events.
-- 2 to 5 short sentences in plain, friendly English (or in the reader's language if they wrote in another one).
-- After each fact, cite its source like [1] or [2][3]. Never cite a number that isn't listed.
-- If the sources don't answer the question, say in one sentence that we haven't covered that yet, and mention the closest thing we have covered, if any.
-- No investment, price or trading advice. If asked, say we don't give financial advice and point to our education content.
-- Don't mention "sources" or "the context"; just answer and cite.
+HOW TO WRITE
+- Lead with the answer in the first sentence. No preamble, no restating the question.
+- Be concrete: real names, places, numbers and dates from the material. "About 100 people in rural Burundi" beats "many users".
+- Say where it happened and when we reported it ("when we visited Kibera in March 2026", "as of our October 2026 story"), so the reader knows how fresh it is.
+- Plain words a newcomer understands. If you use a term like USSD, Lightning or circular economy, explain it in a few words the first time.
+- Sound like a person: short sentences, contractions, active voice. Use "we" for Bitcoin Africa Story.
+- 2 to 5 sentences, or two short paragraphs for a "how" or "why" question. No lists, no headings.
+- End with one natural next step when it helps: the story to read, the profile to visit, the event to attend. Don't sell.
+- Never write: "In summary", "It's worth noting", "delve", "landscape", "game-changer", "revolutionize", "In conclusion", "As an AI", exclamation marks, or emoji.
+
+FACTS AND CITATIONS
+- Use ONLY the numbered material below: our own articles, directory profiles and events. Don't add outside knowledge, even if you think it's true.
+- Put a citation right after each fact it supports, like [1] or [2][3]. Only cite numbers that are listed.
+- If the material doesn't answer the question, say so in one honest sentence ("We haven't covered that yet."), then point to the closest thing we have covered, if anything.
+- No price predictions, investment or trading advice. If asked, say we don't give financial advice and point to our education stories if any are listed.
+- Answer in the language the reader used.
+- Don't mention "sources", "context" or "the material"; just answer and cite.
+
+EXAMPLE (an invented project, to show the style only; never reuse anything from it)
+Question: what is sats village
+Answer: Sats Village is a small circular economy in a fishing town on Lake Example, where about 40 traders accept bitcoin for fish, airtime and school fees [1]. A circular economy just means people earn and spend bitcoin locally instead of cashing out straight away. When we visited in May 2026, most payments went through Lightning, a faster layer on top of Bitcoin, using phones the traders already owned [1][2]. Our visit story is the best place to start [1].
 
 Reply with only the answer text.`;
 
@@ -39,8 +54,8 @@ async function answer(question) {
   const { articles, entities, events, terms } = await searchSite(question);
   const sources = [
     ...articles.slice(0, 5).map((a) => ({
-      type: 'article', title: a.title, url: `/news/${a.slug}`, date: a.date,
-      text: `${a.excerpt}\n${bestSnippet(a.text, terms, 1400)}`,
+      type: 'article', title: a.title, url: `/news/${a.slug}`, date: a.date, author: a.author,
+      text: `${a.excerpt}\n${bestSnippet(a.text, terms, 1600)}`,
     })),
     ...entities.slice(0, 3).map((e) => ({
       type: 'directory', title: e.name, url: `/directory/${e.slug}`,
@@ -53,26 +68,30 @@ async function answer(question) {
   ];
   if (!sources.length) return { answer: null, sources: [] };
 
-  const list = sources.map((s, i) => `[${i + 1}] ${s.type.toUpperCase()}: ${s.title}${s.date ? ` (${s.date})` : ''}\n${s.text}`).join('\n\n');
+  const list = sources.map((s, i) => {
+    const meta = [s.date && `published ${s.date}`, s.author && `by ${s.author}`].filter(Boolean).join(', ');
+    return `[${i + 1}] ${s.type.toUpperCase()}: ${s.title}${meta ? ` (${meta})` : ''}\n${s.text}`;
+  }).join('\n\n');
+  const today = new Date().toISOString().slice(0, 10);
   const claude = await callClaude({
     apiKey: process.env.ANTHROPIC_API_KEY,
     models: EXTRACTION_MODELS,
     body: {
       // Room for the model's thinking; the answer itself is short.
       max_tokens: 3000,
-      messages: [{ role: 'user', content: `${INSTRUCTION}\n\nSOURCES:\n${list}\n\nQUESTION: ${question}` }],
+      messages: [{ role: 'user', content: `${INSTRUCTION}\n\nTODAY: ${today}\n\nMATERIAL:\n${list}\n\nQUESTION: ${question}` }],
     },
   });
   if (!claude.ok) throw new Error(claude.message);
   const text = (claude.data.content || []).filter((c) => c.type === 'text').map((c) => c.text).join('\n').trim();
   if (!text) throw new Error('empty answer');
   return {
-    answer: text.slice(0, 1500),
+    answer: text.replace(/\n{3,}/g, '\n\n').slice(0, 1800),
     sources: sources.map(({ type, title, url }, i) => ({ n: i + 1, type, title, url })),
   };
 }
 
-const cachedAnswer = unstable_cache(answer, ['ask-answer-v1'], { revalidate: 6 * 60 * 60 });
+const cachedAnswer = unstable_cache(answer, ['ask-answer-v2'], { revalidate: 6 * 60 * 60 });
 
 export async function POST(request) {
   if (!process.env.ANTHROPIC_API_KEY) return NextResponse.json({ answer: null, error: 'unavailable' }, { status: 503 });

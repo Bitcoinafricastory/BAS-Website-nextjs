@@ -52,7 +52,7 @@ export default function AskAnswer({ question }) {
     <section aria-live="polite" className="mt-8 rounded-2xl border border-yellow-500/30 bg-gradient-to-b from-yellow-500/[0.07] to-transparent p-5 sm:p-6">
       <div className="flex items-center gap-2 mb-3">
         <Sparkles size={16} className="text-yellow-500" />
-        <h2 className="text-sm font-semibold text-white">Answer from our stories</h2>
+        <h2 className="text-sm font-semibold text-white">From our reporting</h2>
         <span className="ml-auto text-[10px] font-bold uppercase tracking-widest text-gray-500">AI</span>
       </div>
 
@@ -65,7 +65,9 @@ export default function AskAnswer({ question }) {
         </div>
       ) : (
         <>
-          <p className="text-[15px] leading-relaxed text-gray-200">{withCitations(state.answer, state.sources)}</p>
+          <div className="space-y-3 text-[15px] leading-relaxed text-gray-200">
+            {state.answer.split(/\n\s*\n/).map((para, i) => <p key={i}>{withCitations(para.trim(), state.sources)}</p>)}
+          </div>
           <div className="mt-4 flex flex-wrap gap-2">
             {state.sources.filter((s) => state.answer.includes(`[${s.n}]`)).map((s) => {
               const Icon = ICON[s.type] || Newspaper;
