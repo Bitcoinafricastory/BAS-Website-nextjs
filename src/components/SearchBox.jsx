@@ -31,7 +31,7 @@ export default function SearchBox({ initialQuery = '', autoFocus = false }) {
         value={value}
         autoFocus={autoFocus}
         onChange={(e) => setValue(e.target.value)}
-        placeholder="Search news, stories, and events..."
+        placeholder="Ask a question or search a topic…"
         className="w-full pl-12 pr-28 py-4 bg-surface border border-line rounded-xl text-gray-200 placeholder:text-gray-600 focus:outline-none focus:border-yellow-500/50 focus:ring-4 focus:ring-yellow-500/10 transition-all"
       />
       <button
