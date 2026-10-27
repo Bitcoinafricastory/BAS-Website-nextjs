@@ -5,9 +5,10 @@ import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard, Newspaper, FileText, Calendar, Inbox, Globe,
   BookOpen, GraduationCap, Video, PlayCircle, Library, Heart, Users,
-  Mail, Home, LogOut, X, Mic, HelpCircle, Image as ImageIcon,
+  Mail, Home, LogOut, X, Mic, HelpCircle, Image as ImageIcon, ShieldCheck, History,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { useAccess } from '@/context/AccessContext';
 
 // Reorganized into logical groups (improvement over the flat 14-item list),
 // while keeping every original section and familiar names.
@@ -57,9 +58,21 @@ const navGroups = [
       { name: 'Newsletter', path: '/dashboard/newsletter', icon: Mail },
     ],
   },
+  {
+    label: 'Team',
+    items: [
+      { name: 'Team & Access', path: '/dashboard/team', icon: ShieldCheck },
+      { name: 'Activity Log', path: '/dashboard/activity', icon: History },
+    ],
+  },
 ];
 
 function NavContent({ pathname, isActive, onClose, logout }) {
+  // Only the pages this person can open; empty groups are dropped.
+  const { canOpen, isOwner, role } = useAccess();
+  const groups = navGroups
+    .map((g) => ({ ...g, items: g.items.filter((item) => canOpen(item.path)) }))
+    .filter((g) => g.items.length);
   return (
     <>
       <div className="px-6 py-5 border-b border-gray-800">
@@ -69,13 +82,13 @@ function NavContent({ pathname, isActive, onClose, logout }) {
           </div>
           <div>
             <div className="font-bold text-sm leading-tight">Bitcoin Africa Story</div>
-            <div className="text-[10px] text-gray-500">Editorial Dashboard</div>
+            <div className="text-[10px] text-gray-500">Editorial Dashboard{!isOwner && role ? ` · ${role === 'editor' ? 'Editor' : 'Writer'}` : ''}</div>
           </div>
         </Link>
       </div>
 
       <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
-        {navGroups.map((group) => (
+        {groups.map((group) => (
           <div key={group.label}>
             <div className="px-3 mb-2 text-[10px] font-bold text-gray-600 uppercase tracking-widest">{group.label}</div>
             <div className="space-y-1">

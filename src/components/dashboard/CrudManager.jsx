@@ -6,6 +6,8 @@ import { collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, serverTimest
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { announceChange } from '@/lib/announce-change';
 import { publicPathsFor } from '@/lib/public-paths';
+import { logActivity } from '@/lib/activity-log';
+import { useAccess } from '@/context/AccessContext';
 import { PlusCircle, Search, Pencil, Trash2, ArrowLeft, LoaderCircle, CheckCircle2, AlertCircle, X, Sparkles } from 'lucide-react';
 import ImageUploader from '@/components/dashboard/ImageUploader';
 import EntityLinker from '@/components/dashboard/EntityLinker';
@@ -93,6 +95,7 @@ function AutofillBar({ endpoint, label, hint, onFill }) {
  */
 export default function CrudManager({ config }) {
   const { title, collectionName, orderField, fields, listPrimary, listSecondary, listImage } = config;
+  const { canDelete } = useAccess();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState('list');
@@ -197,6 +200,7 @@ export default function CrudManager({ config }) {
       if (editing) {
         await updateDoc(doc(db, collectionName, editing.id), { ...clean, updatedAt: serverTimestamp() });
         notify('success', `${title} updated.`);
+        logActivity({ action: 'updated', collection: collectionName, id: editing.id, title: clean[listPrimary] || editing[listPrimary] });
         announceChange([
           ...publicPathsFor(collectionName, { ...editing, ...clean, id: editing.id }),
           // If a slug changed, the old URL is gone too.
@@ -205,6 +209,7 @@ export default function CrudManager({ config }) {
       } else {
         const created = await addDoc(collection(db, collectionName), { ...clean, createdAt: serverTimestamp() });
         notify('success', `${title} added.`);
+        logActivity({ action: 'created', collection: collectionName, id: created.id, title: clean[listPrimary] });
         announceChange(publicPathsFor(collectionName, { ...clean, id: created.id }));
       }
       backToList();
@@ -234,6 +239,7 @@ export default function CrudManager({ config }) {
       }
       await deleteDoc(doc(db, collectionName, item.id));
       notify('success', `${title} deleted.`);
+      logActivity({ action: 'deleted', collection: collectionName, id: item.id, title: item[listPrimary] });
       announceChange(publicPathsFor(collectionName, item));
     } catch (err) {
       notify('error', 'Delete failed.');
@@ -326,7 +332,9 @@ export default function CrudManager({ config }) {
               </div>
               <div className="flex items-center gap-1 flex-shrink-0">
                 <button onClick={() => openEdit(item)} className="w-9 h-9 rounded-lg flex items-center justify-center text-gray-400 hover:text-yellow-500 hover:bg-white/5 transition-colors"><Pencil size={16} /></button>
-                <button onClick={() => setConfirmDelete(item)} className="w-9 h-9 rounded-lg flex items-center justify-center text-gray-400 hover:text-red-400 hover:bg-red-500/5 transition-colors"><Trash2 size={16} /></button>
+                {canDelete && (
+                  <button onClick={() => setConfirmDelete(item)} className="w-9 h-9 rounded-lg flex items-center justify-center text-gray-400 hover:text-red-400 hover:bg-red-500/5 transition-colors"><Trash2 size={16} /></button>
+                )}
               </div>
             </div>
           ))}

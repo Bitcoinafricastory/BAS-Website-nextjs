@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
-import { verifyIdToken, isAllowedAdmin } from '@/lib/admin-auth';
+import { getDashboardAccess } from '@/lib/admin-auth';
 import { submitToIndexNow } from '@/lib/indexnow';
 import { SITE_URL } from '@/lib/schema';
 
@@ -17,9 +17,9 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
   }
 
-  const user = await verifyIdToken(body?.idToken);
-  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  if (!isAllowedAdmin(user)) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  // Owner and staff: refreshing pages after an edit is safe for anyone who can edit.
+  const access = await getDashboardAccess(body?.idToken);
+  if (!access) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   const paths = [...new Set(Array.isArray(body?.paths) ? body.paths : [])]
     .filter((p) => typeof p === 'string' && /^\/[^\s]*$/.test(p) && !p.startsWith('//') && p.length <= 300)

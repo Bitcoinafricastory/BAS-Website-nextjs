@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server';
 import { lookup } from 'node:dns/promises';
 import { isIP } from 'node:net';
 import sharp from 'sharp';
-import { verifyIdToken, isAllowedAdmin } from '@/lib/admin-auth';
+import { getDashboardAccess, consumeAiQuota } from '@/lib/admin-auth';
+import { canUseSection, STAFF_AI_DAILY_LIMIT, aiUsageDay } from '@/lib/staff-access';
 import { callClaude, EXTRACTION_MODELS } from '@/lib/claude-api';
 
 // "Fill from a link" on Dashboard > Events: paste an event page (Luma,
@@ -145,9 +146,9 @@ export async function POST(request) {
   let body;
   try { body = await request.json(); } catch { return NextResponse.json({ error: 'Invalid request body' }, { status: 400 }); }
 
-  const user = await verifyIdToken(body?.idToken);
-  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  if (!isAllowedAdmin(user)) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  const access = await getDashboardAccess(body?.idToken);
+  if (!access) return NextResponse.json({ error: 'Your account doesn’t have dashboard access.' }, { status: 403 });
+  if (!canUseSection(access, 'events')) return NextResponse.json({ error: 'Your account doesn’t include Events.' }, { status: 403 });
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) return NextResponse.json({ error: 'AI is not configured on this deployment (missing ANTHROPIC_API_KEY).' }, { status: 503 });
@@ -182,6 +183,9 @@ export async function POST(request) {
   if (!events.length && text.length < 80 && !og.title) {
     return NextResponse.json({ error: 'That page has almost no readable text (it may need a login, like X or Instagram). Try the event’s Luma, Eventbrite or website link.' }, { status: 422 });
   }
+
+  const quota = await consumeAiQuota(access, body.idToken, STAFF_AI_DAILY_LIMIT, aiUsageDay());
+  if (!quota.ok) return NextResponse.json({ error: quota.error }, { status: 429 });
 
   const today = new Date().toISOString().slice(0, 10);
   const prompt = `${INSTRUCTION}

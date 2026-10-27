@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { Lock, Mail, LoaderCircle } from 'lucide-react';
+import { sendPasswordResetEmail } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
 
 export default function AdminLoginPage() {
   const { login, user, loading } = useAuth();
@@ -12,6 +14,23 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [busy, setBusy] = useState(false);
+  const [info, setInfo] = useState(null);
+
+  // New team members set their own password through this link too.
+  const forgotPassword = async () => {
+    setError(null);
+    setInfo(null);
+    if (!email.trim()) { setError('Type your email above first, then tap “Forgot password?”.'); return; }
+    try {
+      await sendPasswordResetEmail(auth, email.trim());
+    } catch (err) {
+      if (err?.code === 'auth/invalid-email') { setError('That email address doesn’t look right.'); return; }
+      if (err?.code === 'auth/too-many-requests') { setError('Too many attempts. Please wait a few minutes and try again.'); return; }
+      // Other errors (e.g. no such user) get the same answer, so the form
+      // never reveals which emails have accounts.
+    }
+    setInfo('If that email has an account, a link to set a new password is on its way. Check your spam folder too.');
+  };
 
   // If already signed in, go straight to the dashboard.
   useEffect(() => {
@@ -61,6 +80,12 @@ export default function AdminLoginPage() {
         <h2 className="text-2xl font-semibold mb-1">Welcome back</h2>
         <p className="text-sm text-gray-400 mb-6">Sign in to manage your publication.</p>
 
+        {info && (
+          <div className="mb-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-green-300 text-sm">
+            {info}
+          </div>
+        )}
+
         {error && (
           <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-300 text-sm">
             {error}
@@ -80,7 +105,10 @@ export default function AdminLoginPage() {
           />
         </div>
 
-        <label className="block text-sm font-medium text-gray-300 mb-2">Password</label>
+        <div className="flex items-center justify-between mb-2">
+          <label className="block text-sm font-medium text-gray-300">Password</label>
+          <button type="button" onClick={forgotPassword} className="text-xs text-yellow-500 hover:underline">Forgot password?</button>
+        </div>
         <div className="relative mb-6">
           <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
           <input

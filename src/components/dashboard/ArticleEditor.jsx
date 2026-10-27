@@ -15,6 +15,11 @@ import AiTools from '@/components/dashboard/AiTools';
 import EntityLinker from '@/components/dashboard/EntityLinker';
 import EntityExtractionReview from '@/components/dashboard/EntityExtractionReview';
 import { getActiveAuthors } from '@/lib/authors';
+import { logActivity } from '@/lib/activity-log';
+import { useAccess } from '@/context/AccessContext';
+
+// Writers can only keep articles as drafts or send them for review.
+const WRITER_STATUSES = ['draft', 'review'];
 
 const CATEGORIES = ['Adoption', 'Regulations', 'Education', 'Technology', 'Economy', 'Security', 'Community'];
 
@@ -73,6 +78,7 @@ function loadInitialForm(editingPost) {
 }
 
 export default function ArticleEditor({ editingPost, onDone, onNotify }) {
+  const { canPublish } = useAccess();
   const [form, setForm] = useState(() => loadInitialForm(editingPost));
   const [imagePreview, setImagePreview] = useState(() => {
     if (editingPost?.image) return editingPost.image;
@@ -195,7 +201,9 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
       const authorImageUrl = await uploadIfFile(form.authorImage, `authors/author_${Date.now()}`);
 
       const { id, _doc, ...rest } = form;
-      const finalStatus = statusOverride || form.status;
+      const requested = statusOverride || form.status;
+      // Belt and braces: the security rules refuse anything else from a writer.
+      const finalStatus = canPublish || WRITER_STATUSES.includes(requested) ? requested : 'review';
       // Last line of defence: whatever route the value took to get here, the
       // stored slug must be URL-safe or the published article will 404.
       const safeSlug = toSlug(form.slug) || toSlug(form.title);
@@ -211,7 +219,7 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
       let articleId = editingPost?.id;
       if (isEditing) {
         await updateDoc(doc(db, 'news', editingPost.id), payload);
-        onNotify?.('success', 'Article updated successfully.');
+        onNotify?.('success', finalStatus === 'review' && !canPublish ? 'Sent for review.' : 'Article updated successfully.');
       } else {
         if (!payload.image) {
           onNotify?.('error', 'Please provide a featured image.');
@@ -220,9 +228,16 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
         }
         const newDoc = await addDoc(collection(db, 'news'), { ...payload, createdAt: serverTimestamp() });
         articleId = newDoc.id;
-        onNotify?.('success', finalStatus === 'published' ? 'Article published and live!' : 'Article saved.');
+        onNotify?.('success', finalStatus === 'published' ? 'Article published and live!' : finalStatus === 'review' ? 'Sent for review.' : 'Article saved.');
         try { localStorage.removeItem(AUTOSAVE_KEY); } catch {}
       }
+
+      logActivity({
+        action: finalStatus === 'published' ? 'published' : finalStatus === 'review' ? 'sent for review' : isEditing ? 'updated' : 'created',
+        collection: 'news',
+        id: articleId,
+        title: form.title,
+      });
 
       // Purge the ISR cache so the change is visible immediately. Public pages
       // set revalidate = 300, so without this the homepage, /news and the
@@ -459,7 +474,7 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
             onChange={(e) => update({ status: e.target.value })}
             className="w-full px-3 py-2.5 bg-black/40 border border-gray-800 rounded-lg text-white focus:outline-none focus:border-yellow-500 mb-4 text-sm"
           >
-            {STATUSES.map((s) => (
+            {STATUSES.filter((s) => canPublish || WRITER_STATUSES.includes(s.value)).map((s) => (
               <option key={s.value} value={s.value}>{s.label}</option>
             ))}
           </select>
@@ -477,9 +492,18 @@ export default function ArticleEditor({ editingPost, onDone, onNotify }) {
             <button onClick={() => handleSubmit('draft')} disabled={busy} className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-gray-800 rounded-lg text-sm font-medium transition-colors disabled:opacity-50">
               {busy ? <LoaderCircle className="animate-spin" size={16} /> : <FileText size={16} />} Save Draft
             </button>
-            <button onClick={() => handleSubmit('published')} disabled={busy} className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-yellow-500 text-black hover:bg-yellow-400 rounded-lg font-medium transition-colors disabled:opacity-50">
-              {busy ? <LoaderCircle className="animate-spin" size={16} /> : <Send size={16} />} {isEditing ? 'Update & Publish' : 'Publish'}
-            </button>
+            {canPublish ? (
+              <button onClick={() => handleSubmit('published')} disabled={busy} className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-yellow-500 text-black hover:bg-yellow-400 rounded-lg font-medium transition-colors disabled:opacity-50">
+                {busy ? <LoaderCircle className="animate-spin" size={16} /> : <Send size={16} />} {isEditing ? 'Update & Publish' : 'Publish'}
+              </button>
+            ) : (
+              <>
+                <button onClick={() => handleSubmit('review')} disabled={busy} className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-yellow-500 text-black hover:bg-yellow-400 rounded-lg font-medium transition-colors disabled:opacity-50">
+                  {busy ? <LoaderCircle className="animate-spin" size={16} /> : <Send size={16} />} Send for review
+                </button>
+                <p className="text-xs text-gray-500">An editor or the owner publishes it after checking.</p>
+              </>
+            )}
           </div>
         </div>
 

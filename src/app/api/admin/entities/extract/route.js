@@ -6,7 +6,8 @@ import { NextResponse } from 'next/server';
 export const maxDuration = 60;
 import { getEntities } from '@/lib/entities';
 import { ENTITY_TYPES, ENTITY_COUNTRIES } from '@/lib/entityTypes';
-import { verifyIdToken, isAllowedAdmin } from '@/lib/admin-auth';
+import { getDashboardAccess, consumeAiQuota } from '@/lib/admin-auth';
+import { canUseSection, STAFF_AI_DAILY_LIMIT, aiUsageDay } from '@/lib/staff-access';
 import { callClaude, EXTRACTION_MODELS } from '@/lib/claude-api';
 
 // Same public web API key already used by src/lib/firebase.js — this call
@@ -112,12 +113,12 @@ export async function POST(request) {
 
   const { title = '', excerpt = '', content = '', category = '', idToken } = body;
 
-  const user = await verifyIdToken(idToken);
-  if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const access = await getDashboardAccess(idToken);
+  if (!access) {
+    return NextResponse.json({ error: 'Your account doesn’t have dashboard access.' }, { status: 403 });
   }
-  if (!isAllowedAdmin(user)) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  if (!canUseSection(access, 'articles')) {
+    return NextResponse.json({ error: 'Your account doesn’t include Articles.' }, { status: 403 });
   }
 
   const entities = await getEntities();
@@ -179,6 +180,12 @@ If nothing qualifies, respond with an empty array: []`;
       // issuing a tool call first. The parser below recovers the array from
       // surrounding text instead.
   };
+  // Staff have a daily AI allowance; when it's used up, fall back to name
+  // matching rather than failing the save.
+  const quota = await consumeAiQuota(access, idToken, STAFF_AI_DAILY_LIMIT, aiUsageDay());
+  if (!quota.ok) {
+    return NextResponse.json({ degraded: true, reason: quota.error, suggestions: deterministicMatch(plainText, entities) });
+  }
   let claude = await callClaude({ apiKey, models: EXTRACTION_MODELS, body: aiRequest });
 
   // A long run of web searches can pause the turn part-way ("pause_turn").

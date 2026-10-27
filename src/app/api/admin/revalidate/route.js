@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { submitToIndexNow } from '@/lib/indexnow';
 import { SITE_URL } from '@/lib/schema';
-import { verifyIdToken, isAllowedAdmin } from '@/lib/admin-auth';
+import { getDashboardAccess } from '@/lib/admin-auth';
 
 // Every public page sets `revalidate = 300`, so a newly published or edited
 // article can take up to five minutes to show up on the homepage, /news, the
@@ -26,9 +26,9 @@ export async function POST(request) {
 
   const { idToken, slug, published, wasPublished } = body;
 
-  const user = await verifyIdToken(idToken);
-  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  if (!isAllowedAdmin(user)) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  // Owner and staff: refreshing pages after an edit is safe for anyone who can edit.
+  const access = await getDashboardAccess(idToken);
+  if (!access) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   // Pages that list articles, plus the article's own page. The layout purge
   // covers the footer's popular-posts list, which renders on every route.

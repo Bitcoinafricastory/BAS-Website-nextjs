@@ -16,6 +16,17 @@ service firebase.storage {
         && request.auth.token.email in ['smartdestinyonyekachi@gmail.com'];
     }
 
+    // Team members (Dashboard > Team & Access) may upload new images, but
+    // never replace or delete existing files. Reads their staff entry from
+    // Firestore; Firebase asks to allow this cross-service access when the
+    // rules are published.
+    function isStaff() {
+      return request.auth != null
+        && request.auth.token.email != null
+        && firestore.exists(/databases/(default)/documents/staff/$(request.auth.token.email.lower()))
+        && firestore.get(/databases/(default)/documents/staff/$(request.auth.token.email.lower())).data.get('active', true) == true;
+    }
+
     function isImageUnder(mb) {
       return request.resource != null
         && request.resource.contentType.matches('image/.*')
@@ -37,11 +48,13 @@ service firebase.storage {
         && request.time < resource.timeCreated + duration.value(10, 'm');
     }
 
-    // All site media. Public can fetch; only the admin can upload, replace
-    // or delete. Listing folders is never allowed.
+    // All site media. Public can fetch; the owner uploads, replaces and
+    // deletes; team members can add new images. Listing folders is never
+    // allowed.
     match /{folder}/{allPaths=**} {
-      allow get: if !isPublicSubmissionFolder(folder) || isAdmin();
-      allow create, update: if isAdmin() && isImageUnder(15);
+      allow get: if !isPublicSubmissionFolder(folder) || isAdmin() || isStaff();
+      allow create: if (isAdmin() || isStaff()) && isImageUnder(15);
+      allow update: if isAdmin() && isImageUnder(15);
       allow delete: if isAdmin();
     }
   }

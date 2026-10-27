@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, onSnapshot, addDoc, deleteDoc, doc, serverTimestamp } from 'firebase/firestore';
+import { logActivity } from '@/lib/activity-log';
+import { useAccess } from '@/context/AccessContext';
 import { announceChange } from '@/lib/announce-change';
 import { publicPathsFor } from '@/lib/public-paths';
 import { Check, X, LoaderCircle, Eye, CheckCircle2, AlertCircle, Inbox } from 'lucide-react';
@@ -16,6 +18,7 @@ import { Check, X, LoaderCircle, Eye, CheckCircle2, AlertCircle, Inbox } from 'l
  */
 export default function ModerationQueue({ config }) {
   const { title, sourceCollection, targetCollection, primaryField, secondaryField, imageField, transform, beforeApprove } = config;
+  const { canPublish } = useAccess();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [busyId, setBusyId] = useState(null);
@@ -43,6 +46,8 @@ export default function ModerationQueue({ config }) {
     try {
       const { id, submittedAt, status, ...rest } = item;
       const payload = transform ? transform(rest) : rest;
+      // Writers can't publish articles: an approved story goes in for review.
+      if (targetCollection === 'news' && !canPublish && payload.status === 'published') payload.status = 'review';
       // Optional check (e.g. "already in the directory"); a returned message
       // stops the approval and is shown to the editor.
       const problem = beforeApprove ? await beforeApprove(payload) : null;
@@ -55,7 +60,8 @@ export default function ModerationQueue({ config }) {
       if (!payload.status || payload.status === 'published') {
         announceChange(publicPathsFor(targetCollection, { ...payload, id: created.id }));
       }
-      setToast({ type: 'success', message: 'Approved and published.' });
+      logActivity({ action: 'approved', collection: targetCollection, id: created.id, title: payload[primaryField] || payload.title || payload.name });
+      setToast({ type: 'success', message: payload.status === 'review' ? 'Approved and sent for review.' : 'Approved and published.' });
       setViewing(null);
     } catch (err) {
       console.error('approve error', err);
@@ -70,6 +76,7 @@ export default function ModerationQueue({ config }) {
     setBusyId(item.id);
     try {
       await deleteDoc(doc(db, sourceCollection, item.id));
+      logActivity({ action: 'rejected', collection: sourceCollection, id: item.id, title: item[primaryField] });
       setToast({ type: 'success', message: 'Submission rejected.' });
       setViewing(null);
     } catch (err) {

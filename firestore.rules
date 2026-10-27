@@ -22,9 +22,63 @@ service cloud.firestore {
         'newsletterSubscribers',
         'submitted_stories',
         'submittedEvents',
-        'submittedEntities'
+        'submittedEntities',
+        'staff',
+        'activityLog',
+        'aiUsage'
       ];
     }
+
+    // ---- Team access (Dashboard > Team & Access) --------------------------
+    // Each team member has a document staff/<lower-case email>:
+    //   { role: 'editor' | 'writer', sections: [...], active: true }
+    // Keep the section map below in step with src/lib/staff-access.js.
+    function myEmail() {
+      return request.auth.token.email.lower();
+    }
+    function staffPath() {
+      return /databases/$(database)/documents/staff/$(myEmail());
+    }
+    function isStaff() {
+      return request.auth != null
+        && request.auth.token.email != null
+        && exists(staffPath())
+        && get(staffPath()).data.get('active', true) == true
+        && get(staffPath()).data.role in ['editor', 'writer'];
+    }
+    function staffRole() {
+      return get(staffPath()).data.role;
+    }
+    function hasSection(section) {
+      return section in get(staffPath()).data.get('sections', []);
+    }
+    function staffHasSection(collection) {
+      return isStaff() && (
+        (collection in ['news', 'submitted_stories'] && hasSection('articles'))
+        || (collection in ['entities', 'submittedEntities'] && hasSection('directory'))
+        || (collection in ['events', 'submittedEvents'] && hasSection('events'))
+        || (collection == 'podcasts' && hasSection('podcasts'))
+        || (collection == 'faqs' && hasSection('faqs'))
+        || (collection in ['education_programs', 'other_programs', 'bitcoin_videos', 'whyBitcoinVideo', 'bitcoin_resources'] && hasSection('education'))
+        || (collection in ['testimonials', 'educationTestimonials'] && hasSection('testimonials'))
+        || (collection == 'authors' && hasSection('writers'))
+      );
+    }
+    // Writers keep articles as drafts or "In review". They can't publish,
+    // can't change an article once it's live, except to add an image
+    // description (Dashboard > Image Descriptions).
+    function articleChangeAllowed() {
+      return staffRole() == 'editor'
+        || (request.resource.data.get('status', '') in ['draft', 'review']
+            && (resource == null || resource.data.get('status', 'published') in ['draft', 'review']))
+        || (resource != null
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['imageAlt', 'updatedAt']));
+    }
+    function staffMayWrite(collection) {
+      return staffHasSection(collection)
+        && (collection != 'news' || articleChangeAllowed());
+    }
+
 
     // Newsletter: document ID = lower-cased email. Anyone may add a new
     // address (create only, strict shape). Nobody but the admin can read,
@@ -39,24 +93,67 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
 
-    // Public submission forms: anyone may submit; only the admin can read.
+    // Public submission forms: anyone may submit; the owner and team members
+    // with that section can review them (approving or rejecting removes the
+    // submission, which is moderation, not deleting site content).
     match /submittedEvents/{doc} {
       allow create: if request.resource.data.size() <= 50;
-      allow read, update, delete: if isAdmin();
+      allow read, update, delete: if isAdmin() || staffHasSection('submittedEvents');
     }
     match /submitted_stories/{doc} {
       allow create: if request.resource.data.size() <= 50;
-      allow read, update, delete: if isAdmin();
+      allow read, update, delete: if isAdmin() || staffHasSection('submitted_stories');
     }
     match /submittedEntities/{doc} {
       allow create: if request.resource.data.size() <= 50;
-      allow read, update, delete: if isAdmin();
+      allow read, update, delete: if isAdmin() || staffHasSection('submittedEntities');
     }
 
-    // Everything else is published site content: public read, admin write.
+    // Team list: only the owner manages it; each person can read their own
+    // entry (the dashboard and server use it to know their access).
+    match /staff/{email} {
+      allow read: if isAdmin() || (request.auth != null && request.auth.token.email != null && email == myEmail());
+      allow write: if isAdmin();
+    }
+
+    // Activity log: anyone on the team adds entries as themselves, stamped
+    // with the server's time. Only the owner reads it; nobody edits or
+    // deletes entries.
+    match /activityLog/{entry} {
+      allow create: if (isAdmin() || isStaff())
+        && request.resource.data.by == myEmail()
+        && request.resource.data.at == request.time
+        && request.resource.data.keys().hasOnly(['by', 'action', 'collection', 'docId', 'title', 'at']);
+      allow read: if isAdmin();
+      allow update, delete: if false;
+    }
+
+    // Daily AI allowance: aiUsage/<email> = { day, count, email }, where day
+    // is today's date (midnight UTC). A team member can only raise today's
+    // count by exactly 1, or start a new day at 1, so it can't be reset.
+    // The owner can read everyone's.
+    match /aiUsage/{email} {
+      allow read: if isAdmin() || (isStaff() && email == myEmail());
+      allow create: if isStaff()
+        && email == myEmail()
+        && request.resource.data.day == request.time.date()
+        && request.resource.data.count == 1
+        && request.resource.data.keys().hasOnly(['day', 'count', 'email']);
+      allow update: if isStaff()
+        && email == myEmail()
+        && request.resource.data.day == request.time.date()
+        && request.resource.data.keys().hasOnly(['day', 'count', 'email'])
+        && ((resource.data.day == request.time.date() && request.resource.data.count == resource.data.count + 1)
+            || (resource.data.day != request.time.date() && request.resource.data.count == 1));
+      allow delete: if false;
+    }
+
+    // Everything else is published site content: public read; the owner and
+    // team members with that section can add and edit; only the owner deletes.
     match /{collection}/{document=**} {
       allow read: if !isPrivate(collection);
-      allow write: if isAdmin();
+      allow create, update: if isAdmin() || staffMayWrite(collection);
+      allow delete: if isAdmin();
     }
   }
 }

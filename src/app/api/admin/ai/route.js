@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import sharp from 'sharp';
 import { RESIZABLE_HOSTS } from '@/lib/image-sizes.mjs';
-import { verifyIdToken, isAllowedAdmin } from '@/lib/admin-auth';
+import { getDashboardAccess, consumeAiQuota } from '@/lib/admin-auth';
+import { canUseSection, STAFF_AI_DAILY_LIMIT, aiUsageDay } from '@/lib/staff-access';
 import { callClaude, WRITING_MODELS } from '@/lib/claude-api';
 
 export const maxDuration = 30;
@@ -179,9 +180,9 @@ export async function POST(request) {
 
   const { idToken, task, payload } = body;
 
-  const user = await verifyIdToken(idToken);
-  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  if (!isAllowedAdmin(user)) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  const access = await getDashboardAccess(idToken);
+  if (!access) return NextResponse.json({ error: 'Your account doesn’t have dashboard access.' }, { status: 403 });
+  if (!canUseSection(access, 'articles')) return NextResponse.json({ error: 'Your account doesn’t include Articles.' }, { status: 403 });
 
   const spec = TASKS[task];
   if (!spec && task !== 'imageAlt') return NextResponse.json({ error: `Unknown task: ${task}` }, { status: 400 });
@@ -193,6 +194,9 @@ export async function POST(request) {
       { status: 503 }
     );
   }
+
+  const quota = await consumeAiQuota(access, idToken, STAFF_AI_DAILY_LIMIT, aiUsageDay());
+  if (!quota.ok) return NextResponse.json({ error: quota.error }, { status: 429 });
 
   if (task === 'imageAlt') {
     return describeImage({ apiKey, payload, origin: new URL(request.url).origin });

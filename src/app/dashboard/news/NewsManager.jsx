@@ -5,6 +5,8 @@ import { db, storage } from '@/lib/firebase';
 import { collection, onSnapshot, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
 import { announceChange } from '@/lib/announce-change';
 import { publicPathsFor } from '@/lib/public-paths';
+import { logActivity } from '@/lib/activity-log';
+import { useAccess } from '@/context/AccessContext';
 import { ref, deleteObject } from 'firebase/storage';
 import { PlusCircle, Search, Pencil, Trash2, ArrowLeft, LoaderCircle, CheckCircle2, AlertCircle } from 'lucide-react';
 import ArticleEditor from '@/components/dashboard/ArticleEditor';
@@ -35,6 +37,7 @@ function Toast({ toast, onClose }) {
 }
 
 export default function NewsManager() {
+  const { canPublish, canDelete } = useAccess();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState('list'); // 'list' | 'editor'
@@ -71,7 +74,16 @@ export default function NewsManager() {
   }, [posts, search, statusFilter]);
 
   const openNew = () => { setEditingPost(null); setView('editor'); };
-  const openEdit = (post) => { setEditingPost(post); setView('editor'); };
+  const openEdit = (post) => {
+    // Writers work on drafts; a published (or scheduled/archived) article is
+    // for an editor or the owner to change. The security rules enforce this.
+    if (!canPublish && !['draft', 'review'].includes(post.status)) {
+      notify('error', 'Only editors and the owner can change published articles. Ask them, or start a new draft.');
+      return;
+    }
+    setEditingPost(post);
+    setView('editor');
+  };
   const backToList = () => { setView('list'); setEditingPost(null); };
 
   const doDelete = async (post) => {
@@ -86,6 +98,7 @@ export default function NewsManager() {
       await deleteStorageFile(post.authorImage);
       await deleteDoc(doc(db, 'news', post.id));
       notify('success', 'Article deleted.');
+      logActivity({ action: 'deleted', collection: 'news', id: post.id, title: post.title });
       // Only a published article had a public page to remove from search.
       if (!post.status || post.status === 'published') announceChange(publicPathsFor('news', post));
     } catch (err) {
@@ -164,9 +177,11 @@ export default function NewsManager() {
                 <button onClick={() => openEdit(post)} className="w-9 h-9 rounded-lg flex items-center justify-center text-gray-400 hover:text-yellow-500 hover:bg-white/5 transition-colors" title="Edit">
                   <Pencil size={16} />
                 </button>
-                <button onClick={() => setConfirmDelete(post)} className="w-9 h-9 rounded-lg flex items-center justify-center text-gray-400 hover:text-red-400 hover:bg-red-500/5 transition-colors" title="Delete">
-                  <Trash2 size={16} />
-                </button>
+                {canDelete && (
+                  <button onClick={() => setConfirmDelete(post)} className="w-9 h-9 rounded-lg flex items-center justify-center text-gray-400 hover:text-red-400 hover:bg-red-500/5 transition-colors" title="Delete">
+                    <Trash2 size={16} />
+                  </button>
+                )}
               </div>
             </div>
           ))}

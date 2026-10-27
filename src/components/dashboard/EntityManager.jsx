@@ -16,6 +16,8 @@ import {
   ENTITY_TYPES, ENTITY_COUNTRIES, BADGE_LEVELS, COVERAGE_TYPES, entityTypeLabel, badgeLabel,
 } from '@/lib/entityTypes';
 import { slugifyEntity } from '@/lib/entities';
+import { logActivity } from '@/lib/activity-log';
+import { useAccess } from '@/context/AccessContext';
 import { normalizeBlinkUsername, isValidBlinkUsername } from '@/lib/blink';
 
 const ENTITIES_COLLECTION = 'entities';
@@ -56,6 +58,7 @@ function Field({ label, children }) {
 const inputClass = 'w-full px-4 py-3 bg-black/40 border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500';
 
 export default function EntityManager() {
+  const { canDelete } = useAccess();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState('list');
@@ -189,9 +192,11 @@ export default function EntityManager() {
       if (editing) {
         await updateDoc(doc(db, ENTITIES_COLLECTION, editing.id), { ...payload, updatedAt: serverTimestamp() });
         notify('success', 'Entity updated.');
+        logActivity({ action: 'updated', collection: ENTITIES_COLLECTION, id: editing.id, title: payload.name });
       } else {
-        await addDoc(collection(db, ENTITIES_COLLECTION), { ...payload, createdAt: serverTimestamp() });
+        const created = await addDoc(collection(db, ENTITIES_COLLECTION), { ...payload, createdAt: serverTimestamp() });
         notify('success', 'Entity added.');
+        logActivity({ action: 'created', collection: ENTITIES_COLLECTION, id: created.id, title: payload.name });
       }
       announceChange(publicPathsFor('entities', payload));
       backToList();
@@ -216,6 +221,7 @@ export default function EntityManager() {
       }
       await deleteDoc(doc(db, ENTITIES_COLLECTION, item.id));
       notify('success', 'Entity deleted.');
+      logActivity({ action: 'deleted', collection: ENTITIES_COLLECTION, id: item.id, title: item.name });
       announceChange(publicPathsFor('entities', item));
     } catch (err) {
       notify('error', 'Delete failed.');
@@ -389,7 +395,7 @@ export default function EntityManager() {
         </button>
       </div>
 
-      {!loading && <DuplicatesPanel items={items} onEdit={openEdit} onDelete={setConfirmDelete} />}
+      {!loading && canDelete && <DuplicatesPanel items={items} onEdit={openEdit} onDelete={setConfirmDelete} />}
 
       <div className="relative mb-6">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
@@ -416,7 +422,9 @@ export default function EntityManager() {
               </div>
               <div className="flex items-center gap-1 flex-shrink-0">
                 <button onClick={() => openEdit(item)} className="w-9 h-9 rounded-lg flex items-center justify-center text-gray-400 hover:text-yellow-500 hover:bg-white/5 transition-colors"><Pencil size={16} /></button>
-                <button onClick={() => setConfirmDelete(item)} className="w-9 h-9 rounded-lg flex items-center justify-center text-gray-400 hover:text-red-400 hover:bg-red-500/5 transition-colors"><Trash2 size={16} /></button>
+                {canDelete && (
+                  <button onClick={() => setConfirmDelete(item)} className="w-9 h-9 rounded-lg flex items-center justify-center text-gray-400 hover:text-red-400 hover:bg-red-500/5 transition-colors"><Trash2 size={16} /></button>
+                )}
               </div>
             </div>
           ))}
