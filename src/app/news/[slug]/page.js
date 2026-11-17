@@ -115,7 +115,7 @@ export default async function BlogPostPage({ params }) {
   const breadcrumbs = [
     { name: 'Home', url: SITE_URL },
     { name: 'News', url: `${SITE_URL}/news` },
-    { name: post.category || 'Story', url: `${SITE_URL}/news?category=${encodeURIComponent(post.category || '')}` },
+    { name: post.category || 'Story', url: post.category ? `${SITE_URL}/news/category/${encodeURIComponent(post.category.toLowerCase())}` : `${SITE_URL}/news` },
     { name: post.title, url: pageUrl },
   ];
 
@@ -148,7 +148,7 @@ export default async function BlogPostPage({ params }) {
           {post.category && (
             <>
               <span>/</span>
-              <Link href={`/news?category=${encodeURIComponent(post.category)}`} className="hover:text-yellow-500">{post.category}</Link>
+              <Link href={`/news/category/${encodeURIComponent(post.category.toLowerCase())}`} className="hover:text-yellow-500">{post.category}</Link>
             </>
           )}
         </nav>

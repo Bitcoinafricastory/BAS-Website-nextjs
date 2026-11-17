@@ -168,7 +168,7 @@ export default async function Footer() {
                 categories.map((category) => (
                   <li key={category.name} className="flex items-center justify-between py-1">
                     <Link
-                      href={`/news?category=${category.name}`}
+                      href={`/news/category/${encodeURIComponent(String(category.name).toLowerCase())}`}
                       className="text-white text-base font-medium uppercase hover:text-yellow-500 cursor-pointer transition-colors duration-200"
                     >
                       {category.name}

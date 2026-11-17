@@ -81,7 +81,7 @@ export default function ArticleSidebar({ headings = [], category, title, url }) 
           <div>
             <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Category</p>
             <Link
-              href={`/news?category=${encodeURIComponent(category)}`}
+              href={`/news/category/${encodeURIComponent(String(category).toLowerCase())}`}
               className="inline-block text-sm font-semibold text-yellow-500 hover:underline"
             >
               {category}
