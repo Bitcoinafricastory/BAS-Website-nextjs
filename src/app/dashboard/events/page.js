@@ -21,6 +21,9 @@ const config = {
     { name: 'date', label: 'Date', type: 'text', placeholder: 'e.g. 2026-08-15' },
     { name: 'time', label: 'Time', type: 'text', placeholder: 'e.g. 6:00 PM' },
     { name: 'venue', label: 'Venue', type: 'text', placeholder: 'e.g. Innovation Hub' },
+    // Street address: set by the public "Submit Your Event" form and shown in
+    // the event's search data, so admins need to be able to correct it too.
+    { name: 'address', label: 'Address', type: 'text', placeholder: 'e.g. Sarit Centre, Nairobi' },
     { name: 'city', label: 'City', type: 'text', placeholder: 'e.g. Lagos' },
     { name: 'format', label: 'Format', type: 'select', options: ['in-person', 'virtual'] },
     { name: 'organiser', label: 'Organiser', type: 'text' },
