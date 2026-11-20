@@ -42,6 +42,13 @@ const milestones = [
   { year: '2025', title: '6 Online Bitcoin Diplomas', description: 'Launched online Bitcoin learning programs to make education accessible to every African, anywhere.' },
   { year: '2025', title: '10+ Bitcoin Events', description: 'Hosted impactful events — from school sessions to classroom workshops, church outreach, youth hangouts, and community meetups.' },
   { year: '2025', title: 'Building Circular Economies', description: 'Launched initiatives like Bitcoin Ikorodu and continued scaling real Bitcoin adoption across African communities.' },
+  { year: '2026', title: '100 Stories Published', description: 'Reported on Bitcoin across Africa, from circular economies and merchants to developer grants and regulation.' },
+  { year: '2026', title: 'A Directory of 100+ Builders', description: 'Mapped more than 100 African Bitcoin communities, companies, and builders, each checked by our reporters.' },
+  { year: '2026', title: 'Bitcoin Africa Story Podcast', description: 'Launched our podcast with grassroots builders, including Tumelo Hika, The Orange Man, and Ronnie Mdawida of Afribit Kibera.' },
+  { year: '2026', title: 'Bitcoin Diploma Cohort 8', description: 'Ran our eighth free online Bitcoin Diploma cohort.' },
+  { year: '2026', title: 'Live Education and X Spaces', description: 'Hosted live Bitcoin education sessions and grassroots-focused X Spaces with builders and communities.' },
+  { year: '2026', title: 'Bitcoin Ikorodu Grows', description: '6+ merchants in Ikorodu now accept Bitcoin, and one paid his shop rent from his Bitcoin savings.' },
+  { year: '2026', title: 'Free to Reuse', description: 'Opened our stories and podcast to everyone under a Creative Commons licence, CC BY-SA 4.0.' },
 ];
 
 const fadeUp = {

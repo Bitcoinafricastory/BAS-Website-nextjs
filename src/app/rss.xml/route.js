@@ -1,6 +1,6 @@
 import { getAllNews } from '@/lib/news';
 import { stripHtml } from '@/lib/article-content';
-import { SITE_URL, SITE_NAME } from '@/lib/schema';
+import { SITE_URL, SITE_NAME, CONTENT_LICENSE_URL } from '@/lib/schema';
 
 export const revalidate = 300;
 
@@ -47,6 +47,7 @@ export async function GET() {
     <link>${SITE_URL}</link>
     <description>Bitcoin news, adoption stories, and analysis from across Africa.</description>
     <language>en</language>
+    <copyright>Stories free to reuse under CC BY-SA 4.0: ${CONTENT_LICENSE_URL}</copyright>
     <atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml" />
 ${items}
   </channel>

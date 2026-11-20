@@ -245,6 +245,22 @@ export default async function BlogPostPage({ params }) {
 
           <AuthorFooter author={author} />
 
+          {/* Reuse notice: our stories are CC BY-SA 4.0 (see /terms#licence). */}
+          <p className="mt-8 text-sm text-gray-400 leading-relaxed">
+            Free to republish under{' '}
+            <a
+              href="https://creativecommons.org/licenses/by-sa/4.0/"
+              rel="license"
+              className="underline underline-offset-2 hover:text-yellow-500 transition-colors duration-200"
+            >
+              CC BY-SA 4.0
+            </a>
+            . Credit Bitcoin Africa Story and the writer, and link back to this page.{' '}
+            <Link href="/terms#licence" className="underline underline-offset-2 hover:text-yellow-500 transition-colors duration-200">
+              How to reuse our work
+            </Link>
+          </p>
+
           {/* FAQ section — rendered visibly AND emitted as FAQPage schema above */}
           {faqs.length > 0 && (
             <div className="mt-12 pt-12 border-t border-white/[0.08]">

@@ -12,7 +12,7 @@ export default function TermsPage() {
     <div className="pt-16 bg-black text-white min-h-screen">
       <div className="max-w-3xl mx-auto px-6 py-16">
         <h1 className="text-4xl md:text-5xl font-semibold mb-3">Terms of Use</h1>
-        <p className="text-sm text-gray-500 mb-12">Last updated: July 18, 2026</p>
+        <p className="text-sm text-gray-500 mb-12">Last updated: November 20, 2026</p>
 
         <div className="prose prose-invert prose-lg max-w-none prose-headings:font-semibold prose-a:text-yellow-500 prose-strong:text-white">
           <p>
@@ -51,14 +51,30 @@ export default function TermsPage() {
           </ul>
           <p>We may block or remove access for anyone who violates this.</p>
 
-          <h2>4. Intellectual Property</h2>
+          <h2 id="licence">4. Reusing Our Work</h2>
           <p>
-            Original articles, educational materials, and reporting published by Bitcoin Africa Story are our own work and protected by copyright. You&rsquo;re welcome
-            to share links to our content. If you&rsquo;d like to republish, reproduce, or adapt our work beyond fair use, contact us first at{' '}
+            Our original articles, podcast episodes, educational materials, and reporting are free to share and adapt under the{' '}
+            <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license">
+              Creative Commons Attribution-ShareAlike 4.0 International licence (CC BY-SA 4.0)
+            </a>
+            , unless a page says otherwise. You can republish, translate, quote, clip, or remix them, including for commercial use, as long as you:
+          </p>
+          <ul>
+            <li>Credit Bitcoin Africa Story and the writer, and link to the original page</li>
+            <li>Say if you changed anything</li>
+            <li>Share what you make under the same licence</li>
+          </ul>
+          <p>The licence does not cover:</p>
+          <ul>
+            <li>The Bitcoin Africa Story name and logo</li>
+            <li>Logos, images, and materials belonging to organisations featured in our Directory or News, which remain the property of their respective owners</li>
+            <li>Photos, videos, or other media we credit to someone else</li>
+            <li>The Bitcoin Whitepaper and other third-party materials we link to, which remain the property of their original authors</li>
+          </ul>
+          <p>
+            Questions about reuse, or want to tell us where you used our work? Write to{' '}
             <a href="mailto:bitcoinafricastory@proton.me">bitcoinafricastory@proton.me</a>.
           </p>
-          <p>Logos, images, and materials belonging to organisations featured in our Directory or News remain the property of their respective owners.</p>
-          <p>The Bitcoin Whitepaper and other third-party materials we link to remain the property of their original authors; we link to them for reference, not as our own work.</p>
 
           <h2>5. External Links</h2>
           <p>

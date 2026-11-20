@@ -41,10 +41,28 @@ opportunity.
 - **Research and Insights** — Studying Bitcoin usage, community needs, and adoption
   patterns to guide our programs and share insights with the ecosystem.
 
+## Milestones
+
+- **2024** — Started teaching Bitcoin to local communities in Nigeria; reached our
+  first 100 students; extended programs to Ghana, Kenya, and South Africa.
+- **2025** — Built a network of 300+ community members; ran 6 online Bitcoin
+  Diplomas; hosted 10+ Bitcoin events; launched Bitcoin Ikorodu.
+- **2026** — Published 100 stories; mapped 100+ African Bitcoin communities,
+  companies, and builders in our directory; launched the Bitcoin Africa Story
+  Podcast; ran Bitcoin Diploma cohort 8; hosted live education sessions and
+  grassroots-focused X Spaces; Bitcoin Ikorodu grew to 6+ merchants; opened our stories and podcast
+  under CC BY-SA 4.0.
+
 ## Independence
 
 ${SITE_NAME} is independent and volunteer-led. Funding comes from community
 donations, documented publicly at ${SITE_URL}/donate.
+
+## Reusing our work
+
+Our original stories and podcast episodes are free to reuse under CC BY-SA 4.0
+(https://creativecommons.org/licenses/by-sa/4.0/), with credit and a link back.
+Details: ${SITE_URL}/terms#licence
 
 ---
 

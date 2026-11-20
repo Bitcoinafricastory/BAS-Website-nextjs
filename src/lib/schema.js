@@ -15,6 +15,11 @@ export const SOCIAL_PROFILES = [
   'https://primal.net/p/nprofile1qqs0tmrphute79adfe4r3h8qdkdgqw3fz9244238x2ss53lmhft3jug4hhw4r',
 ];
 
+// Our original stories and podcast episodes are free to reuse under CC BY-SA
+// 4.0 (see /terms#licence). Emitted as `license` in JSON-LD, RSS and the
+// machine endpoints so reusers and grant reviewers can verify it.
+export const CONTENT_LICENSE_URL = 'https://creativecommons.org/licenses/by-sa/4.0/';
+
 export function resolveImageUrl(image) {
   if (!image) return null;
   // Already absolute — use as-is.
@@ -253,6 +258,7 @@ export function newsArticleSchema(post, author, entities = []) {
     keywords,
     inLanguage: 'en',
     isAccessibleForFree: true,
+    license: CONTENT_LICENSE_URL,
     wordCount,
     // Tells voice assistants and AI answer engines which parts of the page are
     // the best candidates to read aloud as a spoken answer.
@@ -297,6 +303,7 @@ export function podcastSeriesSchema() {
       'Conversations with the merchants, builders, and communities putting Bitcoin to work across Africa.',
     publisher: { '@id': `${SITE_URL}/#organization` },
     inLanguage: 'en',
+    license: CONTENT_LICENSE_URL,
   };
 }
 
@@ -308,6 +315,7 @@ export function podcastEpisodeSchema(episode) {
     url: episode.url,
     datePublished: episode.date ? new Date(episode.date).toISOString() : undefined,
     description: episode.description,
+    license: CONTENT_LICENSE_URL,
     associatedMedia: episode.audioUrl
       ? { '@type': 'MediaObject', contentUrl: episode.audioUrl }
       : undefined,

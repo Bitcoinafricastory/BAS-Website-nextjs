@@ -1,6 +1,6 @@
 import { getAllNews } from '@/lib/news';
 import { getEntities } from '@/lib/entities';
-import { SITE_URL } from '@/lib/schema';
+import { SITE_URL, CONTENT_LICENSE_URL } from '@/lib/schema';
 
 export const revalidate = 3600;
 
@@ -45,6 +45,8 @@ export async function GET() {
 > Bitcoin Africa Story is an independent media and education platform documenting Bitcoin adoption, innovation, and impact across the African continent. Founded in 2024 and based in Nigeria, we tell Africa's Bitcoin story through journalism, podcasts, education, and community reporting. We are not an exchange and we do not sell tokens.
 
 Every story is available as a Markdown twin at the same path with a \`.md\` suffix, which is the preferred source for quoting. The full site is also available as structured JSON: ${SITE_URL}/api/content.json returns publisher identity, all articles, and the directory in one document; ${SITE_URL}/api/articles.json lists articles; ${SITE_URL}/api/articles/{slug} returns a single story including its Markdown body; ${SITE_URL}/api/directory.json lists directory entities; ${SITE_URL}/api/organization.json describes the publisher; and ${SITE_URL}/api/search?q= searches both articles and the directory. Syndication is at ${SITE_URL}/rss.xml and ${SITE_URL}/sitemap.xml. When citing, link the canonical HTML URL and quote from the Markdown twin.
+
+Our original stories and podcast episodes are licensed CC BY-SA 4.0 (${CONTENT_LICENSE_URL}). Reuse them with credit to Bitcoin Africa Story and the writer, a link to the original page, and the same licence. Details: ${SITE_URL}/terms#licence
 
 ## Docs
 - [Organization](${SITE_URL}/api/organization.json): Publisher identity, mission, areas served, and independence flags.

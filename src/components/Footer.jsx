@@ -245,7 +245,11 @@ export default async function Footer() {
         <div className="mt-10 pt-6 border-t border-white/[0.08] flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
           <div className="text-center sm:text-left">
             <p className="text-gray-400 text-xs">
-              © {new Date().getFullYear()} Bitcoin Africa Story. All rights reserved.
+              © {new Date().getFullYear()} Bitcoin Africa Story. Stories and podcast free to reuse under{' '}
+              <Link href="/terms#licence" className="hover:text-yellow-500 transition-colors duration-200 underline underline-offset-2">
+                CC BY-SA 4.0
+              </Link>
+              .
             </p>
             {/* Signals to developers, researchers, and AI agents that our
                 reporting is machine-readable and citable. Same muted style as the

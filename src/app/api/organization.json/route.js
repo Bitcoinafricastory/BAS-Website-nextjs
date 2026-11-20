@@ -1,5 +1,5 @@
 import { machineHeaders, SITE_URL, SITE_NAME } from '@/lib/machine-content';
-import { SOCIAL_PROFILES } from '@/lib/schema';
+import { SOCIAL_PROFILES, CONTENT_LICENSE_URL } from '@/lib/schema';
 
 export const revalidate = 3600;
 
@@ -28,6 +28,8 @@ export async function GET() {
       isExchange: false,
       sellsTokens: false,
       publishingPrinciples: `${SITE_URL}/about`,
+      contentLicense: CONTENT_LICENSE_URL,
+      reuseTerms: `${SITE_URL}/terms#licence`,
       sameAs: SOCIAL_PROFILES,
       machineEndpoints: {
         llms: `${SITE_URL}/llms.txt`,
