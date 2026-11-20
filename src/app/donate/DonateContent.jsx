@@ -20,7 +20,7 @@ const buildTracks = (verifiedCount) => [
     n: '01',
     tag: 'Education',
     title: 'Teaching people who go on to build',
-    body: 'Seven Bitcoin Diploma cohorts, free to every student, run with My First Bitcoin. Alumni have started careers and launched their own projects across the continent.',
+    body: 'Eight Bitcoin Diploma cohorts, free to every student, run with My First Bitcoin. Alumni have started careers and launched their own projects across the continent.',
     image: '/assets/education.webp',
     figs: [
       { v: 100, suffix: '+', k: 'Alumni' },
@@ -159,7 +159,7 @@ export default function DonateContent({ verifiedCount = 0 }) {
             </motion.h1>
             <motion.p {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.16 }}
               className="text-gray-400 text-base leading-relaxed max-w-xl">
-              Seven Bitcoin Diploma cohorts. Over a hundred alumni across Africa. A neighbourhood in
+              Eight Bitcoin Diploma cohorts. Over a hundred alumni across Africa. A neighbourhood in
               Ikorodu where sats change hands every day. Two years of unpaid work, and community
               funding you can audit to the last sat.
             </motion.p>

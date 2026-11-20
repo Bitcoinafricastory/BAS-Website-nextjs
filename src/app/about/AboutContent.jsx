@@ -36,9 +36,9 @@ const pillars = [
 
 const milestones = [
   { year: '2024', title: 'The Beginning', description: 'Started teaching Bitcoin to local communities in Nigeria.' },
-  { year: '2024', title: 'First 100 Students', description: 'Reached our first 100 students across multiple cities' },
-  { year: '2024', title: 'Growing Across Africa', description: 'Extended education programs to Ghana, Kenya, and South Africa' },
-  { year: '2025', title: ' 300+ Community Members', description: 'Built a thriving network of students, learners, volunteers, and educators across Africa.' },
+  { year: '2024', title: 'First 100 Students', description: 'Reached our first 100 students across multiple cities.' },
+  { year: '2024', title: 'Growing Across Africa', description: 'Extended education programs to Ghana, Kenya, and South Africa.' },
+  { year: '2025', title: '300+ Community Members', description: 'Built a thriving network of students, learners, volunteers, and educators across Africa.' },
   { year: '2025', title: '6 Online Bitcoin Diplomas', description: 'Launched online Bitcoin learning programs to make education accessible to every African, anywhere.' },
   { year: '2025', title: '10+ Bitcoin Events', description: 'Hosted impactful events — from school sessions to classroom workshops, church outreach, youth hangouts, and community meetups.' },
   { year: '2025', title: 'Building Circular Economies', description: 'Launched initiatives like Bitcoin Ikorodu and continued scaling real Bitcoin adoption across African communities.' },
@@ -261,7 +261,7 @@ export default function AboutContent() {
               </h2>
               <p className="text-sm sm:text-lg text-gray-300 leading-relaxed">
                 To accelerate Bitcoin adoption in Africa through education, community empowerment,
-                grassroots initiatives, and storytelling all aimed at making Bitcoin practical for
+                grassroots initiatives, and storytelling, all aimed at making Bitcoin practical for
                 everyday Africans.
               </p>
             </motion.div>

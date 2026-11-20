@@ -44,8 +44,8 @@ export default function ContactContent() {
                     </div>
                     <div>
                       <h3 className="text-base sm:text-lg font-semibold mb-1">Email</h3>
-                      <a href="mailto:Bitcoinafricastory@proton.me" className="text-gray-400 hover:text-yellow-500 transition-colors duration-200 text-xs sm:text-sm">
-                        Bitcoinafricastory@proton.me
+                      <a href="mailto:bitcoinafricastory@proton.me" className="text-gray-400 hover:text-yellow-500 transition-colors duration-200 text-xs sm:text-sm">
+                        bitcoinafricastory@proton.me
                       </a>
                     </div>
                   </div>

@@ -16,7 +16,7 @@ export default function OtherBitcoinPrograms({ programs = [] }) {
             Other Bitcoin <span className="text-yellow-500">Programs</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl">
-            Explore more Bitcoin Educational Program across and beyond Africa.
+            Explore more Bitcoin education programs across and beyond Africa.
           </p>
         </div>
 

@@ -28,7 +28,7 @@ export default function ProgramsSection({ programs = [] }) {
             New to <span className="text-yellow-500">Bitcoin?</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl">
-            Explore our Bitcoin Educational Program to learn more and get more insight on Bitcoin.
+            Explore our Bitcoin education programs to learn more and get more insight into Bitcoin.
           </p>
         </div>
 

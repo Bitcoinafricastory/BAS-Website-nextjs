@@ -80,7 +80,7 @@ export default async function HomePage() {
               <h2 className="text-4xl md:text-5xl font-semibold mb-4">
                 From Our News and <span className="text-yellow-500">Stories</span>
               </h2>
-              <p className="text-xl text-gray-400">Latest insights on Bitcoin Movement and adoption in Africa</p>
+              <p className="text-xl text-gray-400">Latest insights on the Bitcoin movement and adoption in Africa</p>
             </div>
             <Link href="/news" className="hidden md:inline-flex items-center text-yellow-500 font-medium hover:text-yellow-400 transition-colors duration-200">
               View All Posts →

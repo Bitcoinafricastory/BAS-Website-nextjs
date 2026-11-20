@@ -15,7 +15,7 @@ export default function Mission() {
             </h2>
             <p className="text-base sm:text-lg text-gray-300 mb-6 leading-relaxed">
               To accelerate Bitcoin adoption in Africa through education, community empowerment,
-              grassroots initiatives, and storytelling all aimed at making Bitcoin practical for everyday
+              grassroots initiatives, and storytelling, all aimed at making Bitcoin practical for everyday
               Africans.
             </p>
             <Link href="/about" className="inline-flex items-center text-yellow-500 font-medium hover:text-yellow-400 transition-colors duration-200">
